@@ -11,7 +11,8 @@ A comprehensive package for functional data analysis using:
 Author: Based on Julia code translation
 Date: 2025
 """
-
+import matplotlib.pyplot as plt
+import matplotlib as mpl
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -758,7 +759,7 @@ def plot_asymptotic_analysis(Tn_H0: np.ndarray, D: np.ndarray,
 
     # Histogram of exact distribution
     ax1.hist(Tn_clean, bins=bins, density=True, alpha=0.5,
-             color='blue', label='Exact Distribution of Tₙ')
+             color='blue', label='Exact Distribution of Tn')
 
     # Histogram of asymptotic distribution
     ax1.hist(D_clean, bins=bins, density=True, alpha=0.5,
@@ -804,7 +805,7 @@ def plot_asymptotic_analysis(Tn_H0: np.ndarray, D: np.ndarray,
         # Also save individual figures for compatibility with original code
         fig_hist, ax_hist = plt.subplots(1, 1, figsize=(10, 6))
         ax_hist.hist(Tn_clean, bins=bins, density=True, alpha=0.5,
-                     color='blue', label='Exact Distribution of Tₙ')
+                     color='blue', label='Exact Distribution of Tn')
         ax_hist.hist(D_clean, bins=bins, density=True, alpha=0.5,
                      color='red', label='Asymptotic Distribution of T')
         ax_hist.set_xlabel('Value', fontsize=12)
@@ -824,7 +825,7 @@ def plot_asymptotic_analysis(Tn_H0: np.ndarray, D: np.ndarray,
         max_val = max(quantiles_exact.max(), quantiles_asym.max())
         ax_qq.plot([min_val, max_val], [min_val, max_val], 'r--', linewidth=2,
                    label='y = x')
-        ax_qq.set_xlabel('Exact Tₙ Quantiles', fontsize=12)
+        ax_qq.set_xlabel('Exact Tn Quantiles', fontsize=12)
         ax_qq.set_ylabel('Asymptotic T Quantiles', fontsize=12)
         ax_qq.set_title(f'{model_name}: Q-Q Plot', fontsize=14)
         ax_qq.legend(fontsize=11)
