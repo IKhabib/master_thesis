@@ -662,24 +662,297 @@ def run_full_simulation(M: int = 5000, test_mode: bool = True):
 
     return results
 
+
 # ============================================================================
-# PART 8: MAIN EXECUTION
+# PART 8: ASYMPTOTIC APPROXIMATION ANALYSIS
+# ============================================================================
+
+def simulation_inference(lam: np.ndarray, beta: np.ndarray, v: np.ndarray,
+                         M: int, n: int, J: int, T: int, m: int,
+                         verbose: bool = False) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Simulation for inference (power and size).
+
+    Parameters:
+    lam : ndarray of shape (J,)
+        Eigenvalues
+    beta : ndarray of shape (T,)
+        True coefficients
+    v : ndarray of shape (J, T)
+        Eigenvectors
+    M : int
+        Number of simulations
+    n : int
+        Sample size
+    J : int
+        Number of factors
+    T : int
+        Number of grid points
+    m : int
+        Number of PLS components
+    verbose : bool
+        If True, print progress
+
+    Returns:
+    Tn_H0 : ndarray of shape (M,)
+        Test statistics under H0
+    D : ndarray of shape (M,)
+        Random effects (asymptotic distribution)
+    """
+    Tn_H0 = np.zeros(M)
+    D = np.zeros(M)
+
+    sqrt_lam = np.sqrt(lam)
+
+    for k in range(M):
+        if verbose and k % 10 == 0:
+            print(f"Inference simulation {k + 1}/{M}")
+
+        # Generate data under H0
+        eps = np.random.normal(0, 1, n)
+        u = np.random.normal(0, 1, (n, J))
+        X = (sqrt_lam * u) @ v
+        y = X @ beta / T + eps
+
+        # Compute statistics
+        r = X.T @ y / n
+        K = X.T @ X / (T * n)
+
+        # PLS estimate
+        beta_pls = pls(r, K, m)[:, -1]
+
+        # Test statistic under H0
+        diff = K @ (beta_pls - beta)
+        Tn_H0[k] = n * np.sum(diff ** 2) / T
+
+        # Random effect for asymptotic distribution
+        D[k] = lam @ (np.random.normal(0, 1, J) ** 2)
+
+    return Tn_H0, D
+
+
+def plot_asymptotic_analysis(Tn_H0: np.ndarray, D: np.ndarray,
+                             model_name: str, save_dir: str = "."):
+    """
+    Create histogram comparison and Q-Q plot for asymptotic analysis.
+
+    Parameters:
+    Tn_H0 : ndarray of shape (M,)
+        Test statistics under H0
+    D : ndarray of shape (M,)
+        Random effects (asymptotic distribution)
+    model_name : str
+        Name of the model for labeling
+    save_dir : str
+        Directory to save figures
+    """
+    # Create figure with two subplots
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Remove NaN values if any
+    Tn_clean = Tn_H0[~np.isnan(Tn_H0)]
+    D_clean = D[~np.isnan(D)]
+
+    # Plot 1: Histogram comparison
+    bins = 50
+
+    # Histogram of exact distribution
+    ax1.hist(Tn_clean, bins=bins, density=True, alpha=0.5,
+             color='blue', label='Exact Distribution of Tₙ')
+
+    # Histogram of asymptotic distribution
+    ax1.hist(D_clean, bins=bins, density=True, alpha=0.5,
+             color='red', label='Asymptotic Distribution of T')
+
+    ax1.set_xlabel('Value', fontsize=12)
+    ax1.set_ylabel('Density', fontsize=12)
+    ax1.set_title(f'{model_name}: Distribution Comparison', fontsize=14)
+    ax1.legend(fontsize=11)
+    ax1.grid(True, alpha=0.3)
+    ax1.tick_params(labelsize=12)
+
+    # Plot 2: Q-Q plot
+    # Compute quantiles
+    n_quantiles = min(len(Tn_clean), len(D_clean), 1000)
+    quantiles_exact = np.percentile(Tn_clean, np.linspace(0, 100, n_quantiles))
+    quantiles_asym = np.percentile(D_clean, np.linspace(0, 100, n_quantiles))
+
+    # Q-Q plot
+    ax2.scatter(quantiles_exact, quantiles_asym, alpha=0.5, s=20, color='blue')
+
+    # Add diagonal line
+    min_val = min(quantiles_exact.min(), quantiles_asym.min())
+    max_val = max(quantiles_exact.max(), quantiles_asym.max())
+    ax2.plot([min_val, max_val], [min_val, max_val], 'r--', linewidth=2,
+             label='y = x')
+
+    ax2.set_xlabel('Exact Tₙ Quantiles', fontsize=12)
+    ax2.set_ylabel('Asymptotic T Quantiles', fontsize=12)
+    ax2.set_title(f'{model_name}: Q-Q Plot', fontsize=14)
+    ax2.legend(fontsize=11)
+    ax2.grid(True, alpha=0.3)
+    ax2.tick_params(labelsize=12)
+
+    plt.tight_layout()
+
+    # Save figures
+    try:
+        # Save combined figure
+        fig.savefig(f"{save_dir}/asymptotic_analysis_{model_name.lower().replace(' ', '_')}.pdf",
+                    dpi=300, bbox_inches='tight')
+
+        # Also save individual figures for compatibility with original code
+        fig_hist, ax_hist = plt.subplots(1, 1, figsize=(10, 6))
+        ax_hist.hist(Tn_clean, bins=bins, density=True, alpha=0.5,
+                     color='blue', label='Exact Distribution of Tₙ')
+        ax_hist.hist(D_clean, bins=bins, density=True, alpha=0.5,
+                     color='red', label='Asymptotic Distribution of T')
+        ax_hist.set_xlabel('Value', fontsize=12)
+        ax_hist.set_ylabel('Density', fontsize=12)
+        ax_hist.set_title(f'{model_name}: Distribution Comparison', fontsize=14)
+        ax_hist.legend(fontsize=11)
+        ax_hist.grid(True, alpha=0.3)
+        ax_hist.tick_params(labelsize=12)
+        plt.tight_layout()
+        fig_hist.savefig(f"{save_dir}/asymptotic_distribution_{model_name.lower().replace(' ', '_')}.pdf",
+                         dpi=300, bbox_inches='tight')
+        plt.close(fig_hist)
+
+        fig_qq, ax_qq = plt.subplots(1, 1, figsize=(10, 6))
+        ax_qq.scatter(quantiles_exact, quantiles_asym, alpha=0.5, s=20, color='blue')
+        min_val = min(quantiles_exact.min(), quantiles_asym.min())
+        max_val = max(quantiles_exact.max(), quantiles_asym.max())
+        ax_qq.plot([min_val, max_val], [min_val, max_val], 'r--', linewidth=2,
+                   label='y = x')
+        ax_qq.set_xlabel('Exact Tₙ Quantiles', fontsize=12)
+        ax_qq.set_ylabel('Asymptotic T Quantiles', fontsize=12)
+        ax_qq.set_title(f'{model_name}: Q-Q Plot', fontsize=14)
+        ax_qq.legend(fontsize=11)
+        ax_qq.grid(True, alpha=0.3)
+        ax_qq.tick_params(labelsize=12)
+        plt.tight_layout()
+        fig_qq.savefig(f"{save_dir}/qqplot_{model_name.lower().replace(' ', '_')}.pdf",
+                       dpi=300, bbox_inches='tight')
+        plt.close(fig_qq)
+
+        print(f"Saved figures for {model_name}")
+    except Exception as e:
+        print(f"Could not save figures for {model_name}: {e}")
+
+    plt.show()
+
+    return fig
+
+
+# ============================================================================
+# PART 9: RUN ASYMPTOTIC ANALYSIS
+# ============================================================================
+
+def run_asymptotic_analysis(M: int = 1000, test_mode: bool = True):
+    """
+    Run the asymptotic approximation analysis for all three models.
+
+    Parameters:
+    M : int
+        Number of simulations
+    test_mode : bool
+        If True, use reduced M for testing
+    """
+    print("\n" + "=" * 60)
+    print("ASYMPTOTIC APPROXIMATION ANALYSIS")
+    print("=" * 60)
+
+    # Parameters
+    n = 100
+    J = 100
+    T = 200
+    m = 70
+
+    # Grids
+    s = np.linspace(0, 1, T)
+    j = np.arange(1, J + 1)
+
+    # Create basis
+    v = np.sqrt(2) * np.cos(np.pi * s[:, np.newaxis] * j[np.newaxis, :])
+    v[:, 0] = 1
+    v = v.T  # Shape: (J, T)
+
+    # Model definitions (same as before)
+    b1 = 4 / j ** 2.7
+    beta1 = v.T @ b1
+    lambda1 = 2 / j ** 1.1
+
+    b2 = b1.copy()
+    b2[:5] = 4
+    beta2 = v.T @ b2
+
+    lambda3 = lambda1.copy()
+    lambda3[:5] = 2
+
+    models = [
+        ("Model 1", lambda1, beta1),
+        ("Model 2", lambda1, beta2),
+        ("Model 3", lambda3, beta1)
+    ]
+
+    # Run simulations
+    results = {}
+    M_actual = min(M, 100) if test_mode else M
+
+    print(f"Test mode: {test_mode}")
+    print(f"Simulations: {M_actual}")
+    print("=" * 60)
+
+    for idx, (model_name, lam, beta) in enumerate(models, 1):
+        print(f"\nRunning {model_name} for asymptotic analysis...")
+
+        start_time = datetime.now()
+
+        # Run inference simulation
+        Tn_H0, D = simulation_inference(
+            lam, beta, v, M_actual, n, J, T, m, verbose=True
+        )
+
+        elapsed = (datetime.now() - start_time).total_seconds()
+
+        print(f"{model_name} completed in {elapsed:.2f}s")
+        print(f"Mean Tn_H0: {np.mean(Tn_H0):.4f}")
+        print(f"Mean D: {np.mean(D):.4f}")
+
+        results[model_name] = {
+            'Tn_H0': Tn_H0,
+            'D': D
+        }
+
+        # Create plots
+        fig = plot_asymptotic_analysis(Tn_H0, D, model_name)
+
+    return results
+
+
+# ============================================================================
+# PART 10: UPDATED MAIN EXECUTION
 # ============================================================================
 
 if __name__ == "__main__":
-    print("="*60)
+    print("=" * 60)
     print("FUNCTIONAL DATA ANALYSIS WITH PLS")
-    print("="*60)
+    print("=" * 60)
+
+    # Figure 1: Estimation and Prediction Accuracy
+    print("\n" + "=" * 60)
+    print("FIGURE 1: ESTIMATION AND PREDICTION ACCURACY")
+    print("=" * 60)
 
     # Run with test mode (100 simulations)
-    results = run_full_simulation(M=5000, test_mode=True)
+    results_fig1 = run_full_simulation(M=5000, test_mode=True)
 
-    # Print summary
-    print("\n" + "="*60)
-    print("SUMMARY STATISTICS")
-    print("="*60)
+    # Print summary for Figure 1
+    print("\n" + "=" * 60)
+    print("SUMMARY STATISTICS - FIGURE 1")
+    print("=" * 60)
 
-    for model_name, data in results.items():
+    for model_name, data in results_fig1.items():
         mspe = data['mspe']
         mse = data['mse']
 
@@ -688,3 +961,39 @@ if __name__ == "__main__":
         print(f"  MSPE std:  {np.std(mspe, axis=1)}")
         print(f"  MSE mean:  {np.mean(mse, axis=1)}")
         print(f"  MSE std:   {np.std(mse, axis=1)}")
+        print(f"  Avg m_PLS: {np.mean(data['m_pls']):.1f}")
+        print(f"  Avg m_APLS: {np.mean(data['m_apls']):.1f}")
+
+    # Figure 2: Accuracy of Asymptotic Approximation
+    print("\n" + "=" * 60)
+    print("FIGURE 2: ACCURACY OF ASYMPTOTIC APPROXIMATION")
+    print("=" * 60)
+
+    results_fig2 = run_asymptotic_analysis(M=1000, test_mode=True)
+
+    # Print summary for Figure 2
+    print("\n" + "=" * 60)
+    print("SUMMARY STATISTICS - FIGURE 2")
+    print("=" * 60)
+
+    for model_name, data in results_fig2.items():
+        Tn_H0 = data['Tn_H0']
+        D = data['D']
+
+        # Remove NaN values
+        Tn_clean = Tn_H0[~np.isnan(Tn_H0)]
+        D_clean = D[~np.isnan(D)]
+
+        print(f"\n{model_name}:")
+        print(f"  Exact Tn_H0 - Mean: {np.mean(Tn_clean):.4f}, Std: {np.std(Tn_clean):.4f}")
+        print(f"  Asymptotic D - Mean: {np.mean(D_clean):.4f}, Std: {np.std(D_clean):.4f}")
+
+        # Kolmogorov-Smirnov test for distribution comparison
+        from scipy.stats import ks_2samp
+
+        ks_stat, ks_pval = ks_2samp(Tn_clean, D_clean)
+        print(f"  KS test: stat={ks_stat:.4f}, p-value={ks_pval:.4f}")
+
+    print("\n" + "=" * 60)
+    print("ALL ANALYSES COMPLETED SUCCESSFULLY!")
+    print("=" * 60)
