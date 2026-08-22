@@ -1,17 +1,27 @@
 """Corrected raw-versus-orthogonalized APLS simulation study.
 
-This standalone program compares four estimators under the three simulation
-designs used in ``model_8_corrected.py``:
+This standalone program compares six reported methods under the three
+simulation designs used in ``model_8_corrected.py``:
 
 1. FPCR selected by explicitly labelled response- or moment-space GCV;
-2. Babii et al.'s discrepancy-stopped conjugate-gradient FPLS, including
+2. ``CG-FPLS-code``, which reproduces Babii et al.'s released simulation
+   notebook: one moment-GCV FPCR plug-in variance estimate and m >= 1;
+3. ``CG-FPLS-supplement``, which follows the written supplementary algorithm:
    iterative residual-variance estimation and the admissible m=0 estimate;
-3. raw APLS, implemented from the nonorthogonal powers
+4. ``CG-FPLS-oracle``, an explicitly infeasible simulation diagnostic using
+   the known data-generating noise variance and the theoretical m >= 0 rule;
+5. raw APLS, implemented from the nonorthogonal powers
        H_m = [r, K r, ..., K^(m-1) r]
    and the unregularized normal equations; and
-4. orthogonalized APLS, labelled APLS--Arnoldi--CGS2 (or the selected
+6. orthogonalized APLS, labelled APLS--Arnoldi--CGS2 (or the selected
    Gram--Schmidt variant), which represents the same Krylov spaces with an
    orthonormal Arnoldi basis and solves response least squares by QR.
+
+All three CG-FPLS variants use exactly the same conjugate-gradient path.  They
+differ only in noise calibration and in whether m=0 is an admissible stopping
+point.  The oracle variant must never be presented as a feasible estimator;
+it is included solely to diagnose performance lost through variance
+estimation and threshold calibration.
 
 The raw routine deliberately applies no column scaling, ridge penalty,
 pseudoinverse, truncated SVD, or Gram--Schmidt step.  It is therefore a
@@ -33,7 +43,10 @@ moment-space rule used by the earlier notebook remains reproducible through
 Performance summaries report means, standard errors, medians, 90th and 99th
 percentiles, maxima, transparent extreme-tail rates, and numerical-instability
 rates.  All boxplot outliers are shown, and raw-APLS extreme cases are also
-listed and plotted separately.
+listed and plotted separately.  ``summary.csv`` contains every method, while
+``summary_feasible.csv`` excludes the oracle diagnostic.  The main performance
+figure likewise excludes the oracle, and a separately labelled figure includes
+it for diagnostic comparison.
 
 Discretization
 --------------
@@ -52,7 +65,7 @@ Larger comparison::
     python apls_raw_vs_reorthogonalized.py \
         --replications 500 --m-max 70 \
         --fpcr-gcv response \
-        --output-dir apls_corrected_results
+        --output-dir apls_cg_variants_results
 
 References
 ----------
@@ -92,6 +105,9 @@ from scipy.linalg import LinAlgError, eigh, solve_triangular
 
 METHOD_COLORS = {
     "CG-FPLS": "#0072B2",
+    "CG-FPLS-code": "#0072B2",
+    "CG-FPLS-supplement": "#56B4E9",
+    "CG-FPLS-oracle": "#6A3D9A",
     "APLS-raw": "#D55E00",
     "APLS-CGS1": "#009E73",
     "APLS-CGS2": "#009E73",
@@ -105,6 +121,14 @@ METHOD_COLORS = {
     "FPCR-response-GCV": "#CC79A7",
     "FPCR-moment-GCV": "#CC79A7",
 }
+CG_CODE_LABEL = "CG-FPLS-code"
+CG_SUPPLEMENT_LABEL = "CG-FPLS-supplement"
+CG_ORACLE_LABEL = "CG-FPLS-oracle"
+CG_VARIANT_LABELS = (
+    CG_CODE_LABEL,
+    CG_SUPPLEMENT_LABEL,
+    CG_ORACLE_LABEL,
+)
 STABLE_COLOR = "#009E73"
 MODEL_COLORS = {
     "Model 1": "#0072B2",
@@ -168,7 +192,7 @@ class FPCRResult:
 
 @dataclass
 class CGFPLSSelection:
-    """Babii CG-FPLS fit with iterative variance/stopping diagnostics."""
+    """One Babii CG-FPLS stopping-rule selection and its diagnostics."""
 
     beta: np.ndarray
     selected_components: int
@@ -181,6 +205,11 @@ class CGFPLSSelection:
     selected_components_history: np.ndarray
     threshold_history: np.ndarray
     moment_path: np.ndarray
+    variant: str = "supplement"
+    minimum_components: int = 0
+    sigma2_source: str = "iterated residual variance"
+    variance_iteration_used: bool = True
+    feasible_estimator: bool = True
 
 
 def _validate_xy(y: np.ndarray, X: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
@@ -686,12 +715,13 @@ def _select_cg_for_variance(
     n: int,
     tau: float,
     delta: float,
+    minimum_components: int = 0,
 ) -> Tuple[np.ndarray, int, bool, np.ndarray, float]:
     """Apply the discrepancy rule for one fixed residual-variance value.
 
-    The returned moment path includes m=0 as its first entry.  This matters
-    because Babii et al. define beta_0=0 and stop at the first admissible
-    m, which can therefore be zero.
+    The returned moment path always includes m=0 as its first entry.
+    ``minimum_components=0`` implements the theoretical/supplementary rule,
+    while ``minimum_components=1`` reproduces the released simulation code.
     """
     path = np.asarray(path, dtype=float)
     r = np.asarray(r, dtype=float).reshape(-1)
@@ -704,13 +734,17 @@ def _select_cg_for_variance(
         raise ValueError("sigma2 must be finite and non-negative")
     if X_norm < 0.0 or not np.isfinite(X_norm) or n < 2:
         raise ValueError("X_norm and n are invalid")
+    if not 0 <= minimum_components <= path.shape[1]:
+        raise ValueError("minimum_components is outside the available CG path")
 
     residuals = np.column_stack((r, r[:, None] - K @ path))
     moments = np.sqrt(np.mean(residuals ** 2, axis=0))
     threshold = tau * np.sqrt(2.0 * sigma2 * X_norm / (delta * n))
-    reached = np.flatnonzero(moments <= threshold)
+    reached = np.flatnonzero(
+        moments[minimum_components:] <= threshold
+    )
     if len(reached):
-        selected = int(reached[0])
+        selected = int(reached[0] + minimum_components)
         threshold_reached = True
     else:
         selected = path.shape[1]
@@ -719,7 +753,135 @@ def _select_cg_for_variance(
     return beta, selected, threshold_reached, moments, float(threshold)
 
 
-def select_cg_fpls(
+def _fixed_variance_cg_selection(
+    path: np.ndarray,
+    X: np.ndarray,
+    r: np.ndarray,
+    K: np.ndarray,
+    *,
+    sigma2: float,
+    tau: float,
+    delta: float,
+    minimum_components: int,
+    variant: str,
+    sigma2_source: str,
+    feasible_estimator: bool,
+) -> CGFPLSSelection:
+    """Select one CG iterate using a fixed discrepancy variance."""
+    X = np.asarray(X, dtype=float)
+    if X.ndim != 2 or X.shape[0] < 2 or X.shape[1] < 2:
+        raise ValueError("X must be a nonempty two-dimensional design")
+    if not np.all(np.isfinite(X)):
+        raise ValueError("X must be finite")
+    n, T = X.shape
+    K, r = _validate_matrices(K, r, T)
+    path = np.asarray(path, dtype=float)
+    if path.ndim != 2 or path.shape[0] != T or path.shape[1] < 1:
+        raise ValueError("path must be a nonempty T-by-m array")
+    if not np.all(np.isfinite(path)):
+        raise ValueError("path must be finite")
+    if not 0.0 < delta < 1.0 or tau <= 1.0:
+        raise ValueError("tau must exceed one and delta must lie in (0,1)")
+    if sigma2 < 0.0 or not np.isfinite(sigma2):
+        raise ValueError("sigma2 must be finite and non-negative")
+
+    X_norm = float(np.mean(np.sum(X ** 2, axis=1) / T))
+    beta, selected, reached, moments, threshold = _select_cg_for_variance(
+        path,
+        r,
+        K,
+        sigma2=sigma2,
+        X_norm=X_norm,
+        n=n,
+        tau=tau,
+        delta=delta,
+        minimum_components=minimum_components,
+    )
+    return CGFPLSSelection(
+        beta=beta,
+        selected_components=selected,
+        threshold_reached=reached,
+        converged=True,
+        variance_updates=0,
+        sigma2_initial=float(sigma2),
+        sigma2_final=float(sigma2),
+        sigma2_history=np.asarray([sigma2], dtype=float),
+        selected_components_history=np.asarray([selected], dtype=int),
+        threshold_history=np.asarray([threshold], dtype=float),
+        moment_path=np.asarray(moments, dtype=float),
+        variant=variant,
+        minimum_components=minimum_components,
+        sigma2_source=sigma2_source,
+        variance_iteration_used=False,
+        feasible_estimator=feasible_estimator,
+    )
+
+
+def select_cg_fpls_code(
+    path: np.ndarray,
+    X: np.ndarray,
+    y: np.ndarray,
+    r: np.ndarray,
+    K: np.ndarray,
+    beta_pilot: np.ndarray,
+    *,
+    tau: float,
+    delta: float,
+) -> CGFPLSSelection:
+    """Reproduce the CG-FPLS selector in the authors' released notebook.
+
+    The notebook estimates sigma squared once from a moment-GCV FPCR pilot and
+    searches only the positive CG iterates m=1,...,m_max.  The caller supplies
+    that pilot explicitly so the variance source remains auditable.
+    """
+    y, X = _validate_xy(y, X)
+    T = X.shape[1]
+    beta_pilot = np.asarray(beta_pilot, dtype=float).reshape(-1)
+    if beta_pilot.shape != (T,) or not np.all(np.isfinite(beta_pilot)):
+        raise ValueError("beta_pilot must be a finite vector of length T")
+    sigma2 = max(float(np.mean((y - X @ beta_pilot / T) ** 2)), 0.0)
+    return _fixed_variance_cg_selection(
+        path,
+        X,
+        r,
+        K,
+        sigma2=sigma2,
+        tau=tau,
+        delta=delta,
+        minimum_components=1,
+        variant="code",
+        sigma2_source="one moment-GCV FPCR plug-in estimate",
+        feasible_estimator=True,
+    )
+
+
+def select_cg_fpls_oracle(
+    path: np.ndarray,
+    X: np.ndarray,
+    r: np.ndarray,
+    K: np.ndarray,
+    *,
+    sigma2_true: float,
+    tau: float,
+    delta: float,
+) -> CGFPLSSelection:
+    """Diagnostic CG-FPLS selector using the known simulation noise variance."""
+    return _fixed_variance_cg_selection(
+        path,
+        X,
+        r,
+        K,
+        sigma2=sigma2_true,
+        tau=tau,
+        delta=delta,
+        minimum_components=0,
+        variant="oracle",
+        sigma2_source="known data-generating noise variance",
+        feasible_estimator=False,
+    )
+
+
+def select_cg_fpls_supplement(
     path: np.ndarray,
     X: np.ndarray,
     y: np.ndarray,
@@ -806,6 +968,39 @@ def select_cg_fpls(
         selected_components_history=np.asarray(selected_history, dtype=int),
         threshold_history=np.asarray(threshold_history, dtype=float),
         moment_path=np.asarray(moment_path, dtype=float),
+        variant="supplement",
+        minimum_components=0,
+        sigma2_source="iterated residual variance from moment-GCV FPCR pilot",
+        variance_iteration_used=True,
+        feasible_estimator=True,
+    )
+
+
+def select_cg_fpls(
+    path: np.ndarray,
+    X: np.ndarray,
+    y: np.ndarray,
+    r: np.ndarray,
+    K: np.ndarray,
+    beta_pilot: np.ndarray,
+    *,
+    tau: float,
+    delta: float,
+    variance_tolerance: float = 0.01,
+    variance_kmax: int = 10,
+) -> CGFPLSSelection:
+    """Backward-compatible alias for ``select_cg_fpls_supplement``."""
+    return select_cg_fpls_supplement(
+        path,
+        X,
+        y,
+        r,
+        K,
+        beta_pilot,
+        tau=tau,
+        delta=delta,
+        variance_tolerance=variance_tolerance,
+        variance_kmax=variance_kmax,
     )
 
 
@@ -842,6 +1037,48 @@ def _fpcr_spectral_path(
     return beta_path
 
 
+def _select_fpcr_gcv_from_path(
+    y: np.ndarray,
+    X: np.ndarray,
+    r: np.ndarray,
+    K: np.ndarray,
+    beta_path: np.ndarray,
+    *,
+    criterion: str,
+) -> FPCRResult:
+    """Evaluate one GCV criterion on an already computed FPCR path."""
+    y, X = _validate_xy(y, X)
+    n, T = X.shape
+    K, r = _validate_matrices(K, r, T)
+    beta_path = np.asarray(beta_path, dtype=float)
+    if (
+        beta_path.ndim != 2
+        or beta_path.shape[0] != T
+        or beta_path.shape[1] < 1
+        or not np.all(np.isfinite(beta_path))
+    ):
+        raise ValueError("beta_path must be a finite nonempty T-by-m array")
+    if criterion not in {"response", "moment"}:
+        raise ValueError("criterion must be 'response' or 'moment'")
+
+    gcv = np.full(beta_path.shape[1], np.inf)
+    for component in range(beta_path.shape[1]):
+        count = component + 1
+        if criterion == "response":
+            residual = y - X @ beta_path[:, component] / T
+            gcv[component] = np.mean(residual ** 2) / (1.0 - count / n) ** 2
+        else:
+            residual = r - K @ beta_path[:, component]
+            gcv[component] = np.mean(residual ** 2) / (1.0 - count / T) ** 2
+    selected = int(np.argmin(gcv)) + 1
+    return FPCRResult(
+        beta=beta_path[:, selected - 1],
+        selected_components=selected,
+        gcv=gcv,
+        criterion=criterion,
+    )
+
+
 def select_fpcr_gcv(
     y: np.ndarray,
     X: np.ndarray,
@@ -860,23 +1097,13 @@ def select_fpcr_gcv(
     y, X = _validate_xy(y, X)
     n, T = X.shape
     K, r = _validate_matrices(K, r, T)
-    if criterion not in {"response", "moment"}:
-        raise ValueError("criterion must be 'response' or 'moment'")
     beta_path = _fpcr_spectral_path(r, K, min(m_max, n - 1, T - 1))
-    gcv = np.full(beta_path.shape[1], np.inf)
-    for component in range(beta_path.shape[1]):
-        count = component + 1
-        if criterion == "response":
-            residual = y - X @ beta_path[:, component] / T
-            gcv[component] = np.mean(residual ** 2) / (1.0 - count / n) ** 2
-        else:
-            residual = r - K @ beta_path[:, component]
-            gcv[component] = np.mean(residual ** 2) / (1.0 - count / T) ** 2
-    selected = int(np.argmin(gcv)) + 1
-    return FPCRResult(
-        beta=beta_path[:, selected - 1],
-        selected_components=selected,
-        gcv=gcv,
+    return _select_fpcr_gcv_from_path(
+        y,
+        X,
+        r,
+        K,
+        beta_path,
         criterion=criterion,
     )
 
@@ -1050,7 +1277,47 @@ def run_simulation(
     models = make_model_specs(J, basis)
     stable_label = f"APLS-Arnoldi-{orthogonalization.upper()}"
     fpcr_label = f"FPCR-{fpcr_gcv_criterion}-GCV"
-    methods = ("CG-FPLS", "APLS-raw", stable_label, fpcr_label)
+    methods = (*CG_VARIANT_LABELS, "APLS-raw", stable_label, fpcr_label)
+    method_metadata: Dict[str, Dict[str, object]] = {
+        CG_CODE_LABEL: {
+            "variant": "code",
+            "comparison_role": "main reproduction benchmark",
+            "feasible_estimator": True,
+            "minimum_components": 1,
+            "sigma2_source": "one moment-GCV FPCR plug-in estimate",
+        },
+        CG_SUPPLEMENT_LABEL: {
+            "variant": "supplement",
+            "comparison_role": "written-method sensitivity analysis",
+            "feasible_estimator": True,
+            "minimum_components": 0,
+            "sigma2_source": (
+                "iterated residual variance from moment-GCV FPCR pilot"
+            ),
+        },
+        CG_ORACLE_LABEL: {
+            "variant": "oracle",
+            "comparison_role": "infeasible simulation diagnostic only",
+            "feasible_estimator": False,
+            "minimum_components": 0,
+            "sigma2_source": "known data-generating noise variance",
+        },
+        "APLS-raw": {
+            "variant": "raw Krylov powers",
+            "comparison_role": "numerical baseline",
+            "feasible_estimator": True,
+        },
+        stable_label: {
+            "variant": orthogonalization.lower(),
+            "comparison_role": "stabilized APLS comparator",
+            "feasible_estimator": True,
+        },
+        fpcr_label: {
+            "variant": fpcr_gcv_criterion,
+            "comparison_role": "FPCR benchmark",
+            "feasible_estimator": True,
+        },
+    }
     seed_sequences = np.random.SeedSequence(seed).spawn(len(models))
 
     replication_rows: List[Dict[str, object]] = []
@@ -1085,15 +1352,26 @@ def run_simulation(
     stable_selected_orthogonality_defect = np.full(
         (len(models), replications), np.nan
     )
-    cg_initial_sigma2 = np.full((len(models), replications), np.nan)
-    cg_final_sigma2 = np.full((len(models), replications), np.nan)
-    cg_variance_updates = np.zeros((len(models), replications), dtype=int)
-    cg_variance_converged = np.zeros((len(models), replications), dtype=bool)
-    cg_threshold_reached = np.zeros((len(models), replications), dtype=bool)
+    cg_initial_sigma2 = np.full(
+        (len(models), replications, len(CG_VARIANT_LABELS)), np.nan
+    )
+    cg_final_sigma2 = np.full_like(cg_initial_sigma2, np.nan)
+    cg_variance_updates = np.zeros(
+        (len(models), replications, len(CG_VARIANT_LABELS)), dtype=int
+    )
+    cg_variance_converged = np.zeros(
+        (len(models), replications, len(CG_VARIANT_LABELS)), dtype=bool
+    )
+    cg_threshold_reached = np.zeros(
+        (len(models), replications, len(CG_VARIANT_LABELS)), dtype=bool
+    )
+    cg_pilot_selected_components = np.zeros(
+        (len(models), replications), dtype=int
+    )
     representative: Dict[str, Dict[str, np.ndarray]] = {}
 
     print("=" * 72)
-    print("CORRECTED RAW VERSUS ORTHOGONALIZED APLS")
+    print("APLS AND THREE CG-FPLS STOPPING-RULE VARIANTS")
     print("=" * 72)
     print(
         f"Models=3, replications/model={replications}, n={n}, T={T}, "
@@ -1101,9 +1379,14 @@ def run_simulation(
     )
     print(f"Orthogonalization: {orthogonalization.upper()}")
     print(f"FPCR tuning: {fpcr_gcv_criterion}-space GCV")
+    print("CG-FPLS-code: moment-GCV pilot, one sigma2 estimate, m >= 1")
     print(
-        "CG-FPLS variance iteration: "
-        f"xi={cg_variance_tolerance:g}, kmax={cg_variance_kmax}, m includes 0"
+        "CG-FPLS-supplement: moment-GCV pilot, iterative sigma2, "
+        f"xi={cg_variance_tolerance:g}, kmax={cg_variance_kmax}, m >= 0"
+    )
+    print(
+        "CG-FPLS-oracle: known simulation sigma2="
+        f"{noise_sd ** 2:g}, m >= 0 (diagnostic only)"
     )
 
     for model_index, (model, seed_sequence) in enumerate(
@@ -1123,27 +1406,65 @@ def run_simulation(
             K = X.T @ X / (n * T)
             r = X.T @ y / n
 
-            fpcr = select_fpcr_gcv(
+            fpcr_path = _fpcr_spectral_path(
+                r, K, min(m_max, n - 1, T - 1)
+            )
+            fpcr = _select_fpcr_gcv_from_path(
                 y,
                 X,
                 r,
                 K,
-                m_max,
+                fpcr_path,
                 criterion=fpcr_gcv_criterion,
             )
+            if fpcr_gcv_criterion == "moment":
+                fpcr_moment_pilot = fpcr
+            else:
+                fpcr_moment_pilot = _select_fpcr_gcv_from_path(
+                    y,
+                    X,
+                    r,
+                    K,
+                    fpcr_path,
+                    criterion="moment",
+                )
             cg_path = cg_fpls_path(r, K, m_max)
-            cg_selection = select_cg_fpls(
+            cg_code = select_cg_fpls_code(
                 cg_path,
                 X,
                 y,
                 r,
                 K,
-                fpcr.beta,
+                fpcr_moment_pilot.beta,
+                tau=tau,
+                delta=delta,
+            )
+            cg_supplement = select_cg_fpls_supplement(
+                cg_path,
+                X,
+                y,
+                r,
+                K,
+                fpcr_moment_pilot.beta,
                 tau=tau,
                 delta=delta,
                 variance_tolerance=cg_variance_tolerance,
                 variance_kmax=cg_variance_kmax,
             )
+            cg_oracle = select_cg_fpls_oracle(
+                cg_path,
+                X,
+                r,
+                K,
+                sigma2_true=noise_sd ** 2,
+                tau=tau,
+                delta=delta,
+            )
+            cg_selections = {
+                CG_CODE_LABEL: cg_code,
+                CG_SUPPLEMENT_LABEL: cg_supplement,
+                CG_ORACLE_LABEL: cg_oracle,
+            }
             folds = _make_folds(n, k_folds, rng)
             apls = apls_cv_compare(
                 y,
@@ -1157,53 +1478,89 @@ def run_simulation(
             )
 
             beta_by_method = {
-                "CG-FPLS": cg_selection.beta,
+                **{
+                    method: selection.beta
+                    for method, selection in cg_selections.items()
+                },
                 "APLS-raw": apls.beta_raw,
                 stable_label: apls.beta_reorth,
                 fpcr_label: fpcr.beta,
             }
             m_by_method = {
-                "CG-FPLS": cg_selection.selected_components,
+                **{
+                    method: selection.selected_components
+                    for method, selection in cg_selections.items()
+                },
                 "APLS-raw": apls.m_raw,
                 stable_label: apls.m_reorth,
                 fpcr_label: fpcr.selected_components,
             }
 
-            cg_initial_sigma2[model_index, replication] = (
-                cg_selection.sigma2_initial
+            cg_pilot_selected_components[model_index, replication] = (
+                fpcr_moment_pilot.selected_components
             )
-            cg_final_sigma2[model_index, replication] = cg_selection.sigma2_final
-            cg_variance_updates[model_index, replication] = (
-                cg_selection.variance_updates
-            )
-            cg_variance_converged[model_index, replication] = (
-                cg_selection.converged
-            )
-            cg_threshold_reached[model_index, replication] = (
-                cg_selection.threshold_reached
-            )
-            cg_diagnostic_rows.append(
-                {
-                    "model": model.name,
-                    "replication": replication + 1,
-                    "selected_components": cg_selection.selected_components,
-                    "m_zero_selected": cg_selection.selected_components == 0,
-                    "threshold_reached": cg_selection.threshold_reached,
-                    "variance_converged": cg_selection.converged,
-                    "variance_updates": cg_selection.variance_updates,
-                    "sigma2_initial": cg_selection.sigma2_initial,
-                    "sigma2_final": cg_selection.sigma2_final,
-                    "sigma2_history": json.dumps(
-                        cg_selection.sigma2_history.tolist()
-                    ),
-                    "selected_components_history": json.dumps(
-                        cg_selection.selected_components_history.tolist()
-                    ),
-                    "threshold_history": json.dumps(
-                        cg_selection.threshold_history.tolist()
-                    ),
-                }
-            )
+            for cg_index, method in enumerate(CG_VARIANT_LABELS):
+                selection = cg_selections[method]
+                cg_initial_sigma2[
+                    model_index, replication, cg_index
+                ] = selection.sigma2_initial
+                cg_final_sigma2[
+                    model_index, replication, cg_index
+                ] = selection.sigma2_final
+                cg_variance_updates[
+                    model_index, replication, cg_index
+                ] = selection.variance_updates
+                cg_variance_converged[
+                    model_index, replication, cg_index
+                ] = selection.converged
+                cg_threshold_reached[
+                    model_index, replication, cg_index
+                ] = selection.threshold_reached
+                cg_diagnostic_rows.append(
+                    {
+                        "model": model.name,
+                        "replication": replication + 1,
+                        "method": method,
+                        "variant": selection.variant,
+                        "comparison_role": method_metadata[method][
+                            "comparison_role"
+                        ],
+                        "feasible_estimator": selection.feasible_estimator,
+                        "minimum_components": selection.minimum_components,
+                        "sigma2_source": selection.sigma2_source,
+                        "pilot_gcv_criterion": (
+                            "moment" if method != CG_ORACLE_LABEL else ""
+                        ),
+                        "pilot_selected_components": (
+                            fpcr_moment_pilot.selected_components
+                            if method != CG_ORACLE_LABEL
+                            else ""
+                        ),
+                        "selected_components": selection.selected_components,
+                        "m_zero_selected": selection.selected_components == 0,
+                        "threshold_reached": selection.threshold_reached,
+                        "variance_iteration_used": (
+                            selection.variance_iteration_used
+                        ),
+                        "variance_converged": (
+                            selection.converged
+                            if selection.variance_iteration_used
+                            else ""
+                        ),
+                        "variance_updates": selection.variance_updates,
+                        "sigma2_initial": selection.sigma2_initial,
+                        "sigma2_final": selection.sigma2_final,
+                        "sigma2_history": json.dumps(
+                            selection.sigma2_history.tolist()
+                        ),
+                        "selected_components_history": json.dumps(
+                            selection.selected_components_history.tolist()
+                        ),
+                        "threshold_history": json.dumps(
+                            selection.threshold_history.tolist()
+                        ),
+                    }
+                )
             fpcr_diagnostic_rows.append(
                 {
                     "model": model.name,
@@ -1274,6 +1631,12 @@ def run_simulation(
                         "model": model.name,
                         "replication": replication + 1,
                         "method": method,
+                        "comparison_role": method_metadata[method][
+                            "comparison_role"
+                        ],
+                        "feasible_estimator": method_metadata[method][
+                            "feasible_estimator"
+                        ],
                         "selected_components": m_by_method[method],
                         "ise": ise_value,
                         "mspe": mspe_value,
@@ -1402,9 +1765,26 @@ def run_simulation(
                     "comparison_component": common_component,
                     "relative_beta_difference_same_m": beta_difference_common,
                     "relative_fitted_difference_same_m": fitted_difference_common,
-                    "cg_threshold_reached": cg_selection.threshold_reached,
-                    "cg_variance_converged": cg_selection.converged,
-                    "cg_variance_updates": cg_selection.variance_updates,
+                    "cg_code_selected_m": cg_code.selected_components,
+                    "cg_code_threshold_reached": (
+                        cg_code.threshold_reached
+                    ),
+                    "cg_supplement_selected_m": (
+                        cg_supplement.selected_components
+                    ),
+                    "cg_supplement_threshold_reached": (
+                        cg_supplement.threshold_reached
+                    ),
+                    "cg_supplement_variance_converged": (
+                        cg_supplement.converged
+                    ),
+                    "cg_supplement_variance_updates": (
+                        cg_supplement.variance_updates
+                    ),
+                    "cg_oracle_selected_m": cg_oracle.selected_components,
+                    "cg_oracle_threshold_reached": (
+                        cg_oracle.threshold_reached
+                    ),
                 }
             )
 
@@ -1423,7 +1803,6 @@ def run_simulation(
     cg_stopping_rows: List[Dict[str, object]] = []
     raw_method_index = methods.index("APLS-raw")
     stable_method_index = methods.index(stable_label)
-    cg_method_index = methods.index("CG-FPLS")
 
     for model_index, model in enumerate(models):
         for method_index, method in enumerate(methods):
@@ -1454,6 +1833,13 @@ def run_simulation(
                 {
                     "model": model.name,
                     "method": method,
+                    "variant": method_metadata[method]["variant"],
+                    "comparison_role": method_metadata[method][
+                        "comparison_role"
+                    ],
+                    "feasible_estimator": method_metadata[method][
+                        "feasible_estimator"
+                    ],
                     "replications": replications,
                     "finite_replications": int(np.count_nonzero(finite)),
                     "failure_rate": float(1.0 - np.mean(finite)),
@@ -1605,41 +1991,100 @@ def run_simulation(
             }
         )
 
-        cg_components = selected_components[
-            model_index, :, cg_method_index
-        ]
-        cg_stopping_rows.append(
-            {
-                "model": model.name,
-                "replications": replications,
-                "variance_converged_count": int(
-                    np.count_nonzero(cg_variance_converged[model_index])
-                ),
-                "variance_converged_rate": float(
-                    np.mean(cg_variance_converged[model_index])
-                ),
-                "mean_variance_updates": float(
-                    np.mean(cg_variance_updates[model_index])
-                ),
-                "threshold_reached_count": int(
-                    np.count_nonzero(cg_threshold_reached[model_index])
-                ),
-                "threshold_reached_rate": float(
-                    np.mean(cg_threshold_reached[model_index])
-                ),
-                "m_zero_count": int(np.count_nonzero(cg_components == 0)),
-                "m_zero_rate": float(np.mean(cg_components == 0)),
-                "mean_sigma2_initial": _safe_mean(
-                    cg_initial_sigma2[model_index]
-                ),
-                "mean_sigma2_final": _safe_mean(
-                    cg_final_sigma2[model_index]
-                ),
-                "median_sigma2_final": _safe_median(
-                    cg_final_sigma2[model_index]
-                ),
-            }
-        )
+        for cg_index, method in enumerate(CG_VARIANT_LABELS):
+            method_index = methods.index(method)
+            cg_components = selected_components[
+                model_index, :, method_index
+            ]
+            variance_iteration_used = method == CG_SUPPLEMENT_LABEL
+            cg_stopping_rows.append(
+                {
+                    "model": model.name,
+                    "method": method,
+                    "variant": method_metadata[method]["variant"],
+                    "comparison_role": method_metadata[method][
+                        "comparison_role"
+                    ],
+                    "feasible_estimator": method_metadata[method][
+                        "feasible_estimator"
+                    ],
+                    "replications": replications,
+                    "minimum_components": method_metadata[method][
+                        "minimum_components"
+                    ],
+                    "sigma2_source": method_metadata[method][
+                        "sigma2_source"
+                    ],
+                    "variance_iteration_used": variance_iteration_used,
+                    "variance_converged_count": (
+                        int(
+                            np.count_nonzero(
+                                cg_variance_converged[
+                                    model_index, :, cg_index
+                                ]
+                            )
+                        )
+                        if variance_iteration_used
+                        else ""
+                    ),
+                    "variance_converged_rate": (
+                        float(
+                            np.mean(
+                                cg_variance_converged[
+                                    model_index, :, cg_index
+                                ]
+                            )
+                        )
+                        if variance_iteration_used
+                        else ""
+                    ),
+                    "mean_variance_updates": float(
+                        np.mean(
+                            cg_variance_updates[
+                                model_index, :, cg_index
+                            ]
+                        )
+                    ),
+                    "threshold_reached_count": int(
+                        np.count_nonzero(
+                            cg_threshold_reached[
+                                model_index, :, cg_index
+                            ]
+                        )
+                    ),
+                    "threshold_reached_rate": float(
+                        np.mean(
+                            cg_threshold_reached[
+                                model_index, :, cg_index
+                            ]
+                        )
+                    ),
+                    "m_zero_count": int(
+                        np.count_nonzero(cg_components == 0)
+                    ),
+                    "m_zero_rate": float(np.mean(cg_components == 0)),
+                    "m_max_count": int(
+                        np.count_nonzero(cg_components == m_max)
+                    ),
+                    "m_max_rate": float(np.mean(cg_components == m_max)),
+                    "mean_selected_components": float(
+                        np.mean(cg_components)
+                    ),
+                    "median_selected_components": float(
+                        np.median(cg_components)
+                    ),
+                    "mean_sigma2_initial": _safe_mean(
+                        cg_initial_sigma2[model_index, :, cg_index]
+                    ),
+                    "mean_sigma2_final": _safe_mean(
+                        cg_final_sigma2[model_index, :, cg_index]
+                    ),
+                    "median_sigma2_final": _safe_median(
+                        cg_final_sigma2[model_index, :, cg_index]
+                    ),
+                    "true_sigma2": noise_sd ** 2,
+                }
+            )
 
     configuration = {
         "replications_per_model": replications,
@@ -1649,12 +2094,22 @@ def run_simulation(
         "maximum_components": m_max,
         "cross_validation_folds": k_folds,
         "noise_sd": noise_sd,
+        "true_noise_variance_for_oracle": noise_sd ** 2,
         "cg_tau": tau,
         "cg_delta": delta,
-        "cg_variance_tolerance_xi": cg_variance_tolerance,
-        "cg_variance_kmax": cg_variance_kmax,
-        "cg_variance_loop": "k = 0,...,kmax (at most kmax+1 updates)",
-        "cg_component_search_includes_m_zero": True,
+        "cg_common_path": (
+            "identical conjugate-gradient iterates for all three variants"
+        ),
+        "cg_pilot_gcv_criterion": "moment",
+        "cg_supplement_variance_tolerance_xi": cg_variance_tolerance,
+        "cg_supplement_variance_kmax": cg_variance_kmax,
+        "cg_supplement_variance_loop": (
+            "k = 0,...,kmax (at most kmax+1 updates)"
+        ),
+        "cg_variants": {
+            method: method_metadata[method]
+            for method in CG_VARIANT_LABELS
+        },
         "seed": seed,
         "basis_convention": basis_convention,
         "fpcr_gcv_criterion": fpcr_gcv_criterion,
@@ -1692,10 +2147,15 @@ def run_simulation(
             "orthogonalization": False,
         },
         "methods": list(methods),
+        "method_metadata": method_metadata,
     }
 
     _write_csv(output_dir / "replication_results.csv", replication_rows)
     _write_csv(output_dir / "summary.csv", summary_rows)
+    _write_csv(
+        output_dir / "summary_feasible.csv",
+        [row for row in summary_rows if row["feasible_estimator"]],
+    )
     _write_csv(output_dir / "apls_diagnostics.csv", diagnostic_rows)
     _write_csv(output_dir / "apls_path_diagnostics.csv", path_rows)
     _write_csv(output_dir / "cg_fpls_diagnostics.csv", cg_diagnostic_rows)
@@ -1731,6 +2191,7 @@ def run_simulation(
     with (output_dir / "configuration.json").open("w", encoding="utf-8") as handle:
         json.dump(configuration, handle, indent=2)
         handle.write("\n")
+    cg_supplement_index = CG_VARIANT_LABELS.index(CG_SUPPLEMENT_LABEL)
     np.savez_compressed(
         output_dir / "raw_results.npz",
         ise=ise,
@@ -1748,16 +2209,37 @@ def run_simulation(
         stable_selected_orthogonality_defect=(
             stable_selected_orthogonality_defect
         ),
-        cg_initial_sigma2=cg_initial_sigma2,
-        cg_final_sigma2=cg_final_sigma2,
-        cg_variance_updates=cg_variance_updates,
-        cg_variance_converged=cg_variance_converged,
-        cg_threshold_reached=cg_threshold_reached,
+        # Backward-compatible unqualified arrays refer to the supplement rule.
+        cg_initial_sigma2=(
+            cg_initial_sigma2[:, :, cg_supplement_index]
+        ),
+        cg_final_sigma2=cg_final_sigma2[:, :, cg_supplement_index],
+        cg_variance_updates=(
+            cg_variance_updates[:, :, cg_supplement_index]
+        ),
+        cg_variance_converged=(
+            cg_variance_converged[:, :, cg_supplement_index]
+        ),
+        cg_threshold_reached=(
+            cg_threshold_reached[:, :, cg_supplement_index]
+        ),
+        cg_variant_initial_sigma2=cg_initial_sigma2,
+        cg_variant_final_sigma2=cg_final_sigma2,
+        cg_variant_variance_updates=cg_variance_updates,
+        cg_variant_variance_converged=cg_variance_converged,
+        cg_variant_threshold_reached=cg_threshold_reached,
+        cg_pilot_selected_components=cg_pilot_selected_components,
+        cg_variant_names=np.asarray(CG_VARIANT_LABELS),
         method_names=np.asarray(methods),
         model_names=np.asarray([model.name for model in models]),
     )
 
     if make_plots:
+        feasible_method_indices = [
+            index
+            for index, method in enumerate(methods)
+            if bool(method_metadata[method]["feasible_estimator"])
+        ]
         plot_performance(
             ise,
             mspe,
@@ -1766,6 +2248,26 @@ def run_simulation(
             methods,
             extreme_tail_multiple,
             output_dir,
+            method_indices=feasible_method_indices,
+            filename="performance_comparison.pdf",
+            title=(
+                "Feasible estimator performance "
+                "(all boxplot outliers shown; raw extremes marked)"
+            ),
+        )
+        plot_performance(
+            ise,
+            mspe,
+            selected_components,
+            models,
+            methods,
+            extreme_tail_multiple,
+            output_dir,
+            filename="performance_comparison_with_oracle.pdf",
+            title=(
+                "Estimator performance including infeasible CG oracle "
+                "(diagnostic only)"
+            ),
         )
         plot_conditioning(
             raw_conditions, reorth_conditions, models, output_dir
@@ -1778,6 +2280,14 @@ def run_simulation(
         )
         plot_component_selection(
             selected_components, models, methods, output_dir
+        )
+        plot_cg_fpls_variants(
+            selected_components,
+            cg_final_sigma2,
+            models,
+            methods,
+            noise_sd ** 2,
+            output_dir,
         )
         plot_representative_cv(representative, stable_label, output_dir)
         plot_raw_apls_outliers(
@@ -1797,14 +2307,20 @@ def run_simulation(
 
     print("\nSummary")
     for row in summary_rows:
+        diagnostic_marker = (
+            " [diagnostic only]"
+            if not row["feasible_estimator"]
+            else ""
+        )
         print(
-            f"  {row['model']} | {row['method']:<24} | "
+            f"  {row['model']} | {row['method']:<26} | "
             f"mean ISE={row['mean_ise']:.6g} | "
             f"median ISE={row['median_ise']:.6g} | "
             f"p99 ISE={row['p99_ise']:.6g} | "
             f"mean MSPE={row['mean_mspe']:.6g} | "
             f"instability={row['numerical_instability_rate']:.2%} | "
             f"mean m={row['mean_selected_components']:.2f}"
+            f"{diagnostic_marker}"
         )
     print(f"\nResults written to {output_dir.resolve()}")
 
@@ -1833,11 +2349,28 @@ def run_simulation(
         "stable_selected_orthogonality_defect": (
             stable_selected_orthogonality_defect
         ),
-        "cg_initial_sigma2": cg_initial_sigma2,
-        "cg_final_sigma2": cg_final_sigma2,
-        "cg_variance_updates": cg_variance_updates,
-        "cg_variance_converged": cg_variance_converged,
-        "cg_threshold_reached": cg_threshold_reached,
+        "cg_initial_sigma2": (
+            cg_initial_sigma2[:, :, cg_supplement_index]
+        ),
+        "cg_final_sigma2": (
+            cg_final_sigma2[:, :, cg_supplement_index]
+        ),
+        "cg_variance_updates": (
+            cg_variance_updates[:, :, cg_supplement_index]
+        ),
+        "cg_variance_converged": (
+            cg_variance_converged[:, :, cg_supplement_index]
+        ),
+        "cg_threshold_reached": (
+            cg_threshold_reached[:, :, cg_supplement_index]
+        ),
+        "cg_variant_initial_sigma2": cg_initial_sigma2,
+        "cg_variant_final_sigma2": cg_final_sigma2,
+        "cg_variant_variance_updates": cg_variance_updates,
+        "cg_variant_variance_converged": cg_variance_converged,
+        "cg_variant_threshold_reached": cg_threshold_reached,
+        "cg_pilot_selected_components": cg_pilot_selected_components,
+        "cg_variant_names": CG_VARIANT_LABELS,
     }
 
 
@@ -1854,10 +2387,29 @@ def plot_performance(
     methods: Sequence[str],
     extreme_tail_multiple: float,
     output_dir: Path,
+    *,
+    method_indices: Optional[Sequence[int]] = None,
+    filename: str = "performance_comparison.pdf",
+    title: str = (
+        "Estimator performance "
+        "(all boxplot outliers shown; raw extremes marked)"
+    ),
 ) -> None:
     """Boxplots that retain and explicitly annotate raw-APLS tail cases."""
-    fig, axes = plt.subplots(2, len(models), figsize=(16, 9), squeeze=False)
+    if method_indices is None:
+        display_indices = list(range(len(methods)))
+    else:
+        display_indices = [int(index) for index in method_indices]
+    if not display_indices or any(
+        index < 0 or index >= len(methods) for index in display_indices
+    ):
+        raise ValueError("method_indices contains no valid display methods")
+    display_methods = [methods[index] for index in display_indices]
     raw_index = methods.index("APLS-raw")
+    if raw_index not in display_indices:
+        raise ValueError("performance display must include APLS-raw")
+    raw_display_index = display_indices.index(raw_index)
+    fig, axes = plt.subplots(2, len(models), figsize=(18, 9.5), squeeze=False)
     for model_index, model in enumerate(models):
         for row_index, (metric, label) in enumerate(
             ((ise, "Integrated squared error"), (mspe, "Test MSPE"))
@@ -1865,7 +2417,7 @@ def plot_performance(
             ax = axes[row_index, model_index]
             data = [
                 _finite_positive(metric[model_index, :, method_index])
-                for method_index in range(len(methods))
+                for method_index in display_indices
             ]
             artists = ax.boxplot(
                 data,
@@ -1879,7 +2431,7 @@ def plot_performance(
                     "alpha": 0.35,
                 },
             )
-            for patch, method in zip(artists["boxes"], methods):
+            for patch, method in zip(artists["boxes"], display_methods):
                 patch.set_facecolor(METHOD_COLORS.get(method, "#999999"))
                 patch.set_alpha(0.65)
 
@@ -1890,7 +2442,7 @@ def plot_performance(
             extreme_indices = np.flatnonzero(extreme)
             if len(extreme_indices):
                 ax.scatter(
-                    np.full(len(extreme_indices), raw_index + 1),
+                    np.full(len(extreme_indices), raw_display_index + 1),
                     raw_values[extreme_indices],
                     marker="D",
                     s=24,
@@ -1926,19 +2478,18 @@ def plot_performance(
                 },
             )
             ax.set_yscale("log")
-            ax.set_xticks(range(1, len(methods) + 1))
-            ax.set_xticklabels(methods, rotation=30, ha="right")
+            ax.set_xticks(range(1, len(display_methods) + 1))
+            ax.set_xticklabels(
+                display_methods, rotation=32, ha="right", fontsize=8
+            )
             ax.grid(True, which="both", axis="y", alpha=0.25)
             if row_index == 0:
                 ax.set_title(model.name, fontweight="bold")
             if model_index == 0:
                 ax.set_ylabel(label)
-    fig.suptitle(
-        "Estimator performance (all boxplot outliers shown; raw extremes marked)",
-        y=0.995,
-    )
+    fig.suptitle(title, y=0.995)
     fig.tight_layout()
-    _save_pdf(fig, output_dir / "performance_comparison.pdf")
+    _save_pdf(fig, output_dir / filename)
     plt.close(fig)
 
 
@@ -1975,11 +2526,26 @@ def plot_conditioning(
             label="Orthogonalized basis",
         )
         ax.axhline(
+            RAW_NORMAL_EQUATIONS_CONDITION_THRESHOLD,
+            color="#B2182B",
+            linestyle="--",
+            linewidth=1.1,
+            label=(
+                "Instability flag: 1 / sqrt(machine epsilon)"
+                if model_index == 0
+                else None
+            ),
+        )
+        ax.axhline(
             CONDITION_CAP,
             color="#666666",
             linestyle=":",
             linewidth=1.0,
-            label="1 / machine epsilon" if model_index == 0 else None,
+            label=(
+                "Diagnostic cap: 1 / machine epsilon"
+                if model_index == 0
+                else None
+            ),
         )
         ax.set_yscale("log")
         ax.set_xlabel("Component count m")
@@ -2003,7 +2569,9 @@ def plot_component_selection(
     """Selected-component distributions for raw and reorthogonalized APLS."""
     fig, axes = plt.subplots(1, len(models), figsize=(15, 4.5), squeeze=False)
     raw_index = methods.index("APLS-raw")
-    stable_label = methods[2]
+    stable_label = next(
+        method for method in methods if method.startswith("APLS-Arnoldi-")
+    )
     reorth_index = methods.index(stable_label)
     for model_index, model in enumerate(models):
         ax = axes[0, model_index]
@@ -2042,6 +2610,97 @@ def plot_component_selection(
     fig.suptitle("APLS component selection", y=0.99)
     fig.tight_layout()
     _save_pdf(fig, output_dir / "apls_component_selection.pdf")
+    plt.close(fig)
+
+
+def plot_cg_fpls_variants(
+    selected_components: np.ndarray,
+    cg_final_sigma2: np.ndarray,
+    models: Sequence[ModelSpec],
+    methods: Sequence[str],
+    true_sigma2: float,
+    output_dir: Path,
+) -> None:
+    """Compare stopping and variance calibration across CG-FPLS variants."""
+    if cg_final_sigma2.shape != (
+        len(models),
+        selected_components.shape[1],
+        len(CG_VARIANT_LABELS),
+    ):
+        raise ValueError("cg_final_sigma2 has an incompatible shape")
+    short_labels = ("Code", "Supplement", "Oracle")
+    colors = [METHOD_COLORS[label] for label in CG_VARIANT_LABELS]
+    method_indices = [methods.index(label) for label in CG_VARIANT_LABELS]
+    fig, axes = plt.subplots(2, len(models), figsize=(16, 8.5), squeeze=False)
+
+    for model_index, model in enumerate(models):
+        component_data = [
+            selected_components[model_index, :, method_index]
+            for method_index in method_indices
+        ]
+        component_artists = axes[0, model_index].boxplot(
+            component_data,
+            showfliers=True,
+            patch_artist=True,
+            flierprops={
+                "marker": ".",
+                "markersize": 2.5,
+                "markerfacecolor": "#666666",
+                "markeredgecolor": "#666666",
+                "alpha": 0.35,
+            },
+        )
+        for patch, color in zip(component_artists["boxes"], colors):
+            patch.set_facecolor(color)
+            patch.set_alpha(0.68)
+        axes[0, model_index].set_xticks(range(1, 4))
+        axes[0, model_index].set_xticklabels(short_labels, rotation=20)
+        axes[0, model_index].set_title(model.name, fontweight="bold")
+        axes[0, model_index].set_xlabel("Stopping-rule variant")
+        axes[0, model_index].grid(True, axis="y", alpha=0.25)
+        if model_index == 0:
+            axes[0, model_index].set_ylabel("Selected CG components m")
+
+        sigma_data = [
+            cg_final_sigma2[model_index, :, variant_index]
+            for variant_index in range(len(CG_VARIANT_LABELS))
+        ]
+        sigma_artists = axes[1, model_index].boxplot(
+            sigma_data,
+            showfliers=True,
+            patch_artist=True,
+            flierprops={
+                "marker": ".",
+                "markersize": 2.5,
+                "markerfacecolor": "#666666",
+                "markeredgecolor": "#666666",
+                "alpha": 0.35,
+            },
+        )
+        for patch, color in zip(sigma_artists["boxes"], colors):
+            patch.set_facecolor(color)
+            patch.set_alpha(0.68)
+        axes[1, model_index].axhline(
+            true_sigma2,
+            color="#222222",
+            linestyle="--",
+            linewidth=1.1,
+            label="True noise variance" if model_index == 0 else None,
+        )
+        axes[1, model_index].set_xticks(range(1, 4))
+        axes[1, model_index].set_xticklabels(short_labels, rotation=20)
+        axes[1, model_index].set_xlabel("Variance-calibration variant")
+        axes[1, model_index].grid(True, axis="y", alpha=0.25)
+        if model_index == 0:
+            axes[1, model_index].set_ylabel("Variance used for stopping")
+            axes[1, model_index].legend(fontsize=8)
+
+    fig.suptitle(
+        "CG-FPLS stopping variants (oracle is an infeasible diagnostic)",
+        y=0.995,
+    )
+    fig.tight_layout()
+    _save_pdf(fig, output_dir / "cg_fpls_variant_diagnostics.pdf")
     plt.close(fig)
 
 
@@ -2354,28 +3013,57 @@ def run_self_tests() -> None:
         raise AssertionError("response-space FPCR GCV scaling is incorrect")
 
     cg_path = cg_fpls_path(r, K, 8)
-    cg_selection = select_cg_fpls(
+    cg_code = select_cg_fpls_code(
         cg_path,
         X,
         y,
         r,
         K,
-        fpcr_response.beta,
+        fpcr_moment.beta,
+        tau=1.01,
+        delta=0.1,
+    )
+    cg_supplement = select_cg_fpls_supplement(
+        cg_path,
+        X,
+        y,
+        r,
+        K,
+        fpcr_moment.beta,
         tau=1.01,
         delta=0.1,
         variance_tolerance=0.01,
         variance_kmax=10,
     )
+    cg_oracle = select_cg_fpls_oracle(
+        cg_path,
+        X,
+        r,
+        K,
+        sigma2_true=0.01,
+        tau=1.01,
+        delta=0.1,
+    )
+    expected_code_sigma2 = float(
+        np.mean((y - X @ fpcr_moment.beta / T) ** 2)
+    )
     if not (
-        0 <= cg_selection.selected_components <= 8
-        and cg_selection.variance_updates >= 1
-        and len(cg_selection.sigma2_history)
-        == cg_selection.variance_updates + 1
+        1 <= cg_code.selected_components <= 8
+        and cg_code.minimum_components == 1
+        and cg_code.variance_updates == 0
+        and np.isclose(cg_code.sigma2_final, expected_code_sigma2)
+        and 0 <= cg_supplement.selected_components <= 8
+        and cg_supplement.variance_updates >= 1
+        and len(cg_supplement.sigma2_history)
+        == cg_supplement.variance_updates + 1
         and np.isclose(
-            cg_selection.moment_path[0], np.sqrt(np.mean(r ** 2))
+            cg_supplement.moment_path[0], np.sqrt(np.mean(r ** 2))
         )
+        and 0 <= cg_oracle.selected_components <= 8
+        and np.isclose(cg_oracle.sigma2_final, 0.01)
+        and not cg_oracle.feasible_estimator
     ):
-        raise AssertionError("iterative CG-FPLS diagnostics are inconsistent")
+        raise AssertionError("CG-FPLS variant diagnostics are inconsistent")
     _, selected_zero, reached_zero, _, _ = _select_cg_for_variance(
         cg_path,
         r,
@@ -2388,10 +3076,41 @@ def run_self_tests() -> None:
     )
     if selected_zero != 0 or not reached_zero:
         raise AssertionError("CG-FPLS discrepancy search does not admit m=0")
+    _, selected_one, reached_one, _, _ = _select_cg_for_variance(
+        cg_path,
+        r,
+        K,
+        sigma2=1e20,
+        X_norm=float(np.mean(np.sum(X ** 2, axis=1) / T)),
+        n=n,
+        tau=1.01,
+        delta=0.1,
+        minimum_components=1,
+    )
+    if selected_one != 1 or not reached_one:
+        raise AssertionError("released-code CG selector does not enforce m >= 1")
+    cg_alias = select_cg_fpls(
+        cg_path,
+        X,
+        y,
+        r,
+        K,
+        fpcr_moment.beta,
+        tau=1.01,
+        delta=0.1,
+        variance_tolerance=0.01,
+        variance_kmax=10,
+    )
+    if (
+        cg_alias.selected_components != cg_supplement.selected_components
+        or not np.allclose(cg_alias.beta, cg_supplement.beta)
+    ):
+        raise AssertionError("CG-FPLS backward-compatible alias changed")
     print(
         "Self-tests passed: raw formula, same-m equivalence, MGS1/CGS2/MGS2 "
         "agreement, orthogonality, fold-local CV, both FPCR GCV criteria, "
-        "iterative CG variance estimation, and m=0 stopping."
+        "shared CG path, code/supplement/oracle stopping variants, and the "
+        "m=0 versus m>=1 distinction."
     )
 
 
@@ -2410,13 +3129,18 @@ def _parse_arguments() -> argparse.Namespace:
         "--cg-variance-tolerance",
         type=float,
         default=0.01,
-        help="Babii variance-iteration tolerance xi (default: 0.01)",
+        help=(
+            "supplement-variant variance-iteration tolerance xi "
+            "(default: 0.01)"
+        ),
     )
     parser.add_argument(
         "--cg-variance-kmax",
         type=int,
         default=10,
-        help="Babii variance-iteration kmax (default: 10)",
+        help=(
+            "supplement-variant variance-iteration kmax (default: 10)"
+        ),
     )
     parser.add_argument("--seed", type=int, default=2025)
     parser.add_argument(
@@ -2455,7 +3179,7 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("apls_corrected_results"),
+        default=Path("apls_cg_variants_results"),
     )
     parser.add_argument("--no-plots", action="store_true")
     parser.add_argument(
