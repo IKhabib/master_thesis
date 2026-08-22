@@ -932,10 +932,358 @@ def run_asymptotic_analysis(M: int = 1000, test_mode: bool = True):
 
 
 # ============================================================================
-# PART 10: UPDATED MAIN EXECUTION
+# PART 11: POWER CURVE ANALYSIS
+# ============================================================================
+
+def power_curve(beta: np.ndarray, lam: np.ndarray, v: np.ndarray, s: np.ndarray,
+                M: int = 1000, n1: int = 100, n2: int = 200,
+                J: int = 100, T: int = 200, m: int = 70,
+                n_sims: int = 100, verbose: bool = False) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Compute power curve for the test.
+
+    Parameters:
+    beta : ndarray of shape (T,)
+        True coefficients
+    lam : ndarray of shape (J,)
+        Eigenvalues
+    v : ndarray of shape (J, T)
+        Eigenvectors
+    s : ndarray of shape (T,)
+        Grid points
+    M : int
+        Number of simulations for critical value
+    n1, n2 : int
+        Sample sizes
+    J : int
+        Number of factors
+    T : int
+        Number of grid points
+    m : int
+        Number of PLS components
+    n_sims : int
+        Number of simulations for power (can be smaller than M)
+    verbose : bool
+        If True, print progress
+
+    Returns:
+    delta_vals : ndarray
+        Values of delta
+    power100 : ndarray
+        Power for n=100
+    power200 : ndarray
+        Power for n=200
+    """
+    # Delta values
+    delta_vals = np.arange(-1, 1.05, 0.05)
+
+    # Pre-compute sqrt(lam)
+    sqrt_lam = np.sqrt(lam)
+
+    print(f"\nComputing power curve...")
+    print(f"Delta range: [{delta_vals[0]:.2f}, {delta_vals[-1]:.2f}]")
+    print(f"Number of delta values: {len(delta_vals)}")
+
+    # ============================================
+    # Critical value for n = 100
+    # ============================================
+    print(f"\nComputing critical value for n={n1}...")
+    Tn_H0 = np.zeros(M)
+
+    for k in range(M):
+        if verbose and k % 100 == 0:
+            print(f"  Critical value simulation {k + 1}/{M}")
+
+        # Generate data under H0
+        eps = np.random.normal(0, 1, n1)
+        u = np.random.normal(0, 1, (n1, J))
+        X = (sqrt_lam * u) @ v
+        y0 = X @ beta / T + eps
+
+        # Compute statistics
+        r0 = X.T @ y0 / n1
+        K = X.T @ X / (T * n1)
+        beta_pls = pls(r0, K, m)[:, -1]
+
+        # Test statistic
+        diff = K @ (beta_pls - beta)
+        Tn_H0[k] = n1 * np.sum(diff ** 2) / T
+
+    # Remove NaN values
+    Tn_H0_clean = Tn_H0[~np.isnan(Tn_H0)]
+    if len(Tn_H0_clean) == 0:
+        warnings.warn("All Tn_H0 values are NaN for n=100. Using default critical value.")
+        crit_val_100 = 1.0
+    else:
+        crit_val_100 = np.quantile(Tn_H0_clean, 0.95)
+    print(f"Critical value for n={n1}: {crit_val_100:.4f}")
+
+    # ============================================
+    # Power for n = 100
+    # ============================================
+    print(f"\nComputing power for n={n1}...")
+    power100 = np.zeros(len(delta_vals))
+
+    for i, delta in enumerate(delta_vals):
+        if verbose:
+            print(f"  delta = {delta:.2f}")
+
+        Tn_H1 = np.zeros(n_sims)
+        for k in range(n_sims):
+            # Generate data under H1
+            eps = np.random.normal(0, 1, n1)
+            u = np.random.normal(0, 1, (n1, J))
+            X = (sqrt_lam * u) @ v
+            y1 = X @ (beta + delta * s) / T + eps
+
+            # Compute statistics
+            r1 = X.T @ y1 / n1
+            K = X.T @ X / (T * n1)
+            beta_pls = pls(r1, K, m)[:, -1]
+
+            # Test statistic
+            diff = K @ (beta_pls - beta)
+            Tn_H1[k] = n1 * np.sum(diff ** 2) / T
+
+        # Remove NaN values
+        Tn_H1_clean = Tn_H1[~np.isnan(Tn_H1)]
+        if len(Tn_H1_clean) > 0:
+            power100[i] = np.mean(Tn_H1_clean > crit_val_100)
+        else:
+            power100[i] = np.nan
+
+    # ============================================
+    # Critical value for n = 200
+    # ============================================
+    print(f"\nComputing critical value for n={n2}...")
+    Tn_H0 = np.zeros(M)
+
+    for k in range(M):
+        if verbose and k % 100 == 0:
+            print(f"  Critical value simulation {k + 1}/{M}")
+
+        eps = np.random.normal(0, 1, n2)
+        u = np.random.normal(0, 1, (n2, J))
+        X = (sqrt_lam * u) @ v
+        y0 = X @ beta / T + eps
+
+        r0 = X.T @ y0 / n2
+        K = X.T @ X / (T * n2)
+        beta_pls = pls(r0, K, m)[:, -1]
+
+        diff = K @ (beta_pls - beta)
+        Tn_H0[k] = n2 * np.sum(diff ** 2) / T
+
+    Tn_H0_clean = Tn_H0[~np.isnan(Tn_H0)]
+    if len(Tn_H0_clean) == 0:
+        warnings.warn("All Tn_H0 values are NaN for n=200. Using default critical value.")
+        crit_val_200 = 1.0
+    else:
+        crit_val_200 = np.quantile(Tn_H0_clean, 0.95)
+    print(f"Critical value for n={n2}: {crit_val_200:.4f}")
+
+    # ============================================
+    # Power for n = 200
+    # ============================================
+    print(f"\nComputing power for n={n2}...")
+    power200 = np.zeros(len(delta_vals))
+
+    for i, delta in enumerate(delta_vals):
+        if verbose:
+            print(f"  delta = {delta:.2f}")
+
+        Tn_H1 = np.zeros(n_sims)
+        for k in range(n_sims):
+            eps = np.random.normal(0, 1, n2)
+            u = np.random.normal(0, 1, (n2, J))
+            X = (sqrt_lam * u) @ v
+            y1 = X @ (beta + delta * s) / T + eps
+
+            r1 = X.T @ y1 / n2
+            K = X.T @ X / (T * n2)
+            beta_pls = pls(r1, K, m)[:, -1]
+
+            diff = K @ (beta_pls - beta)
+            Tn_H1[k] = n2 * np.sum(diff ** 2) / T
+
+        Tn_H1_clean = Tn_H1[~np.isnan(Tn_H1)]
+        if len(Tn_H1_clean) > 0:
+            power200[i] = np.mean(Tn_H1_clean > crit_val_200)
+        else:
+            power200[i] = np.nan
+
+    return delta_vals, power100, power200
+
+
+def plot_power_curve(delta_vals: np.ndarray, power100: np.ndarray,
+                     power200: np.ndarray, model_name: str,
+                     save_dir: str = ".") -> plt.Figure:
+    """
+    Plot power curve.
+
+    Parameters:
+    delta_vals : ndarray
+        Values of delta
+    power100 : ndarray
+        Power for n=100
+    power200 : ndarray
+        Power for n=200
+    model_name : str
+        Name of the model for labeling
+    save_dir : str
+        Directory to save figures
+
+    Returns:
+    fig : matplotlib figure
+    """
+    fig, ax = plt.subplots(figsize=(10, 7))
+
+    # Plot power curves
+    ax.plot(delta_vals, power100, 'b-', linewidth=2.5, label='n=100')
+    ax.plot(delta_vals, power200, 'r--', linewidth=2.5, label='n=200')
+
+    # Add horizontal line at 0.05 (nominal level)
+    ax.axhline(y=0.05, color='k', linestyle=':', linewidth=2, label='Nominal 5%')
+
+    # Add vertical line at delta=0
+    ax.axvline(x=0, color='gray', linestyle='--', linewidth=1, alpha=0.5)
+
+    ax.set_xlabel('Scale Factor δ', fontsize=14)
+    ax.set_ylabel('Empirical Rejection Probability', fontsize=14)
+    ax.set_title(f'Power Curve - {model_name}', fontsize=16)
+    ax.set_ylim(-0.05, 1.05)
+    ax.set_xlim(delta_vals[0] - 0.1, delta_vals[-1] + 0.1)
+    ax.legend(loc='best', fontsize=12)
+    ax.grid(True, alpha=0.3)
+    ax.tick_params(labelsize=12)
+
+    plt.tight_layout()
+
+    # Save figure
+    try:
+        filename = f"{save_dir}/power_curve_{model_name.lower().replace(' ', '_')}.pdf"
+        fig.savefig(filename, dpi=300, bbox_inches='tight')
+        print(f"Saved power curve for {model_name}")
+    except Exception as e:
+        print(f"Could not save power curve for {model_name}: {e}")
+
+    return fig
+
+
+# ============================================================================
+# PART 12: RUN POWER CURVE ANALYSIS
+# ============================================================================
+
+def run_power_curve_analysis(M: int = 1000, test_mode: bool = True):
+    """
+    Run power curve analysis for all three models.
+
+    Parameters:
+    M : int
+        Number of simulations for critical value
+    test_mode : bool
+        If True, use reduced parameters for testing
+    """
+    print("\n" + "=" * 60)
+    print("POWER CURVE ANALYSIS (FIGURE 3)")
+    print("=" * 60)
+
+    # Parameters
+    n1 = 100
+    n2 = 200
+    J = 100
+    T = 200
+    m = 70
+
+    # Grids
+    s = np.linspace(0, 1, T)
+    j = np.arange(1, J + 1)
+
+    # Create basis
+    v = np.sqrt(2) * np.cos(np.pi * s[:, np.newaxis] * j[np.newaxis, :])
+    v[:, 0] = 1
+    v = v.T  # Shape: (J, T)
+
+    # Model definitions
+    b1 = 4 / j ** 2.7
+    beta1 = v.T @ b1
+    lambda1 = 2 / j ** 1.1
+
+    b2 = b1.copy()
+    b2[:5] = 4
+    beta2 = v.T @ b2
+
+    lambda3 = lambda1.copy()
+    lambda3[:5] = 2
+
+    models = [
+        ("Model 1", beta1, lambda1),
+        ("Model 2", beta2, lambda1),
+        ("Model 3", beta1, lambda3)
+    ]
+
+    # Adjust parameters for test mode
+    if test_mode:
+        M_actual = min(M, 100)  # Fewer simulations for critical value
+        n_sims = 50  # Fewer simulations for power
+        print("TEST MODE: Using reduced parameters")
+    else:
+        M_actual = M
+        n_sims = 200  # More simulations for accurate power
+
+    print(f"Critical value simulations: {M_actual}")
+    print(f"Power simulations per delta: {n_sims}")
+    print("=" * 60)
+
+    results = {}
+
+    for idx, (model_name, beta, lam) in enumerate(models, 1):
+        print(f"\n{'=' * 50}")
+        print(f"Running {model_name}")
+        print(f"{'=' * 50}")
+
+        start_time = datetime.now()
+
+        # Compute power curve
+        delta_vals, power100, power200 = power_curve(
+            beta, lam, v, s,
+            M=M_actual,
+            n1=n1, n2=n2,
+            J=J, T=T, m=m,
+            n_sims=n_sims,
+            verbose=False
+        )
+
+        elapsed = (datetime.now() - start_time).total_seconds()
+
+        print(f"\n{model_name} completed in {elapsed:.2f}s")
+        print(f"Max power (n=100): {np.nanmax(power100):.4f}")
+        print(f"Max power (n=200): {np.nanmax(power200):.4f}")
+
+        # Store results
+        results[model_name] = {
+            'delta_vals': delta_vals,
+            'power100': power100,
+            'power200': power200
+        }
+
+        # Create plot
+        fig = plot_power_curve(delta_vals, power100, power200, model_name)
+        plt.show()
+
+    return results
+
+
+# ============================================================================
+# PART 13: UPDATED MAIN EXECUTION
 # ============================================================================
 
 if __name__ == "__main__":
+    # Suppress warnings (optional)
+    import warnings
+
+    warnings.filterwarnings('ignore', category=UserWarning, module='matplotlib')
+
     print("=" * 60)
     print("FUNCTIONAL DATA ANALYSIS WITH PLS")
     print("=" * 60)
@@ -945,25 +1293,7 @@ if __name__ == "__main__":
     print("FIGURE 1: ESTIMATION AND PREDICTION ACCURACY")
     print("=" * 60)
 
-    # Run with test mode (100 simulations)
     results_fig1 = run_full_simulation(M=5000, test_mode=True)
-
-    # Print summary for Figure 1
-    print("\n" + "=" * 60)
-    print("SUMMARY STATISTICS - FIGURE 1")
-    print("=" * 60)
-
-    for model_name, data in results_fig1.items():
-        mspe = data['mspe']
-        mse = data['mse']
-
-        print(f"\n{model_name}:")
-        print(f"  MSPE mean: {np.mean(mspe, axis=1)}")
-        print(f"  MSPE std:  {np.std(mspe, axis=1)}")
-        print(f"  MSE mean:  {np.mean(mse, axis=1)}")
-        print(f"  MSE std:   {np.std(mse, axis=1)}")
-        print(f"  Avg m_PLS: {np.mean(data['m_pls']):.1f}")
-        print(f"  Avg m_APLS: {np.mean(data['m_apls']):.1f}")
 
     # Figure 2: Accuracy of Asymptotic Approximation
     print("\n" + "=" * 60)
@@ -972,28 +1302,53 @@ if __name__ == "__main__":
 
     results_fig2 = run_asymptotic_analysis(M=1000, test_mode=True)
 
-    # Print summary for Figure 2
+    # Figure 3: Power Curves
+    print("\n" + "=" * 60)
+    print("FIGURE 3: POWER CURVES")
+    print("=" * 60)
+
+    results_fig3 = run_power_curve_analysis(M=1000, test_mode=True)
+
+    # Print all summaries
+    print("\n" + "=" * 60)
+    print("SUMMARY STATISTICS - FIGURE 1")
+    print("=" * 60)
+    for model_name, data in results_fig1.items():
+        mspe = data['mspe']
+        mse = data['mse']
+        print(f"\n{model_name}:")
+        print(f"  MSPE mean: {np.mean(mspe, axis=1)}")
+        print(f"  MSE mean:  {np.mean(mse, axis=1)}")
+        print(f"  Avg m_PLS: {np.mean(data['m_pls']):.1f}")
+        print(f"  Avg m_APLS: {np.mean(data['m_apls']):.1f}")
+
     print("\n" + "=" * 60)
     print("SUMMARY STATISTICS - FIGURE 2")
     print("=" * 60)
-
     for model_name, data in results_fig2.items():
         Tn_H0 = data['Tn_H0']
         D = data['D']
-
-        # Remove NaN values
         Tn_clean = Tn_H0[~np.isnan(Tn_H0)]
         D_clean = D[~np.isnan(D)]
-
-        print(f"\n{model_name}:")
-        print(f"  Exact Tn_H0 - Mean: {np.mean(Tn_clean):.4f}, Std: {np.std(Tn_clean):.4f}")
-        print(f"  Asymptotic D - Mean: {np.mean(D_clean):.4f}, Std: {np.std(D_clean):.4f}")
-
-        # Kolmogorov-Smirnov test for distribution comparison
         from scipy.stats import ks_2samp
 
         ks_stat, ks_pval = ks_2samp(Tn_clean, D_clean)
-        print(f"  KS test: stat={ks_stat:.4f}, p-value={ks_pval:.4f}")
+        print(f"\n{model_name}:")
+        print(f"  Exact Mean: {np.mean(Tn_clean):.4f}, Std: {np.std(Tn_clean):.4f}")
+        print(f"  Asymp Mean: {np.mean(D_clean):.4f}, Std: {np.std(D_clean):.4f}")
+        print(f"  KS test: stat={ks_stat:.4f}, p={ks_pval:.4f}")
+
+    print("\n" + "=" * 60)
+    print("SUMMARY STATISTICS - FIGURE 3")
+    print("=" * 60)
+    for model_name, data in results_fig3.items():
+        power100 = data['power100']
+        power200 = data['power200']
+        print(f"\n{model_name}:")
+        print(f"  Max power (n=100): {np.nanmax(power100):.4f}")
+        print(f"  Max power (n=200): {np.nanmax(power200):.4f}")
+        print(f"  Power at δ=0 (n=100): {power100[np.where(np.round(data['delta_vals'], 2) == 0.00)[0][0]]:.4f}")
+        print(f"  Power at δ=0 (n=200): {power200[np.where(np.round(data['delta_vals'], 2) == 0.00)[0][0]]:.4f}")
 
     print("\n" + "=" * 60)
     print("ALL ANALYSES COMPLETED SUCCESSFULLY!")
