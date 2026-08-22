@@ -654,7 +654,7 @@ def run_full_simulation(M: int = 5000, test_mode: bool = True):
         # Create plots
         fig = plot_results(mspe, mse, group_labels, f"({model_name})")
         plt.suptitle(f"{model_name}: Estimation and Prediction", fontsize=16)
-        plt.show()
+#        plt.show()
 
         try:
             fig.savefig(f"model{idx}_results.pdf", dpi=300, bbox_inches='tight')
@@ -840,7 +840,7 @@ def plot_asymptotic_analysis(Tn_H0: np.ndarray, D: np.ndarray,
     except Exception as e:
         print(f"Could not save figures for {model_name}: {e}")
 
-    plt.show()
+#    plt.show()
 
     return fig
 
@@ -1269,7 +1269,7 @@ def run_power_curve_analysis(M: int = 1000, test_mode: bool = True):
 
         # Create plot
         fig = plot_power_curve(delta_vals, power100, power200, model_name)
-        plt.show()
+#        plt.show()
 
     return results
 
@@ -1293,21 +1293,21 @@ if __name__ == "__main__":
     print("FIGURE 1: ESTIMATION AND PREDICTION ACCURACY")
     print("=" * 60)
 
-    results_fig1 = run_full_simulation(M=5000, test_mode=True)
+    results_fig1 = run_full_simulation(M=5000, test_mode=False)
 
     # Figure 2: Accuracy of Asymptotic Approximation
     print("\n" + "=" * 60)
     print("FIGURE 2: ACCURACY OF ASYMPTOTIC APPROXIMATION")
     print("=" * 60)
 
-    results_fig2 = run_asymptotic_analysis(M=1000, test_mode=True)
+    results_fig2 = run_asymptotic_analysis(M=1000, test_mode=False)
 
     # Figure 3: Power Curves
     print("\n" + "=" * 60)
     print("FIGURE 3: POWER CURVES")
     print("=" * 60)
 
-    results_fig3 = run_power_curve_analysis(M=1000, test_mode=True)
+    results_fig3 = run_power_curve_analysis(M=1000, test_mode=False)
 
     # Print all summaries
     print("\n" + "=" * 60)
