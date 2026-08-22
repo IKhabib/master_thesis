@@ -1,14 +1,16 @@
-"""Raw versus reorthogonalized APLS for scalar-on-function regression.
+"""Corrected raw-versus-orthogonalized APLS simulation study.
 
 This standalone program compares four estimators under the three simulation
 designs used in ``model_8_corrected.py``:
 
-1. FPCR (called PCA in the earlier script);
-2. Babii et al.'s discrepancy-stopped conjugate-gradient FPLS;
+1. FPCR selected by explicitly labelled response- or moment-space GCV;
+2. Babii et al.'s discrepancy-stopped conjugate-gradient FPLS, including
+   iterative residual-variance estimation and the admissible m=0 estimate;
 3. raw APLS, implemented from the nonorthogonal powers
        H_m = [r, K r, ..., K^(m-1) r]
    and the unregularized normal equations; and
-4. reorthogonalized APLS, which represents the same Krylov spaces with an
+4. orthogonalized APLS, labelled APLS--Arnoldi--CGS2 (or the selected
+   Gram--Schmidt variant), which represents the same Krylov spaces with an
    orthonormal Arnoldi basis and solves response least squares by QR.
 
 The raw routine deliberately applies no column scaling, ridge penalty,
@@ -18,12 +20,20 @@ Section 4.1 of Delaigle and Hall (2012), adapted to the known-zero-mean
 simulation convention used here.  A failed raw solve is recorded rather than
 silently repaired.
 
-The reorthogonalized routine defaults to CGS2: classical Gram--Schmidt with
+The orthogonalized routine defaults to CGS2: classical Gram--Schmidt with
 one reorthogonalization pass.  This is the accurate name for the vectorized
 two-projection implementation used in the earlier project code.  The
 published-style one-pass MGS benchmark and the other variants are available through
 ``--orthogonalization mgs1``, ``cgs1``, or ``mgs2``.  Thus the marginal effect
 of a second pass can be studied rather than attributed to APLS itself.
+
+The default FPCR tuning criterion is conventional response-space GCV.  The
+moment-space rule used by the earlier notebook remains reproducible through
+``--fpcr-gcv moment`` and is labelled ``FPCR-moment-GCV`` in every output.
+Performance summaries report means, standard errors, medians, 90th and 99th
+percentiles, maxima, transparent extreme-tail rates, and numerical-instability
+rates.  All boxplot outliers are shown, and raw-APLS extreme cases are also
+listed and plotted separately.
 
 Discretization
 --------------
@@ -41,7 +51,8 @@ Larger comparison::
 
     python apls_raw_vs_reorthogonalized.py \
         --replications 500 --m-max 70 \
-        --output-dir apls_raw_vs_reorth_results
+        --fpcr-gcv response \
+        --output-dir apls_corrected_results
 
 References
 ----------
@@ -86,7 +97,13 @@ METHOD_COLORS = {
     "APLS-CGS2": "#009E73",
     "APLS-MGS1": "#009E73",
     "APLS-MGS2": "#009E73",
+    "APLS-Arnoldi-CGS1": "#009E73",
+    "APLS-Arnoldi-CGS2": "#009E73",
+    "APLS-Arnoldi-MGS1": "#009E73",
+    "APLS-Arnoldi-MGS2": "#009E73",
     "FPCR": "#CC79A7",
+    "FPCR-response-GCV": "#CC79A7",
+    "FPCR-moment-GCV": "#CC79A7",
 }
 STABLE_COLOR = "#009E73"
 MODEL_COLORS = {
@@ -95,6 +112,10 @@ MODEL_COLORS = {
     "Model 3": "#009E73",
 }
 CONDITION_CAP = 1.0 / np.finfo(float).eps
+RAW_NORMAL_EQUATIONS_CONDITION_THRESHOLD = 1.0 / np.sqrt(
+    np.finfo(float).eps
+)
+ORTHOGONALITY_DEFECT_THRESHOLD = np.sqrt(np.finfo(float).eps)
 
 
 @dataclass(frozen=True)
@@ -133,6 +154,33 @@ class APLSCVResult:
     raw_full_path: APLSPath
     reorth_full_path: APLSPath
     raw_valid_all_folds: np.ndarray
+
+
+@dataclass
+class FPCRResult:
+    """An FPCR fit and its explicitly identified GCV path."""
+
+    beta: np.ndarray
+    selected_components: int
+    gcv: np.ndarray
+    criterion: str
+
+
+@dataclass
+class CGFPLSSelection:
+    """Babii CG-FPLS fit with iterative variance/stopping diagnostics."""
+
+    beta: np.ndarray
+    selected_components: int
+    threshold_reached: bool
+    converged: bool
+    variance_updates: int
+    sigma2_initial: float
+    sigma2_final: float
+    sigma2_history: np.ndarray
+    selected_components_history: np.ndarray
+    threshold_history: np.ndarray
+    moment_path: np.ndarray
 
 
 def _validate_xy(y: np.ndarray, X: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
@@ -628,37 +676,143 @@ def cg_fpls_path(
     return path
 
 
+def _select_cg_for_variance(
+    path: np.ndarray,
+    r: np.ndarray,
+    K: np.ndarray,
+    *,
+    sigma2: float,
+    X_norm: float,
+    n: int,
+    tau: float,
+    delta: float,
+) -> Tuple[np.ndarray, int, bool, np.ndarray, float]:
+    """Apply the discrepancy rule for one fixed residual-variance value.
+
+    The returned moment path includes m=0 as its first entry.  This matters
+    because Babii et al. define beta_0=0 and stop at the first admissible
+    m, which can therefore be zero.
+    """
+    path = np.asarray(path, dtype=float)
+    r = np.asarray(r, dtype=float).reshape(-1)
+    K = np.asarray(K, dtype=float)
+    if path.ndim != 2 or path.shape[0] != len(r):
+        raise ValueError("path must have one row per element of r")
+    if K.shape != (len(r), len(r)):
+        raise ValueError("K and r have incompatible dimensions")
+    if sigma2 < 0.0 or not np.isfinite(sigma2):
+        raise ValueError("sigma2 must be finite and non-negative")
+    if X_norm < 0.0 or not np.isfinite(X_norm) or n < 2:
+        raise ValueError("X_norm and n are invalid")
+
+    residuals = np.column_stack((r, r[:, None] - K @ path))
+    moments = np.sqrt(np.mean(residuals ** 2, axis=0))
+    threshold = tau * np.sqrt(2.0 * sigma2 * X_norm / (delta * n))
+    reached = np.flatnonzero(moments <= threshold)
+    if len(reached):
+        selected = int(reached[0])
+        threshold_reached = True
+    else:
+        selected = path.shape[1]
+        threshold_reached = False
+    beta = np.zeros(len(r)) if selected == 0 else path[:, selected - 1]
+    return beta, selected, threshold_reached, moments, float(threshold)
+
+
 def select_cg_fpls(
     path: np.ndarray,
     X: np.ndarray,
     y: np.ndarray,
     r: np.ndarray,
     K: np.ndarray,
-    beta_fpcr: np.ndarray,
+    beta_pilot: np.ndarray,
     *,
     tau: float,
     delta: float,
-) -> Tuple[np.ndarray, int, bool]:
-    """Apply Babii et al.'s discrepancy stopping rule."""
+    variance_tolerance: float = 0.01,
+    variance_kmax: int = 10,
+) -> CGFPLSSelection:
+    """Apply Babii et al.'s full iterative discrepancy-stopping procedure.
+
+    Starting from a regularized pilot, the routine alternates between the
+    discrepancy-stopped CG-FPLS fit and the residual variance estimate.  The
+    loop follows Supplement S.5 literally for k=0,...,kmax, so at most
+    ``variance_kmax + 1`` variance updates are made.
+    """
     y, X = _validate_xy(y, X)
     n, T = X.shape
-    if not 0.0 < delta < 1.0 or tau <= 0.0:
-        raise ValueError("tau must be positive and delta must lie in (0,1)")
-    sigma2 = max(float(np.mean((y - X @ beta_fpcr / T) ** 2)), 0.0)
+    K, r = _validate_matrices(K, r, T)
+    path = np.asarray(path, dtype=float)
+    beta_pilot = np.asarray(beta_pilot, dtype=float).reshape(-1)
+    if path.ndim != 2 or path.shape[0] != T or path.shape[1] < 1:
+        raise ValueError("path must be a nonempty T-by-m array")
+    if beta_pilot.shape != (T,) or not np.all(np.isfinite(beta_pilot)):
+        raise ValueError("beta_pilot must be a finite vector of length T")
+    if not 0.0 < delta < 1.0 or tau <= 1.0:
+        raise ValueError("tau must exceed one and delta must lie in (0,1)")
+    if variance_tolerance < 0.0 or variance_kmax < 0:
+        raise ValueError("variance_tolerance and variance_kmax must be non-negative")
+
+    sigma2 = max(float(np.mean((y - X @ beta_pilot / T) ** 2)), 0.0)
+    sigma2_initial = sigma2
     X_norm = float(np.mean(np.sum(X ** 2, axis=1) / T))
-    residuals = K @ path - r[:, None]
-    moments = np.sqrt(np.mean(residuals ** 2, axis=0))
-    threshold = tau * np.sqrt(2.0 * sigma2 * X_norm / (delta * n))
-    reached = np.flatnonzero(moments <= threshold)
-    if len(reached):
-        m_selected = int(reached[0]) + 1
-    else:
-        m_selected = path.shape[1]
-    return path[:, m_selected - 1], m_selected, bool(len(reached))
+    sigma2_history = [sigma2]
+    selected_history: List[int] = []
+    threshold_history: List[float] = []
+    converged = False
+    beta_selected = np.zeros(T)
+    selected = 0
+    threshold_reached = False
+    moment_path = np.full(path.shape[1] + 1, np.nan)
+
+    for _ in range(variance_kmax + 1):
+        (
+            beta_selected,
+            selected,
+            threshold_reached,
+            moment_path,
+            threshold,
+        ) = _select_cg_for_variance(
+            path,
+            r,
+            K,
+            sigma2=sigma2,
+            X_norm=X_norm,
+            n=n,
+            tau=tau,
+            delta=delta,
+        )
+        sigma2_new = max(
+            float(np.mean((y - X @ beta_selected / T) ** 2)), 0.0
+        )
+        selected_history.append(selected)
+        threshold_history.append(threshold)
+        sigma2_history.append(sigma2_new)
+        if abs(sigma2_new - sigma2) <= variance_tolerance:
+            converged = True
+            sigma2 = sigma2_new
+            break
+        sigma2 = sigma2_new
+
+    return CGFPLSSelection(
+        beta=beta_selected,
+        selected_components=selected,
+        threshold_reached=threshold_reached,
+        converged=converged,
+        variance_updates=len(selected_history),
+        sigma2_initial=sigma2_initial,
+        sigma2_final=sigma2,
+        sigma2_history=np.asarray(sigma2_history, dtype=float),
+        selected_components_history=np.asarray(selected_history, dtype=int),
+        threshold_history=np.asarray(threshold_history, dtype=float),
+        moment_path=np.asarray(moment_path, dtype=float),
+    )
 
 
-def fpcr_gcv(r: np.ndarray, K: np.ndarray, m_max: int) -> Tuple[np.ndarray, int]:
-    """Functional principal-component regression with moment-space GCV."""
+def _fpcr_spectral_path(
+    r: np.ndarray, K: np.ndarray, m_max: int
+) -> np.ndarray:
+    """Return spectral-cutoff FPCR estimates for m=1,...,m_max."""
     r = np.asarray(r, dtype=float).reshape(-1)
     K = np.asarray(K, dtype=float)
     T = len(r)
@@ -667,21 +821,75 @@ def fpcr_gcv(r: np.ndarray, K: np.ndarray, m_max: int) -> Tuple[np.ndarray, int]
     K = 0.5 * (K + K.T)
     try:
         eigenvalues, eigenvectors = eigh(K, check_finite=False)
+        order = np.argsort(eigenvalues)[::-1]
     except LinAlgError:
         eigenvectors, eigenvalues, _ = np.linalg.svd(K, full_matrices=False)
-    threshold = np.finfo(float).eps * T * max(float(np.max(eigenvalues)), 1.0)
-    positive = np.flatnonzero(eigenvalues > threshold)[::-1]
+        order = np.arange(len(eigenvalues))
+    threshold = np.finfo(float).eps * T * max(
+        float(np.max(np.abs(eigenvalues))), np.finfo(float).tiny
+    )
+    positive = order[eigenvalues[order] > threshold]
     maximum = min(m_max, len(positive), T - 1)
     if maximum == 0:
         raise LinAlgError("K has no numerically positive eigenvalues")
     beta_path = np.zeros((T, maximum))
-    gcv = np.full(maximum, np.inf)
     for component in range(maximum):
         count = component + 1
         indices = positive[:count]
         values = eigenvalues[indices]
         vectors = eigenvectors[:, indices]
         beta_path[:, component] = vectors @ ((vectors.T @ r) / values)
+    return beta_path
+
+
+def select_fpcr_gcv(
+    y: np.ndarray,
+    X: np.ndarray,
+    r: np.ndarray,
+    K: np.ndarray,
+    m_max: int,
+    *,
+    criterion: str = "response",
+) -> FPCRResult:
+    """Select FPCR by response- or moment-space GCV.
+
+    ``response`` uses RSS from y - X beta/T and the sample-size penalty
+    (1-m/n)^2.  ``moment`` reproduces the earlier notebook's criterion based
+    on r - K beta and the grid-size penalty (1-m/T)^2.
+    """
+    y, X = _validate_xy(y, X)
+    n, T = X.shape
+    K, r = _validate_matrices(K, r, T)
+    if criterion not in {"response", "moment"}:
+        raise ValueError("criterion must be 'response' or 'moment'")
+    beta_path = _fpcr_spectral_path(r, K, min(m_max, n - 1, T - 1))
+    gcv = np.full(beta_path.shape[1], np.inf)
+    for component in range(beta_path.shape[1]):
+        count = component + 1
+        if criterion == "response":
+            residual = y - X @ beta_path[:, component] / T
+            gcv[component] = np.mean(residual ** 2) / (1.0 - count / n) ** 2
+        else:
+            residual = r - K @ beta_path[:, component]
+            gcv[component] = np.mean(residual ** 2) / (1.0 - count / T) ** 2
+    selected = int(np.argmin(gcv)) + 1
+    return FPCRResult(
+        beta=beta_path[:, selected - 1],
+        selected_components=selected,
+        gcv=gcv,
+        criterion=criterion,
+    )
+
+
+def fpcr_gcv(r: np.ndarray, K: np.ndarray, m_max: int) -> Tuple[np.ndarray, int]:
+    """Backward-compatible wrapper for the earlier moment-space GCV rule."""
+    r = np.asarray(r, dtype=float).reshape(-1)
+    K = np.asarray(K, dtype=float)
+    T = len(r)
+    beta_path = _fpcr_spectral_path(r, K, min(m_max, T - 1))
+    gcv = np.full(beta_path.shape[1], np.inf)
+    for component in range(beta_path.shape[1]):
+        count = component + 1
         residual = r - K @ beta_path[:, component]
         gcv[component] = np.mean(residual ** 2) / (1.0 - count / T) ** 2
     selected = int(np.argmin(gcv)) + 1
@@ -709,6 +917,32 @@ def _safe_median(values: Iterable[float]) -> float:
     return float(np.median(array)) if len(array) else math.nan
 
 
+def _safe_quantile(values: Iterable[float], probability: float) -> float:
+    array = np.asarray(list(values), dtype=float)
+    array = array[np.isfinite(array)]
+    if not 0.0 <= probability <= 1.0:
+        raise ValueError("probability must lie in [0,1]")
+    return float(np.quantile(array, probability)) if len(array) else math.nan
+
+
+def _safe_max(values: Iterable[float]) -> float:
+    array = np.asarray(list(values), dtype=float)
+    array = array[np.isfinite(array)]
+    return float(np.max(array)) if len(array) else math.nan
+
+
+def _extreme_tail_mask(values: np.ndarray, multiple: float) -> np.ndarray:
+    """Flag finite values strictly exceeding multiple times their median."""
+    values = np.asarray(values, dtype=float)
+    finite = np.isfinite(values)
+    if multiple <= 1.0:
+        raise ValueError("the extreme-tail multiple must exceed one")
+    median = _safe_median(values)
+    if not np.isfinite(median) or median <= 0.0:
+        return np.zeros(values.shape, dtype=bool)
+    return finite & (values > multiple * median)
+
+
 def _standard_error(values: Iterable[float]) -> float:
     array = np.asarray(list(values), dtype=float)
     array = array[np.isfinite(array)]
@@ -717,14 +951,19 @@ def _standard_error(values: Iterable[float]) -> float:
     return float(np.std(array, ddof=1) / np.sqrt(len(array)))
 
 
-def _write_csv(path: Path, rows: Sequence[Dict[str, object]]) -> None:
+def _write_csv(
+    path: Path,
+    rows: Sequence[Dict[str, object]],
+    *,
+    fieldnames: Optional[Sequence[str]] = None,
+) -> None:
     """Write a rectangular sequence of dictionaries."""
-    if not rows:
-        raise ValueError(f"cannot write empty CSV: {path}")
+    if not rows and not fieldnames:
+        raise ValueError(f"cannot infer fields for empty CSV: {path}")
     path.parent.mkdir(parents=True, exist_ok=True)
-    fieldnames = list(rows[0].keys())
+    fields = list(fieldnames) if fieldnames else list(rows[0].keys())
     with path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fields)
         writer.writeheader()
         writer.writerows(rows)
 
@@ -744,20 +983,21 @@ def _is_complete_pdf(path: Path) -> bool:
 
 
 def _save_pdf(fig: plt.Figure, path: Path) -> None:
-    """Atomically save and validate a Matplotlib PDF, retrying transient writes."""
+    """Save and validate a Matplotlib PDF, retrying transient writes."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    staging = path.with_name(f".{path.stem}.staging.pdf")
     last_error: Optional[BaseException] = None
     for _ in range(3):
         try:
-            fig.savefig(staging, bbox_inches="tight")
-            if _is_complete_pdf(staging):
-                os.replace(staging, path)
+            with path.open("wb") as handle:
+                fig.savefig(handle, format="pdf", bbox_inches="tight")
+                handle.flush()
+                os.fsync(handle.fileno())
+            if _is_complete_pdf(path):
                 return
-            last_error = OSError(f"incomplete PDF write: {staging}")
+            last_error = OSError(f"incomplete PDF write: {path}")
         except (OSError, ValueError) as error:
             last_error = error
-        staging.unlink(missing_ok=True)
+        path.unlink(missing_ok=True)
     raise OSError(f"could not create a complete PDF at {path}") from last_error
 
 
@@ -780,10 +1020,14 @@ def run_simulation(
     noise_sd: float,
     tau: float,
     delta: float,
+    cg_variance_tolerance: float,
+    cg_variance_kmax: int,
     seed: int,
     basis_convention: str,
+    fpcr_gcv_criterion: str,
     orthogonalization: str,
     rank_tolerance: float,
+    extreme_tail_multiple: float,
     output_dir: Path,
     make_plots: bool,
 ) -> Dict[str, object]:
@@ -792,19 +1036,28 @@ def run_simulation(
         raise ValueError("replications, n, J, T, and m_max are too small")
     if noise_sd < 0.0:
         raise ValueError("noise_sd must be non-negative")
+    if fpcr_gcv_criterion not in {"response", "moment"}:
+        raise ValueError("fpcr_gcv_criterion must be response or moment")
+    if cg_variance_tolerance < 0.0 or cg_variance_kmax < 0:
+        raise ValueError("CG variance iteration controls must be non-negative")
+    if extreme_tail_multiple <= 1.0:
+        raise ValueError("extreme_tail_multiple must exceed one")
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
     grid = np.linspace(0.0, 1.0, T)
     basis = create_cosine_basis(grid, J, convention=basis_convention)
     models = make_model_specs(J, basis)
-    stable_label = f"APLS-{orthogonalization.upper()}"
-    methods = ("CG-FPLS", "APLS-raw", stable_label, "FPCR")
+    stable_label = f"APLS-Arnoldi-{orthogonalization.upper()}"
+    fpcr_label = f"FPCR-{fpcr_gcv_criterion}-GCV"
+    methods = ("CG-FPLS", "APLS-raw", stable_label, fpcr_label)
     seed_sequences = np.random.SeedSequence(seed).spawn(len(models))
 
     replication_rows: List[Dict[str, object]] = []
     diagnostic_rows: List[Dict[str, object]] = []
     path_rows: List[Dict[str, object]] = []
+    cg_diagnostic_rows: List[Dict[str, object]] = []
+    fpcr_diagnostic_rows: List[Dict[str, object]] = []
     raw_conditions = np.full((len(models), replications, m_max), np.nan)
     reorth_conditions = np.full((len(models), replications, m_max), np.nan)
     reorth_defects = np.full((len(models), replications, m_max), np.nan)
@@ -820,16 +1073,38 @@ def run_simulation(
     ise = np.full((len(models), replications, len(methods)), np.nan)
     mspe = np.full((len(models), replications, len(methods)), np.nan)
     raw_valid = np.zeros((len(models), replications, m_max), dtype=bool)
+    method_instability = np.zeros(
+        (len(models), replications, len(methods)), dtype=bool
+    )
+    raw_selected_design_condition = np.full(
+        (len(models), replications), np.nan
+    )
+    raw_selected_basis_condition = np.full(
+        (len(models), replications), np.nan
+    )
+    stable_selected_orthogonality_defect = np.full(
+        (len(models), replications), np.nan
+    )
+    cg_initial_sigma2 = np.full((len(models), replications), np.nan)
+    cg_final_sigma2 = np.full((len(models), replications), np.nan)
+    cg_variance_updates = np.zeros((len(models), replications), dtype=int)
+    cg_variance_converged = np.zeros((len(models), replications), dtype=bool)
+    cg_threshold_reached = np.zeros((len(models), replications), dtype=bool)
     representative: Dict[str, Dict[str, np.ndarray]] = {}
 
     print("=" * 72)
-    print("RAW VERSUS ORTHOGONALIZED APLS")
+    print("CORRECTED RAW VERSUS ORTHOGONALIZED APLS")
     print("=" * 72)
     print(
         f"Models=3, replications/model={replications}, n={n}, T={T}, "
         f"J={J}, m_max={m_max}, folds={k_folds}"
     )
     print(f"Orthogonalization: {orthogonalization.upper()}")
+    print(f"FPCR tuning: {fpcr_gcv_criterion}-space GCV")
+    print(
+        "CG-FPLS variance iteration: "
+        f"xi={cg_variance_tolerance:g}, kmax={cg_variance_kmax}, m includes 0"
+    )
 
     for model_index, (model, seed_sequence) in enumerate(
         zip(models, seed_sequences)
@@ -848,17 +1123,26 @@ def run_simulation(
             K = X.T @ X / (n * T)
             r = X.T @ y / n
 
-            beta_fpcr, m_fpcr = fpcr_gcv(r, K, m_max)
+            fpcr = select_fpcr_gcv(
+                y,
+                X,
+                r,
+                K,
+                m_max,
+                criterion=fpcr_gcv_criterion,
+            )
             cg_path = cg_fpls_path(r, K, m_max)
-            beta_cg, m_cg, cg_threshold_reached = select_cg_fpls(
+            cg_selection = select_cg_fpls(
                 cg_path,
                 X,
                 y,
                 r,
                 K,
-                beta_fpcr,
+                fpcr.beta,
                 tau=tau,
                 delta=delta,
+                variance_tolerance=cg_variance_tolerance,
+                variance_kmax=cg_variance_kmax,
             )
             folds = _make_folds(n, k_folds, rng)
             apls = apls_cv_compare(
@@ -873,17 +1157,66 @@ def run_simulation(
             )
 
             beta_by_method = {
-                "CG-FPLS": beta_cg,
+                "CG-FPLS": cg_selection.beta,
                 "APLS-raw": apls.beta_raw,
                 stable_label: apls.beta_reorth,
-                "FPCR": beta_fpcr,
+                fpcr_label: fpcr.beta,
             }
             m_by_method = {
-                "CG-FPLS": m_cg,
+                "CG-FPLS": cg_selection.selected_components,
                 "APLS-raw": apls.m_raw,
                 stable_label: apls.m_reorth,
-                "FPCR": m_fpcr,
+                fpcr_label: fpcr.selected_components,
             }
+
+            cg_initial_sigma2[model_index, replication] = (
+                cg_selection.sigma2_initial
+            )
+            cg_final_sigma2[model_index, replication] = cg_selection.sigma2_final
+            cg_variance_updates[model_index, replication] = (
+                cg_selection.variance_updates
+            )
+            cg_variance_converged[model_index, replication] = (
+                cg_selection.converged
+            )
+            cg_threshold_reached[model_index, replication] = (
+                cg_selection.threshold_reached
+            )
+            cg_diagnostic_rows.append(
+                {
+                    "model": model.name,
+                    "replication": replication + 1,
+                    "selected_components": cg_selection.selected_components,
+                    "m_zero_selected": cg_selection.selected_components == 0,
+                    "threshold_reached": cg_selection.threshold_reached,
+                    "variance_converged": cg_selection.converged,
+                    "variance_updates": cg_selection.variance_updates,
+                    "sigma2_initial": cg_selection.sigma2_initial,
+                    "sigma2_final": cg_selection.sigma2_final,
+                    "sigma2_history": json.dumps(
+                        cg_selection.sigma2_history.tolist()
+                    ),
+                    "selected_components_history": json.dumps(
+                        cg_selection.selected_components_history.tolist()
+                    ),
+                    "threshold_history": json.dumps(
+                        cg_selection.threshold_history.tolist()
+                    ),
+                }
+            )
+            fpcr_diagnostic_rows.append(
+                {
+                    "model": model.name,
+                    "replication": replication + 1,
+                    "method": fpcr_label,
+                    "gcv_criterion": fpcr.criterion,
+                    "selected_components": fpcr.selected_components,
+                    "selected_gcv": float(
+                        fpcr.gcv[fpcr.selected_components - 1]
+                    ),
+                    "evaluated_components": len(fpcr.gcv),
+                }
+            )
 
             test_scores = rng.normal(size=(n, J))
             X_test = (test_scores * sqrt_eigenvalues) @ basis
@@ -900,6 +1233,42 @@ def run_simulation(
                 selected_components[model_index, replication, method_index] = (
                     m_by_method[method]
                 )
+                finite_result = bool(
+                    np.isfinite(ise_value) and np.isfinite(mspe_value)
+                )
+                if method == "APLS-raw":
+                    selected_index = apls.m_raw - 1
+                    design_diagnostic = float(
+                        apls.raw_full_path.design_condition[selected_index]
+                    )
+                    basis_diagnostic = float(
+                        apls.raw_full_path.basis_condition[selected_index]
+                    )
+                    diagnostic_value = max(
+                        design_diagnostic, basis_diagnostic
+                    )
+                    unstable = (
+                        not finite_result
+                        or diagnostic_value
+                        >= RAW_NORMAL_EQUATIONS_CONDITION_THRESHOLD
+                    )
+                elif method == stable_label:
+                    selected_index = apls.m_reorth - 1
+                    diagnostic_value = float(
+                        apls.reorth_full_path.orthogonality_defect[
+                            selected_index
+                        ]
+                    )
+                    unstable = (
+                        not finite_result
+                        or diagnostic_value >= ORTHOGONALITY_DEFECT_THRESHOLD
+                    )
+                else:
+                    diagnostic_value = math.nan
+                    unstable = not finite_result
+                method_instability[
+                    model_index, replication, method_index
+                ] = unstable
                 replication_rows.append(
                     {
                         "model": model.name,
@@ -908,11 +1277,23 @@ def run_simulation(
                         "selected_components": m_by_method[method],
                         "ise": ise_value,
                         "mspe": mspe_value,
-                        "finite_result": bool(
-                            np.isfinite(ise_value) and np.isfinite(mspe_value)
-                        ),
+                        "finite_result": finite_result,
+                        "numerical_instability": unstable,
+                        "instability_diagnostic": diagnostic_value,
                     }
                 )
+
+            raw_selected_design_condition[model_index, replication] = float(
+                apls.raw_full_path.design_condition[apls.m_raw - 1]
+            )
+            raw_selected_basis_condition[model_index, replication] = float(
+                apls.raw_full_path.basis_condition[apls.m_raw - 1]
+            )
+            stable_selected_orthogonality_defect[
+                model_index, replication
+            ] = float(
+                apls.reorth_full_path.orthogonality_defect[apls.m_reorth - 1]
+            )
 
             raw_conditions[model_index, replication] = (
                 apls.raw_full_path.basis_condition
@@ -1010,6 +1391,9 @@ def run_simulation(
                     "raw_condition_at_selected_m": float(
                         apls.raw_full_path.basis_condition[apls.m_raw - 1]
                     ),
+                    "raw_design_condition_at_selected_m": float(
+                        apls.raw_full_path.design_condition[apls.m_raw - 1]
+                    ),
                     "reorth_orthogonality_defect_at_selected_m": float(
                         apls.reorth_full_path.orthogonality_defect[
                             apls.m_reorth - 1
@@ -1018,7 +1402,9 @@ def run_simulation(
                     "comparison_component": common_component,
                     "relative_beta_difference_same_m": beta_difference_common,
                     "relative_fitted_difference_same_m": fitted_difference_common,
-                    "cg_threshold_reached": cg_threshold_reached,
+                    "cg_threshold_reached": cg_selection.threshold_reached,
+                    "cg_variance_converged": cg_selection.converged,
+                    "cg_variance_updates": cg_selection.variance_updates,
                 }
             )
 
@@ -1032,12 +1418,38 @@ def run_simulation(
                 }
 
     summary_rows: List[Dict[str, object]] = []
+    raw_instability_rows: List[Dict[str, object]] = []
+    raw_outlier_rows: List[Dict[str, object]] = []
+    cg_stopping_rows: List[Dict[str, object]] = []
+    raw_method_index = methods.index("APLS-raw")
+    stable_method_index = methods.index(stable_label)
+    cg_method_index = methods.index("CG-FPLS")
+
     for model_index, model in enumerate(models):
         for method_index, method in enumerate(methods):
             ise_values = ise[model_index, :, method_index]
             mspe_values = mspe[model_index, :, method_index]
             finite = np.isfinite(ise_values) & np.isfinite(mspe_values)
             components = selected_components[model_index, :, method_index]
+            extreme_ise = _extreme_tail_mask(
+                ise_values, extreme_tail_multiple
+            )
+            extreme_mspe = _extreme_tail_mask(
+                mspe_values, extreme_tail_multiple
+            )
+            instability = method_instability[model_index, :, method_index]
+            if method == "APLS-raw":
+                instability_rule = (
+                    "nonfinite result, or selected normalized Krylov-basis or "
+                    "response-design condition >= 1/sqrt(machine epsilon)"
+                )
+            elif method == stable_label:
+                instability_rule = (
+                    "nonfinite result or selected Arnoldi-basis orthogonality "
+                    "defect >= sqrt(machine epsilon)"
+                )
+            else:
+                instability_rule = "nonfinite result"
             summary_rows.append(
                 {
                     "model": model.name,
@@ -1048,13 +1460,186 @@ def run_simulation(
                     "mean_ise": _safe_mean(ise_values),
                     "se_ise": _standard_error(ise_values),
                     "median_ise": _safe_median(ise_values),
+                    "p90_ise": _safe_quantile(ise_values, 0.90),
+                    "p99_ise": _safe_quantile(ise_values, 0.99),
+                    "max_ise": _safe_max(ise_values),
                     "mean_mspe": _safe_mean(mspe_values),
                     "se_mspe": _standard_error(mspe_values),
                     "median_mspe": _safe_median(mspe_values),
+                    "p90_mspe": _safe_quantile(mspe_values, 0.90),
+                    "p99_mspe": _safe_quantile(mspe_values, 0.99),
+                    "max_mspe": _safe_max(mspe_values),
                     "mean_selected_components": float(np.mean(components)),
                     "median_selected_components": float(np.median(components)),
+                    "p90_selected_components": float(
+                        np.quantile(components, 0.90)
+                    ),
+                    "p99_selected_components": float(
+                        np.quantile(components, 0.99)
+                    ),
+                    "numerical_instability_count": int(
+                        np.count_nonzero(instability)
+                    ),
+                    "numerical_instability_rate": float(
+                        np.mean(instability)
+                    ),
+                    "numerical_instability_rule": instability_rule,
+                    "extreme_tail_multiple": extreme_tail_multiple,
+                    "extreme_ise_count": int(np.count_nonzero(extreme_ise)),
+                    "extreme_ise_rate": float(np.mean(extreme_ise)),
+                    "extreme_mspe_count": int(np.count_nonzero(extreme_mspe)),
+                    "extreme_mspe_rate": float(np.mean(extreme_mspe)),
                 }
             )
+
+        raw_ise = ise[model_index, :, raw_method_index]
+        raw_mspe = mspe[model_index, :, raw_method_index]
+        raw_components = selected_components[
+            model_index, :, raw_method_index
+        ]
+        stable_components = selected_components[
+            model_index, :, stable_method_index
+        ]
+        raw_instability = method_instability[
+            model_index, :, raw_method_index
+        ]
+        extreme_raw_ise = _extreme_tail_mask(
+            raw_ise, extreme_tail_multiple
+        )
+        extreme_raw_mspe = _extreme_tail_mask(
+            raw_mspe, extreme_tail_multiple
+        )
+        raw_ise_median = _safe_median(raw_ise)
+        raw_mspe_median = _safe_median(raw_mspe)
+        outlier_union = raw_instability | extreme_raw_ise | extreme_raw_mspe
+        for replication_index in np.flatnonzero(outlier_union):
+            raw_outlier_rows.append(
+                {
+                    "model": model.name,
+                    "replication": int(replication_index + 1),
+                    "raw_selected_components": int(
+                        raw_components[replication_index]
+                    ),
+                    "stable_selected_components": int(
+                        stable_components[replication_index]
+                    ),
+                    "raw_selected_design_condition": float(
+                        raw_selected_design_condition[
+                            model_index, replication_index
+                        ]
+                    ),
+                    "raw_selected_basis_condition": float(
+                        raw_selected_basis_condition[
+                            model_index, replication_index
+                        ]
+                    ),
+                    "condition_threshold": (
+                        RAW_NORMAL_EQUATIONS_CONDITION_THRESHOLD
+                    ),
+                    "numerical_instability": bool(
+                        raw_instability[replication_index]
+                    ),
+                    "ise": float(raw_ise[replication_index]),
+                    "ise_median": raw_ise_median,
+                    "ise_multiple_of_median": (
+                        float(raw_ise[replication_index] / raw_ise_median)
+                        if raw_ise_median > 0.0
+                        else math.nan
+                    ),
+                    "extreme_ise": bool(extreme_raw_ise[replication_index]),
+                    "mspe": float(raw_mspe[replication_index]),
+                    "mspe_median": raw_mspe_median,
+                    "mspe_multiple_of_median": (
+                        float(raw_mspe[replication_index] / raw_mspe_median)
+                        if raw_mspe_median > 0.0
+                        else math.nan
+                    ),
+                    "extreme_mspe": bool(
+                        extreme_raw_mspe[replication_index]
+                    ),
+                }
+            )
+
+        raw_ise_finite = np.where(np.isfinite(raw_ise), raw_ise, -np.inf)
+        raw_mspe_finite = np.where(np.isfinite(raw_mspe), raw_mspe, -np.inf)
+        max_ise_index = int(np.argmax(raw_ise_finite))
+        max_mspe_index = int(np.argmax(raw_mspe_finite))
+        raw_instability_rows.append(
+            {
+                "model": model.name,
+                "replications": replications,
+                "condition_threshold": (
+                    RAW_NORMAL_EQUATIONS_CONDITION_THRESHOLD
+                ),
+                "numerical_instability_count": int(
+                    np.count_nonzero(raw_instability)
+                ),
+                "numerical_instability_rate": float(
+                    np.mean(raw_instability)
+                ),
+                "raw_stable_component_disagreement_count": int(
+                    np.count_nonzero(raw_components != stable_components)
+                ),
+                "raw_stable_component_disagreement_rate": float(
+                    np.mean(raw_components != stable_components)
+                ),
+                "extreme_tail_multiple": extreme_tail_multiple,
+                "extreme_ise_count": int(
+                    np.count_nonzero(extreme_raw_ise)
+                ),
+                "extreme_ise_rate": float(np.mean(extreme_raw_ise)),
+                "extreme_mspe_count": int(
+                    np.count_nonzero(extreme_raw_mspe)
+                ),
+                "extreme_mspe_rate": float(np.mean(extreme_raw_mspe)),
+                "max_ise": float(raw_ise[max_ise_index]),
+                "max_ise_replication": max_ise_index + 1,
+                "max_ise_selected_components": int(
+                    raw_components[max_ise_index]
+                ),
+                "max_mspe": float(raw_mspe[max_mspe_index]),
+                "max_mspe_replication": max_mspe_index + 1,
+                "max_mspe_selected_components": int(
+                    raw_components[max_mspe_index]
+                ),
+            }
+        )
+
+        cg_components = selected_components[
+            model_index, :, cg_method_index
+        ]
+        cg_stopping_rows.append(
+            {
+                "model": model.name,
+                "replications": replications,
+                "variance_converged_count": int(
+                    np.count_nonzero(cg_variance_converged[model_index])
+                ),
+                "variance_converged_rate": float(
+                    np.mean(cg_variance_converged[model_index])
+                ),
+                "mean_variance_updates": float(
+                    np.mean(cg_variance_updates[model_index])
+                ),
+                "threshold_reached_count": int(
+                    np.count_nonzero(cg_threshold_reached[model_index])
+                ),
+                "threshold_reached_rate": float(
+                    np.mean(cg_threshold_reached[model_index])
+                ),
+                "m_zero_count": int(np.count_nonzero(cg_components == 0)),
+                "m_zero_rate": float(np.mean(cg_components == 0)),
+                "mean_sigma2_initial": _safe_mean(
+                    cg_initial_sigma2[model_index]
+                ),
+                "mean_sigma2_final": _safe_mean(
+                    cg_final_sigma2[model_index]
+                ),
+                "median_sigma2_final": _safe_median(
+                    cg_final_sigma2[model_index]
+                ),
+            }
+        )
 
     configuration = {
         "replications_per_model": replications,
@@ -1066,10 +1651,38 @@ def run_simulation(
         "noise_sd": noise_sd,
         "cg_tau": tau,
         "cg_delta": delta,
+        "cg_variance_tolerance_xi": cg_variance_tolerance,
+        "cg_variance_kmax": cg_variance_kmax,
+        "cg_variance_loop": "k = 0,...,kmax (at most kmax+1 updates)",
+        "cg_component_search_includes_m_zero": True,
         "seed": seed,
         "basis_convention": basis_convention,
+        "fpcr_gcv_criterion": fpcr_gcv_criterion,
+        "fpcr_label": fpcr_label,
         "reorthogonalization": orthogonalization,
+        "orthogonalized_apls_label": stable_label,
         "rank_tolerance": rank_tolerance,
+        "extreme_tail_multiple": extreme_tail_multiple,
+        "numerical_instability": {
+            "raw_apls_condition_threshold": (
+                RAW_NORMAL_EQUATIONS_CONDITION_THRESHOLD
+            ),
+            "raw_apls_rule": (
+                "selected normalized Krylov-basis or response-design "
+                "condition >= 1/sqrt(machine epsilon), or nonfinite result"
+            ),
+            "orthogonalized_apls_defect_threshold": (
+                ORTHOGONALITY_DEFECT_THRESHOLD
+            ),
+            "orthogonalized_apls_rule": (
+                "selected Arnoldi-basis orthogonality defect >= "
+                "sqrt(machine epsilon), or nonfinite result"
+            ),
+            "extreme_tail_rule": (
+                "metric strictly exceeds extreme_tail_multiple times its "
+                "within-model/method median"
+            ),
+        },
         "raw_apls": {
             "basis": "[r, Kr, ..., K^(m-1)r]",
             "solver": "unregularized normal equations via numpy.linalg.solve",
@@ -1085,6 +1698,36 @@ def run_simulation(
     _write_csv(output_dir / "summary.csv", summary_rows)
     _write_csv(output_dir / "apls_diagnostics.csv", diagnostic_rows)
     _write_csv(output_dir / "apls_path_diagnostics.csv", path_rows)
+    _write_csv(output_dir / "cg_fpls_diagnostics.csv", cg_diagnostic_rows)
+    _write_csv(output_dir / "cg_fpls_stopping_summary.csv", cg_stopping_rows)
+    _write_csv(output_dir / "fpcr_diagnostics.csv", fpcr_diagnostic_rows)
+    _write_csv(
+        output_dir / "raw_apls_instability_summary.csv",
+        raw_instability_rows,
+    )
+    raw_outlier_fields = [
+        "model",
+        "replication",
+        "raw_selected_components",
+        "stable_selected_components",
+        "raw_selected_design_condition",
+        "raw_selected_basis_condition",
+        "condition_threshold",
+        "numerical_instability",
+        "ise",
+        "ise_median",
+        "ise_multiple_of_median",
+        "extreme_ise",
+        "mspe",
+        "mspe_median",
+        "mspe_multiple_of_median",
+        "extreme_mspe",
+    ]
+    _write_csv(
+        output_dir / "raw_apls_outliers.csv",
+        raw_outlier_rows,
+        fieldnames=raw_outlier_fields,
+    )
     with (output_dir / "configuration.json").open("w", encoding="utf-8") as handle:
         json.dump(configuration, handle, indent=2)
         handle.write("\n")
@@ -1099,12 +1742,31 @@ def run_simulation(
         beta_path_discrepancy=beta_path_discrepancy,
         fitted_path_discrepancy=fitted_path_discrepancy,
         raw_valid=raw_valid,
+        method_instability=method_instability,
+        raw_selected_design_condition=raw_selected_design_condition,
+        raw_selected_basis_condition=raw_selected_basis_condition,
+        stable_selected_orthogonality_defect=(
+            stable_selected_orthogonality_defect
+        ),
+        cg_initial_sigma2=cg_initial_sigma2,
+        cg_final_sigma2=cg_final_sigma2,
+        cg_variance_updates=cg_variance_updates,
+        cg_variance_converged=cg_variance_converged,
+        cg_threshold_reached=cg_threshold_reached,
         method_names=np.asarray(methods),
         model_names=np.asarray([model.name for model in models]),
     )
 
     if make_plots:
-        plot_performance(ise, mspe, models, methods, output_dir)
+        plot_performance(
+            ise,
+            mspe,
+            selected_components,
+            models,
+            methods,
+            extreme_tail_multiple,
+            output_dir,
+        )
         plot_conditioning(
             raw_conditions, reorth_conditions, models, output_dir
         )
@@ -1118,13 +1780,30 @@ def run_simulation(
             selected_components, models, methods, output_dir
         )
         plot_representative_cv(representative, stable_label, output_dir)
+        plot_raw_apls_outliers(
+            ise,
+            mspe,
+            selected_components,
+            method_instability,
+            np.maximum(
+                raw_selected_design_condition,
+                raw_selected_basis_condition,
+            ),
+            models,
+            methods,
+            extreme_tail_multiple,
+            output_dir,
+        )
 
     print("\nSummary")
     for row in summary_rows:
         print(
-            f"  {row['model']} | {row['method']:<12} | "
+            f"  {row['model']} | {row['method']:<24} | "
             f"mean ISE={row['mean_ise']:.6g} | "
+            f"median ISE={row['median_ise']:.6g} | "
+            f"p99 ISE={row['p99_ise']:.6g} | "
             f"mean MSPE={row['mean_mspe']:.6g} | "
+            f"instability={row['numerical_instability_rate']:.2%} | "
             f"mean m={row['mean_selected_components']:.2f}"
         )
     print(f"\nResults written to {output_dir.resolve()}")
@@ -1134,6 +1813,11 @@ def run_simulation(
         "summary": summary_rows,
         "replications": replication_rows,
         "diagnostics": diagnostic_rows,
+        "cg_diagnostics": cg_diagnostic_rows,
+        "cg_stopping_summary": cg_stopping_rows,
+        "fpcr_diagnostics": fpcr_diagnostic_rows,
+        "raw_instability_summary": raw_instability_rows,
+        "raw_outliers": raw_outlier_rows,
         "ise": ise,
         "mspe": mspe,
         "selected_components": selected_components,
@@ -1143,6 +1827,17 @@ def run_simulation(
         "beta_path_discrepancy": beta_path_discrepancy,
         "fitted_path_discrepancy": fitted_path_discrepancy,
         "raw_valid": raw_valid,
+        "method_instability": method_instability,
+        "raw_selected_design_condition": raw_selected_design_condition,
+        "raw_selected_basis_condition": raw_selected_basis_condition,
+        "stable_selected_orthogonality_defect": (
+            stable_selected_orthogonality_defect
+        ),
+        "cg_initial_sigma2": cg_initial_sigma2,
+        "cg_final_sigma2": cg_final_sigma2,
+        "cg_variance_updates": cg_variance_updates,
+        "cg_variance_converged": cg_variance_converged,
+        "cg_threshold_reached": cg_threshold_reached,
     }
 
 
@@ -1154,12 +1849,15 @@ def _finite_positive(values: np.ndarray) -> np.ndarray:
 def plot_performance(
     ise: np.ndarray,
     mspe: np.ndarray,
+    selected_components: np.ndarray,
     models: Sequence[ModelSpec],
     methods: Sequence[str],
+    extreme_tail_multiple: float,
     output_dir: Path,
 ) -> None:
-    """Boxplots of estimation and prediction error on logarithmic axes."""
-    fig, axes = plt.subplots(2, len(models), figsize=(15, 8), squeeze=False)
+    """Boxplots that retain and explicitly annotate raw-APLS tail cases."""
+    fig, axes = plt.subplots(2, len(models), figsize=(16, 9), squeeze=False)
+    raw_index = methods.index("APLS-raw")
     for model_index, model in enumerate(models):
         for row_index, (metric, label) in enumerate(
             ((ise, "Integrated squared error"), (mspe, "Test MSPE"))
@@ -1169,10 +1867,64 @@ def plot_performance(
                 _finite_positive(metric[model_index, :, method_index])
                 for method_index in range(len(methods))
             ]
-            ax.boxplot(data, showfliers=False, patch_artist=True)
-            for patch, method in zip(ax.patches, methods):
-                patch.set_facecolor(METHOD_COLORS[method])
+            artists = ax.boxplot(
+                data,
+                showfliers=True,
+                patch_artist=True,
+                flierprops={
+                    "marker": ".",
+                    "markersize": 2.5,
+                    "markerfacecolor": "#666666",
+                    "markeredgecolor": "#666666",
+                    "alpha": 0.35,
+                },
+            )
+            for patch, method in zip(artists["boxes"], methods):
+                patch.set_facecolor(METHOD_COLORS.get(method, "#999999"))
                 patch.set_alpha(0.65)
+
+            raw_values = metric[model_index, :, raw_index]
+            extreme = _extreme_tail_mask(
+                raw_values, extreme_tail_multiple
+            )
+            extreme_indices = np.flatnonzero(extreme)
+            if len(extreme_indices):
+                ax.scatter(
+                    np.full(len(extreme_indices), raw_index + 1),
+                    raw_values[extreme_indices],
+                    marker="D",
+                    s=24,
+                    facecolors="none",
+                    edgecolors="#B2182B",
+                    linewidths=0.9,
+                    zorder=4,
+                )
+            finite_for_max = np.where(
+                np.isfinite(raw_values), raw_values, -np.inf
+            )
+            maximum_index = int(np.argmax(finite_for_max))
+            annotation = (
+                f"Raw > {extreme_tail_multiple:g}x median: "
+                f"{len(extreme_indices)}\n"
+                f"Raw max: {raw_values[maximum_index]:.3g} "
+                f"(rep {maximum_index + 1}, "
+                f"m={selected_components[model_index, maximum_index, raw_index]})"
+            )
+            ax.text(
+                0.03,
+                0.97,
+                annotation,
+                transform=ax.transAxes,
+                va="top",
+                ha="left",
+                fontsize=7.5,
+                bbox={
+                    "boxstyle": "round,pad=0.25",
+                    "facecolor": "white",
+                    "edgecolor": "#BBBBBB",
+                    "alpha": 0.88,
+                },
+            )
             ax.set_yscale("log")
             ax.set_xticks(range(1, len(methods) + 1))
             ax.set_xticklabels(methods, rotation=30, ha="right")
@@ -1181,7 +1933,10 @@ def plot_performance(
                 ax.set_title(model.name, fontweight="bold")
             if model_index == 0:
                 ax.set_ylabel(label)
-    fig.suptitle("Estimator performance: raw and orthogonalized APLS", y=0.995)
+    fig.suptitle(
+        "Estimator performance (all boxplot outliers shown; raw extremes marked)",
+        y=0.995,
+    )
     fig.tight_layout()
     _save_pdf(fig, output_dir / "performance_comparison.pdf")
     plt.close(fig)
@@ -1380,6 +2135,122 @@ def plot_representative_cv(
     plt.close(fig)
 
 
+def plot_raw_apls_outliers(
+    ise: np.ndarray,
+    mspe: np.ndarray,
+    selected_components: np.ndarray,
+    method_instability: np.ndarray,
+    raw_selected_condition: np.ndarray,
+    models: Sequence[ModelSpec],
+    methods: Sequence[str],
+    extreme_tail_multiple: float,
+    output_dir: Path,
+) -> None:
+    """Show every raw-APLS replication and identify numerical tail cases."""
+    raw_index = methods.index("APLS-raw")
+    replications = ise.shape[1]
+    replication_axis = np.arange(1, replications + 1)
+    fig, axes = plt.subplots(2, len(models), figsize=(16, 8.5), squeeze=False)
+
+    for model_index, model in enumerate(models):
+        instability = method_instability[model_index, :, raw_index]
+        for row_index, (metric, label) in enumerate(
+            ((ise, "Raw APLS ISE"), (mspe, "Raw APLS test MSPE"))
+        ):
+            ax = axes[row_index, model_index]
+            values = np.asarray(metric[model_index, :, raw_index], dtype=float)
+            positive = np.isfinite(values) & (values > 0.0)
+            extreme = _extreme_tail_mask(values, extreme_tail_multiple)
+            ordinary = positive & ~instability & ~extreme
+            ax.scatter(
+                replication_axis[ordinary],
+                values[ordinary],
+                s=7,
+                color="#777777",
+                alpha=0.38,
+                linewidths=0,
+                label="Other replication" if model_index == 0 and row_index == 0 else None,
+            )
+            ax.scatter(
+                replication_axis[positive & instability],
+                values[positive & instability],
+                s=24,
+                marker="^",
+                color="#B2182B",
+                alpha=0.8,
+                linewidths=0,
+                label="Numerically unstable" if model_index == 0 and row_index == 0 else None,
+            )
+            ax.scatter(
+                replication_axis[positive & extreme],
+                values[positive & extreme],
+                s=30,
+                marker="D",
+                facecolors="none",
+                edgecolors="#E66101",
+                linewidths=1.0,
+                label=(
+                    f"> {extreme_tail_multiple:g}x median"
+                    if model_index == 0 and row_index == 0
+                    else None
+                ),
+            )
+            median = _safe_median(values)
+            if np.isfinite(median) and median > 0.0:
+                ax.axhline(
+                    median,
+                    color="#2166AC",
+                    linewidth=1.1,
+                    linestyle="--",
+                    label="Median" if model_index == 0 and row_index == 0 else None,
+                )
+                if np.any(extreme):
+                    ax.axhline(
+                        extreme_tail_multiple * median,
+                        color="#E66101",
+                        linewidth=1.0,
+                        linestyle=":",
+                    )
+            maximum_values = np.where(positive, values, -np.inf)
+            maximum_index = int(np.argmax(maximum_values))
+            annotation = (
+                f"max={values[maximum_index]:.3g}\n"
+                f"rep={maximum_index + 1}, "
+                f"m={selected_components[model_index, maximum_index, raw_index]}\n"
+                f"max cond={raw_selected_condition[model_index, maximum_index]:.2e}"
+            )
+            ax.text(
+                0.98,
+                0.97,
+                annotation,
+                transform=ax.transAxes,
+                ha="right",
+                va="top",
+                fontsize=7.5,
+                bbox={
+                    "boxstyle": "round,pad=0.25",
+                    "facecolor": "white",
+                    "edgecolor": "#BBBBBB",
+                    "alpha": 0.88,
+                },
+            )
+            ax.set_yscale("log")
+            ax.set_xlabel("Replication")
+            ax.grid(True, which="both", axis="y", alpha=0.22)
+            if row_index == 0:
+                ax.set_title(model.name, fontweight="bold")
+            if model_index == 0:
+                ax.set_ylabel(label)
+    axes[0, 0].legend(fontsize=7.5, loc="lower right")
+    fig.suptitle(
+        "Raw APLS tail diagnostics: no outliers suppressed",
+        y=0.995,
+    )
+    fig.tight_layout()
+    _save_pdf(fig, output_dir / "raw_apls_outliers.pdf")
+    plt.close(fig)
+
+
 def run_self_tests() -> None:
     """Run deterministic checks of scaling, equivalence, and orthogonality."""
     rng = np.random.default_rng(78123)
@@ -1456,9 +2327,71 @@ def run_self_tests() -> None:
         and np.all(np.isfinite(compared.beta_reorth))
     ):
         raise AssertionError("cross-validation returned an invalid fit")
+
+    fpcr_response = select_fpcr_gcv(
+        y, X, r, K, 8, criterion="response"
+    )
+    fpcr_moment = select_fpcr_gcv(
+        y, X, r, K, 8, criterion="moment"
+    )
+    if not (
+        1 <= fpcr_response.selected_components <= 8
+        and 1 <= fpcr_moment.selected_components <= 8
+        and np.all(np.isfinite(fpcr_response.gcv))
+        and np.all(np.isfinite(fpcr_moment.gcv))
+    ):
+        raise AssertionError("FPCR GCV selection returned an invalid result")
+    response_residual = y - X @ fpcr_response.beta / T
+    expected_response_gcv = np.mean(response_residual ** 2) / (
+        1.0 - fpcr_response.selected_components / n
+    ) ** 2
+    if not np.isclose(
+        expected_response_gcv,
+        fpcr_response.gcv[fpcr_response.selected_components - 1],
+        rtol=1e-12,
+        atol=1e-14,
+    ):
+        raise AssertionError("response-space FPCR GCV scaling is incorrect")
+
+    cg_path = cg_fpls_path(r, K, 8)
+    cg_selection = select_cg_fpls(
+        cg_path,
+        X,
+        y,
+        r,
+        K,
+        fpcr_response.beta,
+        tau=1.01,
+        delta=0.1,
+        variance_tolerance=0.01,
+        variance_kmax=10,
+    )
+    if not (
+        0 <= cg_selection.selected_components <= 8
+        and cg_selection.variance_updates >= 1
+        and len(cg_selection.sigma2_history)
+        == cg_selection.variance_updates + 1
+        and np.isclose(
+            cg_selection.moment_path[0], np.sqrt(np.mean(r ** 2))
+        )
+    ):
+        raise AssertionError("iterative CG-FPLS diagnostics are inconsistent")
+    _, selected_zero, reached_zero, _, _ = _select_cg_for_variance(
+        cg_path,
+        r,
+        K,
+        sigma2=1e20,
+        X_norm=float(np.mean(np.sum(X ** 2, axis=1) / T)),
+        n=n,
+        tau=1.01,
+        delta=0.1,
+    )
+    if selected_zero != 0 or not reached_zero:
+        raise AssertionError("CG-FPLS discrepancy search does not admit m=0")
     print(
         "Self-tests passed: raw formula, same-m equivalence, MGS1/CGS2/MGS2 "
-        "agreement, orthogonality, and fold-local CV."
+        "agreement, orthogonality, fold-local CV, both FPCR GCV criteria, "
+        "iterative CG variance estimation, and m=0 stopping."
     )
 
 
@@ -1473,11 +2406,32 @@ def _parse_arguments() -> argparse.Namespace:
     parser.add_argument("--noise-sd", type=float, default=1.0)
     parser.add_argument("--tau", type=float, default=1.01)
     parser.add_argument("--delta", type=float, default=0.1)
+    parser.add_argument(
+        "--cg-variance-tolerance",
+        type=float,
+        default=0.01,
+        help="Babii variance-iteration tolerance xi (default: 0.01)",
+    )
+    parser.add_argument(
+        "--cg-variance-kmax",
+        type=int,
+        default=10,
+        help="Babii variance-iteration kmax (default: 10)",
+    )
     parser.add_argument("--seed", type=int, default=2025)
     parser.add_argument(
         "--basis-convention",
         choices=("babii", "standard"),
         default="babii",
+    )
+    parser.add_argument(
+        "--fpcr-gcv",
+        choices=("response", "moment"),
+        default="response",
+        help=(
+            "response is conventional regression GCV; moment reproduces "
+            "the earlier notebook and is labelled explicitly"
+        ),
     )
     parser.add_argument(
         "--orthogonalization",
@@ -1490,9 +2444,18 @@ def _parse_arguments() -> argparse.Namespace:
     )
     parser.add_argument("--rank-tolerance", type=float, default=1e-10)
     parser.add_argument(
+        "--extreme-tail-multiple",
+        type=float,
+        default=100.0,
+        help=(
+            "flag metrics above this multiple of their model/method median "
+            "(default: 100)"
+        ),
+    )
+    parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("apls_raw_vs_reorth_results"),
+        default=Path("apls_corrected_results"),
     )
     parser.add_argument("--no-plots", action="store_true")
     parser.add_argument(
@@ -1518,10 +2481,14 @@ def main() -> None:
         noise_sd=arguments.noise_sd,
         tau=arguments.tau,
         delta=arguments.delta,
+        cg_variance_tolerance=arguments.cg_variance_tolerance,
+        cg_variance_kmax=arguments.cg_variance_kmax,
         seed=arguments.seed,
         basis_convention=arguments.basis_convention,
+        fpcr_gcv_criterion=arguments.fpcr_gcv,
         orthogonalization=arguments.orthogonalization,
         rank_tolerance=arguments.rank_tolerance,
+        extreme_tail_multiple=arguments.extreme_tail_multiple,
         output_dir=arguments.output_dir,
         make_plots=not arguments.no_plots,
     )
