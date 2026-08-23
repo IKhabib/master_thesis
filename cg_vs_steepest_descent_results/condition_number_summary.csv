@@ -1,0 +1,9 @@
+condition_number,dimension,method,trials,converged_count,convergence_rate,median_iterations_converged,median_budgeted_iterations,q25_budgeted_iterations,q75_budgeted_iterations,median_final_relative_residual
+10.0,60,Conjugate Gradient,12,12,1.0,26.0,26.0,26.0,26.25,7.159265377298783e-09
+10.0,60,Steepest Descent,12,12,1.0,77.0,77.0,74.5,78.0,8.908726073447945e-09
+100.0,60,Conjugate Gradient,12,12,1.0,55.5,55.5,55.0,56.0,7.81087188636231e-09
+100.0,60,Steepest Descent,12,12,1.0,656.0,656.0,631.25,669.0,9.720688773135409e-09
+1000.0,60,Conjugate Gradient,12,12,1.0,98.0,98.0,97.75,98.25,6.504979883618028e-09
+1000.0,60,Steepest Descent,12,12,1.0,5338.0,5338.0,5102.75,5411.5,9.976595590370672e-09
+10000.0,60,Conjugate Gradient,12,12,1.0,154.0,154.0,152.75,158.5,7.602350460543905e-09
+10000.0,60,Steepest Descent,12,0,0.0,nan,20001.0,20001.0,20001.0,1.2544260973396652e-06

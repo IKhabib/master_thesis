@@ -1,0 +1,23 @@
+{
+  "problem_class": "symmetric positive-definite quadratic",
+  "methods": [
+    "Conjugate Gradient",
+    "Steepest Descent"
+  ],
+  "steepest_descent_step": "exact line search",
+  "initial_point": "zero except in the two-dimensional illustration",
+  "dimension": 60,
+  "condition_numbers": [
+    10.0,
+    100.0,
+    1000.0,
+    10000.0
+  ],
+  "trials_per_condition": 12,
+  "relative_residual_tolerance": 1e-08,
+  "maximum_iterations": 20000,
+  "representative_condition_number": 1000.0,
+  "trajectory_condition_number": 50.0,
+  "seed": 2026,
+  "work_measure": "matrix-vector products; one per iteration plus initial residual"
+}
