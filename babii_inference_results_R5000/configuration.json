@@ -1,0 +1,60 @@
+{
+  "J": 100,
+  "T": 200,
+  "alpha_levels": [
+    0.01,
+    0.05,
+    0.1
+  ],
+  "basis_convention": "babii",
+  "calibration_draws": 2000,
+  "calibrations": [
+    "oracle"
+  ],
+  "cg_engine": "stable",
+  "confidence_basis_dimension": 5,
+  "confidence_calibration": "oracle",
+  "confidence_components": 10,
+  "confidence_grid_points": 20,
+  "confidence_method": "analytic",
+  "confidence_replications": 5000,
+  "delta_step": 0.05,
+  "late_components": 70,
+  "noise_sd": 1.0,
+  "oracle_draws": 50000,
+  "power_alpha": 0.05,
+  "power_calibration": "empirical",
+  "power_direct": true,
+  "power_replications": 5000,
+  "power_sample_sizes": [
+    100,
+    200
+  ],
+  "program": "babii_inference_study.py",
+  "sample_size": 100,
+  "seed": 2025,
+  "size_replications": 5000,
+  "skips": {
+    "confidence": false,
+    "power": false,
+    "size": false,
+    "stopping": false
+  },
+  "stopping_components": [
+    1,
+    2,
+    3,
+    5,
+    10,
+    20,
+    40,
+    70
+  ],
+  "stopping_replications": 5000,
+  "versions": {
+    "matplotlib": "3.11.1",
+    "numpy": "2.4.6",
+    "python": "3.11.15",
+    "scipy": "1.17.1"
+  }
+}
