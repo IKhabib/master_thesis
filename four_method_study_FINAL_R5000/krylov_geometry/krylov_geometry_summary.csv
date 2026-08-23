@@ -1,0 +1,2 @@
+model,components,edge_threshold,possible_edges,raw_edges_shown,arnoldi_edges_shown,raw_normalized_basis_condition,raw_min_abs_offdiagonal_inner_product,raw_median_abs_offdiagonal_inner_product,raw_max_abs_offdiagonal_inner_product,arnoldi_orthogonality_defect_2norm,arnoldi_max_abs_offdiagonal_inner_product
+Model 1,12,0.2,66,66,0,1.026898056390624e+16,0.997463440588312,0.9999751089347368,0.9999999998202244,8.528222633493661e-16,2.811221304324181e-16

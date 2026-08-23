@@ -1,42 +1,38 @@
-"""Publication figures for the frozen functional-regression simulation.
+"""Publication figures for the four-method functional-regression simulation.
 
 This companion program does not tune or modify any estimator.  It reads the
 archived ``raw_results.npz`` and ``configuration.json`` produced by
-``apls_raw_vs_reorthogonalized.py``.  The archive contains the selected number
+``run_four_method_simulation.py``.  The archive contains the selected number
 of components and scalar risks, but not every selected slope estimate.  To
 recover the latter, this program deterministically replays the data-generating
 random-number stream and evaluates each estimator at its *archived* component
 count.  The replay is accepted only when its ISE and test MSPE agree with the
 frozen archive.
 
-The main figures exclude ``CG-FPLS-oracle`` because it is an infeasible
-simulation diagnostic.  Exact summaries for all methods, including the
-oracle, are retained in CSV files and in the replay cache.
-
 Outputs
 -------
-``basis_coefficient_histograms_feasible.pdf``
+``basis_coefficient_histograms.pdf``
     Histograms of the first three estimated cosine coefficients, with the true
     coefficient and Monte Carlo mean marked.
-``beta_point_histograms_feasible.pdf``
+``beta_point_histograms.pdf``
     Histograms of the selected slope estimate at five locations on [0, 1].
 ``bias_variance_decomposition.pdf``
     Full-sample slope and prediction decompositions.  Component bars use a log
-    scale because raw APLS has genuine catastrophic finite-precision tails.
+    scale because Raw FPLS has genuine catastrophic finite-precision tails.
 ``bias_variance_decomposition_raw_stable_subset.pdf``
-    The same decomposition on the paired subset where raw APLS was not flagged
+    The same decomposition on the paired subset where Raw FPLS was not flagged
     as numerically unstable.
-``coefficient_normal_qq_feasible.pdf``
+``coefficient_normal_qq.pdf``
     Normal Q-Q plots for the first three estimated cosine coefficients.
 ``babii_style_error_boxplots_with_tails.pdf``
     ISE and MSPE boxplots in the layout of Babii et al. Figure 1, but with all
-    outliers retained and raw-APLS instability cases explicitly marked.
+    outliers retained and Raw-FPLS instability cases explicitly marked.
 
 Example
 -------
-python thesis_simulation_graphs.py \
-    --results-dir cg_fpls_three_variants_results \
-    --output-dir thesis_simulation_graphs \
+python make_thesis_simulation_figures.py \
+    --results-dir four_method_results \
+    --output-dir four_method_thesis_figures \
     --jobs 3
 """
 
@@ -44,9 +40,12 @@ from __future__ import annotations
 
 import argparse
 import csv
+import io
 import json
 import math
 import os
+import re
+import tempfile
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from dataclasses import dataclass
 from pathlib import Path
@@ -60,34 +59,28 @@ import numpy as np
 from matplotlib.backends.backend_pdf import PdfPages
 from scipy import stats
 
-import apls_raw_vs_reorthogonalized as core
+import four_method_core as core
 
 
 COEFFICIENT_INDICES = (0, 1, 2)
 BETA_POINTS = (0.00, 0.25, 0.50, 0.75, 1.00)
 EXPECTED_METHODS = (
     "CG-FPLS-code",
-    "CG-FPLS-supplement",
-    "CG-FPLS-oracle",
-    "APLS-raw",
-    "APLS-Arnoldi-CGS2",
-    "FPCR-response-GCV",
+    "Raw FPLS",
+    "Arnoldi FPLS",
+    "FPCR",
 )
 SHORT_LABELS = {
     "CG-FPLS-code": "CG code",
-    "CG-FPLS-supplement": "CG supplement",
-    "CG-FPLS-oracle": "CG oracle",
-    "APLS-raw": "APLS raw",
-    "APLS-Arnoldi-CGS2": "Arnoldi-CGS2",
-    "FPCR-response-GCV": "FPCR",
+    "Raw FPLS": "Raw FPLS",
+    "Arnoldi FPLS": "Arnoldi FPLS",
+    "FPCR": "FPCR",
 }
 METHOD_COLORS = {
     "CG-FPLS-code": "#0072B2",
-    "CG-FPLS-supplement": "#56B4E9",
-    "CG-FPLS-oracle": "#6A3D9A",
-    "APLS-raw": "#D55E00",
-    "APLS-Arnoldi-CGS2": "#009E73",
-    "FPCR-response-GCV": "#CC79A7",
+    "Raw FPLS": "#D55E00",
+    "Arnoldi FPLS": "#009E73",
+    "FPCR": "#CC79A7",
 }
 BIAS_COLOR = "#D55E00"
 VARIANCE_COLOR = "#0072B2"
@@ -118,35 +111,77 @@ def _write_csv(path: Path, rows: Sequence[Mapping[str, object]]) -> None:
 
 def _is_complete_pdf(path: Path) -> bool:
     try:
-        if path.stat().st_size < 100:
-            return False
-        with path.open("rb") as handle:
-            header = handle.read(5)
-            handle.seek(max(0, path.stat().st_size - 2048))
-            trailer = handle.read()
+        data = path.read_bytes()
     except OSError:
         return False
-    return header == b"%PDF-" and b"%%EOF" in trailer
+    return _pdf_bytes_are_complete(data)
+
+
+def _pdf_bytes_are_complete(data: bytes) -> bool:
+    if len(data) < 100 or not data.startswith(b"%PDF-"):
+        return False
+    if b"%%EOF" not in data[-2048:]:
+        return False
+    matches = list(
+        re.finditer(rb"startxref\s+(\d+)\s+%%EOF", data[-4096:])
+    )
+    if not matches:
+        return False
+    xref_offset = int(matches[-1].group(1))
+    if not 0 <= xref_offset < len(data):
+        return False
+    xref_prefix = data[xref_offset : xref_offset + 64]
+    return bool(
+        xref_prefix.startswith(b"xref")
+        or re.match(rb"\d+\s+\d+\s+obj", xref_prefix)
+    )
+
+
+def _write_pdf_bytes(path: Path, data: bytes) -> None:
+    if not _pdf_bytes_are_complete(data):
+        raise OSError(f"incomplete PDF generated for {path}")
+    descriptor, temporary_name = tempfile.mkstemp(
+        dir=path.parent,
+        prefix=f".{path.stem}.",
+        suffix=".pdf",
+    )
+    temporary = Path(temporary_name)
+    try:
+        with os.fdopen(descriptor, "wb") as handle:
+            handle.write(data)
+            handle.flush()
+            os.fsync(handle.fileno())
+        if not _is_complete_pdf(temporary):
+            raise OSError(f"incomplete PDF write: {path}")
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def _save_figure(fig: plt.Figure, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path, format="pdf", bbox_inches="tight")
-    plt.close(fig)
-    if not _is_complete_pdf(path):
-        raise OSError(f"incomplete PDF: {path}")
+    try:
+        buffer = io.BytesIO()
+        fig.savefig(buffer, format="pdf", bbox_inches="tight")
+        _write_pdf_bytes(path, buffer.getvalue())
+    finally:
+        plt.close(fig)
 
 
 def _save_multipage(path: Path, figures: Iterable[plt.Figure]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    with PdfPages(path) as pdf:
-        count = 0
-        for fig in figures:
-            pdf.savefig(fig, bbox_inches="tight")
+    figure_list = list(figures)
+    if not figure_list:
+        raise ValueError(f"cannot create an empty PDF: {path}")
+    try:
+        buffer = io.BytesIO()
+        with PdfPages(buffer) as pdf:
+            for fig in figure_list:
+                pdf.savefig(fig, bbox_inches="tight")
+        _write_pdf_bytes(path, buffer.getvalue())
+    finally:
+        for fig in figure_list:
             plt.close(fig)
-            count += 1
-    if count == 0 or not _is_complete_pdf(path):
-        raise OSError(f"incomplete multipage PDF: {path}")
 
 
 def _resolve_inputs(args: argparse.Namespace) -> Tuple[Path, Path]:
@@ -253,31 +288,33 @@ def _selected_beta_matrix(
     n, T = X.shape
     cg_path = core.cg_fpls_path(r, K, m_max)
     raw_path = (
-        core.raw_apls_path(y, X, K, r, m_max) if include_raw else None
+        core.raw_fpls_path(y, X, K, r, m_max) if include_raw else None
     )
-    stable_path = core.reorthogonalized_apls_path(
+    stable_path = core.arnoldi_fpls_path(
         y,
         X,
         K,
         r,
         m_max,
-        method=str(configuration["reorthogonalization"]),
-        rank_tolerance=float(configuration["rank_tolerance"]),
+        rank_tolerance=float(configuration["arnoldi_rank_tolerance"]),
     )
-    fpcr_path = core._fpcr_spectral_path(  # pylint: disable=protected-access
+    fpcr_path = core.fpcr_spectral_path(
         r, K, min(m_max, n - 1, T - 1)
     )
 
+    cg_index = EXPECTED_METHODS.index("CG-FPLS-code")
+    raw_index = EXPECTED_METHODS.index("Raw FPLS")
+    stable_index = EXPECTED_METHODS.index("Arnoldi FPLS")
+    fpcr_index = EXPECTED_METHODS.index("FPCR")
+    cg_m = int(selected[cg_index])
+    raw_m = int(selected[raw_index])
+    stable_m = int(selected[stable_index])
+    fpcr_m = int(selected[fpcr_index])
+    if min(cg_m, raw_m, stable_m, fpcr_m) < 1:
+        raise ValueError("all archived component counts must be positive")
+
     beta = np.zeros((len(EXPECTED_METHODS), T), dtype=float)
-    for method_index in range(3):
-        m_value = int(selected[method_index])
-        if m_value > 0:
-            beta[method_index] = cg_path[:, m_value - 1]
-    raw_m = int(selected[3])
-    stable_m = int(selected[4])
-    fpcr_m = int(selected[5])
-    if raw_m < 1 or stable_m < 1 or fpcr_m < 1:
-        raise ValueError("APLS and FPCR selected counts must be positive")
+    beta[cg_index] = cg_path[:, cg_m - 1]
     if not stable_path.valid[stable_m - 1]:
         raise RuntimeError("archived Arnoldi component is invalid during replay")
     if fpcr_m > fpcr_path.shape[1]:
@@ -289,11 +326,11 @@ def _selected_beta_matrix(
         and np.all(np.isfinite(raw_path.beta[:, raw_m - 1]))
     )
     if raw_valid and raw_path is not None:
-        beta[3] = raw_path.beta[:, raw_m - 1]
+        beta[raw_index] = raw_path.beta[:, raw_m - 1]
     else:
-        beta[3] = np.nan
-    beta[4] = stable_path.beta[:, stable_m - 1]
-    beta[5] = fpcr_path[:, fpcr_m - 1]
+        beta[raw_index] = np.nan
+    beta[stable_index] = stable_path.beta[:, stable_m - 1]
+    beta[fpcr_index] = fpcr_path[:, fpcr_m - 1]
     return beta, raw_valid
 
 
@@ -311,12 +348,11 @@ def _replay_one_model(
     T = int(configuration["grid_size_T"])
     noise_sd = float(configuration["noise_sd"])
     seed = int(configuration["seed"])
-    basis_convention = str(configuration["basis_convention"])
     replications = selected_components.shape[0]
     method_count = selected_components.shape[1]
     grid = np.linspace(0.0, 1.0, T)
     points = np.asarray(BETA_POINTS, dtype=float)
-    basis = core.create_cosine_basis(grid, J, convention=basis_convention)
+    basis = core.create_cosine_basis(grid, J)
     models = core.make_model_specs(J, basis)
     model = models[model_index]
     seed_sequence = np.random.SeedSequence(seed).spawn(len(models))[model_index]
@@ -450,7 +486,7 @@ def replay_selected_estimates(
     jobs: int,
 ) -> Dict[str, np.ndarray]:
     model_count, replications, method_count = frozen.selected_components.shape
-    raw_index = frozen.method_names.index("APLS-raw")
+    raw_index = frozen.method_names.index("Raw FPLS")
     raw_stable = ~frozen.method_instability[:, :, raw_index]
     kwargs = [
         (
@@ -549,7 +585,7 @@ def _validate_replay(
         # Raw normal equations are intentionally platform-sensitive.  A looser
         # replay tolerance is used only for that diagnostic implementation;
         # every stabilized/CG/FPCR estimate must reproduce much more tightly.
-        tolerance = 5e-3 if method == "APLS-raw" else 5e-9
+        tolerance = 5e-3 if method == "Raw FPLS" else 5e-9
         method_ise = scaled_ise[:, :, method_index]
         method_mspe = scaled_mspe[:, :, method_index]
         finite_ise = method_ise[np.isfinite(method_ise)]
@@ -680,7 +716,7 @@ def build_bias_variance_rows(
     cache: Mapping[str, np.ndarray],
 ) -> List[Dict[str, object]]:
     replications = frozen.selected_components.shape[1]
-    raw_index = frozen.method_names.index("APLS-raw")
+    raw_index = frozen.method_names.index("Raw FPLS")
     rows: List[Dict[str, object]] = []
 
     for subset in ("all replications", "paired raw-stable subset"):
@@ -715,7 +751,7 @@ def build_bias_variance_rows(
             for method_index, method in enumerate(frozen.method_names):
                 count = int(counts[model_index, method_index])
                 decomposition_available = not (
-                    subset == "all replications" and method == "APLS-raw"
+                    subset == "all replications" and method == "Raw FPLS"
                 )
                 if decomposition_available:
                     beta_mean = sum_beta[model_index, method_index] / count
@@ -775,7 +811,6 @@ def build_bias_variance_rows(
                         "subset": subset,
                         "model": model_name,
                         "method": method,
-                        "feasible_estimator": method != "CG-FPLS-oracle",
                         "decomposition_available": decomposition_available,
                         "decomposition_scope": (
                             subset
@@ -854,10 +889,9 @@ def build_coefficient_rows(
                     {
                         "model": model_name,
                         "method": method,
-                        "feasible_estimator": method != "CG-FPLS-oracle",
                         "distribution_scope": (
                             "archived numerically stable raw fits"
-                            if method == "APLS-raw"
+                            if method == "Raw FPLS"
                             else "all replications"
                         ),
                         "replications": int(np.count_nonzero(np.isfinite(values))),
@@ -886,10 +920,9 @@ def build_point_rows(
                     {
                         "model": model_name,
                         "method": method,
-                        "feasible_estimator": method != "CG-FPLS-oracle",
                         "distribution_scope": (
                             "archived numerically stable raw fits"
-                            if method == "APLS-raw"
+                            if method == "Raw FPLS"
                             else "all replications"
                         ),
                         "replications": int(np.count_nonzero(np.isfinite(values))),
@@ -912,7 +945,6 @@ def build_tail_rows(frozen: FrozenInputs) -> List[Dict[str, object]]:
                     {
                         "model": model_name,
                         "method": method,
-                        "feasible_estimator": method != "CG-FPLS-oracle",
                         "metric": metric_name,
                         "mean": float(np.mean(values)),
                         "q1": float(q1),
@@ -1032,30 +1064,26 @@ def plot_coefficient_histograms(
     output_dir: Path,
     bins: int,
 ) -> None:
-    feasible_indices = [
-        index
-        for index, method in enumerate(frozen.method_names)
-        if method != "CG-FPLS-oracle"
-    ]
+    method_indices = list(range(len(frozen.method_names)))
     samples = cache["coefficient_samples"]
     figures: List[plt.Figure] = []
     for model_index, model_name in enumerate(frozen.model_names):
         fig, axes = plt.subplots(
             len(COEFFICIENT_INDICES),
-            len(feasible_indices),
+            len(method_indices),
             figsize=(18.5, 10.2),
             squeeze=False,
         )
         for local_index, coefficient_index in enumerate(COEFFICIENT_INDICES):
             row_data = [
                 samples[model_index, :, method_index, local_index]
-                for method_index in feasible_indices
+                for method_index in method_indices
             ]
             xlim = _robust_limits(row_data)
             true_value = float(
                 cache["true_coefficients"][model_index, coefficient_index]
             )
-            for column, method_index in enumerate(feasible_indices):
+            for column, method_index in enumerate(method_indices):
                 method = frozen.method_names[method_index]
                 ax = axes[local_index, column]
                 _hist_panel(
@@ -1094,7 +1122,7 @@ def plot_coefficient_histograms(
             0.01,
             (
                 "Axes show the central 99% pooled range; omitted numerical tails are counted. "
-                "Raw-APLS panels use archived fits not flagged as numerically unstable."
+                "Raw-FPLS panels use archived fits not flagged as numerically unstable."
             ),
             ha="center",
             fontsize=8.5,
@@ -1102,7 +1130,7 @@ def plot_coefficient_histograms(
         fig.tight_layout(rect=(0.02, 0.035, 0.99, 0.94))
         figures.append(fig)
     _save_multipage(
-        output_dir / "basis_coefficient_histograms_feasible.pdf", figures
+        output_dir / "basis_coefficient_histograms.pdf", figures
     )
 
 
@@ -1112,28 +1140,24 @@ def plot_beta_point_histograms(
     output_dir: Path,
     bins: int,
 ) -> None:
-    feasible_indices = [
-        index
-        for index, method in enumerate(frozen.method_names)
-        if method != "CG-FPLS-oracle"
-    ]
+    method_indices = list(range(len(frozen.method_names)))
     samples = cache["point_samples"]
     figures: List[plt.Figure] = []
     for model_index, model_name in enumerate(frozen.model_names):
         fig, axes = plt.subplots(
             len(BETA_POINTS),
-            len(feasible_indices),
+            len(method_indices),
             figsize=(18.5, 15.8),
             squeeze=False,
         )
         for point_index, point in enumerate(BETA_POINTS):
             row_data = [
                 samples[model_index, :, method_index, point_index]
-                for method_index in feasible_indices
+                for method_index in method_indices
             ]
             xlim = _robust_limits(row_data)
             true_value = float(cache["true_points"][model_index, point_index])
-            for column, method_index in enumerate(feasible_indices):
+            for column, method_index in enumerate(method_indices):
                 method = frozen.method_names[method_index]
                 ax = axes[point_index, column]
                 _hist_panel(
@@ -1170,7 +1194,7 @@ def plot_beta_point_histograms(
             0.008,
             (
                 "Axes show the central 99% pooled range; omitted numerical tails are counted. "
-                "Raw-APLS panels use archived fits not flagged as numerically unstable."
+                "Raw-FPLS panels use archived fits not flagged as numerically unstable."
             ),
             ha="center",
             fontsize=8.5,
@@ -1178,7 +1202,7 @@ def plot_beta_point_histograms(
         fig.tight_layout(rect=(0.02, 0.025, 0.99, 0.955))
         figures.append(fig)
     _save_multipage(
-        output_dir / "beta_point_histograms_feasible.pdf", figures
+        output_dir / "beta_point_histograms.pdf", figures
     )
 
 
@@ -1200,16 +1224,14 @@ def plot_bias_variance(
     output_dir: Path,
 ) -> None:
     lookup = _rows_for_subset(rows, subset)
-    feasible_methods = [
-        method for method in frozen.method_names if method != "CG-FPLS-oracle"
-    ]
+    methods = list(frozen.method_names)
     fig, axes = plt.subplots(2, 3, figsize=(18.2, 9.3), squeeze=False)
-    x = np.arange(len(feasible_methods), dtype=float)
+    x = np.arange(len(methods), dtype=float)
     width = 0.22
     floor = 1e-12
 
     for model_index, model_name in enumerate(frozen.model_names):
-        model_rows = [lookup[(model_name, method)] for method in feasible_methods]
+        model_rows = [lookup[(model_name, method)] for method in methods]
         slope_bias = np.asarray(
             [float(row["slope_squared_bias"]) for row in model_rows]
         )
@@ -1312,7 +1334,7 @@ def plot_bias_variance(
         ax.set_ylabel("Prediction risk" if model_index == 0 else "")
         ax.grid(True, axis="y", which="both", alpha=0.22)
         if subset == "all replications":
-            raw_position = feasible_methods.index("APLS-raw")
+            raw_position = methods.index("Raw FPLS")
             for row_index in range(2):
                 axes[row_index, model_index].text(
                     raw_position,
@@ -1327,7 +1349,7 @@ def plot_bias_variance(
         for row_index in range(2):
             axes[row_index, model_index].set_xticks(x)
             axes[row_index, model_index].set_xticklabels(
-                [SHORT_LABELS[method] for method in feasible_methods],
+                [SHORT_LABELS[method] for method in methods],
                 rotation=30,
                 ha="right",
                 fontsize=8,
@@ -1338,18 +1360,10 @@ def plot_bias_variance(
     unique: Dict[str, object] = {}
     for handle, label in zip(handles_top + handles_bottom, labels_top + labels_bottom):
         unique.setdefault(label, handle)
-    fig.legend(
-        unique.values(),
-        unique.keys(),
-        loc="upper center",
-        ncol=4,
-        frameon=False,
-        bbox_to_anchor=(0.5, 0.965),
-    )
     title_suffix = (
         f"all {frozen.selected_components.shape[1]:,} replications"
         if subset == "all replications"
-        else "paired subset with numerically stable raw APLS"
+        else "paired subset with numerically stable Raw FPLS"
     )
     fig.suptitle(
         f"Bias-variance decomposition: {title_suffix}",
@@ -1362,14 +1376,23 @@ def plot_bias_variance(
         0.012,
         (
             "Bars show components on a logarithmic scale; black diamonds show their arithmetic sum. "
-            "Full raw-APLS totals come from the frozen archive because unstable slope directions are backend-dependent."
+            "Full Raw-FPLS totals come from the frozen archive because unstable slope directions are backend-dependent."
             if subset == "all replications"
             else "Bars show components on a logarithmic scale; black diamonds show their arithmetic sum."
         ),
         ha="center",
         fontsize=8.5,
     )
-    fig.tight_layout(rect=(0.02, 0.035, 0.99, 0.94))
+    fig.tight_layout(rect=(0.02, 0.12, 0.99, 0.91))
+    legend = fig.legend(
+        unique.values(),
+        unique.keys(),
+        loc="lower center",
+        ncol=4,
+        frameon=False,
+        bbox_to_anchor=(0.5, 0.045),
+    )
+    legend.set_zorder(1000)
     _save_figure(fig, output_dir / filename)
 
 
@@ -1378,22 +1401,18 @@ def plot_coefficient_qq(
     cache: Mapping[str, np.ndarray],
     output_dir: Path,
 ) -> None:
-    feasible_indices = [
-        index
-        for index, method in enumerate(frozen.method_names)
-        if method != "CG-FPLS-oracle"
-    ]
+    method_indices = list(range(len(frozen.method_names)))
     samples = cache["coefficient_samples"]
     figures: List[plt.Figure] = []
     for model_index, model_name in enumerate(frozen.model_names):
         fig, axes = plt.subplots(
             len(COEFFICIENT_INDICES),
-            len(feasible_indices),
+            len(method_indices),
             figsize=(17.7, 10.4),
             squeeze=False,
         )
         for row_index, coefficient_index in enumerate(COEFFICIENT_INDICES):
-            for column, method_index in enumerate(feasible_indices):
+            for column, method_index in enumerate(method_indices):
                 method = frozen.method_names[method_index]
                 values = samples[model_index, :, method_index, row_index]
                 values = np.sort(values[np.isfinite(values)])
@@ -1460,14 +1479,14 @@ def plot_coefficient_qq(
         fig.text(
             0.5,
             0.008,
-            "Raw-APLS Q-Q panels use archived fits not flagged as numerically unstable.",
+            "Raw-FPLS Q-Q panels use archived fits not flagged as numerically unstable.",
             ha="center",
             fontsize=8.3,
         )
         fig.tight_layout(rect=(0.02, 0.025, 0.99, 0.965))
         figures.append(fig)
     _save_multipage(
-        output_dir / "coefficient_normal_qq_feasible.pdf", figures
+        output_dir / "coefficient_normal_qq.pdf", figures
     )
 
 
@@ -1475,14 +1494,10 @@ def plot_babii_style_boxplots(
     frozen: FrozenInputs,
     output_dir: Path,
 ) -> None:
-    feasible_indices = [
-        index
-        for index, method in enumerate(frozen.method_names)
-        if method != "CG-FPLS-oracle"
-    ]
-    feasible_methods = [frozen.method_names[index] for index in feasible_indices]
-    raw_index = frozen.method_names.index("APLS-raw")
-    raw_display_index = feasible_indices.index(raw_index) + 1
+    method_indices = list(range(len(frozen.method_names)))
+    methods = [frozen.method_names[index] for index in method_indices]
+    raw_index = frozen.method_names.index("Raw FPLS")
+    raw_display_index = method_indices.index(raw_index) + 1
     fig, axes = plt.subplots(2, 3, figsize=(18.0, 9.1), squeeze=False)
 
     for model_index, model_name in enumerate(frozen.model_names):
@@ -1490,7 +1505,7 @@ def plot_babii_style_boxplots(
             ((frozen.ise, "Integrated squared error"), (frozen.mspe, "Test MSPE"))
         ):
             ax = axes[row_index, model_index]
-            data = [metric[model_index, :, index] for index in feasible_indices]
+            data = [metric[model_index, :, index] for index in method_indices]
             artists = ax.boxplot(
                 data,
                 showfliers=True,
@@ -1505,7 +1520,7 @@ def plot_babii_style_boxplots(
                 },
                 medianprops={"color": "#111111", "linewidth": 1.1},
             )
-            for patch, method in zip(artists["boxes"], feasible_methods):
+            for patch, method in zip(artists["boxes"], methods):
                 patch.set_facecolor(METHOD_COLORS[method])
                 patch.set_alpha(0.72)
 
@@ -1541,9 +1556,9 @@ def plot_babii_style_boxplots(
                 },
             )
             ax.set_yscale("log")
-            ax.set_xticks(np.arange(1, len(feasible_methods) + 1))
+            ax.set_xticks(np.arange(1, len(methods) + 1))
             ax.set_xticklabels(
-                [SHORT_LABELS[method] for method in feasible_methods],
+                [SHORT_LABELS[method] for method in methods],
                 rotation=30,
                 ha="right",
                 fontsize=8,
@@ -1600,12 +1615,12 @@ def _apply_style() -> None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Create thesis figures from the frozen six-method simulation."
+        description="Create thesis figures from the four-method simulation."
     )
     parser.add_argument(
         "--results-dir",
         type=Path,
-        default=Path("cg_fpls_three_variants_results"),
+        default=Path("fpls_four_method_results"),
         help="directory containing raw_results.npz and configuration.json",
     )
     parser.add_argument(
@@ -1621,7 +1636,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("thesis_simulation_graphs"),
+        default=Path("fpls_four_method_graphs"),
     )
     parser.add_argument(
         "--replications",
@@ -1658,7 +1673,7 @@ def main() -> None:
     cache_path = output_dir / "selected_beta_diagnostics_cache.npz"
 
     print("=" * 72)
-    print("THESIS FIGURES FOR THE FROZEN SIX-METHOD SIMULATION")
+    print("THESIS FIGURES FOR THE FOUR-METHOD SIMULATION")
     print("=" * 72)
     print(f"Raw archive: {raw_path}")
     print(f"Configuration: {config_path}")

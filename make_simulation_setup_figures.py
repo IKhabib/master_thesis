@@ -1,8 +1,8 @@
 """Create publication-ready figures for the three simulation setups.
 
-This companion script imports the data-generating-process definitions from
-``apls_raw_vs_reorthogonalized.py``.  It does not fit, tune, or compare any
-estimator, so the setup figures stay independent of the four-method results.
+This companion script imports the three intended data-generating setups from
+``four_method_core.py``.  It does not fit, tune, or compare any estimator, so
+the setup figures stay independent of the four-method results.
 
 The three designs are deliberately controlled comparisons:
 
@@ -26,7 +26,7 @@ Outputs
 All PDF output is vector based.  Add ``--png`` to also write 300-dpi PNG
 copies.  With the defaults, run from the directory containing both scripts::
 
-    python simulation_setup_figures.py
+    python make_simulation_setup_figures.py
 
 The discretization matches the simulation code exactly:
 
@@ -52,7 +52,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import PercentFormatter
 
-import apls_raw_vs_reorthogonalized as core
+import four_method_core as core
 
 
 MODEL_COLORS = {
@@ -132,6 +132,37 @@ def _write_pdf_bytes(path: Path, data: bytes) -> None:
         temporary.unlink(missing_ok=True)
 
 
+def _png_bytes_are_complete(data: bytes) -> bool:
+    """Check the fixed PNG signature and terminal IEND chunk."""
+    return (
+        len(data) >= 100
+        and data.startswith(b"\x89PNG\r\n\x1a\n")
+        and data.endswith(b"\x00\x00\x00\x00IEND\xaeB`\x82")
+    )
+
+
+def _write_png_bytes(path: Path, data: bytes) -> None:
+    """Atomically write a structurally complete PNG."""
+    if not _png_bytes_are_complete(data):
+        raise OSError(f"incomplete PNG generated for {path}")
+    descriptor, temporary_name = tempfile.mkstemp(
+        dir=path.parent,
+        prefix=f".{path.stem}.",
+        suffix=".png",
+    )
+    temporary = Path(temporary_name)
+    try:
+        with os.fdopen(descriptor, "wb") as handle:
+            handle.write(data)
+            handle.flush()
+            os.fsync(handle.fileno())
+        if not _png_bytes_are_complete(temporary.read_bytes()):
+            raise OSError(f"incomplete PNG write for {path}")
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
 def _save_figure(fig: plt.Figure, pdf_path: Path, also_png: bool) -> None:
     """Save one figure as a checked vector PDF and optional 300-dpi PNG."""
     pdf_path.parent.mkdir(parents=True, exist_ok=True)
@@ -140,12 +171,14 @@ def _save_figure(fig: plt.Figure, pdf_path: Path, also_png: bool) -> None:
         fig.savefig(buffer, format="pdf", bbox_inches="tight")
         _write_pdf_bytes(pdf_path, buffer.getvalue())
         if also_png:
+            png_buffer = io.BytesIO()
             fig.savefig(
-                pdf_path.with_suffix(".png"),
+                png_buffer,
                 format="png",
                 dpi=300,
                 bbox_inches="tight",
             )
+            _write_png_bytes(pdf_path.with_suffix(".png"), png_buffer.getvalue())
     finally:
         plt.close(fig)
 
@@ -621,14 +654,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--basis-size", type=int, default=100, metavar="J")
     parser.add_argument("--grid-size", type=int, default=200, metavar="T")
-    parser.add_argument(
-        "--basis-convention",
-        choices=("babii", "standard"),
-        default="babii",
-        help="cosine-basis convention passed to the frozen DGP code",
-    )
     parser.add_argument("--noise-sd", type=float, default=1.0)
-    parser.add_argument("--seed", type=int, default=2025)
+    parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument(
         "--trajectory-count",
         type=int,
@@ -691,11 +718,7 @@ def main() -> None:
     _apply_style()
 
     grid = np.linspace(0.0, 1.0, args.grid_size)
-    basis = core.create_cosine_basis(
-        grid,
-        args.basis_size,
-        convention=args.basis_convention,
-    )
+    basis = core.create_cosine_basis(grid, args.basis_size)
     models = core.make_model_specs(args.basis_size, basis)
     coefficients = _recover_basis_coefficients(basis, models)
     _validate_controlled_comparisons(models, coefficients)
@@ -703,7 +726,7 @@ def main() -> None:
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     print("Creating figures for the three frozen simulation setups")
-    print(f"  basis: J={args.basis_size}, T={args.grid_size}, {args.basis_convention}")
+    print(f"  basis: J={args.basis_size}, T={args.grid_size}, fixed Babii convention")
     print(f"  output: {output_dir.resolve()}")
 
     plot_true_slope_structure(

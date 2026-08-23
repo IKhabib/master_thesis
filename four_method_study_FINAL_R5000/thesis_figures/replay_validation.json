@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "criterion": "maximum absolute error divided by max(abs(archived value), 1); tolerance 5e-9 for stabilized/CG/FPCR methods and 5e-3 for the intentionally platform-sensitive raw normal equations",
+  "max_absolute_ise_error": 0.0,
+  "max_relative_ise_error": 0.0,
+  "max_absolute_mspe_error": 5.329070518200751e-15,
+  "max_relative_mspe_error": 1.3340895501742215e-15,
+  "per_method": [
+    {
+      "method": "CG-FPLS-code",
+      "tolerance": 5e-09,
+      "max_scaled_ise_error": 0.0,
+      "max_scaled_mspe_error": 1.1292914399995602e-15,
+      "replayed_replications": 15000,
+      "passed": true
+    },
+    {
+      "method": "Raw FPLS",
+      "tolerance": 0.005,
+      "max_scaled_ise_error": 0.0,
+      "max_scaled_mspe_error": 1.1748599010667815e-15,
+      "replayed_replications": 14555,
+      "passed": true
+    },
+    {
+      "method": "Arnoldi FPLS",
+      "tolerance": 5e-09,
+      "max_scaled_ise_error": 0.0,
+      "max_scaled_mspe_error": 1.2564428607338456e-15,
+      "replayed_replications": 15000,
+      "passed": true
+    },
+    {
+      "method": "FPCR",
+      "tolerance": 5e-09,
+      "max_scaled_ise_error": 0.0,
+      "max_scaled_mspe_error": 1.3340895501742215e-15,
+      "replayed_replications": 15000,
+      "passed": true
+    }
+  ],
+  "raw_replay_failure_count_by_model": [
+    0,
+    0,
+    0
+  ]
+}
