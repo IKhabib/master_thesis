@@ -1,0 +1,8 @@
+{
+  "configuration_resolved_sha256": "fda5b12a5ea1a3e94f9b3c57ecdb1246039fdc4a692cb75a60727f2efad8e2bf",
+  "configuration_source_sha256": "ca4d4cba67eaf7d78a9b1597dc82b4211fc85e31a4ef9f8adca01a5bd5dc2c8b",
+  "elapsed_seconds": 33.169123040977865,
+  "protocol_sha256": "839fa454053644f9c2ef46673a79ea1ca0974898da2d5b5d9e2e16650cba138b",
+  "stage": "full",
+  "status": "passed"
+}

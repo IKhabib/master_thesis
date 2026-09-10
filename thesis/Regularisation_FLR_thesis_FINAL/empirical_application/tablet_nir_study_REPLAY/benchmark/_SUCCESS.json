@@ -1,0 +1,24 @@
+{
+  "benchmark_label": "designated benchmark",
+  "bootstrap_replicates_per_scheme": 10000,
+  "bootstrap_schemes": [
+    "iid",
+    "moving_block_5",
+    "moving_block_10",
+    "moving_block_20"
+  ],
+  "methods": [
+    "CG-FPLS-code",
+    "Raw FPLS",
+    "Arnoldi FPLS",
+    "FPCR"
+  ],
+  "status": "passed",
+  "tablets": 460,
+  "variants": [
+    "primary_instrument1_full",
+    "sensitivity_instrument1_trim1798",
+    "sensitivity_instrument1_savgol_smooth",
+    "sensitivity_instrument2_full"
+  ]
+}

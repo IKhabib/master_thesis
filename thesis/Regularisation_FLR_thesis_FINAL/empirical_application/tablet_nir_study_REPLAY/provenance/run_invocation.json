@@ -1,0 +1,19 @@
+{
+  "archive": "/Users/khabibulloibadullaev/Desktop/STUDY_BISMILLAH/8th_semester/Master_Thesis/Functional_Regression/thesis/Regularisation_FLR_thesis_FINAL/empirical_application/dataset/nir_shootout_2002.mat_.zip",
+  "argv": [
+    "/Users/khabibulloibadullaev/miniforge3/envs/thesis/bin/python",
+    "run_tablet_nir_study.py",
+    "--stage",
+    "full",
+    "--archive",
+    "../dataset/nir_shootout_2002.mat_.zip",
+    "--output",
+    "../tablet_nir_study_REPLAY"
+  ],
+  "config": "/Users/khabibulloibadullaev/Desktop/STUDY_BISMILLAH/8th_semester/Master_Thesis/Functional_Regression/thesis/Regularisation_FLR_thesis_FINAL/empirical_application/code/spectroscopy_config.json",
+  "cwd": "/Users/khabibulloibadullaev/Desktop/STUDY_BISMILLAH/8th_semester/Master_Thesis/Functional_Regression/thesis/Regularisation_FLR_thesis_FINAL/empirical_application/code",
+  "output": "/Users/khabibulloibadullaev/Desktop/STUDY_BISMILLAH/8th_semester/Master_Thesis/Functional_Regression/thesis/Regularisation_FLR_thesis_FINAL/empirical_application/tablet_nir_study_REPLAY",
+  "protocol": "/Users/khabibulloibadullaev/Desktop/STUDY_BISMILLAH/8th_semester/Master_Thesis/Functional_Regression/thesis/Regularisation_FLR_thesis_FINAL/empirical_application/code/SPECTROSCOPY_PROTOCOL.md",
+  "stage": "full",
+  "timestamp_utc": "2026-09-10T14:27:39.525999+00:00"
+}

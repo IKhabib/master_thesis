@@ -5,7 +5,7 @@
 Chapter~\ref{chap:background} showed that functional linear regression leads
 to a compact-operator equation whose direct inverse is unstable.  This
 chapter develops the four regularised estimators used in the Monte Carlo
-study: FPCR, raw FPLS, Arnoldi FPLS, and the released-code CG--FPLS procedure
+study: FPCR, raw FPLS, Arnoldi FPLS, and the CG--FPLS procedure
 of \textcite{babii_carrasco_tsafack_2026}.  Particular attention is paid to a
 terminological point that otherwise causes confusion.  Classical functional
 PLS can be computed by a sequential score-and-deflation algorithm of NIPALS
@@ -18,7 +18,7 @@ every respect.
 
 To align the theoretical comparison with the computation, the definitions
 below use the same centring, discretisation, rank safeguards, and tuning
-conventions as the accompanying Python implementation.  Proofs of the
+conventions.  Proofs of the
 Krylov-space identities and variational characterisations are collected in
 Appendix~\ref{app:mathematical-proofs}.
 
@@ -28,7 +28,7 @@ Appendix~\ref{app:mathematical-proofs}.
 Let $X_i^c=X_i-\mu_X$ and $y_i=Y_i-\mu_Y$.  In an empirical application the
 unknown means would normally be replaced by their sample counterparts.  The
 controlled simulation designs impose $\mu_X=\mu_Y=0$, so the generated
-curves and responses enter the code directly and no intercept is estimated.
+curves and responses enter directly and no intercept is estimated.
 Define the empirical sampling operator
 $T_n:\mathcal H\rightarrow\mathbb R^n$ and its adjoint by
 \begin{align}
@@ -336,7 +336,7 @@ floating-point perturbations can then create large changes in $a$, despite
 the fact that the intended exact subspace remains well defined.
 
 The raw path is deliberately not repaired by a pseudoinverse or hidden
-orthogonalisation in the simulation code.  A component count is marked
+orthogonalisation in the simulation.  A component count is marked
 invalid if its normal-equation solve fails or produces non-finite values.
 Five-fold cross-validation is evaluated only on component counts valid in
 the full sample and every fold.  This makes numerical failure part of the
@@ -438,10 +438,10 @@ raw curve, invalidate candidate dimensions, and lead to a different selected
 component count.  The comparison therefore separates exact subspace
 equivalence from the behaviour of complete, tuned numerical procedures.
 
-\section{Released-code CG--FPLS}
+\section{Conjugate-Gradient FPLS}
 \label{sec:methods-cg}
 
-The fourth estimator follows the released-code construction of
+The fourth estimator follows the construction of
 \textcite{babii_carrasco_tsafack_2026}.  It searches over the same spaces
 $\widehat{\mathcal K}_m$ but defines the finite-$m$ iterate by
 \begin{equation}
@@ -480,7 +480,7 @@ where
     \label{eq:methods-moment-hankel-entries}
 \end{equation}
 Relative to \eqref{eq:methods-response-hankel-entries}, every operator power
-has shifted by one.  Hence the NIPALS/APLS and released-code CG estimates
+has shifted by one.  Hence the NIPALS/APLS and CG estimates
 generally differ before convergence.  Proposition
 \ref{prop:app-response-moment-krylov} proves these two characterisations.
 
@@ -511,15 +511,11 @@ For $m=0,1,\ldots$, the released recurrence is
     &=e_{m+1}+\gamma_md_m.
     \label{eq:methods-cg-direction-update}
 \end{align}
-The paper's and code's name \emph{CG--FPLS} is retained throughout the
-thesis.  The important reproducibility point is the displayed recurrence,
-not a generic software routine named \texttt{cg}.  Its short recurrence
-avoids the explicit, ill-conditioned power-basis normal equations.  In
+Its short recurrence avoids the explicit, ill-conditioned power-basis normal equations.  It should be noted that in
 standard numerical-linear-algebra terminology, the residual-minimising
 updates in \eqref{eq:methods-cg-alpha}--\eqref{eq:methods-cg-direction-update}
 are the conjugate-residual recurrence, rather than the textbook energy-norm
-CG recurrence used in Section~\ref{sec:methods-cg-versus-sd}; the
-nomenclature here follows the paper and released code.  The displayed
+CG recurrence used in Section~\ref{sec:methods-cg-versus-sd}.  The displayed
 updates are well defined in exact arithmetic while their quadratic-form
 numerator and squared-norm denominator are positive.  The implementation
 symmetrises $\widehat K$ and freezes the remaining path at the last valid
@@ -548,7 +544,7 @@ The theoretical discrepancy rule in
 \end{equation}
 Here $\sigma^2=\mathbb E\varepsilon^2$ in the homoskedastic simulation
 design.  This ideal rule states the theoretical benchmark.  Because $\sigma^2$ and
-$\mathbb E\|X^c\|^2$ are not supplied to an estimator, the implemented Python
+$\mathbb E\|X^c\|^2$ are not supplied to an estimator, the implemented
 workflow instead uses the plug-in scale
 \begin{equation}
     \widehat\nu_n
@@ -573,10 +569,7 @@ reached.  Here $\tau>1$ is a safety multiplier, $\delta\in(0,1)$ controls
 the probability bound underlying the rule, and $\widehat\sigma^2$ is the
 mean squared response residual from an internal FPCR pilot.  The pilot
 dimension is chosen by moment-space GCV solely to estimate the noise level;
-it does not enter the method comparison as a separate estimator.  The code
-also enforces at least one component, whereas the ideal definition permits
-$m^\circ=0$ if the initial residual already lies below the population
-threshold.
+it does not enter the method comparison as a separate estimator.
 
 \section{Why conjugate directions improve on steepest descent}
 \label{sec:methods-cg-versus-sd}
@@ -714,7 +707,7 @@ and restricted objective coincide.
         & Response least squares solved by QR
         & Same exact fixed-$m$ fit as raw FPLS; five-fold CV applied separately \\
 
-        Released-code CG--FPLS
+        CG--FPLS
         & Recursive directions spanning $\widehat{\mathcal K}_m$
         & Moment-residual least squares
         & Same nested spaces but generally a different finite-$m$ iterate;

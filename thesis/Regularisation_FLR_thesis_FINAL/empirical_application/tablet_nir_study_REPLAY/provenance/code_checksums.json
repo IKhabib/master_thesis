@@ -1,0 +1,20 @@
+{
+  "configuration_resolved_sha256": "fda5b12a5ea1a3e94f9b3c57ecdb1246039fdc4a692cb75a60727f2efad8e2bf",
+  "configuration_source_sha256": "ca4d4cba67eaf7d78a9b1597dc82b4211fc85e31a4ef9f8adca01a5bd5dc2c8b",
+  "git": {
+    "branch": "main",
+    "commit": "26198aa84537af9bd77985b4d25c56671dd6fce0",
+    "remote_origin": "git@github.com:IKhabib/master_thesis.git",
+    "status_porcelain": "M ../../.DS_Store\n M ../../thesis/frontmatter/abstract.tex\n?? __pycache__/"
+  },
+  "protocol_sha256": "839fa454053644f9c2ef46673a79ea1ca0974898da2d5b5d9e2e16650cba138b",
+  "source_files": {
+    "TABLET_NIR_README.md": "50b79939ef111fce461ed407bb62037c80d3da83b27fd787ad5bffd162414620",
+    "four_method_core.py": "3dc6ceb556e9ec61d6dc5959afb029af7a66565252f80f5386c465ff5105f975",
+    "make_tablet_nir_figures.py": "996a5e0641b038bf1d699213ed474f617e9b7980e1488473d3fb9ec723af9ec8",
+    "requirements-spectroscopy.txt": "4f4f7f546d1b14bda64ad51db30554f59bbd562096a96ff35340d76f754de81e",
+    "run_tablet_nir_study.py": "dada2566cd3d0523c718d934acbd1318ad0d3336b7b02a49e1f75b07e53838a8",
+    "tablet_nir_core.py": "b47cf9d62cdaeec3f94b5e8bcf5218f9a8a311e4664ae835c9b0265ba4e69b72",
+    "test_tablet_nir_core.py": "3202484189443bde219c0c0257802a0d7a21abe32742abf6b4a1a0d24211c7f0"
+  }
+}

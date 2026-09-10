@@ -7,12 +7,11 @@ This chapter specifies the experiment used to compare the four estimators
 developed in Chapter~\ref{chap:methods}.  Its purpose is to separate the
 scientific design from the numerical findings.  The data-generating process,
 component-selection rules, diagnostic thresholds, loss functions, and random
-number streams recorded here define the frozen final experiment; none is
-redefined using the outcomes reported in the next chapter.  The design retains
+number streams recorded here define the simulation setting.  The design retains
 the three functional linear models and principal numerical settings used in
 the replication study of \textcite{babii_carrasco_tsafack_2026}, while
 restricting the comparison to the four estimators relevant to this thesis:
-released-code CG--FPLS, raw FPLS, Arnoldi FPLS, and FPCR.
+CG--FPLS, raw FPLS, Arnoldi FPLS, and FPCR.
 
 The three models form controlled comparisons.  Model~2 changes only the slope
 relative to Model~1, whereas Model~3 changes only the score-variance sequence
@@ -42,12 +41,12 @@ by the equal-weight discrete inner product
     =\frac1T\sum_{t=1}^{T}f(s_t)g(s_t).
     \label{eq:simulation-inner-product}
 \end{equation}
-This is the endpoint average used in the code, rather than a trapezoidal rule.
+This is the endpoint average used in the simulation.
 Consequently, every displayed finite-sample formula is interpreted under the
 same numerical geometry as the estimators.
 
-The fixed dictionary contains $J=100$ functions.  Following the indexing in
-the released replication code, it is
+Generated dataset contains $J=100$ functions.  Following the indexing in
+the our simulation, it is
 \begin{equation}
     \phi_1(s)=1,
     \qquad
@@ -55,7 +54,7 @@ the released replication code, it is
     \quad j=2,\ldots,J.
     \label{eq:simulation-basis}
 \end{equation}
-The indexing in \eqref{eq:simulation-basis} is intentional.  The code first
+The indexing in \eqref{eq:simulation-basis} is intentional.  The simulation first
 constructs cosine frequencies $1,\ldots,J$ and then replaces its first column
 by the constant function; hence $\sqrt{2}\cos(\pi s)$ is not included.  Stating
 this convention explicitly prevents an apparently harmless re-indexing from
@@ -237,7 +236,7 @@ response.  In particular,
     &=\sum_{j=1}^{J}q_j+\sigma^2.
     \label{eq:simulation-response-variance}
 \end{align}
-Appendix Proposition~\ref{prop:app-simulation-variance} proves these identities.
+Detailed proof of these identities is represented in Appendix Proposition~\ref{prop:app-simulation-variance}.
 The signal-to-noise ratio is defined as
 \begin{equation}
     \operatorname{SNR}
@@ -517,7 +516,7 @@ Thus the oracle noise floor is $\sigma^2=1$, while the second term is excess
 prediction risk.  Equation \eqref{eq:simulation-mspe-risk} is the discrete
 counterpart of Appendix Proposition~\ref{prop:app-risk-identity}.
 
-For every model--method pair, the archive reports the mean and its Monte Carlo
+For every model--method pair, simulation result illustrates the mean and its Monte Carlo
 standard error, the median, the $90$th and $99$th percentiles, and the maximum
 of both ISE and MSPE.  If $L_1,\ldots,L_{R_f}$ are the finite values of a loss,
 the reported standard error is
@@ -532,9 +531,7 @@ error distributions extremely right-skewed.
 
 \subsection{Bias--variance decomposition}
 
-The deterministic replay stage reconstructs each selected slope whenever the
-fit is numerically reproducible.  Unstable raw fits are omitted only from
-replay-based function-valued diagnostics---the bias--variance decomposition,
+Unstable raw fits are omitted only from function-valued diagnostics---the bias--variance decomposition,
 basis-coefficient distributions, pointwise distributions, and normal
 quantile--quantile plots.  They remain in every primary ISE and MSPE summary.
 With
@@ -555,12 +552,7 @@ Appendix Proposition~\ref{prop:app-mc-decomposition} proves the finite-$R$
 identity.  The factor $R^{-1}$, rather than $(R-1)^{-1}$, is used so the two
 terms add exactly to the Monte Carlo mean squared error.
 
-The primary risk summaries retain every finite replication.  A secondary
-paired raw-stable subset is used only for a like-for-like bias--variance
-display when the selected raw power-basis fit can be reconstructed reliably.
-Whenever that subset is used, the same replications are retained for all four
-methods and the restriction is labelled explicitly.  It does not replace the
-full-sample ISE or MSPE comparison.
+The main comparison uses the full set of results to assess slope estimation and prediction accuracy. An additional bias–variance analysis considers only cases where raw FPLS produces a numerically stable fit. To keep this comparison fair, all four methods are assessed using those same cases. This smaller set is clearly identified and provides an additional perspective; it does not replace the main comparison.
 
 \subsection{Complexity, instability, and tail events}
 
@@ -601,15 +593,7 @@ FPCR are flagged only if ISE or MSPE is non-finite because their relevant path
 diagnostics are already governed by the recurrence and positive-eigenvalue
 checks.
 
-Finally, a finite ISE or MSPE value is marked as an extreme tail event if it
-exceeds $100$ times the positive median for its own model--method pair.  This
-threshold is descriptive rather than a deletion rule: extreme observations
-remain in means, maxima, archives, and full-distribution figures.  Reporting
-failure rates, instability rates, and tail counts alongside robust summaries
-prevents a numerically fragile procedure from appearing reliable merely
-because its typical replication is accurate.  Because these classifications
-must themselves be reproducible, the random streams and replay rules are fixed
-as carefully as the losses and thresholds.
+An estimation or prediction error is considered extreme if it exceeds 100 times the positive median error for the same method and model. These unusually large errors remain in the analysis, including the averages, maximum values, and full-distribution figures. Reporting them alongside failure and instability rates shows whether a method that usually performs well also suffers from occasional serious problems. The simulation settings and checking procedures are kept fixed so that the analysis can be reproduced.
 
 \section{Randomness and reproducibility}
 \label{sec:simulation-reproducibility}
@@ -622,23 +606,7 @@ replay.  The four methods share the training and test data, and raw and
 Arnoldi FPLS additionally share the folds.  Models do not share their realised
 samples.
 
-The final plotting stage deterministically regenerates selected estimates
-from the seed, model definition, and archived component counts before checking
-their ISE and MSPE against the frozen archive.  This replay validation is an
-audit of internal consistency, not a second simulation or an exclusion rule.
-The exact command, file manifest, validation tolerances, and environment fields
-to record are kept in the accompanying reproducibility documentation rather
-than in the statistical argument.
 
-Exact reproduction of the stabilised methods is expected on a common software
-stack.  Small platform differences are more plausible for raw FPLS because
-ill-conditioned linear algebra is deliberately part of the method being
-diagnosed; the archived configuration and validation report make those
-differences visible.
-
-Because the models isolate slope and covariance changes while every method
-receives the same samples, the results can separate statistical regularisation
-from numerical implementation.  The fixed tuning and replay rules also ensure
-that adverse tail behaviour remains part of the comparison.
-Chapter~\ref{chap:estimation-results} examines how those mechanisms appear in
+The models vary the slope and covariance structure in a controlled way, while all methods use the same data. This helps distinguish the effects of regularisation from those of numerical computation. Each method follows fixed tuning and evaluation rules, and unusually large errors remain part of the comparison.
+Chapter~\ref{chap:estimation-results} examines how they appear in
 slope recovery and prediction.

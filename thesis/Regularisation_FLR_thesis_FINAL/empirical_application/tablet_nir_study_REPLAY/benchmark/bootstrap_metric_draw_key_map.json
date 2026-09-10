@@ -1,0 +1,1538 @@
+{
+  "primary_instrument1_full__iid__Arnoldi_FPLS__bias": {
+    "method": "Arnoldi FPLS",
+    "metric": "bias",
+    "scheme": "iid",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__iid__Arnoldi_FPLS__mae": {
+    "method": "Arnoldi FPLS",
+    "metric": "mae",
+    "scheme": "iid",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__iid__Arnoldi_FPLS__r2": {
+    "method": "Arnoldi FPLS",
+    "metric": "r2",
+    "scheme": "iid",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__iid__Arnoldi_FPLS__rmse": {
+    "method": "Arnoldi FPLS",
+    "metric": "rmse",
+    "scheme": "iid",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__iid__CG_FPLS_code__bias": {
+    "method": "CG-FPLS-code",
+    "metric": "bias",
+    "scheme": "iid",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__iid__CG_FPLS_code__mae": {
+    "method": "CG-FPLS-code",
+    "metric": "mae",
+    "scheme": "iid",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__iid__CG_FPLS_code__r2": {
+    "method": "CG-FPLS-code",
+    "metric": "r2",
+    "scheme": "iid",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__iid__CG_FPLS_code__rmse": {
+    "method": "CG-FPLS-code",
+    "metric": "rmse",
+    "scheme": "iid",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__iid__FPCR__bias": {
+    "method": "FPCR",
+    "metric": "bias",
+    "scheme": "iid",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__iid__FPCR__mae": {
+    "method": "FPCR",
+    "metric": "mae",
+    "scheme": "iid",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__iid__FPCR__r2": {
+    "method": "FPCR",
+    "metric": "r2",
+    "scheme": "iid",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__iid__FPCR__rmse": {
+    "method": "FPCR",
+    "metric": "rmse",
+    "scheme": "iid",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__iid__Raw_FPLS__bias": {
+    "method": "Raw FPLS",
+    "metric": "bias",
+    "scheme": "iid",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__iid__Raw_FPLS__mae": {
+    "method": "Raw FPLS",
+    "metric": "mae",
+    "scheme": "iid",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__iid__Raw_FPLS__r2": {
+    "method": "Raw FPLS",
+    "metric": "r2",
+    "scheme": "iid",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__iid__Raw_FPLS__rmse": {
+    "method": "Raw FPLS",
+    "metric": "rmse",
+    "scheme": "iid",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_10__Arnoldi_FPLS__bias": {
+    "method": "Arnoldi FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_10",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_10__Arnoldi_FPLS__mae": {
+    "method": "Arnoldi FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_10",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_10__Arnoldi_FPLS__r2": {
+    "method": "Arnoldi FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_10",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_10__Arnoldi_FPLS__rmse": {
+    "method": "Arnoldi FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_10",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_10__CG_FPLS_code__bias": {
+    "method": "CG-FPLS-code",
+    "metric": "bias",
+    "scheme": "moving_block_10",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_10__CG_FPLS_code__mae": {
+    "method": "CG-FPLS-code",
+    "metric": "mae",
+    "scheme": "moving_block_10",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_10__CG_FPLS_code__r2": {
+    "method": "CG-FPLS-code",
+    "metric": "r2",
+    "scheme": "moving_block_10",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_10__CG_FPLS_code__rmse": {
+    "method": "CG-FPLS-code",
+    "metric": "rmse",
+    "scheme": "moving_block_10",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_10__FPCR__bias": {
+    "method": "FPCR",
+    "metric": "bias",
+    "scheme": "moving_block_10",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_10__FPCR__mae": {
+    "method": "FPCR",
+    "metric": "mae",
+    "scheme": "moving_block_10",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_10__FPCR__r2": {
+    "method": "FPCR",
+    "metric": "r2",
+    "scheme": "moving_block_10",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_10__FPCR__rmse": {
+    "method": "FPCR",
+    "metric": "rmse",
+    "scheme": "moving_block_10",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_10__Raw_FPLS__bias": {
+    "method": "Raw FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_10",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_10__Raw_FPLS__mae": {
+    "method": "Raw FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_10",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_10__Raw_FPLS__r2": {
+    "method": "Raw FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_10",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_10__Raw_FPLS__rmse": {
+    "method": "Raw FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_10",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_20__Arnoldi_FPLS__bias": {
+    "method": "Arnoldi FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_20",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_20__Arnoldi_FPLS__mae": {
+    "method": "Arnoldi FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_20",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_20__Arnoldi_FPLS__r2": {
+    "method": "Arnoldi FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_20",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_20__Arnoldi_FPLS__rmse": {
+    "method": "Arnoldi FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_20",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_20__CG_FPLS_code__bias": {
+    "method": "CG-FPLS-code",
+    "metric": "bias",
+    "scheme": "moving_block_20",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_20__CG_FPLS_code__mae": {
+    "method": "CG-FPLS-code",
+    "metric": "mae",
+    "scheme": "moving_block_20",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_20__CG_FPLS_code__r2": {
+    "method": "CG-FPLS-code",
+    "metric": "r2",
+    "scheme": "moving_block_20",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_20__CG_FPLS_code__rmse": {
+    "method": "CG-FPLS-code",
+    "metric": "rmse",
+    "scheme": "moving_block_20",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_20__FPCR__bias": {
+    "method": "FPCR",
+    "metric": "bias",
+    "scheme": "moving_block_20",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_20__FPCR__mae": {
+    "method": "FPCR",
+    "metric": "mae",
+    "scheme": "moving_block_20",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_20__FPCR__r2": {
+    "method": "FPCR",
+    "metric": "r2",
+    "scheme": "moving_block_20",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_20__FPCR__rmse": {
+    "method": "FPCR",
+    "metric": "rmse",
+    "scheme": "moving_block_20",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_20__Raw_FPLS__bias": {
+    "method": "Raw FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_20",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_20__Raw_FPLS__mae": {
+    "method": "Raw FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_20",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_20__Raw_FPLS__r2": {
+    "method": "Raw FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_20",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_20__Raw_FPLS__rmse": {
+    "method": "Raw FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_20",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_5__Arnoldi_FPLS__bias": {
+    "method": "Arnoldi FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_5",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_5__Arnoldi_FPLS__mae": {
+    "method": "Arnoldi FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_5",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_5__Arnoldi_FPLS__r2": {
+    "method": "Arnoldi FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_5",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_5__Arnoldi_FPLS__rmse": {
+    "method": "Arnoldi FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_5",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_5__CG_FPLS_code__bias": {
+    "method": "CG-FPLS-code",
+    "metric": "bias",
+    "scheme": "moving_block_5",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_5__CG_FPLS_code__mae": {
+    "method": "CG-FPLS-code",
+    "metric": "mae",
+    "scheme": "moving_block_5",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_5__CG_FPLS_code__r2": {
+    "method": "CG-FPLS-code",
+    "metric": "r2",
+    "scheme": "moving_block_5",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_5__CG_FPLS_code__rmse": {
+    "method": "CG-FPLS-code",
+    "metric": "rmse",
+    "scheme": "moving_block_5",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_5__FPCR__bias": {
+    "method": "FPCR",
+    "metric": "bias",
+    "scheme": "moving_block_5",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_5__FPCR__mae": {
+    "method": "FPCR",
+    "metric": "mae",
+    "scheme": "moving_block_5",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_5__FPCR__r2": {
+    "method": "FPCR",
+    "metric": "r2",
+    "scheme": "moving_block_5",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_5__FPCR__rmse": {
+    "method": "FPCR",
+    "metric": "rmse",
+    "scheme": "moving_block_5",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_5__Raw_FPLS__bias": {
+    "method": "Raw FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_5",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_5__Raw_FPLS__mae": {
+    "method": "Raw FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_5",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_5__Raw_FPLS__r2": {
+    "method": "Raw FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_5",
+    "variant": "primary_instrument1_full"
+  },
+  "primary_instrument1_full__moving_block_5__Raw_FPLS__rmse": {
+    "method": "Raw FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_5",
+    "variant": "primary_instrument1_full"
+  },
+  "sensitivity_instrument1_savgol_smooth__iid__Arnoldi_FPLS__bias": {
+    "method": "Arnoldi FPLS",
+    "metric": "bias",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__iid__Arnoldi_FPLS__mae": {
+    "method": "Arnoldi FPLS",
+    "metric": "mae",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__iid__Arnoldi_FPLS__r2": {
+    "method": "Arnoldi FPLS",
+    "metric": "r2",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__iid__Arnoldi_FPLS__rmse": {
+    "method": "Arnoldi FPLS",
+    "metric": "rmse",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__iid__CG_FPLS_code__bias": {
+    "method": "CG-FPLS-code",
+    "metric": "bias",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__iid__CG_FPLS_code__mae": {
+    "method": "CG-FPLS-code",
+    "metric": "mae",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__iid__CG_FPLS_code__r2": {
+    "method": "CG-FPLS-code",
+    "metric": "r2",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__iid__CG_FPLS_code__rmse": {
+    "method": "CG-FPLS-code",
+    "metric": "rmse",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__iid__FPCR__bias": {
+    "method": "FPCR",
+    "metric": "bias",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__iid__FPCR__mae": {
+    "method": "FPCR",
+    "metric": "mae",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__iid__FPCR__r2": {
+    "method": "FPCR",
+    "metric": "r2",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__iid__FPCR__rmse": {
+    "method": "FPCR",
+    "metric": "rmse",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__iid__Raw_FPLS__bias": {
+    "method": "Raw FPLS",
+    "metric": "bias",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__iid__Raw_FPLS__mae": {
+    "method": "Raw FPLS",
+    "metric": "mae",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__iid__Raw_FPLS__r2": {
+    "method": "Raw FPLS",
+    "metric": "r2",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__iid__Raw_FPLS__rmse": {
+    "method": "Raw FPLS",
+    "metric": "rmse",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_10__Arnoldi_FPLS__bias": {
+    "method": "Arnoldi FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_10__Arnoldi_FPLS__mae": {
+    "method": "Arnoldi FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_10__Arnoldi_FPLS__r2": {
+    "method": "Arnoldi FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_10__Arnoldi_FPLS__rmse": {
+    "method": "Arnoldi FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_10__CG_FPLS_code__bias": {
+    "method": "CG-FPLS-code",
+    "metric": "bias",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_10__CG_FPLS_code__mae": {
+    "method": "CG-FPLS-code",
+    "metric": "mae",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_10__CG_FPLS_code__r2": {
+    "method": "CG-FPLS-code",
+    "metric": "r2",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_10__CG_FPLS_code__rmse": {
+    "method": "CG-FPLS-code",
+    "metric": "rmse",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_10__FPCR__bias": {
+    "method": "FPCR",
+    "metric": "bias",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_10__FPCR__mae": {
+    "method": "FPCR",
+    "metric": "mae",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_10__FPCR__r2": {
+    "method": "FPCR",
+    "metric": "r2",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_10__FPCR__rmse": {
+    "method": "FPCR",
+    "metric": "rmse",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_10__Raw_FPLS__bias": {
+    "method": "Raw FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_10__Raw_FPLS__mae": {
+    "method": "Raw FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_10__Raw_FPLS__r2": {
+    "method": "Raw FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_10__Raw_FPLS__rmse": {
+    "method": "Raw FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_20__Arnoldi_FPLS__bias": {
+    "method": "Arnoldi FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_20__Arnoldi_FPLS__mae": {
+    "method": "Arnoldi FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_20__Arnoldi_FPLS__r2": {
+    "method": "Arnoldi FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_20__Arnoldi_FPLS__rmse": {
+    "method": "Arnoldi FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_20__CG_FPLS_code__bias": {
+    "method": "CG-FPLS-code",
+    "metric": "bias",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_20__CG_FPLS_code__mae": {
+    "method": "CG-FPLS-code",
+    "metric": "mae",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_20__CG_FPLS_code__r2": {
+    "method": "CG-FPLS-code",
+    "metric": "r2",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_20__CG_FPLS_code__rmse": {
+    "method": "CG-FPLS-code",
+    "metric": "rmse",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_20__FPCR__bias": {
+    "method": "FPCR",
+    "metric": "bias",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_20__FPCR__mae": {
+    "method": "FPCR",
+    "metric": "mae",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_20__FPCR__r2": {
+    "method": "FPCR",
+    "metric": "r2",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_20__FPCR__rmse": {
+    "method": "FPCR",
+    "metric": "rmse",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_20__Raw_FPLS__bias": {
+    "method": "Raw FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_20__Raw_FPLS__mae": {
+    "method": "Raw FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_20__Raw_FPLS__r2": {
+    "method": "Raw FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_20__Raw_FPLS__rmse": {
+    "method": "Raw FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_5__Arnoldi_FPLS__bias": {
+    "method": "Arnoldi FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_5__Arnoldi_FPLS__mae": {
+    "method": "Arnoldi FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_5__Arnoldi_FPLS__r2": {
+    "method": "Arnoldi FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_5__Arnoldi_FPLS__rmse": {
+    "method": "Arnoldi FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_5__CG_FPLS_code__bias": {
+    "method": "CG-FPLS-code",
+    "metric": "bias",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_5__CG_FPLS_code__mae": {
+    "method": "CG-FPLS-code",
+    "metric": "mae",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_5__CG_FPLS_code__r2": {
+    "method": "CG-FPLS-code",
+    "metric": "r2",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_5__CG_FPLS_code__rmse": {
+    "method": "CG-FPLS-code",
+    "metric": "rmse",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_5__FPCR__bias": {
+    "method": "FPCR",
+    "metric": "bias",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_5__FPCR__mae": {
+    "method": "FPCR",
+    "metric": "mae",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_5__FPCR__r2": {
+    "method": "FPCR",
+    "metric": "r2",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_5__FPCR__rmse": {
+    "method": "FPCR",
+    "metric": "rmse",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_5__Raw_FPLS__bias": {
+    "method": "Raw FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_5__Raw_FPLS__mae": {
+    "method": "Raw FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_5__Raw_FPLS__r2": {
+    "method": "Raw FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_savgol_smooth__moving_block_5__Raw_FPLS__rmse": {
+    "method": "Raw FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_savgol_smooth"
+  },
+  "sensitivity_instrument1_trim1798__iid__Arnoldi_FPLS__bias": {
+    "method": "Arnoldi FPLS",
+    "metric": "bias",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__iid__Arnoldi_FPLS__mae": {
+    "method": "Arnoldi FPLS",
+    "metric": "mae",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__iid__Arnoldi_FPLS__r2": {
+    "method": "Arnoldi FPLS",
+    "metric": "r2",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__iid__Arnoldi_FPLS__rmse": {
+    "method": "Arnoldi FPLS",
+    "metric": "rmse",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__iid__CG_FPLS_code__bias": {
+    "method": "CG-FPLS-code",
+    "metric": "bias",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__iid__CG_FPLS_code__mae": {
+    "method": "CG-FPLS-code",
+    "metric": "mae",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__iid__CG_FPLS_code__r2": {
+    "method": "CG-FPLS-code",
+    "metric": "r2",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__iid__CG_FPLS_code__rmse": {
+    "method": "CG-FPLS-code",
+    "metric": "rmse",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__iid__FPCR__bias": {
+    "method": "FPCR",
+    "metric": "bias",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__iid__FPCR__mae": {
+    "method": "FPCR",
+    "metric": "mae",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__iid__FPCR__r2": {
+    "method": "FPCR",
+    "metric": "r2",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__iid__FPCR__rmse": {
+    "method": "FPCR",
+    "metric": "rmse",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__iid__Raw_FPLS__bias": {
+    "method": "Raw FPLS",
+    "metric": "bias",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__iid__Raw_FPLS__mae": {
+    "method": "Raw FPLS",
+    "metric": "mae",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__iid__Raw_FPLS__r2": {
+    "method": "Raw FPLS",
+    "metric": "r2",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__iid__Raw_FPLS__rmse": {
+    "method": "Raw FPLS",
+    "metric": "rmse",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_10__Arnoldi_FPLS__bias": {
+    "method": "Arnoldi FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_10__Arnoldi_FPLS__mae": {
+    "method": "Arnoldi FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_10__Arnoldi_FPLS__r2": {
+    "method": "Arnoldi FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_10__Arnoldi_FPLS__rmse": {
+    "method": "Arnoldi FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_10__CG_FPLS_code__bias": {
+    "method": "CG-FPLS-code",
+    "metric": "bias",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_10__CG_FPLS_code__mae": {
+    "method": "CG-FPLS-code",
+    "metric": "mae",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_10__CG_FPLS_code__r2": {
+    "method": "CG-FPLS-code",
+    "metric": "r2",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_10__CG_FPLS_code__rmse": {
+    "method": "CG-FPLS-code",
+    "metric": "rmse",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_10__FPCR__bias": {
+    "method": "FPCR",
+    "metric": "bias",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_10__FPCR__mae": {
+    "method": "FPCR",
+    "metric": "mae",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_10__FPCR__r2": {
+    "method": "FPCR",
+    "metric": "r2",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_10__FPCR__rmse": {
+    "method": "FPCR",
+    "metric": "rmse",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_10__Raw_FPLS__bias": {
+    "method": "Raw FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_10__Raw_FPLS__mae": {
+    "method": "Raw FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_10__Raw_FPLS__r2": {
+    "method": "Raw FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_10__Raw_FPLS__rmse": {
+    "method": "Raw FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_20__Arnoldi_FPLS__bias": {
+    "method": "Arnoldi FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_20__Arnoldi_FPLS__mae": {
+    "method": "Arnoldi FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_20__Arnoldi_FPLS__r2": {
+    "method": "Arnoldi FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_20__Arnoldi_FPLS__rmse": {
+    "method": "Arnoldi FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_20__CG_FPLS_code__bias": {
+    "method": "CG-FPLS-code",
+    "metric": "bias",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_20__CG_FPLS_code__mae": {
+    "method": "CG-FPLS-code",
+    "metric": "mae",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_20__CG_FPLS_code__r2": {
+    "method": "CG-FPLS-code",
+    "metric": "r2",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_20__CG_FPLS_code__rmse": {
+    "method": "CG-FPLS-code",
+    "metric": "rmse",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_20__FPCR__bias": {
+    "method": "FPCR",
+    "metric": "bias",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_20__FPCR__mae": {
+    "method": "FPCR",
+    "metric": "mae",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_20__FPCR__r2": {
+    "method": "FPCR",
+    "metric": "r2",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_20__FPCR__rmse": {
+    "method": "FPCR",
+    "metric": "rmse",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_20__Raw_FPLS__bias": {
+    "method": "Raw FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_20__Raw_FPLS__mae": {
+    "method": "Raw FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_20__Raw_FPLS__r2": {
+    "method": "Raw FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_20__Raw_FPLS__rmse": {
+    "method": "Raw FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_5__Arnoldi_FPLS__bias": {
+    "method": "Arnoldi FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_5__Arnoldi_FPLS__mae": {
+    "method": "Arnoldi FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_5__Arnoldi_FPLS__r2": {
+    "method": "Arnoldi FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_5__Arnoldi_FPLS__rmse": {
+    "method": "Arnoldi FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_5__CG_FPLS_code__bias": {
+    "method": "CG-FPLS-code",
+    "metric": "bias",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_5__CG_FPLS_code__mae": {
+    "method": "CG-FPLS-code",
+    "metric": "mae",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_5__CG_FPLS_code__r2": {
+    "method": "CG-FPLS-code",
+    "metric": "r2",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_5__CG_FPLS_code__rmse": {
+    "method": "CG-FPLS-code",
+    "metric": "rmse",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_5__FPCR__bias": {
+    "method": "FPCR",
+    "metric": "bias",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_5__FPCR__mae": {
+    "method": "FPCR",
+    "metric": "mae",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_5__FPCR__r2": {
+    "method": "FPCR",
+    "metric": "r2",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_5__FPCR__rmse": {
+    "method": "FPCR",
+    "metric": "rmse",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_5__Raw_FPLS__bias": {
+    "method": "Raw FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_5__Raw_FPLS__mae": {
+    "method": "Raw FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_5__Raw_FPLS__r2": {
+    "method": "Raw FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument1_trim1798__moving_block_5__Raw_FPLS__rmse": {
+    "method": "Raw FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument1_trim1798"
+  },
+  "sensitivity_instrument2_full__iid__Arnoldi_FPLS__bias": {
+    "method": "Arnoldi FPLS",
+    "metric": "bias",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__iid__Arnoldi_FPLS__mae": {
+    "method": "Arnoldi FPLS",
+    "metric": "mae",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__iid__Arnoldi_FPLS__r2": {
+    "method": "Arnoldi FPLS",
+    "metric": "r2",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__iid__Arnoldi_FPLS__rmse": {
+    "method": "Arnoldi FPLS",
+    "metric": "rmse",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__iid__CG_FPLS_code__bias": {
+    "method": "CG-FPLS-code",
+    "metric": "bias",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__iid__CG_FPLS_code__mae": {
+    "method": "CG-FPLS-code",
+    "metric": "mae",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__iid__CG_FPLS_code__r2": {
+    "method": "CG-FPLS-code",
+    "metric": "r2",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__iid__CG_FPLS_code__rmse": {
+    "method": "CG-FPLS-code",
+    "metric": "rmse",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__iid__FPCR__bias": {
+    "method": "FPCR",
+    "metric": "bias",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__iid__FPCR__mae": {
+    "method": "FPCR",
+    "metric": "mae",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__iid__FPCR__r2": {
+    "method": "FPCR",
+    "metric": "r2",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__iid__FPCR__rmse": {
+    "method": "FPCR",
+    "metric": "rmse",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__iid__Raw_FPLS__bias": {
+    "method": "Raw FPLS",
+    "metric": "bias",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__iid__Raw_FPLS__mae": {
+    "method": "Raw FPLS",
+    "metric": "mae",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__iid__Raw_FPLS__r2": {
+    "method": "Raw FPLS",
+    "metric": "r2",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__iid__Raw_FPLS__rmse": {
+    "method": "Raw FPLS",
+    "metric": "rmse",
+    "scheme": "iid",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_10__Arnoldi_FPLS__bias": {
+    "method": "Arnoldi FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_10__Arnoldi_FPLS__mae": {
+    "method": "Arnoldi FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_10__Arnoldi_FPLS__r2": {
+    "method": "Arnoldi FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_10__Arnoldi_FPLS__rmse": {
+    "method": "Arnoldi FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_10__CG_FPLS_code__bias": {
+    "method": "CG-FPLS-code",
+    "metric": "bias",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_10__CG_FPLS_code__mae": {
+    "method": "CG-FPLS-code",
+    "metric": "mae",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_10__CG_FPLS_code__r2": {
+    "method": "CG-FPLS-code",
+    "metric": "r2",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_10__CG_FPLS_code__rmse": {
+    "method": "CG-FPLS-code",
+    "metric": "rmse",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_10__FPCR__bias": {
+    "method": "FPCR",
+    "metric": "bias",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_10__FPCR__mae": {
+    "method": "FPCR",
+    "metric": "mae",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_10__FPCR__r2": {
+    "method": "FPCR",
+    "metric": "r2",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_10__FPCR__rmse": {
+    "method": "FPCR",
+    "metric": "rmse",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_10__Raw_FPLS__bias": {
+    "method": "Raw FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_10__Raw_FPLS__mae": {
+    "method": "Raw FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_10__Raw_FPLS__r2": {
+    "method": "Raw FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_10__Raw_FPLS__rmse": {
+    "method": "Raw FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_10",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_20__Arnoldi_FPLS__bias": {
+    "method": "Arnoldi FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_20__Arnoldi_FPLS__mae": {
+    "method": "Arnoldi FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_20__Arnoldi_FPLS__r2": {
+    "method": "Arnoldi FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_20__Arnoldi_FPLS__rmse": {
+    "method": "Arnoldi FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_20__CG_FPLS_code__bias": {
+    "method": "CG-FPLS-code",
+    "metric": "bias",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_20__CG_FPLS_code__mae": {
+    "method": "CG-FPLS-code",
+    "metric": "mae",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_20__CG_FPLS_code__r2": {
+    "method": "CG-FPLS-code",
+    "metric": "r2",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_20__CG_FPLS_code__rmse": {
+    "method": "CG-FPLS-code",
+    "metric": "rmse",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_20__FPCR__bias": {
+    "method": "FPCR",
+    "metric": "bias",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_20__FPCR__mae": {
+    "method": "FPCR",
+    "metric": "mae",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_20__FPCR__r2": {
+    "method": "FPCR",
+    "metric": "r2",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_20__FPCR__rmse": {
+    "method": "FPCR",
+    "metric": "rmse",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_20__Raw_FPLS__bias": {
+    "method": "Raw FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_20__Raw_FPLS__mae": {
+    "method": "Raw FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_20__Raw_FPLS__r2": {
+    "method": "Raw FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_20__Raw_FPLS__rmse": {
+    "method": "Raw FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_20",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_5__Arnoldi_FPLS__bias": {
+    "method": "Arnoldi FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_5__Arnoldi_FPLS__mae": {
+    "method": "Arnoldi FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_5__Arnoldi_FPLS__r2": {
+    "method": "Arnoldi FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_5__Arnoldi_FPLS__rmse": {
+    "method": "Arnoldi FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_5__CG_FPLS_code__bias": {
+    "method": "CG-FPLS-code",
+    "metric": "bias",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_5__CG_FPLS_code__mae": {
+    "method": "CG-FPLS-code",
+    "metric": "mae",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_5__CG_FPLS_code__r2": {
+    "method": "CG-FPLS-code",
+    "metric": "r2",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_5__CG_FPLS_code__rmse": {
+    "method": "CG-FPLS-code",
+    "metric": "rmse",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_5__FPCR__bias": {
+    "method": "FPCR",
+    "metric": "bias",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_5__FPCR__mae": {
+    "method": "FPCR",
+    "metric": "mae",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_5__FPCR__r2": {
+    "method": "FPCR",
+    "metric": "r2",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_5__FPCR__rmse": {
+    "method": "FPCR",
+    "metric": "rmse",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_5__Raw_FPLS__bias": {
+    "method": "Raw FPLS",
+    "metric": "bias",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_5__Raw_FPLS__mae": {
+    "method": "Raw FPLS",
+    "metric": "mae",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_5__Raw_FPLS__r2": {
+    "method": "Raw FPLS",
+    "metric": "r2",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument2_full"
+  },
+  "sensitivity_instrument2_full__moving_block_5__Raw_FPLS__rmse": {
+    "method": "Raw FPLS",
+    "metric": "rmse",
+    "scheme": "moving_block_5",
+    "variant": "sensitivity_instrument2_full"
+  }
+}

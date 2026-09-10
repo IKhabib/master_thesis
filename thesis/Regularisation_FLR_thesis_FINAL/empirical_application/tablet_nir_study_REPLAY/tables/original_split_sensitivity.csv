@@ -1,0 +1,5 @@
+analysis,variant,instrument,repeat,method,rmse,mae,bias,r2,observations,failed_predictions
+original_split_sensitivity,primary_instrument1_full,1,1,CG-FPLS-code,5.997854942137112,4.820366810676184,2.108634744787683,-5.442409767085705,40,0
+original_split_sensitivity,primary_instrument1_full,1,1,Raw FPLS,4.131477609607036,3.597615593256517,1.6498925512274347,-2.0568014810383404,40,0
+original_split_sensitivity,primary_instrument1_full,1,1,Arnoldi FPLS,4.15019247937055,3.5581865497925436,1.405693300669269,-2.0845577548587615,40,0
+original_split_sensitivity,primary_instrument1_full,1,1,FPCR,3.977993120824317,3.4305364499152353,1.5115564928500682,-1.833899755309615,40,0

@@ -1,49 +1,54 @@
-% Chapter 5. Estimation and prediction results from the frozen R=5,000 archive.
+% Estimation and prediction results from the frozen R=5,000 archive.
 \chapter{Estimation and Prediction Results}
 \label{chap:estimation-results}
 
-The fixed experiment from Chapter~\ref{chap:simulation-design} is analysed
-without post hoc changes to its tuning rules or diagnostics.  The results first
-separate slope recovery from independent prediction and then use selected
-dimensions, tail behaviour, and paired raw--Arnoldi fits to distinguish
-statistical regularisation from numerical stabilisation.  The central issue is
-not a single method ranking, but whether the target geometry and numerical
-representation favour the same amount and form of regularisation.
+This chapter analyses the experiment described in
+Chapter~\ref{chap:simulation-design}, using the original tuning rules and
+diagnostic criteria. It first compares how well the methods estimate the slope
+and predict new responses. It then examines the number of selected components,
+unusually large errors, and differences between raw and Arnoldi FPLS on the
+same data to explain the roles of regularisation and numerical stability. The
+aim is to understand whether slope estimation and prediction benefit from the
+same type and strength of regularisation, and how numerical stability affects
+that choice.
 
-\section{Archive verification and reporting conventions}
+\section{How the results are assessed}
 \label{sec:results-verification}
 
-All $60{,}000$ fits enter the primary ISE, MSPE, component-count, and tail
-summaries.  Function-valued replay excludes only the $445$ raw fits flagged by
-the fixed numerical-stability rule, never on the basis of their observed loss;
-the adverse values therefore remain part of the reported performance of the
-complete raw procedure.
+The main comparison includes all $60{,}000$ fits and their slope errors (ISE),
+prediction errors (MSPE), selected component counts, and unusually large
+errors. The $445$ raw-FPLS fits identified as numerically unstable remain in
+this comparison. They are excluded only from additional analyses requiring
+reliable reconstruction of the slope curves, according to the stability rule
+in Chapter~\ref{chap:simulation-design}. This exclusion is not based on the
+size of the observed error.
 
-Means, medians, and upper quantiles answer different questions in this
-experiment.  The mean estimates the risk of using the complete procedure,
-including rare adverse outcomes.  The median describes a typical
-replication, while the $90$th and $99$th percentiles describe progressively
-less common losses without allowing a single catastrophic value to dominate.
+The mean, median, and upper percentiles describe different aspects of
+performance. The mean includes the influence of rare but very large errors.
+The median describes a typical result, while the $90$th and $99$th percentiles
+show how large errors become among the less successful cases. These
+percentiles are less sensitive than the mean to a single extreme value.
 For the numerically stable methods, the Monte Carlo standard errors of mean
 ISE range from $0.0018$ to $0.0475$, and those of mean MSPE range from
-$0.0024$ to $0.0088$.  The exceptionally large standard errors attached to
-some raw-FPLS means are themselves evidence of a heavy numerical tail.
+$0.0024$ to $0.0088$. These standard errors measure uncertainty due to the
+finite number of simulation runs. For raw FPLS, rare extreme errors can
+greatly increase both the mean and its standard error.
 
 \section{Overall estimation and prediction accuracy}
 \label{sec:results-overall-accuracy}
 
-Table~\ref{tab:results-primary-risk} gives the primary full-archive results.
-All $5{,}000$ replications enter each row, including every numerically flagged
-raw fit.  The boxplots in Figure~\ref{fig:results-error-boxplots} display the
-same observations on logarithmic axes, making both central performance and
-the complete upper tails visible.
+Table~\ref{tab:results-primary-risk} compares the methods using all $5{,}000$
+simulation runs for each model, including every raw-FPLS fit identified as
+numerically unstable. Figure~\ref{fig:results-error-boxplots} shows the same
+results on logarithmic scales, so that both typical errors and unusually
+large errors can be seen.
 
 \begin{table}[htbp]
     \centering
     \scriptsize
-    \caption[Full-archive slope and prediction errors]{Full-archive slope-estimation and prediction results.  Means,
+    \caption[Slope and prediction errors across all simulation runs]{Slope-estimation and prediction errors across all simulation runs. Means,
     medians, and $90$th percentiles are calculated over all $5{,}000$
-    replications for each model--method pair.}
+    runs for each model--method pair.}
     \label{tab:results-primary-risk}
     \begin{tabular}{@{}llrrrrrr@{}}
         \toprule
@@ -73,94 +78,93 @@ the complete upper tails visible.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{babii_style_error_boxplots_with_tails.pdf}
-    \caption[Full empirical error distributions]{Complete empirical distributions of slope ISE (left column) and
-    independent test MSPE (right column), with one row per model.  Boxes use the conventional $1.5$
-    interquartile-range whiskers, all displayed axes are logarithmic, and red
-    open diamonds identify raw-FPLS fits satisfying the numerical-instability
-    rule.  The labels ``CG'', ``Raw'', and ``Arnoldi'' denote the released-code
-    CG--FPLS, raw FPLS, and Arnoldi FPLS procedures.  No tail observation is removed.}
+    \caption[Full distributions of estimation and prediction errors]{Distributions of slope ISE (left column) and
+    independent test MSPE (right column), with one row per model. The boxplots
+    use the conventional $1.5$ interquartile-range rule for their whiskers.
+    All axes are logarithmic, and red open diamonds mark raw-FPLS fits
+    identified as numerically unstable. The labels ``CG'', ``Raw'', and
+    ``Arnoldi'' refer to the CG--FPLS, raw FPLS, and Arnoldi FPLS procedures
+    defined in Chapter~\ref{chap:methods}. All extreme errors are retained.}
     \label{fig:results-error-boxplots}
 \end{figure}
 
-\subsection{Model 1: rapidly concentrated predictive signal}
+\subsection{Model 1: predictive signal concentrated in the leading directions}
 
-In Model~1, the typical slope losses are close.  FPCR has the smallest median
-ISE at $0.532$, followed by raw and Arnoldi FPLS at approximately $0.539$;
-the CG--FPLS median is $0.597$.  The ranking of the stable methods changes
-when the arithmetic mean is used.  CG--FPLS has mean ISE $0.633$, compared
-with $0.670$ for FPCR and $0.760$ for Arnoldi FPLS, because its aggressive
-stopping rule produces a comparatively concentrated slope-error distribution.
-The raw-FPLS mean of $334.298$ does not describe its typical fit: it is driven
-by a very small number of catastrophic power-basis solves.
+In Model~1, the methods have similar typical slope errors. FPCR has the
+smallest median ISE at $0.532$, followed by raw and Arnoldi FPLS at
+approximately $0.539$, and CG--FPLS at $0.597$. The comparison changes when
+we consider the mean. CG--FPLS has mean ISE $0.633$, compared with $0.670$
+for FPCR and $0.760$ for Arnoldi FPLS. Its early stopping keeps the slope
+errors more concentrated and limits unusually poor estimates. Raw FPLS, by
+contrast, has a mean of $334.298$, despite its competitive median. A very
+small number of severe numerical errors account for this large difference.
 
-Prediction favours FPCR and Arnoldi FPLS.  Their median MSPEs are $1.112$ and
-$1.113$, respectively, only slightly above the irreducible noise floor of
-$1$.  Raw FPLS has the same central behaviour, whereas CG--FPLS has median
-MSPE $1.230$.  Thus, CG's lower unweighted mean slope error does not imply a
-lower covariance-weighted prediction risk: errors in the dominant directions
-receive greater weight in MSPE.  This divergence supplies the concentrated-
-signal baseline for Model~2, where substantial slope signal extends across
-five leading directions.
+FPCR and Arnoldi FPLS perform best in prediction. Their median MSPEs are
+$1.112$ and $1.113$, respectively, only slightly above the unavoidable error
+variance of $1$. Raw FPLS has similar typical prediction errors, while
+CG--FPLS has median MSPE $1.230$. A smaller average slope error therefore
+does not necessarily lead to better predictions. Prediction gives more
+weight to errors in directions with greater predictor variation, whereas
+ISE measures the overall error in the slope. Model~2 examines this difference
+when substantial slope signal is spread across five leading directions.
 
-\subsection{Model 2: a less compressible slope}
+\subsection{Model 2: a slope spread across more directions}
 
-Model~2 sets the first five slope coefficients to $4$ without changing the
-predictor score variances.  Because the first coefficient already equals $4$
-in Model~1, the actual change is an increase in coefficients $2$--$5$.  Every
-procedure consequently tends to select a richer model and incurs substantially
-larger slope loss.  CG--FPLS has the smallest median and mean ISE, $5.272$ and
-$5.506$.  FPCR follows with mean ISE $5.662$, while
-Arnoldi FPLS has mean ISE $6.065$.  The differences in their medians are much
-smaller: $5.272$, $5.365$, and $5.345$, respectively.  The bias--variance
-decomposition below shows that this is the clearest case in which the early
-CG rule trades additional bias for reduced slope variance in the ordinary
-$L^2$ norm.
+Model~2 sets the first five slope coefficients to $4$ and leaves the predictor
+score variances unchanged. The first coefficient already equals $4$ in
+Model~1, so only coefficients $2$--$5$ increase. All methods tend to select
+more components, and their typical slope errors are substantially larger. CG--FPLS
+has the smallest median and mean ISE, $5.272$ and $5.506$. FPCR has mean
+ISE $5.662$, followed by Arnoldi FPLS at $6.065$. Their medians are closer:
+$5.272$ for CG--FPLS, $5.365$ for FPCR, and $5.345$ for Arnoldi FPLS. The
+bias--variance analysis below explains this result: early CG stopping allows
+more bias in exchange for less variation in the estimated slope, measured
+in the ordinary $L^2$ norm.
 
-The prediction ordering is different.  Arnoldi FPLS has the smallest mean and
-median MSPE, $1.442$ and $1.419$, followed closely by the typical raw-FPLS
-fit.  FPCR has mean MSPE $1.495$, whereas CG--FPLS reaches $1.999$.  The
-directions suppressed by the early CG rule therefore matter materially for
-the response even though retaining them increases unweighted slope variance.
-Model~2 therefore makes the separation between slope recovery and prediction
-especially visible.  Model~3 supplies the complementary intervention: the
-slope returns to the baseline while the leading predictor variances change.
+Arnoldi FPLS performs best in prediction, with mean MSPE $1.442$ and median
+MSPE $1.419$. Typical raw-FPLS results are close to these values. FPCR has
+mean MSPE $1.495$, while CG--FPLS reaches $1.999$. Some of the directions
+left out by early CG stopping are therefore useful for predicting the
+response, even though including them makes the estimated slope more variable.
+Model~2 shows particularly clearly why a method can perform well in slope
+estimation and less well in prediction. Model~3 considers a different change:
+it restores the original slope and increases the leading predictor variances.
 
 \subsection{Model 3: stronger leading predictor directions}
 
-Model~3 keeps the slope of Model~1 and sets the first five score variances to
-$2$.  Since the first score variance is already $2$ in Model~1, only score
-variances $2$--$5$ are raised.  The resulting stronger information in these
-directions is accompanied by a reduction in CG--FPLS mean ISE from
-$0.633$ in Model~1 to $0.447$, the best value in Model~3.  FPCR and Arnoldi
-FPLS have mean ISEs of $0.615$ and $0.670$.  The median differences are more
-modest: $0.426$ for CG--FPLS, approximately $0.446$ for both Krylov
-least-squares implementations, and $0.463$ for FPCR.
+Model~3 keeps the slope of Model~1 and sets the first five score variances
+to $2$. Since the first already equals $2$, only score variances $2$--$5$
+increase. With more information in these directions, CG--FPLS mean ISE falls
+from $0.633$ in Model~1 to $0.447$, the lowest value in Model~3. FPCR and
+Arnoldi FPLS have mean ISEs of $0.615$ and $0.670$. The medians are closer:
+$0.426$ for CG--FPLS, approximately $0.446$ for both raw and Arnoldi FPLS,
+and $0.463$ for FPCR.
 
-Prediction again favours the less aggressively stopped procedures.  FPCR has
-mean MSPE $1.127$, Arnoldi FPLS $1.131$, and CG--FPLS $1.221$; their medians
-are $1.113$, $1.114$, and $1.176$.  Raising the leading score variances
-improves identification in the ordinary slope norm, but it also increases the
-prediction penalty attached to estimation error in those directions.  The
-comparison between Models~1 and 3 therefore shows that a change in the
-score-variance sequence can affect ISE and MSPE differently even when the true
-slope is identical.  The selected component counts are consequently needed to
-show how each tuning rule converts these changes in signal and covariance into
-regularisation.
+FPCR and Arnoldi FPLS again predict more accurately than CG--FPLS. Their mean
+MSPEs are $1.127$ and $1.131$, compared with $1.221$ for CG--FPLS; the
+corresponding medians are $1.113$, $1.114$, and $1.176$. Greater predictor
+variation can make a slope direction easier to estimate, but it also makes
+prediction more sensitive to errors in that direction. Models~1 and 3 thus
+show that changing the predictor variances can affect estimation and
+prediction differently even when the true slope stays the same. The number
+of selected components helps explain how each method responds to these
+changes.
 
 \section{Selected regularisation levels}
 \label{sec:results-components}
 
-Table~\ref{tab:results-components} shows how each complete procedure converts
-the data into a regularisation level.  The response-informed Krylov methods
-generally use far fewer components than FPCR.  This does not mean that one
-Krylov component equals one principal component; it reflects the fact that a
-Krylov direction combines covariance information with the response moment.
+Table~\ref{tab:results-components} shows how many components each method
+selects. The Krylov methods generally use far fewer components than FPCR
+because their directions use information about both the predictors and the
+response. FPCR orders its components by predictor variation alone. Component
+counts therefore need to be interpreted within each method: one Krylov
+component is not equivalent to one principal component.
 
 \begin{table}[htbp]
     \centering
     \small
     \caption[Distributions of selected component counts]{Distribution of the selected component count over $5{,}000$
-    replications.  The maximum records rare selections and should be read
+    simulation runs. The maximum records rare selections and should be read
     together with the numerical diagnostics.}
     \label{tab:results-components}
     \begin{tabular}{@{}llrrrr@{}}
@@ -185,60 +189,64 @@ Krylov direction combines covariance information with the response moment.
     \end{tabular}
 \end{table}
 
-The component counts respond systematically to the controlled changes.
-Model~2 exhibits an upward shift consistent with its predictive signal being
-less compressible after coefficients $2$--$5$ are increased.  This is not a
-one-to-one correspondence between basis coefficients and Krylov components,
-because each Krylov direction combines several basis directions.  CG--FPLS
-selects three components in $88.6\%$
-of its Model~2 replications, compared with one component in $90.2\%$ of
-Model~1 replications and two components in $83.2\%$ of Model~3 replications.
-FPCR selects many more components---a median of $17$ in Model~2---because its
-ordering is determined by predictor variance rather than by the cross-moment
-with the response.
+The methods select more components in Model~2, where increasing coefficients
+$2$--$5$ spreads the predictive signal across more directions. The number
+of important basis coefficients does not directly determine the number of
+Krylov components, since a Krylov direction can combine several basis
+directions. CG--FPLS selects three components in $88.6\%$ of Model~2 runs,
+compared with one component in $90.2\%$ of Model~1 runs and two components
+in $83.2\%$ of Model~3 runs. FPCR selects many more components, with a
+median of $17$ in Model~2. Its ordering by predictor variance can require
+more components to represent the directions that matter for the response.
 
-All $15{,}000$ CG--FPLS fits cross the plug-in discrepancy threshold before
-the upper limit, so none is assigned $m=70$ by the fallback rule.  The internal
-moment-GCV pilot used to scale that threshold selects a median of $70$
-components in all three models and produces a mean residual variance estimate
-of approximately $0.300$, although the data-generating error variance is $1$.
-Because the pilot usually fits $70$ components and divides its residual sum of
-squares by $n$ without a degrees-of-freedom correction, a value near
-$1-70/100=0.30$ is consistent with an overfitting or degrees-of-freedom effect.
-The pilot is therefore not an accurate stand-alone noise estimator in this
-finite design.  Since the threshold is proportional to $\widehat\sigma$, this
-downward bias makes crossing harder and can only delay stopping along the same
-residual path.  The observed one-to-three-component indices therefore reflect
-rapid residual contraction, but the risk results validate only the implemented
-plug-in procedure, not the oracle discrepancy theorem.  The pilot remains part
-of the released-code procedure and is not retuned after observing this
-discrepancy.
+All $15{,}000$ CG--FPLS fits meet the discrepancy stopping rule before the
+maximum component count is reached. None therefore needs the fallback value
+$m=70$. The noise estimate used in this rule, however, deserves attention.
+It comes from a preliminary fit chosen by moment-GCV, which selects a median
+of $70$ components in all three models. The resulting mean estimate of the
+error variance is approximately $0.300$, well below the true value of $1$.
 
-The raw and Arnoldi component distributions coincide in their central region
-but diverge sharply in their maxima.  Raw FPLS occasionally selects dimensions
-as high as $57$, $70$, and $68$, whereas the Arnoldi maxima are $14$, $16$,
-and $11$.  Component counts alone cannot determine whether these extremes
-reflect statistical complexity or numerical failure, so the next section
-links them to the fixed stability diagnostics.
+This preliminary fit usually uses $70$ components and divides its residual
+sum of squares by $n$, without adjusting for the degrees of freedom used in
+fitting. An estimate near $1-70/100=0.30$ is therefore consistent with an
+overfitting or degrees-of-freedom effect. The preliminary fit does not provide
+an accurate estimate of the noise variance in this experiment. Since the
+stopping threshold is proportional to $\widehat\sigma$, underestimating the
+noise makes the threshold harder to reach and can only delay stopping along
+the same sequence of residuals. The observed stopping after one to three
+components therefore reflects a rapid reduction in the residual. These
+results assess the procedure with its estimated noise level; they do not
+validate the theoretical rule that assumes the noise level is known. The
+original noise-estimation and stopping rules are retained throughout.
 
-\section{Complete tails and numerical stability}
+Raw and Arnoldi FPLS usually select similar numbers of components, but their
+largest selections differ considerably. Raw FPLS sometimes selects $57$,
+$70$, and $68$ components in Models~1--3, while the Arnoldi maxima are $14$,
+$16$, and $11$. A large component count alone does not show whether a method
+is capturing additional signal or responding to numerical problems. The
+stability checks in the next section help distinguish these possibilities.
+
+\section{Unusually large errors and numerical stability}
 \label{sec:results-numerical-stability}
 
-The similarity of medians in Table~\ref{tab:results-primary-risk} must not be
-confused with equivalent reliability.  Table~\ref{tab:results-raw-instability}
-isolates the raw-FPLS stability diagnostic.  A flagged fit is not automatically
-non-finite: all reported losses are finite.  Instead, the flag records that
-the condition number of the normalised raw Krylov basis or of its response
-design exceeds the fixed threshold.  Because raw FPLS then solves normal
-equations in those coordinates, its reconstructed slope is not regarded as
-numerically reliable for replay-based function diagnostics.
+Similar median errors in Table~\ref{tab:results-primary-risk} do not mean that
+the methods are equally reliable.  Table~\ref{tab:results-raw-instability}
+shows how often raw FPLS is flagged as numerically unstable.  All reported
+losses are finite, including those from flagged fits.  A flag means that the
+condition number of the normalised raw Krylov basis or its response design
+exceeds the fixed threshold.  In these cases, the normal-equation calculation
+is too sensitive to small numerical errors to be trusted.  The
+reconstructed slope is therefore excluded from diagnostics that require a
+reliable estimate of the whole function, while its finite ISE and MSPE remain
+in the main comparison.
 
 \begin{table}[htbp]
     \centering
     \small
-    \caption[Raw-FPLS instability and upper tails]{Numerical instability and complete upper tails of raw FPLS.
-    Stable-subset size is the number of replications available for paired
-    function-valued replay.}
+    \caption[Raw-FPLS instability and unusually large errors]{Numerical instability and the largest errors of raw FPLS.
+    The stable subset contains the simulation runs for which the raw-FPLS
+    slope can be reconstructed reliably.  The additional comparison uses
+    these same runs for every method.}
     \label{tab:results-raw-instability}
     \begin{tabular}{@{}lrrrrr@{}}
         \toprule
@@ -252,61 +260,70 @@ numerically reliable for replay-based function diagnostics.
     \end{tabular}
 \end{table}
 
-Model~2 is most exposed, and this exposure coincides with typical FPLS paths
-of approximately five rather than two or three Krylov directions.  Its raw
-instability rate is $8.18\%$, compared with $0.40\%$ and $0.32\%$ in Models~1
-and 3.  In Model~1, only one raw ISE exceeds one hundred times its
-model--method median, but that
-single value reaches approximately $1.67$ million.  This is why raw FPLS has a
-median ISE of $0.539$ and a mean of $334.298$ in the same model.  Robust
-summaries alone would conceal a practically important failure mode, while the
-mean alone would conceal the method's ordinarily competitive behaviour.
+Instability is most common in Model~2, where FPLS typically selects about
+five Krylov directions rather than two or three.  Its raw-FPLS instability
+rate is $8.18\%$, compared with $0.40\%$ and $0.32\%$ in Models~1 and 3.
+Even a much lower rate can have a large effect on average performance.  In
+Model~1, only one raw-FPLS ISE exceeds one hundred times the median for that
+model and method, but this error reaches approximately $1.67$ million.  It
+explains why the median ISE is $0.539$ while the mean is $334.298$.
+The median describes the method's usually competitive performance; the mean
+also reflects the damage caused by a rare, very large error.  Both are needed
+to give a fair account of its reliability.
 
-The combined Arnoldi--QR implementation removes the catastrophic numerical
-tail in this experiment, not all statistical tail variation.  Arnoldi FPLS
-has no numerical-instability flags,
-but its maximum ISEs are $36.35$, $77.41$, and $30.23$ across the three
-models.  These values are compatible with ordinary sample and tuning
-variability and do not coincide with a loss of Arnoldi-basis orthogonality.
-The corresponding FPCR maxima are
-$11.53$, $28.23$, and $16.30$, while the CG--FPLS maxima are $1.82$, $16.79$,
-and $1.25$.  The especially compact CG tails are consistent with its strong
-early-stopping regularisation; the bias--variance decomposition next shows how
-much variance reduction this achieves and what bias it incurs.
+The combined Arnoldi--QR implementation avoids such extreme numerical
+errors in this experiment, although its errors still vary across samples.
+Arnoldi FPLS has no numerical-instability flags, but its maximum ISEs are
+$36.35$, $77.41$, and $30.23$ across the three models.  These larger errors
+are consistent with ordinary variation in the samples and selected tuning
+parameters, and they are not accompanied by a loss of orthogonality in the
+Arnoldi basis.  The corresponding FPCR maxima are $11.53$, $28.23$, and
+$16.30$, while the CG--FPLS maxima are $1.82$, $16.79$, and $1.25$.
+The lower maximum errors for CG--FPLS are consistent with its strong early
+stopping.  The next section examines how this stopping rule reduces slope
+variance and how much additional bias it introduces.
 
-\section{Bias--variance mechanisms}
+\section{Understanding bias and variance}
 \label{sec:results-bias-variance}
 
-Figure~\ref{fig:results-bias-variance-all} decomposes the losses of the three
-fully replayable methods over all replications.  For raw FPLS, only the frozen
-archive total is displayed in the full-sample panels: a decomposition into a
-mean function and dispersion would require reconstructing the $445$
-platform-sensitive slopes.  The same restriction applies to the replay-based
-basis-coefficient distributions, pointwise distributions, and normal
-quantile--quantile plots in Appendix~\ref{app:simulation-diagnostics}.
-Table~\ref{tab:results-bias-variance} gives the numerical components for
-CG--FPLS, Arnoldi FPLS, and FPCR.  Prediction bias and
-variance are weighted by the independent-score variances $\lambda_j$.  This is
-the exact excess-prediction-risk geometry of the discrete data-generating
-process; the irreducible variance $\sigma^2=1$ must be added to their sum.
+Figure~\ref{fig:results-bias-variance-all} separates the errors of CG--FPLS,
+Arnoldi FPLS, and FPCR into squared bias and variance using all simulation runs.
+For raw FPLS, the figure retains the total risk from the full set of saved
+results.  Splitting this total into bias and variance would require reliable
+reconstruction of the $445$ numerically sensitive slopes, so these components
+are not shown.  The same limitation applies to the raw-FPLS coefficient
+distributions, pointwise distributions, and normal quantile--quantile plots
+in Appendix~\ref{app:simulation-diagnostics}.
+
+Table~\ref{tab:results-bias-variance} gives the bias and variance components
+for CG--FPLS, Arnoldi FPLS, and FPCR. For prediction, the contribution of
+slope error in each direction is weighted by the corresponding predictor-score
+variance $\lambda_j$, as in \eqref{eq:simulation-mspe-risk}. A slope error
+therefore matters more when the predictor varies more in that direction.
+These weights give the exact excess prediction risk for
+the discrete model used to generate the data.  Adding the irreducible noise
+variance $\sigma^2=1$ to the sum of squared bias and variance gives the total
+prediction risk.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{bias_variance_decomposition.pdf}
-    \caption[Full-archive bias--variance decomposition]{Monte Carlo bias--variance decomposition over all $5{,}000$
-    replications.  Each row is one model; slope risk is on the left and
+    \caption[Bias--variance decomposition using all simulation runs]{Monte Carlo bias--variance decomposition over all $5{,}000$
+    simulation runs.  Each row is one model; slope risk is on the left and
     prediction risk on the right.  Bars show squared bias, variance, and irreducible noise on
-    logarithmic scales; black diamonds show total risk.  Full raw-FPLS totals
-    are retained from the archive, but their components are intentionally not
-    reconstructed for numerically unstable fits.}
+    logarithmic scales; black diamonds show total risk.  The full raw-FPLS
+    totals are included, but their components are not shown because the
+    numerically unstable slopes are not considered reliable enough for this
+    reconstruction.}
     \label{fig:results-bias-variance-all}
 \end{figure}
 
 \begin{table}[htbp]
     \centering
     \scriptsize
-    \caption[Bias--variance components for replayable methods]{Bias--variance components for the fully replayable methods.  The
-    prediction columns exclude the irreducible noise variance of $1$.}
+    \caption[Bias--variance components for CG--FPLS, Arnoldi FPLS, and FPCR]{Bias--variance components for the three methods whose slopes can
+    be reconstructed reliably in every simulation run.  The prediction
+    columns exclude the irreducible noise variance of $1$.}
     \label{tab:results-bias-variance}
     \begin{tabular}{@{}llrrrr@{}}
         \toprule
@@ -330,47 +347,48 @@ process; the irreducible variance $\sigma^2=1$ must be added to their sum.
     \end{tabular}
 \end{table}
 
-The mechanism is consistent in all three models.  CG--FPLS substantially
-reduces slope variance but accepts more bias.  In Model~1, for example, its
-slope variance is $0.526$, compared with $0.752$ for Arnoldi FPLS and $0.660$
-for FPCR, while its squared bias is $0.107$ rather than approximately $0.01$.
-This exchange lowers CG--FPLS mean ISE relative to the other replayable
-methods.  In prediction geometry, however, the CG squared bias and variance
-are both larger: $0.110$ and $0.160$, compared with $0.013$ and $0.116$ for
-Arnoldi FPLS.  Adding the common noise variance gives expected MSPEs of
-approximately $1.271$ and $1.130$.
+The same pattern appears in all three models.  CG--FPLS reduces slope
+variance but introduces more bias.  In Model~1, for example, its slope
+variance is $0.526$, compared with $0.752$ for Arnoldi FPLS and $0.660$ for
+FPCR, while its squared bias is $0.107$ rather than approximately $0.01$.
+The reduction in variance outweighs the added bias, giving CG--FPLS a lower
+mean ISE than the other two methods.  For prediction, however, both its
+squared bias and variance are larger: $0.110$ and $0.160$, compared with
+$0.013$ and $0.116$ for Arnoldi FPLS.  Adding the common noise variance gives
+expected MSPEs of approximately $1.271$ and $1.130$.
 
-Model~2 sharpens the same distinction.  CG--FPLS reduces slope variance by
-about $1.69$ relative to Arnoldi FPLS, more than compensating for its larger
-unweighted squared bias.  After covariance weighting, CG has prediction
-squared bias $0.473$ and variance $0.522$, both above the Arnoldi values of
-$0.049$ and $0.390$.  The procedure can therefore be preferable for the
-ordinary slope norm and inferior for response prediction without any
-contradiction.  Model~3 repeats this pattern on a smaller scale.  Early
-stopping is not uniformly ``more biased but less variable'' independently of
-the norm: the relevant bias and variance must be evaluated in the geometry of
-the target loss.
+Model~2 makes this difference especially clear.  CG--FPLS reduces slope
+variance by about $1.69$ relative to Arnoldi FPLS, which more than offsets
+its larger squared bias when measuring the slope error.  Once the errors
+are weighted for prediction, CG--FPLS has squared bias $0.473$ and variance
+$0.522$, both above the Arnoldi values of $0.049$ and $0.390$.
+A method can therefore estimate the slope more accurately overall while
+predicting responses less accurately.  Model~3 shows the same pattern on a
+smaller scale.  Early stopping does not always mean more bias and less
+variance under every measure of error: its effect depends on whether the
+goal is to recover the slope or to predict the response.
 
-\section{Raw and Arnoldi FPLS on a paired stable subset}
+\section{Raw and Arnoldi FPLS when the raw fit is stable}
 \label{sec:results-raw-arnoldi}
 
-The preceding decomposition combines differences in statistical
-regularisation with differences in numerical implementation.  To isolate the
-latter, Figure~\ref{fig:results-bias-variance-stable} and
-Table~\ref{tab:results-stable-pair} retain only replications in which the raw
-Krylov basis remains stable and apply that same subset to all four methods.
-This paired restriction is diagnostic only; it does not replace the primary
-full-archive comparison.
+The preceding results reflect both the tuning rules and the numerical
+calculations used by each method.  To examine the numerical differences
+more closely, Figure~\ref{fig:results-bias-variance-stable} and
+Table~\ref{tab:results-stable-pair} consider only cases in which the raw
+Krylov basis satisfies the stability rule.  All four methods are evaluated
+on those same cases.  This additional comparison helps explain their
+behaviour; it does not replace the main comparison using the full set of
+results.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{bias_variance_decomposition_raw_stable_subset.pdf}
-    \caption[Bias--variance decomposition on the paired stable subset]{Bias--variance decomposition on the paired subset for which raw
-    FPLS satisfies its numerical-stability rule.  All four methods are
-    evaluated on exactly the same retained replications within a model.
-    Each row is one model, with its retained sample size shown; slope risk
-    is on the left and prediction risk on the right.  Bar colours and black
-    total-risk diamonds have the same meaning as in
+    \caption[Bias--variance decomposition on the paired stable subset]{Bias--variance decomposition for cases in which raw FPLS
+    satisfies its numerical-stability rule.  All four methods are evaluated
+    on exactly the same simulation runs within each model.  Each row is one
+    model, with the number of included runs shown; slope risk is on the left
+    and prediction risk on the right.  Bar colours and black total-risk
+    diamonds have the same meaning as in
     Figure~\ref{fig:results-bias-variance-all}.}
     \label{fig:results-bias-variance-stable}
 \end{figure}
@@ -378,8 +396,9 @@ full-archive comparison.
 \begin{table}[htbp]
     \centering
     \small
-    \caption[Raw and Arnoldi errors on the paired stable subset]{Mean errors of raw and Arnoldi FPLS on paired numerically stable
-    raw-FPLS replications.}
+    \caption[Raw and Arnoldi errors on the paired stable subset]{Mean errors of raw and Arnoldi FPLS, using the same simulation
+    runs for both methods and including only cases in which raw FPLS is
+    numerically stable.}
     \label{tab:results-stable-pair}
     \begin{tabular}{@{}lrrrrr@{}}
         \toprule
@@ -395,98 +414,104 @@ full-archive comparison.
     \end{tabular}
 \end{table}
 
-On the stable subsets, raw and Arnoldi FPLS are nearly indistinguishable.
+In these stable cases, raw and Arnoldi FPLS give almost identical results.
 Their Model~3 mean ISEs differ by less than $3\times10^{-7}$ and their mean
-MSPEs by less than $10^{-8}$.  Small differences in Models~1 and 2 arise
-because each implementation minimises its own finite-precision
-cross-validation curve, so a small number of selected dimensions differ even
-before the instability threshold is reached.  The comparison supports the
-equivalence boundary established in Chapter~\ref{chap:methods}: when the raw
-Krylov basis remains usable, it and the Arnoldi basis approximate the same
-response-least-squares solution; the practical advantage of Arnoldi is that
-this equivalence remains numerically accessible farther along the path when
-the orthogonal basis is paired with the response-space QR solve.
+MSPEs by less than $10^{-8}$.  The small differences in Models~1 and 2 arise
+because each implementation selects its dimension from its own
+cross-validation errors.  Small numerical differences in those errors can
+lead to different selected dimensions even before the instability threshold
+is reached.
 
-Stabilisation therefore extends how far the shared FPLS target remains
-numerically accessible; it does not create a different statistical target or
-guarantee a smaller loss in every sample.  CGS2 supplies reliable coordinates
-for the same nested spaces, while QR avoids response-space normal equations.
-The coefficientwise and pointwise distributions considered next show what
-each tuning rule then retains or suppresses in the recovered slope.
+This finding agrees with the result in Chapter~\ref{chap:methods}: at the
+same dimension, when the relevant systems have full rank, raw and Arnoldi
+FPLS target the same response-least-squares solution in exact arithmetic.
+Their computed solutions remain close while the raw basis is usable.  The
+advantage of Arnoldi is that its orthogonal basis, combined with a QR solve
+in the response space, allows this solution to be computed reliably at
+larger dimensions.
+
+Numerical stabilisation does not change the underlying statistical target
+or guarantee a smaller error for every sample.  Two-pass orthogonalisation
+(CGS2) gives a reliable basis for the same sequence of Krylov spaces, while
+QR avoids solving normal equations in the response space.  The next section
+examines how the tuning rules affect individual coefficients and different
+parts of the estimated slope.
 
 \section{Distribution of the recovered slope}
 \label{sec:results-slope-distributions}
 
-The global error measures are complemented by coefficientwise and pointwise
-diagnostics in Appendix~\ref{app:simulation-diagnostics}.  Figures
-\ref{fig:app-coefficient-distributions-model1}--
+The coefficient and pointwise plots in
+Appendix~\ref{app:simulation-diagnostics} help explain the overall error
+measures.  Figures~\ref{fig:app-coefficient-distributions-model1}--
 \ref{fig:app-coefficient-distributions-model3} show the first three basis
 coefficients, and Figures~\ref{fig:app-pointwise-distributions-model1}--
-\ref{fig:app-pointwise-distributions-model3} show the estimated slope at five
-locations.  The raw-FPLS panels use only archived fits satisfying the raw
-stability rule; the other methods use all $5{,}000$ replications.
+\ref{fig:app-pointwise-distributions-model3} show the estimated slope at
+five locations.  The raw-FPLS panels include only fits that satisfy its
+stability rule; the other methods use all $5{,}000$ simulation runs.
 
-These coefficients are recovered from each slope vector on the finite grid,
-rather than computed as continuum inner products.  If
-$\boldsymbol\Phi\in\mathbb{R}^{J\times T}$ has entries
-$\Phi_{jt}=\phi_j(s_t)$, the plotted coefficient vector is
+The plotted coefficients are recovered from the estimated slope values on
+the finite grid.  If $\boldsymbol\Phi\in\mathbb{R}^{J\times T}$ has entries
+$\Phi_{jt}=\phi_j(s_t)$, the coefficient vector is
 \begin{equation}
     \widehat{\boldsymbol b}
     = (\boldsymbol\Phi\boldsymbol\Phi^{\mathsf T})^{-1}
       \boldsymbol\Phi\widehat{\boldsymbol\beta},
     \label{eq:discrete-basis-coefficient-recovery}
 \end{equation}
-implemented by a Moore--Penrose pseudoinverse.  On the endpoint-inclusive
-grid this least-squares recovery is not identical to simply taking discrete
-inner products with the nominal basis functions.
+calculated using a Moore--Penrose pseudoinverse.  This is a least-squares
+recovery on the grid, rather than a calculation using continuous inner
+products.  Because the grid includes both endpoints, it also differs from
+simply taking discrete inner products with the nominal basis functions.
 
-The coefficient distributions make the effect of early stopping concrete.
-In Model~1, CG--FPLS estimates the second coefficient with mean $0.366$ when
-its true value is $0.616$, and the third with mean $0.071$ rather than $0.206$.
-Its first coefficient is also shrunk, but much less severely: $3.867$ rather
-than $4$.  Since $90.2\%$ of CG fits stop at one component, the procedure
-captures the dominant supervised direction and deliberately leaves much of
-the weaker structure unresolved.  Raw FPLS, Arnoldi FPLS, and FPCR have
-smaller bias in these later coefficients but wider functional variation.
+The coefficient distributions show how early stopping affects the estimated
+slope.  In Model~1, CG--FPLS estimates the second coefficient with mean
+$0.366$ when its true value is $0.616$, and the third with mean $0.071$
+rather than $0.206$.  Its first coefficient is also shrunk, but much less:
+$3.867$ rather than $4$.  Since $90.2\%$ of CG fits stop at one component,
+the method captures the main direction associated with the response while
+leaving much of the weaker structure unresolved.  Raw FPLS, Arnoldi FPLS,
+and FPCR have less bias in these later coefficients, but their estimated
+slopes vary more across samples.
 
-The pattern changes with the design.  In Model~2, where all first five slope
-coefficients equal $4$, CG--FPLS means for the first three are $3.930$,
+The pattern changes with the model.  In Model~2, where all first five slope
+coefficients equal $4$, the CG--FPLS means for the first three are $3.930$,
 $3.848$, and $3.887$.  In Model~3, the larger leading score variances are
-associated with CG--FPLS means of $0.599$ and $0.198$ for coefficients two and
-three, close to the true values $0.616$ and $0.206$.  This is consistent with
-the marked improvement in CG slope ISE from Model~1 to Model~3.
+associated with CG--FPLS means of $0.599$ and $0.198$ for the second and
+third coefficients, close to the true values $0.616$ and $0.206$.
+This agrees with the substantial improvement in CG slope ISE from Model~1
+to Model~3.
 
-The pointwise distributions tell the same story after the coefficients have
-been aggregated into functions.  CG--FPLS is generally narrower but can be
-visibly shifted from the truth, particularly in Model~1.  Model~2 has the
-widest distributions for every method, a pattern consistent with the less
-compressible, oscillatory slope and the use of several estimated directions.
+The pointwise distributions show how these coefficient differences affect
+the slope itself.  CG--FPLS estimates generally vary less, but their
+distributions can be visibly shifted away from the true slope,
+particularly in Model~1.  Model~2 has the widest distributions for every
+method.  Its oscillatory slope is harder to represent with just a few
+directions, so several directions must be estimated.
+
 The normal quantile--quantile plots in
 Figures~\ref{fig:app-coefficient-qq-model1}--
-\ref{fig:app-coefficient-qq-model3} are approximately linear through their
-centres for most method--coefficient combinations.  Departures in the tails
-and bends for some CG coordinates reflect the mixture induced by a discrete,
-data-dependent stopping rule; they should not be interpreted as evidence
-that the complete functional estimator has a simple Gaussian distribution.
+\ref{fig:app-coefficient-qq-model3} are approximately straight through
+their centres for most combinations of method and coefficient.  Some bend
+near the extremes, and some CG coefficients show more pronounced curvature.
+The stopping rule can select different dimensions for different samples,
+so the resulting distribution combines estimates obtained at different
+stopping points.  These plots should therefore not be taken as evidence
+that the whole estimated function follows a simple Gaussian distribution.
 
-Across the loss, complexity, stability, and function-level evidence, two
-distinctions govern the comparison.  Aggressive CG stopping stabilises
-ordinary slope estimation but can leave covariance-weighted signal unresolved;
-Arnoldi does not change the full-rank APLS target, but keeps that target
-numerically accessible when raw powers become nearly collinear.  Any ranking
-therefore depends both on the statistical target and on whether the computation
-reliably realises the intended estimator.
+Together, the results show that performance depends on both the goal of the
+analysis and numerical reliability. CG--FPLS has the lowest mean slope error
+in these models, but early stopping can leave useful predictive information
+unresolved. Arnoldi preserves the full-rank APLS target while keeping the
+calculation stable as raw power-basis directions become nearly collinear.
 
-These conclusions are conditional on dense error-free curves, Gaussian
-scores, $n=100$, the three chosen designs, and the stated tuning rules.  They
-identify mechanisms rather than a universal ranking.  The compact
-spectroscopy application in Chapter~\ref{chap:spectroscopy-application}
-provides a first assessment beyond this controlled setting, while
-Appendix~\ref{app:spectroscopy-supplement} retains the complete empirical
-diagnostics and sensitivity evidence.
+These findings are limited to the three chosen models, densely observed
+curves measured without error, Gaussian scores, $n=100$, and the stated tuning
+rules. They do not establish a universal ranking. The spectroscopy study in
+Chapter~\ref{chap:spectroscopy-application} considers observed data, with
+supporting diagnostics and sensitivities in
+Appendix~\ref{app:spectroscopy-supplement}.
 
-That dependence changes again for inference.  Estimation can benefit from the
-bias introduced by a small $m$, whereas
-Chapter~\ref{chap:inference-methodology} requires the CG residual to be
-negligible relative to $n^{-1/2}$ sampling uncertainty.  The early stopping
-used here therefore cannot be transferred unchanged to hypothesis testing.
+Choosing a small $m$ can benefit slope estimation. For hypothesis testing,
+Chapter~\ref{chap:inference-methodology} instead requires the CG residual
+to be negligible relative to sampling uncertainty of order $n^{-1/2}$.
+The same stopping rule therefore cannot be used unchanged.

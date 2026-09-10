@@ -1,0 +1,49 @@
+scheme,result_type,method_left,method_right,contrast_label,metric,estimate,ci_lower,ci_upper,confidence,replicates,finite_replicates,variant,variant_role,contrast_scope
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,-0.0993983874104698,-0.1719964219365413,-0.0310689052663392,0.95,10000,10000,primary_instrument1_full,primary,focal
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,-0.1393348339285989,-0.1949529128503114,-0.0822084120318306,0.95,10000,10000,primary_instrument1_full,primary,focal
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,-0.0169144292053178,-0.0769535036703906,0.0432671005977783,0.95,10000,10000,primary_instrument1_full,primary,focal
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,0.0036830802503574,0.0012983431502647,0.0059967944050445,0.95,10000,10000,primary_instrument1_full,primary,focal
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,0.6500354728293525,0.3973242142715786,0.9207790853705028,0.95,10000,10000,primary_instrument1_full,primary,secondary
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,0.5872703277890241,0.3159371965793575,0.8548915364209992,0.95,10000,10000,primary_instrument1_full,primary,secondary
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,0.4779757437261432,0.1439503692511869,0.8146024950713576,0.95,10000,10000,primary_instrument1_full,primary,secondary
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.0260512117362681,-0.0383122522118591,-0.0149515758058549,0.95,10000,10000,primary_instrument1_full,primary,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,0.5419623508345017,0.2855147378250755,0.8442165254912436,0.95,10000,10000,primary_instrument1_full,primary,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.4613403822911017,0.232889627398878,0.6978120136486046,0.95,10000,10000,primary_instrument1_full,primary,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,-0.3268133576516099,-0.6011410749737316,-0.0545409052327921,0.95,10000,10000,primary_instrument1_full,primary,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,-0.0214837571983336,-0.0334640947332389,-0.0112775019194664,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,-0.0993983874104698,-0.1825113029647806,-0.0271946750188887,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,-0.1393348339285989,-0.2081526392136785,-0.0678839848249033,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,-0.0169144292053178,-0.0918345054462055,0.0579000364601023,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,0.0036830802503574,0.0011136595740036,0.0064717994850389,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,0.6500354728293525,0.3285722247181797,0.9783301504432894,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,0.5872703277890241,0.2332095367617277,0.9244753868954848,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,0.4779757437261432,0.0355269494085005,0.9001845539151954,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.0260512117362681,-0.0395500639541724,-0.0128594140261571,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,0.5419623508345017,0.2403275930225524,0.8838797402729669,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.4613403822911017,0.1898409035821301,0.7392463396297059,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,-0.3268133576516099,-0.6875456165521083,0.027624858412958,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,-0.0214837571983336,-0.0365628629781038,-0.0093117193157714,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,-0.0993983874104698,-0.1911994207933785,-0.0210431940297626,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,-0.1393348339285989,-0.2191993677160162,-0.0588562051184997,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,-0.0169144292053178,-0.099811323882508,0.0677472835906637,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,0.0036830802503574,0.000835228181412,0.0070588316994733,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,0.6500354728293525,0.2565479749249305,1.0169142244832106,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,0.5872703277890241,0.1410519291493677,0.9920920875701914,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,0.4779757437261432,-0.0537732076118499,0.98164180863161,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.0260512117362681,-0.0415029392950807,-0.0105468982528319,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,0.5419623508345017,0.2014849356833461,0.9218196674108974,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.4613403822911017,0.150437493384752,0.7579107248450795,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,-0.3268133576516099,-0.7158824200650651,0.096030142215705,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,-0.0214837571983336,-0.0400127132803267,-0.0078077572555793,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,-0.0993983874104698,-0.2001949999280033,-0.0128414514017359,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,-0.1393348339285989,-0.2266956122766162,-0.0494582589932574,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,-0.0169144292053178,-0.1072348669411644,0.076582865535157,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,0.0036830802503574,0.0004929122227225,0.0079261927822238,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,0.6500354728293525,0.1663754188001961,1.0686553229477782,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,0.5872703277890241,0.0434122338763618,1.0648524011995633,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,0.4779757437261432,-0.1376139358129151,1.0685518577644593,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.0260512117362681,-0.0445364232490244,-0.0072527627252288,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,0.5419623508345017,0.188609025705164,0.938444762092788,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.4613403822911017,0.1512550998359386,0.7613236965252249,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,-0.3268133576516099,-0.7629134531678736,0.1383851097926259,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,-0.0214837571983336,-0.0424085498283973,-0.0076736492048842,0.95,10000,10000,primary_instrument1_full,primary,secondary
