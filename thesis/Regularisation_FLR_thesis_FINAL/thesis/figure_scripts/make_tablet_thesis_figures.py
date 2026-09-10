@@ -1,10 +1,4 @@
 #!/usr/bin/env python3
-"""Render thesis-scale figures from the frozen tablet-NIR archive.
-
-This script changes presentation only.  It reads the immutable prediction,
-metric, diagnostic, and resampling outputs produced by the empirical workflow;
-it does not fit or tune a model.
-"""
 
 from __future__ import annotations
 

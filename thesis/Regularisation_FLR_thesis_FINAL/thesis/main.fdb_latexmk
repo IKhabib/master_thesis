@@ -1,12 +1,12 @@
 # Fdb version 4
-["biber main"] 1789063014.31239 "main.bcf" "main.bbl" "main" 1789063022.82679 0
-  "main.bcf" 1789063022.6516 113414 8d7ab1475b59fa09c772454f92a74093 "pdflatex"
+["biber main"] 1789064264.83984 "main.bcf" "main.bbl" "main" 1789064273.19386 0
+  "main.bcf" 1789064273.0157 113414 8d7ab1475b59fa09c772454f92a74093 "pdflatex"
   "thesis_bibliography.bib" 1789042024 9061 cd0ea8f859377214191a79bebbaa47ff ""
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1789063020.8683 "main.tex" "main.pdf" "main" 1789063022.82704 0
+["pdflatex"] 1789064271.21171 "main.tex" "main.pdf" "main" 1789064273.19412 0
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -242,14 +242,14 @@
   "figures/tablet_spectra_assay_overview.pdf" 1788898672 44243 8d46c91ff2450896da3901ac629f0519 ""
   "figures/true_slope_structure.pdf" 1789041574 20707 c8cc47768d95dfb6fca79d01173d9d42 ""
   "frontmatter/abstract.tex" 1789048463.70143 2157 74336c4db106617b5c47a1e5b65420c1 ""
-  "main.aux" 1789063022.64249 72129 b620c28bf072599cb16a0a950eb19809 "pdflatex"
-  "main.bbl" 1789063016.95257 38641 d7a8bb5edb471c93a6a01930a9882b96 "biber main"
-  "main.lof" 1789063022.65235 4153 1295b0f38487d11a55f3999542499f90 "pdflatex"
-  "main.lot" 1789063022.65239 3476 2f31867f02d8098496c960e29c7c8b99 "pdflatex"
-  "main.out" 1789063022.6507 26294 2bfc66f29f9745198c56c84c69a961ec "pdflatex"
-  "main.run.xml" 1789063022.6522 2351 1d6f91c208f127513e223f4e0f06e2d8 "pdflatex"
+  "main.aux" 1789064273.00635 72129 b620c28bf072599cb16a0a950eb19809 "pdflatex"
+  "main.bbl" 1789064267.24235 38641 d7a8bb5edb471c93a6a01930a9882b96 "biber main"
+  "main.lof" 1789064273.01647 4153 1295b0f38487d11a55f3999542499f90 "pdflatex"
+  "main.lot" 1789064273.01653 3476 2f31867f02d8098496c960e29c7c8b99 "pdflatex"
+  "main.out" 1789064273.01476 26294 2bfc66f29f9745198c56c84c69a961ec "pdflatex"
+  "main.run.xml" 1789064273.0163 2351 1d6f91c208f127513e223f4e0f06e2d8 "pdflatex"
   "main.tex" 1789056873.39019 5694 45cc0b5992f44e42ba5d46d8f7ace6b3 ""
-  "main.toc" 1789063022.65227 11215 2934a6716916dbe457babf9dbd952271 "pdflatex"
+  "main.toc" 1789064273.01637 11215 2934a6716916dbe457babf9dbd952271 "pdflatex"
   (generated)
   "main.aux"
   "main.bcf"

@@ -1,43 +1,5 @@
 #!/usr/bin/env python3
-"""Standalone comparison of Conjugate Gradient and steepest descent.
 
-The comparison concerns symmetric positive-definite (SPD) linear systems
-
-    A x = b,
-
-or, equivalently, minimization of the strictly convex quadratic
-
-    f(x) = 0.5 x' A x - b' x.
-
-Both methods start from the same point and stop at the same relative-residual
-tolerance.  Steepest descent uses its optimal exact line-search step, so this
-is a fair comparison rather than a comparison against a poorly tuned learning
-rate.  One matrix-vector product is charged for each iteration of either
-method.
-
-Outputs
--------
-representative_convergence.pdf
-    Relative residual and relative objective gap versus matrix-vector work.
-quadratic_trajectory_2d.pdf
-    Contours of a two-dimensional quadratic with both optimization paths.
-quadratic_surface_3d.pdf
-    Three-dimensional quadratic surface with the same two optimization paths.
-condition_number_sweep.pdf
-    Iteration counts and convergence rates over matched SPD problems.
-condition_number_trials.csv
-    One row per condition number, trial, and method.
-condition_number_summary.csv
-    Aggregated iteration, residual, and convergence results.
-representative_history.csv
-    Complete convergence history for the representative problem.
-trajectory_2d.csv
-    Coordinates and objective heights of both two-dimensional paths.
-configuration.json
-    Exact settings needed to reproduce the experiment.
-
-Add ``--png`` to create high-resolution PNG copies of the four figures.
-"""
 
 from __future__ import annotations
 

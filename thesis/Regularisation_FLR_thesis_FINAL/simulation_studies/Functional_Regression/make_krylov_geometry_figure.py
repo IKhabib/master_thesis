@@ -1,33 +1,4 @@
-"""Visualize the numerical geometry of raw and Arnoldi FPLS bases.
 
-The figure adapts the matrix-plus-circular-network visual language of a graph
-certificate to a setting where the nodes and edges have an exact functional-
-regression interpretation.  Nodes are Krylov directions.  An edge is drawn
-when two normalized directions have an absolute inner product above a common
-threshold.  The left-hand matrix combines the same information: raw FPLS is
-shown below the diagonal and Arnoldi FPLS above it.
-
-All quantities are computed from the population operator of the baseline
-simulation setup (Model 1) in ``four_method_core.py``.  The other
-two setups give the same qualitative geometry and are intentionally omitted
-to avoid a repetitive figure.  No random dataset is selected, so the picture
-is reproducible and cannot depend on a favorable Monte Carlo replication.
-
-Outputs
--------
-``krylov_geometry.pdf``
-    Vector figure suitable for a thesis or paper.
-``krylov_geometry.png``
-    High-resolution raster copy for slides and word processors.
-``krylov_geometry_summary.csv``
-    Numerical diagnostics and edge counts used in the figure.
-
-Example
--------
-Run from the directory containing the frozen simulation code::
-
-    python make_krylov_geometry_figure.py
-"""
 
 from __future__ import annotations
 

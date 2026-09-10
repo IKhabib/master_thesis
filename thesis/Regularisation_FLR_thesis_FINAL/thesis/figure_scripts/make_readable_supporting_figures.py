@@ -1,21 +1,4 @@
 #!/usr/bin/env python3
-"""Redraw supporting thesis figures at their final physical size.
-
-This changes presentation only. Inference curves are read from the frozen
-CSV/NPZ results, and optimisation paths from the frozen trajectory CSV.
-The design and geometry illustrations evaluate the original deterministic
-definitions; the ten example predictor curves reuse the original seed 2026.
-No estimator, tuning experiment or Monte Carlo study is rerun.
-
-Usage (from any directory)::
-
-    python make_readable_supporting_figures.py --code-root /path/to/Functional_Regression
-
-The code root must contain four_method_core.py, make_krylov_geometry_figure.py,
-four_method_study_FINAL_R5000, babii_inference_results_R5000 and
-cg_vs_steepest_descent_results. The default destination is ../figures relative
-to this script. Optional --preview-dir writes PNGs without changing archives.
-"""
 from __future__ import annotations
 
 import argparse

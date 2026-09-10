@@ -1,12 +1,4 @@
-"""Run the entire refactored four-method study with one command.
 
-The flow is fixed and sequential:
-
-1. validate the numerical core and run the Monte Carlo simulation;
-2. create the three simulation-setup figures;
-3. create the single baseline Krylov-geometry illustration; and
-4. replay the frozen archive and create all thesis result figures.
-"""
 
 from __future__ import annotations
 

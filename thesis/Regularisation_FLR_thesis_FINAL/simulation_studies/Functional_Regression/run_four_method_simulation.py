@@ -1,9 +1,4 @@
-"""Run the clean four-method functional-regression simulation.
 
-This program writes a frozen archive for exactly four estimators and exactly
-three controlled simulation setups.  Figure creation is handled downstream by
-the matched programs in the same folder.
-"""
 
 from __future__ import annotations
 

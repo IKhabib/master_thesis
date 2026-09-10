@@ -1,19 +1,3 @@
-"""Render estimation diagnostics from frozen results, without model replay.
-
-Example (run from the complete package root)::
-
-    python -B thesis/figure_scripts/make_readable_estimation_figures.py \
-        --results simulation_materials/four_method_study_FINAL_R5000 \
-        --output-dir thesis/figures
-
-The input directory must contain simulation_results/raw_results.npz and the
-original thesis_figures/{selected_beta_diagnostics_cache.npz,
-bias_variance_decomposition.csv}. These inputs are opened read-only. No
-estimator is fitted, no random numbers are drawn, and no cache is written.
-Each diagnostic PDF retains three pages, one per model, in Model 1–3 order.
-The 6.14-inch canvases are intended for full thesis text width (15.5 cm),
-giving ordinary 8.5-point labels an effective size of about 8.45 points.
-"""
 
 from __future__ import annotations
 

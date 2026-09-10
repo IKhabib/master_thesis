@@ -1,15 +1,4 @@
-"""Shared numerical core for the four-method functional-regression study.
 
-The public estimator surface is deliberately small and fixed:
-
-* CG-FPLS-code;
-* Raw FPLS;
-* Arnoldi FPLS, using two-pass classical Gram--Schmidt (CGS2); and
-* FPCR, selected by response-space GCV.
-
-The moment-space FPCR calculation below is not an additional reported method.
-It is used only as the plug-in variance pilot required by CG-FPLS-code.
-"""
 
 from __future__ import annotations
 

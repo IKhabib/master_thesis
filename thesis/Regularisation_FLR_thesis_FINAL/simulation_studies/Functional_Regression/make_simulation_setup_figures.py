@@ -1,38 +1,4 @@
-"""Create publication-ready figures for the three simulation setups.
 
-This companion script imports the three intended data-generating setups from
-``four_method_core.py``.  It does not fit, tune, or compare any estimator, so
-the setup figures stay independent of the four-method results.
-
-The three designs are deliberately controlled comparisons:
-
-* Model 1 is the baseline.
-* Model 2 keeps Model 1's predictor spectrum and changes only the slope.
-* Model 3 keeps Model 1's slope and changes only the predictor spectrum.
-
-Outputs
--------
-``true_slope_structure.pdf``
-    The true slope functions and their first cosine-basis coefficients.
-``covariance_spectrum.pdf``
-    Predictor eigenvalues and cumulative predictor variance.
-``predictive_signal_allocation.pdf``
-    Componentwise and cumulative contributions to predictive signal variance.
-``functional_predictor_examples.pdf``
-    Representative predictor curves and exact pointwise 90% Gaussian bands.
-``setup_summary.csv``
-    Numerical quantities that can be quoted in a simulation-design section.
-
-All PDF output is vector based.  Add ``--png`` to also write 300-dpi PNG
-copies.  With the defaults, run from the directory containing both scripts::
-
-    python make_simulation_setup_figures.py
-
-The discretization matches the simulation code exactly:
-
-    X_i(s_t) = sum_j sqrt(lambda_j) Z_ij phi_j(s_t)
-    Y_i      = X_i @ beta / T + epsilon_i
-"""
 
 from __future__ import annotations
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create the Chapter 2 illustration of ell-p geometry and duality."""
+
 
 from __future__ import annotations
 

@@ -1,40 +1,4 @@
-"""Publication figures for the four-method functional-regression simulation.
 
-This companion program does not tune or modify any estimator.  It reads the
-archived ``raw_results.npz`` and ``configuration.json`` produced by
-``run_four_method_simulation.py``.  The archive contains the selected number
-of components and scalar risks, but not every selected slope estimate.  To
-recover the latter, this program deterministically replays the data-generating
-random-number stream and evaluates each estimator at its *archived* component
-count.  The replay is accepted only when its ISE and test MSPE agree with the
-frozen archive.
-
-Outputs
--------
-``basis_coefficient_histograms.pdf``
-    Histograms of the first three estimated cosine coefficients, with the true
-    coefficient and Monte Carlo mean marked.
-``beta_point_histograms.pdf``
-    Histograms of the selected slope estimate at five locations on [0, 1].
-``bias_variance_decomposition.pdf``
-    Full-sample slope and prediction decompositions.  Component bars use a log
-    scale because Raw FPLS has genuine catastrophic finite-precision tails.
-``bias_variance_decomposition_raw_stable_subset.pdf``
-    The same decomposition on the paired subset where Raw FPLS was not flagged
-    as numerically unstable.
-``coefficient_normal_qq.pdf``
-    Normal Q-Q plots for the first three estimated cosine coefficients.
-``babii_style_error_boxplots_with_tails.pdf``
-    ISE and MSPE boxplots in the layout of Babii et al. Figure 1, but with all
-    outliers retained and Raw-FPLS instability cases explicitly marked.
-
-Example
--------
-python make_thesis_simulation_figures.py \
-    --results-dir four_method_results \
-    --output-dir four_method_thesis_figures \
-    --jobs 3
-"""
 
 from __future__ import annotations
 
