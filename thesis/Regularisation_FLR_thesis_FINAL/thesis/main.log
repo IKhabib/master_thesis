@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.13)  10 SEP 2026 15:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.13)  10 SEP 2026 15:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -925,7 +925,7 @@ Chapter 2.
 [5
 
 ] [6] [7] [8]
-<figures/lp_duality_geometry.pdf, id=870, 443.7378pt x 379.4175pt>
+<figures/lp_duality_geometry.pdf, id=863, 443.7378pt x 379.4175pt>
 File: figures/lp_duality_geometry.pdf Graphic file (type pdf)
 <use figures/lp_duality_geometry.pdf>
 Package pdftex.def Info: figures/lp_duality_geometry.pdf  used on input line 12
@@ -947,7 +947,7 @@ Overfull \hbox (7.98822pt too wide) in paragraph at lines 144--144
  []
 
 [24] [25] [26] [27] [28]
-<figures/krylov_geometry.pdf, id=1120, 443.7378pt x 224.037pt>
+<figures/krylov_geometry.pdf, id=1113, 443.7378pt x 224.037pt>
 File: figures/krylov_geometry.pdf Graphic file (type pdf)
 <use figures/krylov_geometry.pdf>
 Package pdftex.def Info: figures/krylov_geometry.pdf  used on input line 422.
@@ -964,13 +964,13 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
  [30] [31]
-<figures/quadratic_trajectory_2d.pdf, id=1176, 216.81pt x 216.81pt>
+<figures/quadratic_trajectory_2d.pdf, id=1169, 216.81pt x 216.81pt>
 File: figures/quadratic_trajectory_2d.pdf Graphic file (type pdf)
 <use figures/quadratic_trajectory_2d.pdf>
 Package pdftex.def Info: figures/quadratic_trajectory_2d.pdf  used on input lin
 e 613.
 (pdftex.def)             Requested size: 216.1011pt x 216.11142pt.
-<figures/quadratic_surface_3d.pdf, id=1177, 216.81pt x 216.81pt>
+<figures/quadratic_surface_3d.pdf, id=1170, 216.81pt x 216.81pt>
 File: figures/quadratic_surface_3d.pdf Graphic file (type pdf)
 <use figures/quadratic_surface_3d.pdf>
 Package pdftex.def Info: figures/quadratic_surface_3d.pdf  used on input line 6
@@ -983,28 +983,28 @@ Chapter 4.
 [35
 
 ] [36]
-<figures/true_slope_structure.pdf, id=1259, 443.7378pt x 458.9145pt>
+<figures/true_slope_structure.pdf, id=1252, 443.7378pt x 458.9145pt>
 File: figures/true_slope_structure.pdf Graphic file (type pdf)
 <use figures/true_slope_structure.pdf>
 Package pdftex.def Info: figures/true_slope_structure.pdf  used on input line 1
 89.
 (pdftex.def)             Requested size: 436.60997pt x 451.56078pt.
  [37] [38 <./figures/true_slope_structure.pdf>]
-<figures/covariance_spectrum.pdf, id=1292, 443.7378pt x 238.49101pt>
+<figures/covariance_spectrum.pdf, id=1285, 443.7378pt x 238.49101pt>
 File: figures/covariance_spectrum.pdf Graphic file (type pdf)
 <use figures/covariance_spectrum.pdf>
 Package pdftex.def Info: figures/covariance_spectrum.pdf  used on input line 20
 7.
 (pdftex.def)             Requested size: 423.37997pt x 227.55862pt.
  [39]
-<figures/predictive_signal_allocation.pdf, id=1304, 443.7378pt x 256.5585pt>
+<figures/predictive_signal_allocation.pdf, id=1297, 443.7378pt x 256.5585pt>
 File: figures/predictive_signal_allocation.pdf Graphic file (type pdf)
 <use figures/predictive_signal_allocation.pdf>
 Package pdftex.def Info: figures/predictive_signal_allocation.pdf  used on inpu
 t line 288.
 (pdftex.def)             Requested size: 423.37997pt x 244.79793pt.
  [40 <./figures/covariance_spectrum.pdf>]
-<figures/functional_predictor_examples.pdf, id=1334, 443.7378pt x 325.215pt>
+<figures/functional_predictor_examples.pdf, id=1327, 443.7378pt x 325.215pt>
 File: figures/functional_predictor_examples.pdf Graphic file (type pdf)
 <use figures/functional_predictor_examples.pdf>
 Package pdftex.def Info: figures/functional_predictor_examples.pdf  used on inp
@@ -1017,7 +1017,7 @@ Chapter 5.
 [49
 
 ]
-<figures/babii_style_error_boxplots_with_tails.pdf, id=1444, 443.7378pt x 440.8
+<figures/babii_style_error_boxplots_with_tails.pdf, id=1436, 443.7378pt x 440.8
 4702pt>
 File: figures/babii_style_error_boxplots_with_tails.pdf Graphic file (type pdf)
 
@@ -1027,14 +1027,14 @@ d on input line 75.
 (pdftex.def)             Requested size: 441.01773pt x 438.16194pt.
  [50] [51 <./figures/babii_style_error_boxplots_with_tails.pdf>] [52]
 [53] [54]
-<figures/bias_variance_decomposition.pdf, id=1510, 443.7378pt x 440.84702pt>
+<figures/bias_variance_decomposition.pdf, id=1503, 443.7378pt x 440.84702pt>
 File: figures/bias_variance_decomposition.pdf Graphic file (type pdf)
 <use figures/bias_variance_decomposition.pdf>
 Package pdftex.def Info: figures/bias_variance_decomposition.pdf  used on input
  line 295.
 (pdftex.def)             Requested size: 441.01773pt x 438.16194pt.
  [55] [56 <./figures/bias_variance_decomposition.pdf>]
-<figures/bias_variance_decomposition_raw_stable_subset.pdf, id=1535, 443.7378pt
+<figures/bias_variance_decomposition_raw_stable_subset.pdf, id=1528, 443.7378pt
  x 440.84702pt>
 File: figures/bias_variance_decomposition_raw_stable_subset.pdf Graphic file (t
 ype pdf)
@@ -1053,26 +1053,26 @@ Chapter 7.
 [72
 
 ]
-<figures/stopping_diagnostics.pdf, id=1739, 443.7378pt x 448.07399pt>
+<figures/stopping_diagnostics.pdf, id=1732, 443.7378pt x 448.07399pt>
 File: figures/stopping_diagnostics.pdf Graphic file (type pdf)
 <use figures/stopping_diagnostics.pdf>
 Package pdftex.def Info: figures/stopping_diagnostics.pdf  used on input line 6
 8.
 (pdftex.def)             Requested size: 441.01773pt x 445.34488pt.
  [73] [74 <./figures/stopping_diagnostics.pdf>] [75]
-<figures/null_calibration.pdf, id=1792, 443.7378pt x 448.07399pt>
+<figures/null_calibration.pdf, id=1785, 443.7378pt x 448.07399pt>
 File: figures/null_calibration.pdf Graphic file (type pdf)
 <use figures/null_calibration.pdf>
 Package pdftex.def Info: figures/null_calibration.pdf  used on input line 173.
 (pdftex.def)             Requested size: 441.01773pt x 445.34488pt.
  [76] [77 <./figures/null_calibration.pdf>]
-<figures/power_curves.pdf, id=1833, 443.7378pt x 419.166pt>
+<figures/power_curves.pdf, id=1826, 443.7378pt x 419.166pt>
 File: figures/power_curves.pdf Graphic file (type pdf)
 <use figures/power_curves.pdf>
 Package pdftex.def Info: figures/power_curves.pdf  used on input line 266.
 (pdftex.def)             Requested size: 441.01773pt x 416.61299pt.
  [78] [79 <./figures/power_curves.pdf>]
-<figures/confidence_sets.pdf, id=1861, 443.7378pt x 419.166pt>
+<figures/confidence_sets.pdf, id=1854, 443.7378pt x 419.166pt>
 File: figures/confidence_sets.pdf Graphic file (type pdf)
 <use figures/confidence_sets.pdf>
 Package pdftex.def Info: figures/confidence_sets.pdf  used on input line 350.
@@ -1083,14 +1083,14 @@ Chapter 8.
 [83
 
 ]
-<figures/tablet_spectra_assay_overview.pdf, id=1906, 458.70119pt x 508.602pt>
+<figures/tablet_spectra_assay_overview.pdf, id=1899, 458.70119pt x 508.602pt>
 File: figures/tablet_spectra_assay_overview.pdf Graphic file (type pdf)
 <use figures/tablet_spectra_assay_overview.pdf>
 Package pdftex.def Info: figures/tablet_spectra_assay_overview.pdf  used on inp
 ut line 51.
 (pdftex.def)             Requested size: 361.63776pt x 400.98407pt.
  [84 <./figures/tablet_spectra_assay_overview.pdf>] [85]
-<figures/tablet_benchmark_observed_vs_predicted.pdf, id=1931, 483.5947pt x 463.
+<figures/tablet_benchmark_observed_vs_predicted.pdf, id=1924, 483.5947pt x 463.
 10617pt>
 File: figures/tablet_benchmark_observed_vs_predicted.pdf Graphic file (type pdf
 )
@@ -1098,7 +1098,7 @@ File: figures/tablet_benchmark_observed_vs_predicted.pdf Graphic file (type pdf
 Package pdftex.def Info: figures/tablet_benchmark_observed_vs_predicted.pdf  us
 ed on input line 162.
 (pdftex.def)             Requested size: 379.27551pt x 363.22821pt.
-<figures/tablet_benchmark_rmse_intervals.pdf, id=1934, 452.3324pt x 263.05653pt
+<figures/tablet_benchmark_rmse_intervals.pdf, id=1927, 452.3324pt x 263.05653pt
 >
 File: figures/tablet_benchmark_rmse_intervals.pdf Graphic file (type pdf)
 <use figures/tablet_benchmark_rmse_intervals.pdf>
@@ -1107,7 +1107,7 @@ nput line 180.
 (pdftex.def)             Requested size: 343.99329pt x 200.0575pt.
  [86] [87 <./figures/tablet_benchmark_observed_vs_predicted.pdf> <./figures/tab
 let_benchmark_rmse_intervals.pdf>]
-<figures/tablet_development_selected_components.pdf, id=1981, 458.81223pt x 306
+<figures/tablet_development_selected_components.pdf, id=1973, 458.81223pt x 306
 .91878pt>
 File: figures/tablet_development_selected_components.pdf Graphic file (type pdf
 )
@@ -1133,7 +1133,7 @@ Appendix A.
 [112] [113] [114] [115] [116] [117] [118] [119] [120] [121] [122])
 (./appendices/b_simulation_diagnostics.tex [123]
 Appendix B.
-<figures/basis_coefficient_histograms.pdf, id=2240, page=1, 443.7378pt x 339.66
+<figures/basis_coefficient_histograms.pdf, id=2233, page=1, 443.7378pt x 339.66
 899pt>
 File: figures/basis_coefficient_histograms.pdf Graphic file (type pdf)
 <use figures/basis_coefficient_histograms.pdf, page 1>
@@ -1143,7 +1143,7 @@ on input line 24.
 [124
 
 ]
-<figures/basis_coefficient_histograms.pdf, id=2246, page=2, 443.7378pt x 339.66
+<figures/basis_coefficient_histograms.pdf, id=2239, page=2, 443.7378pt x 339.66
 899pt>
 File: figures/basis_coefficient_histograms.pdf Graphic file (type pdf)
 <use figures/basis_coefficient_histograms.pdf, page 2>
@@ -1151,7 +1151,7 @@ Package pdftex.def Info: figures/basis_coefficient_histograms.pdf , page2 used
 on input line 33.
 (pdftex.def)             Requested size: 441.01773pt x 337.60016pt.
  [125 <./figures/basis_coefficient_histograms.pdf>]
-<figures/basis_coefficient_histograms.pdf, id=2273, page=3, 443.7378pt x 339.66
+<figures/basis_coefficient_histograms.pdf, id=2266, page=3, 443.7378pt x 339.66
 899pt>
 File: figures/basis_coefficient_histograms.pdf Graphic file (type pdf)
 <use figures/basis_coefficient_histograms.pdf, page 3>
@@ -1160,13 +1160,13 @@ on input line 41.
 (pdftex.def)             Requested size: 441.01773pt x 337.60016pt.
  [126 <./figures/basis_coefficient_histograms.pdf>] [127 <./figures/basis_coeff
 icient_histograms.pdf>]
-<figures/beta_point_histograms.pdf, id=2282, page=1, 443.7378pt x 458.9145pt>
+<figures/beta_point_histograms.pdf, id=2275, page=1, 443.7378pt x 458.9145pt>
 File: figures/beta_point_histograms.pdf Graphic file (type pdf)
 <use figures/beta_point_histograms.pdf, page 1>
 Package pdftex.def Info: figures/beta_point_histograms.pdf , page1 used on inpu
 t line 52.
 (pdftex.def)             Requested size: 441.01773pt x 456.11938pt.
-<figures/beta_point_histograms.pdf, id=2283, page=2, 443.7378pt x 458.9145pt>
+<figures/beta_point_histograms.pdf, id=2276, page=2, 443.7378pt x 458.9145pt>
 File: figures/beta_point_histograms.pdf Graphic file (type pdf)
 <use figures/beta_point_histograms.pdf, page 2>
 Package pdftex.def Info: figures/beta_point_histograms.pdf , page2 used on inpu
@@ -1175,7 +1175,7 @@ t line 60.
 [128
 
  <./figures/beta_point_histograms.pdf>]
-<figures/beta_point_histograms.pdf, id=2304, page=3, 443.7378pt x 458.9145pt>
+<figures/beta_point_histograms.pdf, id=2297, page=3, 443.7378pt x 458.9145pt>
 File: figures/beta_point_histograms.pdf Graphic file (type pdf)
 <use figures/beta_point_histograms.pdf, page 3>
 Package pdftex.def Info: figures/beta_point_histograms.pdf , page3 used on inpu
@@ -1183,13 +1183,13 @@ t line 68.
 (pdftex.def)             Requested size: 441.01773pt x 456.11938pt.
  [129 <./figures/beta_point_histograms.pdf>] [130 <./figures/beta_point_histogr
 ams.pdf>]
-<figures/coefficient_normal_qq.pdf, id=2314, page=1, 443.7378pt x 346.89601pt>
+<figures/coefficient_normal_qq.pdf, id=2307, page=1, 443.7378pt x 346.89601pt>
 File: figures/coefficient_normal_qq.pdf Graphic file (type pdf)
 <use figures/coefficient_normal_qq.pdf, page 1>
 Package pdftex.def Info: figures/coefficient_normal_qq.pdf , page1 used on inpu
 t line 79.
 (pdftex.def)             Requested size: 441.01773pt x 344.78316pt.
-<figures/coefficient_normal_qq.pdf, id=2315, page=2, 443.7378pt x 346.89601pt>
+<figures/coefficient_normal_qq.pdf, id=2308, page=2, 443.7378pt x 346.89601pt>
 File: figures/coefficient_normal_qq.pdf Graphic file (type pdf)
 <use figures/coefficient_normal_qq.pdf, page 2>
 Package pdftex.def Info: figures/coefficient_normal_qq.pdf , page2 used on inpu
@@ -1198,7 +1198,7 @@ t line 89.
  [131
 
  <./figures/coefficient_normal_qq.pdf>]
-<figures/coefficient_normal_qq.pdf, id=2487, page=3, 443.7378pt x 346.89601pt>
+<figures/coefficient_normal_qq.pdf, id=2480, page=3, 443.7378pt x 346.89601pt>
 File: figures/coefficient_normal_qq.pdf Graphic file (type pdf)
 <use figures/coefficient_normal_qq.pdf, page 3>
 Package pdftex.def Info: figures/coefficient_normal_qq.pdf , page3 used on inpu
@@ -1207,7 +1207,7 @@ t line 98.
 ) (./appendices/c_inference_diagnostics.tex [132 <./figures/coefficient_normal_
 qq.pdf>] [133 <./figures/coefficient_normal_qq.pdf>]
 Appendix C.
-<figures/calibration_comparison.pdf, id=2498, 443.7378pt x 252.945pt>
+<figures/calibration_comparison.pdf, id=2491, 443.7378pt x 252.945pt>
 File: figures/calibration_comparison.pdf Graphic file (type pdf)
 <use figures/calibration_comparison.pdf>
 Package pdftex.def Info: figures/calibration_comparison.pdf  used on input line
@@ -1221,14 +1221,14 @@ Appendix D.
 
 {/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
  [137] [138] [139] [140]
-<figures/tablet_benchmark_residuals.pdf, id=2559, 483.23636pt x 442.0756pt>
+<figures/tablet_benchmark_residuals.pdf, id=2552, 483.23636pt x 442.0756pt>
 File: figures/tablet_benchmark_residuals.pdf Graphic file (type pdf)
 <use figures/tablet_benchmark_residuals.pdf>
 Package pdftex.def Info: figures/tablet_benchmark_residuals.pdf  used on input 
 line 366.
 (pdftex.def)             Requested size: 388.09775pt x 355.05054pt.
  [141] [142 <./figures/tablet_benchmark_residuals.pdf>]
-<figures/tablet_raw_arnoldi_numerical_diagnostics.pdf, id=2583, 458.69206pt x 4
+<figures/tablet_raw_arnoldi_numerical_diagnostics.pdf, id=2576, 458.69206pt x 4
 94.14801pt>
 File: figures/tablet_raw_arnoldi_numerical_diagnostics.pdf Graphic file (type p
 df)
@@ -1237,7 +1237,7 @@ Package pdftex.def Info: figures/tablet_raw_arnoldi_numerical_diagnostics.pdf
 used on input line 433.
 (pdftex.def)             Requested size: 361.63776pt x 389.58847pt.
  [143] [144 <./figures/tablet_raw_arnoldi_numerical_diagnostics.pdf>]
-<figures/tablet_benchmark_sensitivity_rmse.pdf, id=2624, 480.3383pt x 335.09854
+<figures/tablet_benchmark_sensitivity_rmse.pdf, id=2617, 480.3383pt x 335.09854
 pt>
 File: figures/tablet_benchmark_sensitivity_rmse.pdf Graphic file (type pdf)
 <use figures/tablet_benchmark_sensitivity_rmse.pdf>
@@ -1251,17 +1251,17 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 91D2B935864AFFF5C18515E7F7F4C2D4;26705.
+(rerunfilecheck)             Checksum: FD6632C68416FB8B7167304B4983D31B;26525.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 26085 strings out of 474116
- 462167 string characters out of 5743682
- 1945187 words of memory out of 5000000
- 46961 multiletter control sequences out of 15000+600000
- 606650 words of font info for 386 fonts, out of 8000000 for 9000
+ 26073 strings out of 474116
+ 461962 string characters out of 5743682
+ 1942187 words of memory out of 5000000
+ 46956 multiletter control sequences out of 15000+600000
+ 606210 words of font info for 383 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  66i,14n,81p,1205b,2365s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
@@ -1297,12 +1297,11 @@ t/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2024/texmf-dist/
 fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2024/texmf-dist/fo
 nts/type1/public/cm-super/sfti1200.pfb></usr/local/texlive/2024/texmf-dist/font
 s/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2024/texmf-dist/fonts/
-type1/public/cm-super/sftt1095.pfb></usr/local/texlive/2024/texmf-dist/fonts/ty
-pe1/public/cm-super/sftt1200.pfb>
-Output written on main.pdf (155 pages, 2039130 bytes).
+type1/public/cm-super/sftt1200.pfb>
+Output written on main.pdf (155 pages, 2009249 bytes).
 PDF statistics:
- 2923 PDF objects out of 2984 (max. 8388607)
- 2322 compressed objects within 24 object streams
- 586 named destinations out of 1000 (max. 500000)
- 84537 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 2911 PDF objects out of 2984 (max. 8388607)
+ 2312 compressed objects within 24 object streams
+ 584 named destinations out of 1000 (max. 500000)
+ 84017 words of extra memory for PDF output out of 89155 (max. 10000000)
 

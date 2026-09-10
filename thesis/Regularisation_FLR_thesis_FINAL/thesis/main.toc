@@ -116,4 +116,3 @@
 \contentsline {section}{\numberline {D.6}Benchmark uncertainty and residuals}{141}{section.D.6}%
 \contentsline {section}{\numberline {D.7}Final-fit numerical diagnostics}{143}{section.D.7}%
 \contentsline {section}{\numberline {D.8}Preprocessing and instrument sensitivities}{143}{section.D.8}%
-\contentsline {section}{\numberline {D.9}Reproducibility manifest}{145}{section.D.9}%
