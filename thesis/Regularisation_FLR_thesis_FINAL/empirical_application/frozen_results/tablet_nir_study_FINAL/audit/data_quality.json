@@ -1,0 +1,53 @@
+{
+  "all_finite": true,
+  "benchmark_variables_loaded": true,
+  "catalogue_count_discrepancy": {
+    "action": "retain all complete unique archive rows",
+    "archive": 655,
+    "catalogue": 654
+  },
+  "duplicate_spectra": {
+    "instrument_1": 0,
+    "instrument_2": 0
+  },
+  "observations": 655,
+  "provenance": {
+    "container": "zip",
+    "input_path": "/workspace/scratch/544cc718ff18/upload/nir_shootout_2002.mat_.zip",
+    "mat_member": "nir_shootout_2002.mat",
+    "mat_sha256": "129a32ec9e194e568cbd96a200c88aabeb347156081b5dfbb0120372fdd6c22a",
+    "mat_size_bytes": 6868936,
+    "zip_sha256": "04c03a4314ab8e8f63e0ecc788b657b5d1b5450791ce465ad41ad90cb5d52125"
+  },
+  "split_summary": [
+    {
+      "assay_max": 239.10000610351562,
+      "assay_mean": 192.88516156596523,
+      "assay_min": 151.60000610351562,
+      "assay_sd_ddof1": 21.98033576126515,
+      "observations": 155,
+      "split": "calibrate"
+    },
+    {
+      "assay_max": 199.5,
+      "assay_mean": 194.7949996948242,
+      "assay_min": 188.1999969482422,
+      "assay_sd_ddof1": 2.393147561590279,
+      "observations": 40,
+      "split": "validate"
+    },
+    {
+      "assay_max": 237.6999969482422,
+      "assay_mean": 188.3995653235394,
+      "assay_min": 154.3000030517578,
+      "assay_sd_ddof1": 15.762639132475543,
+      "observations": 460,
+      "split": "test"
+    }
+  ],
+  "status": "passed",
+  "wavelength_count": 650,
+  "wavelength_start_nm": 600.0,
+  "wavelength_step_nm": 2.0,
+  "wavelength_stop_nm": 1898.0
+}

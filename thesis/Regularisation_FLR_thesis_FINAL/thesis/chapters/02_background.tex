@@ -1,0 +1,578 @@
+% Provisional thesis draft. This chapter combines the literature review with
+% the mathematical background needed for the methods and inference chapters.
+\chapter{Literature and Functional Regression Background}
+\label{chap:background}
+
+The scalar-on-function linear model is easy to state but cannot be understood fully through finite-dimensional regression intuition alone. Its regressor is a random element of a function space, its covariance is a linear operator rather than a matrix, and estimation of the slope requires the inversion of that operator. This chapter introduces the mathematical objects needed to formulate the problem precisely and places the regularisation methods studied in this thesis within the functional regression literature. The presentation draws on the functional-analysis material developed in the MIT 18.102 lecture notes \parencite{lin_mit_18102_2021}, the operator-theoretic treatment of \textcite{hsing_eubank_2015}, and the statistical accounts of \textcite{ramsay_silverman_2005}, \textcite{horvath_kokoszka_2012}, and \textcite{kokoszka_reimherr_2017}.
+
+Definitions and proofs of the foundational results used below are collected
+in Appendix~\ref{app:mathematical-proofs}.  Keeping the arguments there makes
+the assumptions and derivations available for reference while allowing this
+chapter to retain a continuous statistical narrative.
+
+\section{Functional observations from discrete measurements}
+\label{sec:functional-observations}
+
+In an ordinary multivariate data set, the observational unit is a vector with a fixed number of coordinates. In functional data analysis, the observational unit is a curve or another structured function. The available data are still recorded at finitely many points, but those measurements are regarded as observations of an underlying object $X(t)$ defined over a continuum $t\in\mathcal I$. This viewpoint is appropriate when the order and proximity of the measurement locations have substantive meaning and when values at neighbouring locations are related. Daily demand profiles, growth trajectories, spectra, and biomedical signals are typical examples \parencite{ramsay_silverman_2005,kokoszka_reimherr_2017}.
+
+Suppose that the $i$th curve is observed at grid points $t_1,\ldots,t_T$. A functional representation may be obtained directly from a dense grid, by interpolation or smoothing, or through a finite basis expansion
+\begin{equation}
+    X_i(t)\approx \sum_{j=1}^{J} x_{ij}\phi_j(t),
+    \label{eq:basis-representation}
+\end{equation}
+where $\phi_1,\ldots,\phi_J$ may be Fourier, spline, wavelet, or other basis functions. The coefficient vector in \eqref{eq:basis-representation} is a computational representation of the curve, not a change in the conceptual model: the statistical object remains a function. Increasing the grid size or the number of basis functions allows progressively richer variation and therefore exposes the infinite-dimensional character of the problem.
+
+Functional observations may be densely and regularly sampled, sparsely sampled, or contaminated by measurement error. These regimes require different preliminary reconstruction methods. The simulations in this thesis use densely evaluated curves generated from a known basis, so reconstruction uncertainty is deliberately separated from regularisation of the regression slope. This controlled setting allows the comparison to focus on the inverse problem and on the numerical behaviour of the four estimators. The spectroscopy application in Chapter~\ref{chap:spectroscopy-application} will state the preprocessing choices needed to interpret its principal findings, while Appendix~\ref{app:spectroscopy-supplement} will document them in full, since smoothing, registration, and scaling can form an additional layer of regularisation with observed curves.
+
+Once a curve has been reconstructed, its statistical analysis requires a geometry in which distances, projections, and linear functionals are well defined. The square-integrable function space introduced next supplies that geometry.
+
+\section{Hilbert-space foundations}
+\label{sec:hilbert-foundations}
+
+\subsection{The space of square-integrable functions}
+
+Let $\mathcal I=[0,1]$ and consider real-valued functions on this interval. The interval can be replaced by any compact interval through an affine transformation. The natural state space for the present model is
+\begin{equation}
+    \mathcal H=L^2(\mathcal I)
+    =\left\{f:\mathcal I\rightarrow\mathbb R:
+      \int_{\mathcal I}f(t)^2\,\mathrm dt<\infty\right\},
+    \label{eq:l2-space}
+\end{equation}
+where functions that differ only on a set of Lebesgue measure zero are identified. The space is equipped with the inner product
+\begin{equation}
+    \langle f,g\rangle
+    =\int_{\mathcal I}f(t)g(t)\,\mathrm dt
+    \label{eq:l2-inner-product}
+\end{equation}
+and induced norm $\|f\|=\langle f,f\rangle^{1/2}$. The Cauchy--Schwarz inequality,
+\begin{equation}
+    |\langle f,g\rangle|\leq \|f\|\,\|g\|,
+    \label{eq:cauchy-schwarz}
+\end{equation}
+ensures, among other things, that the regression functional $f\mapsto\langle f,\beta\rangle$ is continuous whenever $\beta\in L^2(\mathcal I)$.
+
+\begin{definition}[Hilbert space]
+An inner-product space is a \emph{Hilbert space} if it is complete under the norm induced by its inner product. Completeness means that every Cauchy sequence has a limit in the space.
+\end{definition}
+
+The space $L^2(\mathcal I)$ is a separable Hilbert space. Completeness makes limits of approximating sequences mathematically well defined, while separability guarantees the existence of a finite or countable orthonormal basis. Both properties are essential in functional statistics. They permit functions to be approximated by finite expansions without reducing the population model itself to a fixed finite dimension \parencite{lin_mit_18102_2021,hsing_eubank_2015}.
+
+The use of $L^2$ is also matched to the regression model. The quantity $\langle X,\beta\rangle$ is the integrated contribution of the predictor curve to the response, and $\|\widehat\beta-\beta\|^2$ is the integrated squared error used later to evaluate slope recovery. Other function spaces may encode smoothness or pointwise behaviour more directly, but $L^2$ supplies the geometry in which covariance operators, principal components, and the CG--FPLS moment equation have particularly convenient forms.
+
+\subsection{Orthogonality, bases, and projections}
+
+A sequence $\{e_j\}_{j\geq1}\subset\mathcal H$ is orthonormal if $\langle e_j,e_k\rangle=0$ for $j\neq k$ and $\|e_j\|=1$. It is an orthonormal basis if its closed linear span equals $\mathcal H$. For such a basis, every $f\in\mathcal H$ has the expansion
+\begin{equation}
+    f=\sum_{j=1}^{\infty}\langle f,e_j\rangle e_j,
+    \label{eq:hilbert-basis-expansion}
+\end{equation}
+where convergence is in the $L^2$ norm. Parseval's identity gives
+\begin{equation}
+    \|f\|^2=\sum_{j=1}^{\infty}|\langle f,e_j\rangle|^2.
+    \label{eq:parseval}
+\end{equation}
+Thus, the coefficient sequence contains the same norm information as the function itself.
+
+For the finite-dimensional subspace $V_m=\operatorname{span}\{e_1,\ldots,e_m\}$, the orthogonal projection is
+\begin{equation}
+    P_m f=\sum_{j=1}^{m}\langle f,e_j\rangle e_j.
+    \label{eq:orthogonal-projection}
+\end{equation}
+It satisfies the best-approximation property
+\begin{equation}
+    \|f-P_m f\|
+    =\inf_{v\in V_m}\|f-v\|.
+    \label{eq:best-approximation}
+\end{equation}
+This basic geometric result appears repeatedly in functional regression. A predetermined basis approximation restricts the slope to a chosen subspace; FPCR projects onto a subspace estimated from the covariance operator; and Arnoldi FPLS constructs an orthonormal basis for a response-informed Krylov subspace. The distinction between these methods therefore lies less in whether projection occurs than in how the target subspace is selected.
+
+The Riesz representation theorem provides a second connection between Hilbert-space geometry and regression. Every continuous linear functional $\ell:\mathcal H\rightarrow\mathbb R$ can be written uniquely as $\ell(f)=\langle f,b\rangle$ for some $b\in\mathcal H$. Consequently, assuming a linear and continuous effect of a functional predictor naturally leads to an inner-product model with slope $\beta$. This representation is the infinite-dimensional analogue of expressing a linear functional on $\mathbb R^p$ as multiplication by a coefficient vector \parencite{lin_mit_18102_2021,hsing_eubank_2015}.
+
+Figure~\ref{fig:lp-geometry-duality} places this Hilbert-space geometry within
+the broader family of $\ell^p$ norms.  In the two-dimensional coordinate
+space $\mathbb R^2$, write
+\[
+  \|x\|_p=(|x_1|^p+|x_2|^p)^{1/p},\quad 1\leq p<\infty,
+  \qquad
+  \|x\|_\infty=\max\{|x_1|,|x_2|\}.
+\]
+The corresponding metric is $d_p(x,z)=\|x-z\|_p$, so a unit-ball boundary
+is also a unit-distance contour about the origin; translating and rescaling it
+gives the contour about any other centre.  The diamond, circle, and square in
+the left panel therefore show both different unit balls and different ways of
+measuring the same displacement.  These are finite-dimensional sections used
+for visualisation.  Although all norms on $\mathbb R^2$ are equivalent, the
+infinite-dimensional sequence spaces $\ell^p$ are genuinely different.
+
+More formally, if $1\leq p<\infty$ and $q$ satisfies
+$p^{-1}+q^{-1}=1$, then $(\ell^p)^*$ is isometrically $\ell^q$ and
+\[
+  \|y\|_q=\sup_{\|x\|_p\leq1}\left|\sum_{j\geq1}x_jy_j\right|.
+\]
+The case $p=q=2$ is the self-dual member of this conjugate family.  For an
+orthonormal basis, Parseval's identity identifies $L^2$ functions with their
+$\ell^2$ coefficient sequences without changing distances, while Riesz
+identifies continuous linear effects with elements of the same space.  This
+common geometry is particularly well matched to orthogonal projections,
+covariance operators, and the conjugate-gradient constructions used later in
+the thesis.  It does not assert that $L^2$ is universally preferable to every
+other function space: in particular, the prediction criterion later uses a
+covariance-weighted seminorm.  The full sequence-space statement and its
+finite-dimensional polar interpretation are proved in
+Theorem~\ref{thm:app-lp-duality}; Remark~\ref{rem:app-linfty-dual} records the
+exceptional endpoint behaviour of $(\ell^\infty)^*$
+\parencite{lin_mit_18102_2021}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{lp_duality_geometry.pdf}
+    \caption[Unit-ball geometry and $\ell^p$ duality]{Unit-ball geometry,
+    norm-induced distance, and duality.  The left panel plots
+    $B_p^2=\{x\in\mathbb R^2:\|x\|_p\leq1\}$ for $p=1,2,\infty$ and assigns
+    three different lengths to the same displacement $h=(4/5,3/5)$.  In the
+    right panel, $q$ is the H\"older-conjugate exponent and
+    $(B_p^2)^\circ=B_q^2$ under the standard finite-dimensional pairing.  The
+    dashed line $u^{\mathsf T}x=1$ supports the Euclidean ball at
+    $u=(4/5,3/5)$; the same $u$ is both the boundary point and its norming
+    vector, illustrating $(B_2^2)^\circ=B_2^2$.  The lower strip records how
+    Parseval's identity and Riesz representation transfer this self-dual
+    coefficient geometry to $L^2(\mathcal I)$.  The plotted balls are
+    two-dimensional analogues, not depictions of infinite-dimensional sets.}
+    \label{fig:lp-geometry-duality}
+\end{figure}
+
+\section{Random functions and covariance operators}
+\label{sec:random-functions-covariance}
+
+\subsection{Random elements in \texorpdfstring{$L^2$}{L2}}
+
+Let $(\Omega,\mathcal F,\mathbb P)$ be a probability space. A functional observation is represented by a random element $X:\Omega\rightarrow\mathcal H$. Assume throughout that
+\begin{equation}
+    \mathbb E\|X\|^2<\infty.
+    \label{eq:finite-second-moment}
+\end{equation}
+Its mean $\mu_X\in\mathcal H$ is defined by the relation
+\begin{equation}
+    \langle\mu_X,f\rangle
+    =\mathbb E\langle X,f\rangle,
+    \qquad f\in\mathcal H.
+    \label{eq:functional-mean}
+\end{equation}
+This definition does not require pointwise expectations to exist at every $t$; it characterises the mean as an element of the Hilbert space. Write $X^c=X-\mu_X$ for the centred predictor.
+
+For $u,v\in\mathcal H$, define the rank-one operator $u\otimes v$ by
+\begin{equation}
+    (u\otimes v)f=\langle v,f\rangle u.
+    \label{eq:tensor-operator}
+\end{equation}
+The covariance operator of $X$ is
+\begin{equation}
+    K=\mathbb E(X^c\otimes X^c),
+    \qquad
+    Kf=\mathbb E\!\left[\langle X^c,f\rangle X^c\right].
+    \label{eq:covariance-operator}
+\end{equation}
+If a jointly measurable representative of $X^c$ has pointwise second moments,
+define
+\[
+    c(s,t)=\operatorname{Cov}\{X(s),X(t)\}.
+\]
+Provided expectation and
+integration may be interchanged---for example, if, for the function $f$ under
+consideration,
+\[
+  \int_{\mathcal I}\mathbb E|X^c(s)X^c(t)|\,|f(t)|\,\mathrm dt<\infty
+  \qquad\text{for almost every }s,
+\]
+the same operator can be written as
+\begin{equation}
+    (Kf)(s)=\int_{\mathcal I}c(s,t)f(t)\,\mathrm dt.
+    \label{eq:covariance-integral-operator}
+\end{equation}
+The qualification is important because an element of $L^2$ is an equivalence
+class rather than a pointwise-defined curve.  The operator formulation is
+therefore preferable: it remains meaningful without choosing pointwise values
+or imposing sample-path smoothness.
+
+\subsection{Properties and spectral representation}
+
+The covariance operator is bounded, self-adjoint, and non-negative:
+\begin{equation}
+    \langle Kf,g\rangle=\langle f,Kg\rangle,
+    \qquad
+    \langle Kf,f\rangle
+    =\mathbb E\langle X^c,f\rangle^2\geq0.
+    \label{eq:covariance-properties}
+\end{equation}
+Under \eqref{eq:finite-second-moment}, it is also trace class and hence compact, with
+\begin{equation}
+    \operatorname{tr}(K)=\mathbb E\|X^c\|^2<\infty.
+    \label{eq:covariance-trace}
+\end{equation}
+These facts place $K$ within the compact self-adjoint operator theory covered by the spectral theorem \parencite{lin_mit_18102_2021,hsing_eubank_2015,horvath_kokoszka_2012}.
+
+\begin{proposition}[Spectral representation of the covariance operator]
+Let $\mathcal J_K$ be either a possibly empty finite index set
+$\{1,\ldots,q\}$, with $q\geq0$, or $\mathbb N$.  There exist positive eigenvalues
+$\{\lambda_j:j\in\mathcal J_K\}$ and orthonormal eigenfunctions
+$\{v_j:j\in\mathcal J_K\}$ spanning
+$\overline{\operatorname{Range}(K)}$ such that
+\begin{equation}
+    Kf=\sum_{j\in\mathcal J_K}\lambda_j\langle f,v_j\rangle v_j,
+    \qquad f\in\mathcal H,
+    \label{eq:covariance-spectral-representation}
+\end{equation}
+where the eigenvalues are ordered non-increasingly.  If $\mathcal J_K=\mathbb N$,
+then $\lambda_j\rightarrow0$; on $\operatorname{Null}(K)$ the operator is zero.
+\end{proposition}
+
+The eigenfunctions define the functional principal component directions. With scores $\xi_j=\langle X^c,v_j\rangle$, the Karhunen--Lo\`eve representation is
+\begin{equation}
+    X=\mu_X+\sum_{j\in\mathcal J_K}\xi_jv_j,
+    \label{eq:karhunen-loeve}
+\end{equation}
+with convergence in mean square. The scores are uncorrelated, $\mathbb E\xi_j=0$, $\mathbb E(\xi_j\xi_k)=0$ for $j\neq k$, and $\mathbb E\xi_j^2=\lambda_j$. When at least $m$ positive eigenvalues exist, the first $m$ eigenfunctions span the $m$-dimensional subspace that minimises the expected squared reconstruction error of $X$ among all $m$-dimensional subspaces. This optimality concerns reconstruction of the predictor; it does not by itself guarantee that the same directions are the most informative for a response variable.
+
+Given independent observations $X_1,\ldots,X_n$, the empirical mean and covariance operator are
+\begin{align}
+    \overline X
+    &=\frac1n\sum_{i=1}^{n}X_i,
+    \label{eq:sample-functional-mean}\\
+    \widehat K f
+    &=\frac1n\sum_{i=1}^{n}
+      \langle X_i-\overline X,f\rangle(X_i-\overline X).
+    \label{eq:sample-covariance-operator}
+\end{align}
+Even though $\widehat K$ acts on an infinite-dimensional space, its rank is at most $n-1$. It is therefore non-invertible on $\mathcal H$. A basis or grid representation replaces it by a finite matrix, but this does not remove the underlying difficulty: the resulting matrix is singular or increasingly ill-conditioned as more directions are admitted.
+
+\section{The scalar-on-function linear model}
+\label{sec:scalar-on-function-model}
+
+Let $(Y,X)$ be a scalar--function pair with $\mathbb E(Y^2)<\infty$ and $X\in\mathcal H$. The scalar-on-function linear model is
+\begin{equation}
+    Y=\alpha+\langle X,\beta\rangle+\varepsilon,
+    \qquad
+    \mathbb E(\varepsilon\mid X)=0,
+    \label{eq:scalar-on-function-model}
+\end{equation}
+where $\beta\in\mathcal H$ is the slope function. If $\mu_Y=\mathbb EY$, then
+\begin{equation}
+    \alpha=\mu_Y-\langle\mu_X,\beta\rangle.
+    \label{eq:functional-intercept}
+\end{equation}
+Consequently, centring gives
+\begin{equation}
+    Y^c=Y-\mu_Y=\langle X^c,\beta\rangle+\varepsilon.
+    \label{eq:centered-functional-model}
+\end{equation}
+All subsequent derivations can therefore be carried out for centred variables without an intercept.
+
+Define the cross-covariance element
+\begin{equation}
+    r=\mathbb E(Y^cX^c)\in\mathcal H.
+    \label{eq:cross-covariance-element}
+\end{equation}
+For any $f\in\mathcal H$, the conditional mean restriction implies
+\begin{align}
+    \langle r,f\rangle
+    &=\mathbb E\!\left[Y^c\langle X^c,f\rangle\right] \\
+    &=\mathbb E\!\left[\langle X^c,\beta\rangle
+                       \langle X^c,f\rangle\right]
+      =\langle K\beta,f\rangle.
+    \label{eq:normal-equation-weak}
+\end{align}
+Since this holds for every $f$, the population normal equation is
+\begin{equation}
+    K\beta=r.
+    \label{eq:background-normal-equation}
+\end{equation}
+This is the operator counterpart of the finite-dimensional normal equations: the covariance matrix and cross-covariance vector are replaced by $K$ and $r$, respectively.
+
+The same equation follows from least squares. For a candidate $b\in\mathcal H$, let
+\begin{equation}
+    R(b)=\mathbb E\left(Y^c-\langle X^c,b\rangle\right)^2.
+    \label{eq:population-risk}
+\end{equation}
+The error orthogonality condition gives the risk identity
+\begin{equation}
+    R(b)-R(\beta)
+    =\mathbb E\langle X^c,b-\beta\rangle^2
+    =\langle K(b-\beta),b-\beta\rangle
+    =\left\|K^{1/2}(b-\beta)\right\|^2.
+    \label{eq:prediction-risk-identity}
+\end{equation}
+Thus, prediction error and slope estimation error use different geometries. Integrated squared error is $\|b-\beta\|^2$, whereas excess prediction risk is the weaker covariance-weighted seminorm $\|K^{1/2}(b-\beta)\|^2$ on $\mathcal H$. It becomes a norm after the parameter space is restricted to $\operatorname{Null}(K)^\perp$. Directions with small eigenvalues contribute little to prediction but may contribute substantially to integrated slope error. The distinction is central to the theoretical results of \textcite{cai_hall_2006} and motivates reporting both criteria in the simulation study.
+
+The empirical counterparts of $r$ and the normal equation are
+\begin{align}
+    \widehat r
+    &=\frac1n\sum_{i=1}^{n}(Y_i-\overline Y)(X_i-\overline X),
+    \label{eq:sample-cross-covariance}\\
+    \widehat K\widehat\beta
+    &=\widehat r.
+    \label{eq:sample-normal-equation}
+\end{align}
+Equation \eqref{eq:sample-normal-equation} is the common starting point for all four estimators. Before regularising it, however, one must separate which part of the slope is identified from whether that identified part can be recovered stably.
+
+\section{Identification and ill-posedness}
+\label{sec:identification-illposedness}
+
+\subsection{Identification of the slope}
+
+For two slopes $\beta$ and $\widetilde\beta$, put
+$h=\beta-\widetilde\beta$.  They produce the same conditional mean if and only
+if
+\begin{equation}
+    h\in\operatorname{Null}(K).
+    \label{eq:identified-equivalence}
+\end{equation}
+Indeed, if $h\in\operatorname{Null}(K)$, then
+\begin{equation}
+    \mathbb E\langle X^c,h\rangle^2=\langle Kh,h\rangle=0,
+\end{equation}
+and hence $\langle X^c,h\rangle=0$ almost surely.  Conversely, equality of
+the conditional means implies this almost-sure equality and therefore
+$Kh=\mathbb E\{\langle X^c,h\rangle X^c\}=0$.  Thus the observationally
+identified parameter is the equivalence class
+$[\beta]=\beta+\operatorname{Null}(K)$.  Equivalently, one may work on the
+canonical parameter space
+\begin{equation}
+    \mathcal H_{\mathrm{id}}=\operatorname{Null}(K)^\perp
+    =\overline{\operatorname{Range}(K)},
+    \label{eq:identified-parameter-space}
+\end{equation}
+where the conditional-mean map is injective.  The identified representative is
+the unique minimum-norm element of $[\beta]$; it is denoted by
+$\beta^\dagger$.  Full identification on all of $\mathcal H$ occurs if and only
+if $\operatorname{Null}(K)=\{0\}$.  When the distinction is not material, later
+chapters write $\beta$ for the canonical representative $\beta^\dagger$.
+
+Expand $\beta^\dagger$ and $r$ in the positive-eigenvalue system of $K$:
+\begin{equation}
+    \beta^\dagger=\sum_{j\in\mathcal J_K}\beta_jv_j,
+    \qquad
+    r=\sum_{j\in\mathcal J_K}r_jv_j.
+    \label{eq:beta-r-spectral-expansions}
+\end{equation}
+For positive eigenvalues, \eqref{eq:background-normal-equation} implies
+\begin{equation}
+    r_j=\lambda_j\beta_j,
+    \qquad
+    \beta_j=\frac{r_j}{\lambda_j}.
+    \label{eq:spectral-inverse-coefficients}
+\end{equation}
+Together with $r\perp\operatorname{Null}(K)$, a square-integrable solution
+exists if and only if the coefficients satisfy the Picard condition
+\begin{equation}
+    \sum_{j\in\mathcal J_K}\frac{r_j^2}{\lambda_j^2}<\infty.
+    \label{eq:picard-condition}
+\end{equation}
+Under the correctly specified model, $r=K\beta$ ensures this population condition for the true square-integrable slope. It does not ensure that replacing $r$ and $K$ by noisy empirical quantities yields a stable estimator.
+
+\subsection{Why inversion is unstable}
+
+Compactness is the source of the inverse problem. If $K$ has infinite rank, its positive eigenvalues converge to zero. The appropriate inverse for the identified parameter is the Moore--Penrose inverse. On its natural domain it is
+\begin{equation}
+    K^\dagger f
+    =\sum_{j\in\mathcal J_K}
+      \frac{\langle f,v_j\rangle}{\lambda_j}v_j,
+    \qquad
+    \mathcal D(K^\dagger)
+    =\left\{f\in\mathcal H:
+      \sum_{j\in\mathcal J_K}
+      \frac{|\langle f,v_j\rangle|^2}{\lambda_j^2}<\infty\right\},
+    \label{eq:moore-penrose-inverse}
+\end{equation}
+with $K^\dagger f=0$ for $f\in\operatorname{Null}(K)$.  The Picard condition
+ensures that $r\in\mathcal D(K^\dagger)$ and the canonical slope is
+$\beta^\dagger=K^\dagger r$.  The factors $1/\lambda_j$ are nevertheless
+unbounded. To see the consequence directly, perturb the right-hand side of the normal equation by $a_jv_j$. Although the perturbation has norm $|a_j|$, its effect after inversion has norm $|a_j|/\lambda_j$. For high-index directions, an arbitrarily small error in $r$ can therefore generate a large error in the recovered slope.
+
+Sampling error affects both $\widehat r$ and $\widehat K$. Empirical eigenvalues fluctuate, empirical eigenfunctions are estimated imperfectly, and components of $\widehat r$ along low-variance directions can be dominated by noise. Simply increasing the basis dimension does not solve these problems. It permits more small-eigenvalue directions to enter the calculation and may increase variance and numerical conditioning problems. Functional linear regression is consequently ill posed in the sense that the solution does not depend continuously on the observed moments \parencite{engl_hanke_neubauer_1996,hall_horowitz_2007}.
+
+Ill-posedness should be distinguished from non-identification. An injective compact covariance operator can identify every coefficient of $\beta$ at the population level while still possessing an unbounded inverse. Identification states that two different slopes imply different population conditional means. Stability asks whether a small change in the moments produces only a small change in the recovered slope. Regularisation is needed for the second property even when the first holds.
+
+There is also a finite-dimensional numerical manifestation. After discretisation in a $J$-dimensional basis, the covariance operator becomes a positive semidefinite matrix. Its condition number is the ratio between its largest and smallest retained eigenvalues. As $J$ grows, the smallest eigenvalues typically become very small and the condition number becomes large. Rounding error and statistical noise can then be amplified by a direct linear solve. This link explains why the theoretical inverse problem and the numerical conditioning diagnostics in the simulation study describe the same underlying geometry at different levels.
+
+\section{Regularisation principles in functional regression}
+\label{sec:regularisation-principles}
+
+Regularisation replaces the unstable inverse by a family of stable approximate inverses. The amount of regularisation controls a bias--variance trade-off. Strong regularisation suppresses poorly identified directions and introduces bias; weak regularisation admits more directions and increases sensitivity to noise. A tuning parameter, truncation level, or stopping index determines the operating point.
+
+For orientation, suppose that $\widehat K$ has eigenpairs $(\widehat\lambda_j,\widehat v_j)$. A broad class of spectral estimators has the form
+\begin{equation}
+    \widehat\beta_{\eta}
+    =\sum_{j:\widehat\lambda_j>0} g_{\eta}(\widehat\lambda_j)
+      \langle\widehat r,\widehat v_j\rangle\widehat v_j,
+    \label{eq:spectral-filter-estimator}
+\end{equation}
+where $g_{\eta}$ is a bounded approximation to $\lambda\mapsto1/\lambda$ on the positive spectrum and is taken to satisfy $g_{\eta}(0)=0$. Different choices of $g_{\eta}$ lead to different regularisation schemes. Krylov estimators need not be computed through the empirical eigendecomposition, but they can still be understood as iteration-dependent polynomial approximations to this inverse.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption[Regularisation principles for functional linear regression]{Regularisation principles relevant to functional linear regression.}
+    \label{tab:regularisation-principles}
+    \begin{tabular}{@{}
+        >{\raggedright\arraybackslash}p{2.5cm}
+        >{\raggedright\arraybackslash}p{3.2cm}
+        >{\raggedright\arraybackslash}p{2.2cm}
+        >{\raggedright\arraybackslash}p{5.3cm}@{}}
+        \toprule
+        Method family & Restricted or modified object & Main tuning quantity & Statistical interpretation \\
+        \midrule
+        Basis and roughness penalty
+        & Predetermined basis and a penalty on size or derivatives
+        & Basis dimension and penalty weight
+        & Encodes structural smoothness and stabilises correlated coefficients \\
+        FPCR
+        & Leading empirical covariance eigenfunctions
+        & Number of components
+        & Removes directions explaining little predictor variation \\
+        Tikhonov regularisation
+        & Shifted operator $\widehat K+\rho I$
+        & Penalty $\rho$
+        & Continuously shrinks small-eigenvalue directions \\
+        FPLS and CG
+        & Response-informed Krylov subspace
+        & Component count or stopping rule
+        & Uses iteration as regularisation and prioritises directions linked to the response \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Basis penalties and Tikhonov regularisation}
+
+One approach restricts $\beta$ to a predetermined finite basis and estimates its coefficients by penalised least squares. When $L$ is an unbounded operator such as differentiation, the optimisation is understood over $b\in\operatorname{Dom}(L)$, or over a finite differentiable basis contained in that domain. A typical criterion is
+\begin{equation}
+    \frac1n\sum_{i=1}^{n}
+    \left\{Y_i-\overline Y-\langle X_i-\overline X,b\rangle\right\}^2
+    +\rho\|Lb\|^2,
+    \label{eq:roughness-penalised-risk}
+\end{equation}
+where $L$ is often a derivative operator and $\rho>0$ controls smoothness. When $L=I$, the population analogue yields the Tikhonov solution $(K+\rho I)^{-1}r$, whose filter on the positive spectrum is $g_\rho(\lambda)=(\lambda+\rho)^{-1}$. We retain the convention $g_\rho(0)=0$ in \eqref{eq:spectral-filter-estimator}. This gives the same solution because $r\perp\operatorname{Null}(K)$ under the model; likewise, $\widehat r\perp\operatorname{Null}(\widehat K)$ empirically. Every positive eigendirection is retained, with stronger shrinkage where the eigenvalue is small. Penalised basis and spline estimators for functional linear regression were developed, among others, by \textcite{cardot_ferraty_sarda_2003} and \textcite{crambes_kneip_sarda_2009}. Although these estimators are not part of the four-method Monte Carlo comparison, they clarify that regularisation can encode smoothness directly rather than through covariance components.
+
+\subsection{Spectral cut-off and FPCR}
+
+Functional principal component regression uses the truncated inverse
+\begin{equation}
+    \widehat\beta_m^{\mathrm{FPCR}}
+    =\sum_{j=1}^{m}
+      \frac{\langle\widehat r,\widehat v_j\rangle}
+           {\widehat\lambda_j}\widehat v_j.
+    \label{eq:fpcr-background}
+\end{equation}
+The cut-off prevents division by empirical eigenvalues beyond the retained rank. FPCR is attractive because it is transparent, computationally convenient, and tied directly to the Karhunen--Lo\`eve representation. Its main limitation is that $\widehat v_j$ and their order are determined only by the marginal variation of $X$. A direction with modest predictor variance but a large slope coefficient may be important for the response and nevertheless enter late in the principal component ordering.
+
+\textcite{cardot_ferraty_sarda_1999} developed functional principal-component estimation, while their later spline construction combines basis expansion with a roughness penalty \parencite{cardot_ferraty_sarda_2003}. \textcite{hall_horowitz_2007} analysed convergence rates for principal-component and ridge-type regularisation under eigenvalue and smoothness conditions. \textcite{cai_hall_2006} showed why estimating the slope and predicting a response can have substantially different difficulty, a distinction already visible in \eqref{eq:prediction-risk-identity}. FPCR therefore provides both a canonical estimator and a benchmark against which response-informed regularisation can be assessed.
+
+\subsection{Response-informed Krylov regularisation}
+
+Partial least squares selects directions using both $X$ and $Y$. In functional form, the relevant population Krylov space is
+\begin{equation}
+    \mathcal K_m(K,r)
+    =\operatorname{span}\{r,Kr,\ldots,K^{m-1}r\}.
+    \label{eq:background-krylov-space}
+\end{equation}
+An $m$-component FPLS solution has the polynomial form
+\begin{equation}
+    \beta_m=p_{m-1}(K)r
+    \label{eq:krylov-polynomial-solution}
+\end{equation}
+for a polynomial $p_{m-1}$ of degree at most $m-1$. Its moment residual is
+\begin{equation}
+    r-K\beta_m=\pi_m(K)r,
+    \qquad
+    \pi_m(\lambda)=1-\lambda p_{m-1}(\lambda).
+    \label{eq:krylov-residual-polynomial}
+\end{equation}
+The iteration constructs an approximation to the inverse only along directions represented in the cross-covariance $r$. This explains the supervised nature of FPLS and why it can require fewer components than FPCR in some prediction problems.
+
+\textcite{preda_saporta_2005} formulated PLS regression for stochastic-process predictors. \textcite{delaigle_hall_2012} developed an alternative functional PLS representation using successive powers of the covariance operator and established its statistical properties. In finite-dimensional PLS, the connection with Lanczos and conjugate-gradient algorithms was studied by \textcite{phatak_dehoog_2002}. More recently, \textcite{babii_carrasco_tsafack_2026} formulated functional PLS explicitly as a CG regularisation method, developed a data-driven early-stopping rule, and derived estimation and inference theory.
+
+The common organising object is the Krylov space, but not every algorithm
+defines the same finite-step estimate.  Raw FPLS uses the displayed power
+sequence directly, while Arnoldi replaces it by an orthonormal basis of the same
+space.  Under the usual full-rank conditions, classical score-and-deflation
+FPLS, often implemented by a NIPALS-type algorithm, yields the same restricted
+response-space fit at a common component count.
+
+Babii's released-code CG--FPLS recurrence also explores these nested spaces
+without forming the complete power basis, but it minimises the empirical moment
+residual rather than the response sum of squares.  It is therefore closely
+related to, but not generally identical with, the finite-step NIPALS/APLS
+estimator.  Even among formulations with the same exact-arithmetic target, the
+coordinates matter numerically: repeated covariance powers can approach an
+active dominant eigenspace and become nearly dependent.  Because the objectives
+and coordinates differ, the rule that selects the iteration or component count
+is part of the procedure rather than an interchangeable afterthought.
+
+\subsection{Tuning and early stopping}
+
+In every method in Table~\ref{tab:regularisation-principles}, tuning determines how much information from weak directions enters the estimator. For FPCR and component-based FPLS, $m$ is often selected by cross-validation or a generalised cross-validation criterion. For iterative inverse methods, a discrepancy rule can stop when the residual is comparable with an estimate of the sampling noise. The precise rule matters: allowing $m$ to increase without control ultimately moves the estimator towards the unstable empirical inverse.
+
+The statistical role of early stopping parallels spectral shrinkage. Initially, the iterative estimator tends to recover directions associated with larger effective eigenvalues. Later iterations fit increasingly delicate features of the sample moment equation. Stopping before this occurs introduces regularisation bias but limits variance. This is the sense in which CG is not merely a faster linear-system solver in the present thesis; its iteration path is a family of regularised estimators.
+
+\section{Estimation, prediction, and inference}
+\label{sec:background-estimation-inference}
+
+The literature reviewed above shows that the quality of a regularisation method depends on the target. With $\beta$ now denoting the canonical representative, slope estimation evaluates $\|\widehat\beta-\beta\|$, whereas prediction evaluates the covariance-weighted seminorm $\|K^{1/2}(\widehat\beta-\beta)\|$. Inference introduces a third objective: the algorithmic approximation error must be negligible at the scale of the sampling distribution. These objectives do not generally select the same amount of regularisation.
+
+For the hypothesis $H_0:\beta=b$, with
+$b\in\mathcal H_{\mathrm{id}}$, \textcite{babii_carrasco_tsafack_2026} base inference on
+the covariance-weighted difference appearing in
+$\mathcal T_n(b)$ from \eqref{eq:intro-test-statistic}:
+\begin{equation}
+    \widehat K(\widehat\beta_m-b)
+    =(\widehat r-\widehat Kb)
+      -(\widehat r-\widehat K\widehat\beta_m).
+    \label{eq:inference-residual-decomposition-background}
+\end{equation}
+The first term is the sample moment under the null; the second is the residual left by stopping CG after $m$ iterations. Early stopping may minimise an estimation or prediction criterion while leaving the second term too large for valid inference. Under independent and identically distributed sampling, $\mathbb E(\varepsilon X^c)=0$, $\mathbb E\|\varepsilon X^c\|^2<\infty$, and the standard measurability conditions for the Hilbert-space central limit theorem,
+\begin{equation}
+    \sqrt n\,(\widehat r-\widehat Kb)
+    \rightsquigarrow G
+    \qquad\text{under }H_0,
+    \label{eq:background-moment-clt}
+\end{equation}
+where $G$ is a centred Gaussian element.  Sample centring contributes only a
+lower-order term under the corresponding second-moment conditions.  To ensure
+that the algorithmic residual does not alter this limit, the inferential
+requirement is
+\begin{equation}
+    \sqrt n\,
+    \|\widehat r-\widehat K\widehat\beta_m\|
+    \xrightarrow{\mathbb P}0.
+    \label{eq:background-late-stopping}
+\end{equation}
+This generally calls for later stopping than estimation or prediction.  Under
+\eqref{eq:background-late-stopping}, the finite-iteration statistic has the same
+first-order limit as the direct-moment statistic
+$n\|\widehat r-\widehat Kb\|^2$, and the spectral representation of $G$ leads
+to a weighted chi-square law.  Chapter~\ref{chap:inference-methodology} states
+the full testing and calibration argument; Chapter~\ref{chap:inference-results}
+then evaluates its finite-sample behaviour.
+
+This separation also clarifies why late stopping does not claim to improve the slope estimate. The inferential statistic depends on $\widehat K\widehat\beta_m$, for which the weakly identified slope directions are attenuated by $\widehat K$. Late iteration is used to solve the sample moment equation accurately, not to recover $\beta$ accurately in the unweighted $L^2$ norm. These target-dependent requirements have so far been expressed at the operator level. Their implementation introduces approximation and floating-point effects in addition to sampling error, motivating the distinction considered next.
+
+\section{Discretisation and the population--computation distinction}
+\label{sec:discretisation-distinction}
+
+Theoretical objects in this chapter live in $L^2(\mathcal I)$, whereas computation uses vectors and matrices. Let $t_1,\ldots,t_T$ be a numerical grid with quadrature weights $w_1,\ldots,w_T$. Then
+\begin{equation}
+    \langle f,g\rangle
+    \approx\sum_{\ell=1}^{T}w_\ell f(t_\ell)g(t_\ell).
+    \label{eq:quadrature-inner-product}
+\end{equation}
+Equivalently, a $J$-term basis representation yields a finite coefficient vector and a basis Gram matrix. Both routes approximate the Hilbert-space geometry; neither changes the population estimand.
+
+Three errors should therefore be kept conceptually separate. Approximation error arises from representing a function on a finite grid or basis. Statistical error arises because $K$ and $r$ are estimated from a finite sample. Numerical error arises from floating-point calculations, particularly when a matrix or basis is ill-conditioned. The simulation design uses a sufficiently rich common basis and grid for all methods, so comparisons are not driven by method-specific discretisations. The raw-versus-Arnoldi comparison then isolates numerical stability within the same theoretical Krylov space, while the comparison across component counts describes statistical regularisation.
+
+This distinction is also important for interpreting a successful matrix computation. A finite matrix may be invertible even though it approximates an operator with an unbounded inverse. Conversely, a stable population regularisation principle may be implemented poorly if the chosen coordinates are nearly dependent. A defensible functional regression analysis must therefore align the population theory, statistical tuning, and numerical linear algebra.
+
+\section{Position of the thesis in the literature}
+\label{sec:literature-positioning}
+
+The functional linear model and its principal-component estimators are well established \parencite{cardot_ferraty_sarda_1999,hall_horowitz_2007}. Penalised and spline approaches provide alternative ways to encode smoothness \parencite{crambes_kneip_sarda_2009}, while the different statistical difficulty of slope recovery and prediction has been studied explicitly \parencite{cai_hall_2006}. The FPLS literature introduced response-guided dimension reduction and later supplied a Krylov representation and convergence theory \parencite{preda_saporta_2005,delaigle_hall_2012}. Comparative evidence indicates that neither FPCR nor FPLS can dominate independently of the covariance spectrum, slope alignment, and tuning design \parencite{febrero_bande_et_al_2017}. The question pursued here lies where those statistical principles meet finite-precision computation: a Krylov subspace can remain mathematically well defined even when its coordinates have become numerically unusable.
+
+The study isolates that interaction through controlled contrasts. FPCR changes how the search space is selected; raw and Arnoldi FPLS hold the Krylov space and response objective fixed while changing its coordinates and linear solver; and released-code CG--FPLS retains the nested spaces but changes the finite-step objective and stopping rule. The separate inference study then asks how far the moment-residual Krylov path must be continued when the target changes from regularised estimation to testing. With the operator, identification, and target geometries now in place, Chapter~\ref{chap:methods} turns these contrasts into four fully specified estimators.

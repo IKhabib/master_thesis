@@ -1,0 +1,301 @@
+{
+  "file_count_excluding_manifest": 59,
+  "files": [
+    {
+      "path": "_SUCCESS.json",
+      "sha256": "c53feac0bdb3afce0d73cb708252156b6dd20cbba73664854f1f603066e330c9",
+      "size_bytes": 378
+    },
+    {
+      "path": "audit/_SUCCESS.json",
+      "sha256": "672274a79c9e8043da2730f333aa2141cc9024b3f2cd932ce9f726c69a0e8759",
+      "size_bytes": 63
+    },
+    {
+      "path": "audit/data_quality.json",
+      "sha256": "48712e3ecc9fe886b38cf0a40246a6f0bf67e4ffe63981808fdc52c1de1cb03d",
+      "size_bytes": 1505
+    },
+    {
+      "path": "benchmark/_SUCCESS.json",
+      "sha256": "68b1248679b12978366bd4865f197e851743dc2e378f5ba94394cb72eac43395",
+      "size_bytes": 500
+    },
+    {
+      "path": "benchmark/bootstrap_metric_draw_key_map.json",
+      "sha256": "b66d3f44764408e924ddf80bc07624d2c4b7dfcca554841982934aebafd5d00a",
+      "size_bytes": 51075
+    },
+    {
+      "path": "benchmark/bootstrap_metric_draws.npz",
+      "sha256": "7b8b11d1cc37ee73db133e8c92a2d8fda3501a288dc61746caaa89db361198e4",
+      "size_bytes": 19068327
+    },
+    {
+      "path": "benchmark/bootstrap_summary.csv",
+      "sha256": "4f1858dfcf407564c390b1155b1d3272a9e75a5a92bef9a8b9befaf8392a7717",
+      "size_bytes": 123410
+    },
+    {
+      "path": "benchmark/fit_diagnostics.csv",
+      "sha256": "63a1631634a9fddcac506a7693c81aff5b3079805a3b7ce773e38445793c80a1",
+      "size_bytes": 6388
+    },
+    {
+      "path": "benchmark/metrics.csv",
+      "sha256": "8ebb1e67b0d29f9421f4ebe5fcb7fa775a68ea5ce179ea4fb071100f351d8c58",
+      "size_bytes": 3064
+    },
+    {
+      "path": "benchmark/predictions.csv",
+      "sha256": "40a66582e9f3033de94467fa4fcd254658fc94660c720e6830de1642383074d5",
+      "size_bytes": 1362676
+    },
+    {
+      "path": "benchmark/selected_coefficients.csv",
+      "sha256": "2a357e013f3c34d63f3fb2577093d5c582f88ad499d9ce2dd00072ee96d9ba92",
+      "size_bytes": 2129369
+    },
+    {
+      "path": "benchmark/tuning_and_numerical_curves.csv",
+      "sha256": "00d1247f3416e2eb56771c9fe4c55f34852d5d69c7b0ea1a54465aa3720d366e",
+      "size_bytes": 205657
+    },
+    {
+      "path": "development/_SUCCESS.json",
+      "sha256": "b4a089792043616ef487cce6a05c7fcbef33b625ebbd1276ab5c187bf8cb335e",
+      "size_bytes": 256
+    },
+    {
+      "path": "development/fit_diagnostics.csv",
+      "sha256": "fc46f982bd7ec77165e13c104f81bed3eb3c875df269b9e8fa0317af6540f9fa",
+      "size_bytes": 45412
+    },
+    {
+      "path": "development/fold_metrics.csv",
+      "sha256": "e1ef04c6940354d724af5c818533483f233237b61946f735c622685cd0bade84",
+      "size_bytes": 23696
+    },
+    {
+      "path": "development/predictions.csv",
+      "sha256": "a20bd0e1a60838a1ef236f01784bdc83cc77d061d8f360619480e31ee2cd95a4",
+      "size_bytes": 978266
+    },
+    {
+      "path": "development/repeat_metrics.csv",
+      "sha256": "14cf47c8fe240ed857ea18a22d11120e65562391e31f4f19f8310cd4994f4644",
+      "size_bytes": 4334
+    },
+    {
+      "path": "development/selected_coefficients.csv",
+      "sha256": "2ab1153dc4f20b46927ff49afc93d4e0b0f39e72e3c3729f5acc9bf8f2e2bbd3",
+      "size_bytes": 17255777
+    },
+    {
+      "path": "development/tuning_and_numerical_curves.csv",
+      "sha256": "ccadc56e2651ce863858457a252a48bb60dd8f5739eb9290456f19b067c002e1",
+      "size_bytes": 1669113
+    },
+    {
+      "path": "figures/_SUCCESS.json",
+      "sha256": "6fc7e843b4b79279c2717505cf9f1f827af473e34db35f19f69a4e427a301e14",
+      "size_bytes": 291
+    },
+    {
+      "path": "figures/benchmark_observed_vs_predicted.pdf",
+      "sha256": "5b4999ebbd9e4fcfee3fd931be8809d541553ece72e1364e7e9a4d8b64615307",
+      "size_bytes": 45483
+    },
+    {
+      "path": "figures/benchmark_observed_vs_predicted.png",
+      "sha256": "3312943a01b456cc6fb99c9b10cf2aa466087054eca1d2f436bc1df981e627f5",
+      "size_bytes": 386302
+    },
+    {
+      "path": "figures/benchmark_residuals.pdf",
+      "sha256": "acd5dbc36091a57e8c07b33dd290831c07846dce9930eef80df3c4b626ccb61d",
+      "size_bytes": 36212
+    },
+    {
+      "path": "figures/benchmark_residuals.png",
+      "sha256": "cdd8bfaf0dcce91efcc5a8da6e2bdb6aa9c41179025ebaed885d5cb296f298d9",
+      "size_bytes": 266037
+    },
+    {
+      "path": "figures/benchmark_rmse_intervals.pdf",
+      "sha256": "ce35d54896cd4e3833bfbfd7569f94a50d19315024bd91ad3cab967814de81bc",
+      "size_bytes": 15548
+    },
+    {
+      "path": "figures/benchmark_rmse_intervals.png",
+      "sha256": "e01d0bf12c19333fa7df826ca93313d1f84ac6115120664da524f4d3a1ec61cd",
+      "size_bytes": 61283
+    },
+    {
+      "path": "figures/benchmark_sensitivity_rmse.pdf",
+      "sha256": "faf621995fd8c468d2ac713e7db54429ae995f7fff058c5d16f9439bac118381",
+      "size_bytes": 17193
+    },
+    {
+      "path": "figures/benchmark_sensitivity_rmse.png",
+      "sha256": "5342cd8f310c527398f43f7ffd2593bc15daf880cb8b46bfd55a39bc8c068b83",
+      "size_bytes": 88473
+    },
+    {
+      "path": "figures/development_selected_components.pdf",
+      "sha256": "39ad49f1614cce04e2754eee5262c65491f6c764b283e31a3e469ab11bf242c9",
+      "size_bytes": 16984
+    },
+    {
+      "path": "figures/development_selected_components.png",
+      "sha256": "a42b8bebc3acd9859c80e7d64777a5e8b6af47783533b4b2d1f8e2ca304c77c2",
+      "size_bytes": 122830
+    },
+    {
+      "path": "figures/raw_arnoldi_numerical_diagnostics.pdf",
+      "sha256": "53e8d3074c9f8628c6b3129a6c24409990863bda72daa3bfecaacaed2621eaab",
+      "size_bytes": 24449
+    },
+    {
+      "path": "figures/raw_arnoldi_numerical_diagnostics.png",
+      "sha256": "72760f58765a64de91fb1eef7dd6df97529b3507ef7063d89f602cee992c8e31",
+      "size_bytes": 117077
+    },
+    {
+      "path": "figures/spectra_assay_overview.pdf",
+      "sha256": "0a1fed260e35038fb1a1ef48eb494d8e7fccf70f17223263c6a8149954888ceb",
+      "size_bytes": 43387
+    },
+    {
+      "path": "figures/spectra_assay_overview.png",
+      "sha256": "bdded22668dc9f2b4340e14a914f156d9ebce72245e229c060a42930c03a67b3",
+      "size_bytes": 221943
+    },
+    {
+      "path": "provenance/SPECTROSCOPY_PROTOCOL.md",
+      "sha256": "839fa454053644f9c2ef46673a79ea1ca0974898da2d5b5d9e2e16650cba138b",
+      "size_bytes": 10314
+    },
+    {
+      "path": "provenance/code_checksums.json",
+      "sha256": "7a1e9905ded5028728f2125321b228231929069e7ed84d4ba6d45cc276584408",
+      "size_bytes": 1957
+    },
+    {
+      "path": "provenance/configuration.json",
+      "sha256": "fda5b12a5ea1a3e94f9b3c57ecdb1246039fdc4a692cb75a60727f2efad8e2bf",
+      "size_bytes": 3466
+    },
+    {
+      "path": "provenance/run_invocation.json",
+      "sha256": "e3dfd55fcfaf6eb12e875e26072bd8ed32a36589ab7fa7a3ed09bb99e09c3d4b",
+      "size_bytes": 911
+    },
+    {
+      "path": "provenance/software_environment.json",
+      "sha256": "97b7dc1863a598dcaf93e33d12f9d4df281cb9323ecfb3105dc3d3f2dba08e1c",
+      "size_bytes": 3687
+    },
+    {
+      "path": "provenance/source/SPECTROSCOPY_PROTOCOL.md",
+      "sha256": "839fa454053644f9c2ef46673a79ea1ca0974898da2d5b5d9e2e16650cba138b",
+      "size_bytes": 10314
+    },
+    {
+      "path": "provenance/source/TABLET_NIR_README.md",
+      "sha256": "50b79939ef111fce461ed407bb62037c80d3da83b27fd787ad5bffd162414620",
+      "size_bytes": 2409
+    },
+    {
+      "path": "provenance/source/four_method_core.py",
+      "sha256": "3dc6ceb556e9ec61d6dc5959afb029af7a66565252f80f5386c465ff5105f975",
+      "size_bytes": 29210
+    },
+    {
+      "path": "provenance/source/make_tablet_nir_figures.py",
+      "sha256": "996a5e0641b038bf1d699213ed474f617e9b7980e1488473d3fb9ec723af9ec8",
+      "size_bytes": 19212
+    },
+    {
+      "path": "provenance/source/requirements-spectroscopy.txt",
+      "sha256": "4f4f7f546d1b14bda64ad51db30554f59bbd562096a96ff35340d76f754de81e",
+      "size_bytes": 81
+    },
+    {
+      "path": "provenance/source/run_tablet_nir_study.py",
+      "sha256": "dada2566cd3d0523c718d934acbd1318ad0d3336b7b02a49e1f75b07e53838a8",
+      "size_bytes": 37743
+    },
+    {
+      "path": "provenance/source/spectroscopy_config.json",
+      "sha256": "ca4d4cba67eaf7d78a9b1597dc82b4211fc85e31a4ef9f8adca01a5bd5dc2c8b",
+      "size_bytes": 3466
+    },
+    {
+      "path": "provenance/source/tablet_nir_core.py",
+      "sha256": "b47cf9d62cdaeec3f94b5e8bcf5218f9a8a311e4664ae835c9b0265ba4e69b72",
+      "size_bytes": 60059
+    },
+    {
+      "path": "provenance/source/test_tablet_nir_core.py",
+      "sha256": "3202484189443bde219c0c0257802a0d7a21abe32742abf6b4a1a0d24211c7f0",
+      "size_bytes": 10197
+    },
+    {
+      "path": "resampling/benchmark_bootstrap_indices.npz",
+      "sha256": "5e622a85f068a9e8856b8212caf9604db3eaa20438128eff0d61c9968bfc42ef",
+      "size_bytes": 9820238
+    },
+    {
+      "path": "resampling/development_inner_assignments.csv",
+      "sha256": "d6af72c67cea8ca6d704d07846bd7110a2e8d1207b781b8ed59bca296223e8be",
+      "size_bytes": 509671
+    },
+    {
+      "path": "resampling/development_outer_assignments.csv",
+      "sha256": "a2e74632393b4f9bbaa92fccd83db8d5d3867662c25e7deabb2910c1a39ff1ba",
+      "size_bytes": 121274
+    },
+    {
+      "path": "resampling/final_inner_assignments.csv",
+      "sha256": "5a3fb4efc3e9c7611ad972225fc320e12f2a25910cf86e526cf60d2a521927ee",
+      "size_bytes": 18489
+    },
+    {
+      "path": "tables/benchmark_sensitivity_metrics.csv",
+      "sha256": "8830ae373c17b501587a9f1bd4f99f73df8f9db978e2df97b560444d576ff909",
+      "size_bytes": 3058
+    },
+    {
+      "path": "tables/declared_benchmark_contrasts.csv",
+      "sha256": "acf898e0a1db3c10a918da2fb277abdd697392960004b6df02101aecf7d80353",
+      "size_bytes": 9566
+    },
+    {
+      "path": "tables/development_repeat_metrics.csv",
+      "sha256": "a55b899fef3c0e65f8ca6e782bb4e1a205f708c29852d35e4160d3e47378fc7a",
+      "size_bytes": 3098
+    },
+    {
+      "path": "tables/development_selection_stability.csv",
+      "sha256": "29b7c3b6e97c03ae24e3ccb62f9631382f9f60727e43b88cb9045d55f11f1daf",
+      "size_bytes": 309
+    },
+    {
+      "path": "tables/headline_results.json",
+      "sha256": "771328f497fe9cbd06eabd5f15a021d27a6d2e4cc2c696f2be369e6b5374bc1b",
+      "size_bytes": 345
+    },
+    {
+      "path": "tables/original_split_sensitivity.csv",
+      "sha256": "46e96ff5bfaac9df802b76d76d2538000af5cb0cf318ac60011dc4b8c8e789c9",
+      "size_bytes": 673
+    },
+    {
+      "path": "tables/primary_benchmark_metrics.csv",
+      "sha256": "c9b48833eaa335059975359d644923f8ddda871bce701de90614de99596a551a",
+      "size_bytes": 1262
+    }
+  ],
+  "schema_version": "1.0.0"
+}

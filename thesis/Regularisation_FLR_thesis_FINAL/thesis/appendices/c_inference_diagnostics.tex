@@ -1,0 +1,35 @@
+% Supplementary display supporting Chapter 7.
+\chapter{Supplementary Inference Diagnostics}
+\label{app:inference-diagnostics}
+
+Chapter~\ref{chap:inference-results} reports the exact rejection frequencies
+at the 1\%, 5\%, and 10\% levels in
+Table~\ref{tab:inference-null-summary}.  The additional figure below isolates
+the principal 5\% comparison and displays its conditional Monte Carlo
+uncertainty.  It is retained for visual completeness but is placed here because
+the numerical table communicates the same evidence more compactly.
+
+\section{Oracle-calibrated size at the 5\% level}
+\label{sec:app-inference-size-figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.96\textwidth]{calibration_comparison.pdf}
+    \caption[Oracle-calibrated null rejection probabilities]{Empirical null rejection probability of
+    $\mathcal T_{n,70}$ at $n=100$, using the oracle weighted chi-square 5\%
+    critical value.  Each point is based on 5,000 finite-sample replications;
+    vertical bars are normal-approximation intervals equal to the estimate
+    plus or minus 1.96 binomial Monte Carlo standard errors.  They condition on
+    the realised critical values and do not include uncertainty from the
+    50,000 oracle draws.  Since only oracle calibration was selected, the
+    figure compares empirical size with the nominal line rather than comparing
+    alternative feasible calibration procedures.}
+    \label{fig:app-inference-calibration-comparison}
+\end{figure}
+
+All three point estimates lie modestly above 5\%, matching the heavier
+finite-sample upper tails documented in
+Figure~\ref{fig:inference-null-calibration}.  The figure should therefore be
+read as a finite-sample size assessment of the oracle reference, not as
+evidence that oracle calibration is exact or available in an empirical
+application.

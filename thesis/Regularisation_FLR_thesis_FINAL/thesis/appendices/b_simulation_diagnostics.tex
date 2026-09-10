@@ -1,0 +1,103 @@
+\chapter{Supplementary Monte Carlo Diagnostics}
+\label{app:simulation-diagnostics}
+
+This appendix collects the basis-coefficient and pointwise distribution plots
+supporting Section~\ref{sec:results-slope-distributions}.  Each page uses the
+same frozen $R=5{,}000$ archive as Chapter~\ref{chap:estimation-results}.  The
+horizontal ranges of the histograms are based on the central $99\%$ of the
+pooled distribution so that the centre remains readable; nonzero omitted tail counts
+are printed inside the panels as ``out: $N$''.  Each histogram is normalised
+over its displayed observations.  All replay-based raw-FPLS panels---the
+basis-coefficient histograms, pointwise slope histograms, and quantile
+plots---use the archived fits not flagged by the raw stability diagnostic,
+while all replications are retained for CG--FPLS, Arnoldi FPLS, and FPCR.
+
+In these plots, ``CG'', ``Raw'', and ``Arnoldi'' denote the released
+implementation of CG--FPLS, raw FPLS, and Arnoldi FPLS.  Model identity is
+given in the caption; method columns retain the same order throughout.
+The full numerical distribution summaries remain in the frozen archive.
+
+\section{Leading basis coefficients}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[page=1,width=\textwidth]{basis_coefficient_histograms.pdf}
+    \caption[Leading coefficient distributions: Model 1]{Empirical distributions of the first three basis coefficients
+    in Model~1.  Solid vertical lines mark the true coefficients and dashed
+    lines mark Monte Carlo means.}
+    \label{fig:app-coefficient-distributions-model1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[page=2,width=\textwidth]{basis_coefficient_histograms.pdf}
+    \caption[Leading coefficient distributions: Model 2]{Empirical distributions of the first three basis coefficients
+    in Model~2.}
+    \label{fig:app-coefficient-distributions-model2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[page=3,width=\textwidth]{basis_coefficient_histograms.pdf}
+    \caption[Leading coefficient distributions: Model 3]{Empirical distributions of the first three basis coefficients
+    in Model~3.}
+    \label{fig:app-coefficient-distributions-model3}
+\end{figure}
+
+\clearpage
+\section{Pointwise slope distributions}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[page=1,width=\textwidth]{beta_point_histograms.pdf}
+    \caption[Pointwise slope distributions: Model 1]{Pointwise distributions of the selected slope estimator at five
+    locations in Model~1.}
+    \label{fig:app-pointwise-distributions-model1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[page=2,width=\textwidth]{beta_point_histograms.pdf}
+    \caption[Pointwise slope distributions: Model 2]{Pointwise distributions of the selected slope estimator at five
+    locations in Model~2.}
+    \label{fig:app-pointwise-distributions-model2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[page=3,width=\textwidth]{beta_point_histograms.pdf}
+    \caption[Pointwise slope distributions: Model 3]{Pointwise distributions of the selected slope estimator at five
+    locations in Model~3.}
+    \label{fig:app-pointwise-distributions-model3}
+\end{figure}
+
+\clearpage
+\section{Normal quantile--quantile diagnostics}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[page=1,width=\textwidth]{coefficient_normal_qq.pdf}
+    \caption[Coefficient normal quantile plots: Model 1]{Normal quantile--quantile plots for the first three estimated
+    basis coefficients in Model~1.  Each coefficient sample is standardised by
+    its empirical mean and standard deviation; the dashed line is the
+    $45$-degree identity line.}
+    \label{fig:app-coefficient-qq-model1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[page=2,width=\textwidth]{coefficient_normal_qq.pdf}
+    \caption[Coefficient normal quantile plots: Model 2]{Normal quantile--quantile plots for the first three estimated
+    basis coefficients in Model~2, using the same empirical standardisation
+    and identity reference line as in Model~1.}
+    \label{fig:app-coefficient-qq-model2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[page=3,width=\textwidth]{coefficient_normal_qq.pdf}
+    \caption[Coefficient normal quantile plots: Model 3]{Normal quantile--quantile plots for the first three estimated
+    basis coefficients in Model~3, using the same empirical standardisation
+    and identity reference line as in Model~1.}
+    \label{fig:app-coefficient-qq-model3}
+\end{figure}

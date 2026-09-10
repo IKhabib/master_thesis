@@ -1,0 +1,253 @@
+\chapter{Conclusion and Outlook}
+\label{chap:conclusion}
+
+Functional linear regression turns a familiar linear prediction problem into
+an inverse problem.  The covariance operator suppresses weak directions, its
+empirical version is finite rank, and any attempt to invert it must decide both
+which information to retain and how to represent the resulting computation.
+This thesis has examined those decisions through spectral truncation, raw and
+orthogonalised Krylov least squares, and direct conjugate-gradient iteration.
+Its main conclusion is that regularisation cannot be separated from purpose or
+from numerical realisation.  A rule that is effective for slope estimation can
+be inadequate for prediction or inference, and two procedures that target the
+same exact-arithmetic subspace can have radically different reliability in
+floating-point coordinates.
+
+The argument combines operator geometry, fully specified algorithms, controlled
+Monte Carlo experiments, a separate inference study, and one observed
+spectroscopic application.  The evidence is deliberately conditional.  It
+does not produce a universally best method; it identifies when target
+geometry, stopping, and numerical representation change the conclusion.
+
+\section{Answers to the research questions}
+\label{sec:conclusion-research-questions}
+
+\subsection{Spectral and iterative regularisation}
+
+The first question asked how spectral and iterative regularisation compare as
+the covariance structure and slope change.  The simulations show that the
+answer depends on the loss used to define success.  CG--FPLS stops very early
+under the implemented discrepancy rule.  That aggressive regularisation often
+reduces variance in the ordinary $L^2$ slope norm, giving it the smallest mean
+ISE in Models~2 and 3 and a concentrated slope-error distribution.  The same
+stopping can leave response-relevant directions unresolved.  Its mean
+prediction error exceeds that of Arnoldi FPLS in all three models, most clearly
+in Model~2, where their mean MSPEs are 1.999 and 1.442.
+
+FPCR and the response-informed Krylov procedures order information differently.
+FPCR follows predictor variance, whereas FPLS builds spaces from both
+$\widehat K$ and $\widehat r$.  The response-informed methods can therefore
+reach a useful predictive relation in relatively few directions, but no fixed
+component count has the same meaning across the two geometries.  In Models~1
+and 3, FPCR and Arnoldi have almost identical mean prediction errors; in
+Model~2, Arnoldi has the smallest stable-method mean and median MSPE.  The
+simulation result is thus a target-dependent trade-off rather than a categorical
+advantage of spectral or iterative regularisation.
+
+The tablet application repeats the prediction-side cost of the implemented CG
+rule, which stops at three steps: CG--FPLS has benchmark RMSE 5.293, compared
+with 4.607 for Raw and 4.643 for Arnoldi.  Because the physical slope is
+unknown, the application cannot determine whether early stopping improves
+ordinary slope recovery.  It confirms only that, for this assay prediction
+problem, the remaining response information matters enough to improve
+benchmark prediction.
+
+\subsection{Finite-precision Krylov representation}
+
+The second question concerned the reliability of theoretically equivalent
+FPLS formulations.  At a common valid dimension, raw and Arnoldi FPLS span the
+same Krylov space and target the same restricted response least-squares fit.
+Their paired stable-subset simulation behaviour is correspondingly almost
+identical.  The equivalence fails as an implementation guarantee, however,
+because the raw powers become nearly dependent.  Raw FPLS is flagged in
+0.40\%, 8.18\%, and 0.32\% of the 5,000 simulations in Models~1--3.  Those
+rare fits create catastrophic ISE and MSPE tails that are absent after
+orthogonalisation.  Medians alone conceal this reliability difference.
+
+The observed spectra make the distinction even sharper.  Twenty-four of 25
+raw development fits and the final raw fit are flagged.  Its selected
+dimensions range from four to 70, and the final $m=55$ basis and design
+condition numbers reach $4.50\times10^{15}$.  Arnoldi selections stay between
+four and six; the final $m=5$ basis condition is one and its orthogonality
+defect is $7.4\times10^{-16}$.  Yet the two final prediction vectors correlate
+at 0.999934 and differ by only 0.174 assay units in RMS.  Their benchmark RMSE
+difference is just 0.036.
+
+This is the clearest answer to the second question.  Orthogonalisation does not
+promise a lower loss in each realised dataset, nor does it define a different
+exact fixed-$m$ target.  It keeps the intended Krylov fit accessible and its
+selection path interpretable when the raw power coordinates cease to be
+trustworthy.  A finite prediction score cannot by itself certify numerical
+reliability.
+
+\subsection{Stopping for estimation and inference}
+
+The third question asked why an inference-compatible CG index can differ from
+one selected for estimation.  The distinction follows from the quantity that
+regularisation is allowed to leave behind.  Estimation uses early stopping to
+control amplification of sampling noise.  The direct-moment test instead
+requires the residual
+$\widehat r-\widehat K\widehat\beta_m$ to be negligible on the root-$n$
+sampling scale.  Crossing a fixed estimation-oriented discrepancy threshold
+does not imply that stronger requirement.
+
+The stopping experiment illustrates the consequence with an
+estimation-oriented variant.  It uses the earlier discrepancy formula and
+constants, but caps the variance pilot at 20 components rather than 70 and
+uses the stabilised moment-residual path rather than the short recurrence.
+It therefore does not reproduce the complete estimation procedure unchanged.
+This comparator selects one or two components in most samples, satisfies its
+own realised threshold, yet produces 5\%-level null rejection frequencies of 52.70\%,
+96.02\%, and 71.94\% in Models~1--3.  Its finite-iteration residual remains
+large on the root-$n$ scale.  Continuing the path reduces both the
+scaled residual and the difference from the direct-moment statistic.  At
+$m=70$, the two versions make identical stored decisions, with rejection
+frequencies of 6.20\%, 6.00\%, and 5.26\% in that stopping-diagnostic
+experiment.  In the separate principal size stream, the direct-moment
+oracle-calibrated rejection frequencies are 5.90\%, 5.84\%, and 6.10\%.  Both
+sets show modest liberal behaviour at $n=100$.  Once the iterative residual is
+negligible, the discrepancy from the continuous-design oracle reference
+combines finite-sample calibration effects, the fixed-grid approximation, and
+simulation error in the reference distribution and critical value.
+
+The inference study also establishes the narrower positive results that the
+design supports.  Empirically calibrated direct-moment power rises sharply
+when $n$ increases from 100 to 200; the finite-dimensional inversions are
+non-empty, bounded, and full rank in every replication.  Neither result makes
+$m=70$ a universal stopping rule.  The general lesson is to diagnose the
+root-$n$ moment residual and to validate a feasible calibration, rather than
+reuse an estimation index for formal inference.
+
+\subsection{Regularisation in observed spectroscopy}
+
+The fourth question asked whether the same trade-offs appear with observed
+functional predictors.  All four procedures recover substantial assay signal
+on the supplied benchmark, with $R^2$ from 0.887 to 0.914.  Raw and Arnoldi
+form the leading predictive pair.  The paired iid interval for Raw-minus-
+Arnoldi RMSE is $[-0.057,-0.017]$, but the point difference is less than 1\%
+of Arnoldi's RMSE and their tablet-level errors move almost together.  It is a
+conditional difference that is small relative to the benchmark prediction
+errors.  Its practical importance cannot be determined without an assay scale
+and an application-specific tolerance.
+
+The stable empirical conclusion is therefore not that Raw wins.  Arnoldi
+realises essentially the same predictive relation with a five-component,
+orthonormal representation, while the nominal 55-component raw fit is severely
+ill-conditioned.  The primary disadvantage of CG is consistent with the cost
+of aggressive stopping seen in simulation, and FPCR's larger selected index
+illustrates the different ordering imposed by spectral truncation.  Trimming,
+smoothing, and changing instrument alter both the errors and selected
+dimensions; the Raw--Arnoldi point ordering itself changes across variants.
+The application transfers the mechanisms developed in the controlled study
+without converting them into a universal ranking.
+
+\section{Integrated implications for practice}
+\label{sec:conclusion-implications}
+
+The first practical implication is to specify the target before choosing a
+regularisation rule.  Ordinary slope error, covariance-weighted prediction,
+and a moment-based inferential approximation reward different compromises.
+An early index that suppresses slope variance can still omit predictive signal,
+while a useful prediction index can leave an inferential residual that is much
+too large.  Reporting a single generic measure of fit does not resolve this
+distinction.
+
+Second, the basis is part of the procedure in finite precision.  Krylov-space
+notation identifies a mathematical subspace, but software must still produce
+coordinates in that space and solve the induced least-squares problem.  Raw
+powers can be adequate at low dimension and fail abruptly later.  Arnoldi with
+reorthogonalisation and QR supplies a defensible default when the aim is to
+follow the APLS path, especially when its prediction is effectively tied with
+the raw fit.  Condition numbers, orthogonality defects, effective dimensions,
+and invalid candidates should accompany loss summaries.
+
+Third, component counts must be interpreted within their algorithms.  A
+principal component, a raw or Arnoldi Krylov direction, and a CG stopping
+index do not constitute equal units of effective complexity.  The comparison
+in this thesis intentionally preserves each procedure's native objective and
+tuning rule.  It therefore evaluates complete procedures, not isolated
+regularisers at an artificial common index.
+
+Finally, reproducibility must extend below an aggregated results table.  The
+estimation archive retains replication-level losses, selected dimensions,
+instability diagnostics, and cached quantities supporting the distributional
+figures.  The inference archive retains statistics, confidence-set summaries,
+diagnostics, and configuration information.  The spectroscopy archive
+additionally preserves observation-level predictions, fitted coefficients,
+tuning paths, exact resampling indices, source snapshots, environment records,
+and checksums.  These records support checks of the reported statistical and
+numerical behaviour, with the scope of exact replay determined by what each
+archive retains.
+
+\section{Limitations}
+\label{sec:conclusion-limitations}
+
+The estimation Monte Carlo evidence covers three dense, error-free functional designs
+with Gaussian scores, homoskedastic errors, $n=100$, and fixed implementation
+rules.  These choices isolate mechanisms but do not span irregular sampling,
+measurement error, heavy-tailed or dependent errors, sparse curves, or a broad
+range of eigenvalue and slope classes.  Monte Carlo rankings are conditional
+on the stated tuning procedures and should not be interpreted as minimax or
+uniform comparisons.
+
+The inference analysis is still further from a ready observational workflow.
+Its principal calibration uses continuous-design population quantities known
+from the simulation; their covariance weights differ slightly from those of
+the fixed grid.  Its power calculations use simulation-specific empirical null
+critical values.  Only one perturbation direction is examined, and the
+confidence-set display restricts candidates to five basis coefficients.  No
+stored result validates a feasible plug-in, multiplier, or bootstrap
+calibration on observed data.  This is why the tablet analysis makes no formal
+functional inference claim.
+
+The empirical evidence comes from one response in one public archive.  There
+is no independent tablet batch, laboratory, site, or acquisition-period test;
+instrument~2 repeats measurements on the same tablets.  Benchmark responses
+had already influenced dataset selection, so the supplied test split is not a
+prospectively blind holdout.  Its bootstrap intervals hold all fitted models
+fixed and omit variation from development sampling, preprocessing, and tuning.
+No batch identifiers explain possible archive-order dependence, assay units
+are not explicit in the MAT object, and the true physical slope is unavailable.
+The coefficients consequently support replay and numerical comparison, not
+causal chemical interpretation.  Finally, the publicly downloadable archive
+contains no explicit open-data licence, limiting redistribution of the raw
+file.
+
+\section{Directions for further work}
+\label{sec:conclusion-future-work}
+
+The most immediate methodological task is feasible calibration of the late-
+stopped statistic.  Plug-in, multiplier, or bootstrap approximations should be
+studied under the same finite-sample discipline used here, with critical-value
+uncertainty separated from residual iteration error.  A related goal is a
+data-dependent inference stopping rule that directly controls the scaled
+moment residual, rather than selecting a prediction index and hoping it is
+late enough.
+
+On the numerical side, stability-aware selection could combine predictive
+loss with an explicit admissibility rule for conditioning and rank.  When
+several candidates have practically indistinguishable validation error, such a
+rule could prefer the simplest stable representation.  Comparisons with ridge,
+spline, and other functional regularisers would show whether the target and
+conditioning lessons persist beyond truncation and Krylov methods.
+
+For spectroscopy, the decisive next step is genuine external validation across
+tablet batches, instruments, laboratories, and acquisition periods.  Known
+groups would permit batch-aware or order-aware resampling, while a bootstrap
+that refits preprocessing, tuning, and models would address a broader
+uncertainty target than the fixed-model intervals used here.  Measurement-
+error models and irregular-grid methods would further connect the idealised
+functional model to practical acquisition.  Such studies should freeze the
+primary response and preprocessing rules before opening the external outcomes.
+
+\section{Final perspective}
+\label{sec:conclusion-final-perspective}
+
+Regularisation in functional linear regression is simultaneously statistical,
+computational, and purpose-dependent.  Early stopping can improve estimation
+yet invalidate inference; theoretically equivalent Krylov spaces can behave
+very differently in finite-precision coordinates; and a strong realised
+prediction score need not certify a stable estimator.  Reliable practice
+therefore requires matching the stopping rule to the target, using numerically
+defensible representations, and preserving the diagnostics needed to
+distinguish predictive success from computational fragility.

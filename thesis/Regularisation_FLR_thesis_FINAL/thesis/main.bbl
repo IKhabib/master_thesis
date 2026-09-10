@@ -1,0 +1,989 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global}
+    \entry{babii_carrasco_tsafack_2026}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=2679af564742dcc7e564377f72d5b9c6}{%
+           family={Babii},
+           familyi={B\bibinitperiod},
+           given={Andrii},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a35d1fb4461f66bfbd032f6e90ad7bea}{%
+           family={Carrasco},
+           familyi={C\bibinitperiod},
+           given={Marine},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6e15fd048f731d1e1dbd8d4e15bd0fcb}{%
+           family={Tsafack},
+           familyi={T\bibinitperiod},
+           given={Idriss},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{45c6b75d5fd084ef5fc26e669afe297e}
+      \strng{fullhash}{3b96fc56a898eb1da4e5bf2c709c7e8f}
+      \strng{bibnamehash}{3b96fc56a898eb1da4e5bf2c709c7e8f}
+      \strng{authorbibnamehash}{3b96fc56a898eb1da4e5bf2c709c7e8f}
+      \strng{authornamehash}{45c6b75d5fd084ef5fc26e669afe297e}
+      \strng{authorfullhash}{3b96fc56a898eb1da4e5bf2c709c7e8f}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of the American Statistical Association}
+      \field{number}{554}
+      \field{title}{Functional Partial Least-Squares: Adaptive Estimation and Inference}
+      \field{volume}{121}
+      \field{year}{2026}
+      \field{pages}{1424\bibrangedash 1434}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1080/01621459.2025.2582874
+      \endverb
+    \endentry
+    \entry{blanchard_kramer_2016}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=385b3b6ce1dc679a91345c63c1b145d1}{%
+           family={Blanchard},
+           familyi={B\bibinitperiod},
+           given={Gilles},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=58a5dce2b48f6e206013eeeafce6893a}{%
+           family={Krämer},
+           familyi={K\bibinitperiod},
+           given={Nicole},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f5ea2b8db1d53b2b4cb87059c286e531}
+      \strng{fullhash}{f5ea2b8db1d53b2b4cb87059c286e531}
+      \strng{bibnamehash}{f5ea2b8db1d53b2b4cb87059c286e531}
+      \strng{authorbibnamehash}{f5ea2b8db1d53b2b4cb87059c286e531}
+      \strng{authornamehash}{f5ea2b8db1d53b2b4cb87059c286e531}
+      \strng{authorfullhash}{f5ea2b8db1d53b2b4cb87059c286e531}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Analysis and Applications}
+      \field{number}{6}
+      \field{title}{Convergence Rates of Kernel Conjugate Gradient for Random Design Regression}
+      \field{volume}{14}
+      \field{year}{2016}
+      \field{pages}{763\bibrangedash 794}
+      \range{pages}{32}
+      \verb{doi}
+      \verb 10.1142/S0219530516400017
+      \endverb
+    \endentry
+    \entry{cai_hall_2006}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=522ba29dd0a27bce6085e7b8942979b9}{%
+           family={Cai},
+           familyi={C\bibinitperiod},
+           given={T.\bibnamedelimi Tony},
+           giveni={T\bibinitperiod\bibinitdelim T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8922d50f77e8cc98c9ac19d6edca3701}{%
+           family={Hall},
+           familyi={H\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{41911fc61dc24a03ab4786b034f6ac22}
+      \strng{fullhash}{41911fc61dc24a03ab4786b034f6ac22}
+      \strng{bibnamehash}{41911fc61dc24a03ab4786b034f6ac22}
+      \strng{authorbibnamehash}{41911fc61dc24a03ab4786b034f6ac22}
+      \strng{authornamehash}{41911fc61dc24a03ab4786b034f6ac22}
+      \strng{authorfullhash}{41911fc61dc24a03ab4786b034f6ac22}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The Annals of Statistics}
+      \field{number}{5}
+      \field{title}{Prediction in Functional Linear Regression}
+      \field{volume}{34}
+      \field{year}{2006}
+      \field{pages}{2159\bibrangedash 2179}
+      \range{pages}{21}
+      \verb{doi}
+      \verb 10.1214/009053606000000830
+      \endverb
+    \endentry
+    \entry{cardot_ferraty_sarda_1999}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=7771e014f886d75016ade6d6e37db566}{%
+           family={Cardot},
+           familyi={C\bibinitperiod},
+           given={Hervé},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f9e787675d81fc4ed2604b873334655d}{%
+           family={Ferraty},
+           familyi={F\bibinitperiod},
+           given={Frédéric},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=99e02fae336cbe50c0ca882d9d9c4436}{%
+           family={Sarda},
+           familyi={S\bibinitperiod},
+           given={Pascal},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{9eff8f71ff8fd55f815ecca4b47d8d4e}
+      \strng{fullhash}{004f51d35c84c7d041aab849b6a12540}
+      \strng{bibnamehash}{004f51d35c84c7d041aab849b6a12540}
+      \strng{authorbibnamehash}{004f51d35c84c7d041aab849b6a12540}
+      \strng{authornamehash}{9eff8f71ff8fd55f815ecca4b47d8d4e}
+      \strng{authorfullhash}{004f51d35c84c7d041aab849b6a12540}
+      \field{extraname}{1}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Statistics \& Probability Letters}
+      \field{number}{1}
+      \field{title}{Functional Linear Model}
+      \field{volume}{45}
+      \field{year}{1999}
+      \field{pages}{11\bibrangedash 22}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1016/S0167-7152(99)00036-X
+      \endverb
+    \endentry
+    \entry{cardot_ferraty_sarda_2003}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=7771e014f886d75016ade6d6e37db566}{%
+           family={Cardot},
+           familyi={C\bibinitperiod},
+           given={Hervé},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f9e787675d81fc4ed2604b873334655d}{%
+           family={Ferraty},
+           familyi={F\bibinitperiod},
+           given={Frédéric},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=99e02fae336cbe50c0ca882d9d9c4436}{%
+           family={Sarda},
+           familyi={S\bibinitperiod},
+           given={Pascal},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{9eff8f71ff8fd55f815ecca4b47d8d4e}
+      \strng{fullhash}{004f51d35c84c7d041aab849b6a12540}
+      \strng{bibnamehash}{004f51d35c84c7d041aab849b6a12540}
+      \strng{authorbibnamehash}{004f51d35c84c7d041aab849b6a12540}
+      \strng{authornamehash}{9eff8f71ff8fd55f815ecca4b47d8d4e}
+      \strng{authorfullhash}{004f51d35c84c7d041aab849b6a12540}
+      \field{extraname}{2}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Statistica Sinica}
+      \field{number}{3}
+      \field{title}{Spline Estimators for the Functional Linear Model}
+      \field{volume}{13}
+      \field{year}{2003}
+      \field{pages}{571\bibrangedash 591}
+      \range{pages}{21}
+      \verb{urlraw}
+      \verb https://www3.stat.sinica.edu.tw/statistica/oldpdf/A13n31.pdf
+      \endverb
+      \verb{url}
+      \verb https://www3.stat.sinica.edu.tw/statistica/oldpdf/A13n31.pdf
+      \endverb
+    \endentry
+    \entry{crambes_kneip_sarda_2009}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=aae243639ad0e7a53c1cd7465a430716}{%
+           family={Crambes},
+           familyi={C\bibinitperiod},
+           given={Christophe},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d79b05f4c72405c9f1d16befe4499147}{%
+           family={Kneip},
+           familyi={K\bibinitperiod},
+           given={Alois},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=99e02fae336cbe50c0ca882d9d9c4436}{%
+           family={Sarda},
+           familyi={S\bibinitperiod},
+           given={Pascal},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{48aaf87685f2cb854049b63c6a76969e}
+      \strng{fullhash}{75197c113ae45c324cf7d7c49371011b}
+      \strng{bibnamehash}{75197c113ae45c324cf7d7c49371011b}
+      \strng{authorbibnamehash}{75197c113ae45c324cf7d7c49371011b}
+      \strng{authornamehash}{48aaf87685f2cb854049b63c6a76969e}
+      \strng{authorfullhash}{75197c113ae45c324cf7d7c49371011b}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The Annals of Statistics}
+      \field{number}{1}
+      \field{title}{Smoothing Splines Estimators for Functional Linear Regression}
+      \field{volume}{37}
+      \field{year}{2009}
+      \field{pages}{35\bibrangedash 72}
+      \range{pages}{38}
+      \verb{doi}
+      \verb 10.1214/07-AOS563
+      \endverb
+    \endentry
+    \entry{delaigle_hall_2012}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=b8a39e2a0d9db39f77727ad37c5700a2}{%
+           family={Delaigle},
+           familyi={D\bibinitperiod},
+           given={Aurore},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8922d50f77e8cc98c9ac19d6edca3701}{%
+           family={Hall},
+           familyi={H\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{64157c826f0fba3891b5ed0adcddff2b}
+      \strng{fullhash}{64157c826f0fba3891b5ed0adcddff2b}
+      \strng{bibnamehash}{64157c826f0fba3891b5ed0adcddff2b}
+      \strng{authorbibnamehash}{64157c826f0fba3891b5ed0adcddff2b}
+      \strng{authornamehash}{64157c826f0fba3891b5ed0adcddff2b}
+      \strng{authorfullhash}{64157c826f0fba3891b5ed0adcddff2b}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The Annals of Statistics}
+      \field{number}{1}
+      \field{title}{Methodology and Theory for Partial Least Squares Applied to Functional Data}
+      \field{volume}{40}
+      \field{year}{2012}
+      \field{pages}{322\bibrangedash 352}
+      \range{pages}{31}
+      \verb{doi}
+      \verb 10.1214/11-AOS958
+      \endverb
+    \endentry
+    \entry{eigenvector_tablets}{misc}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=9e599213ec44accce94651d4c358f773}{%
+           family={{Eigenvector Research}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Eigenvector Research, Inc.}%
+      }
+      \strng{namehash}{9e599213ec44accce94651d4c358f773}
+      \strng{fullhash}{9e599213ec44accce94651d4c358f773}
+      \strng{bibnamehash}{9e599213ec44accce94651d4c358f773}
+      \strng{authorbibnamehash}{9e599213ec44accce94651d4c358f773}
+      \strng{authornamehash}{9e599213ec44accce94651d4c358f773}
+      \strng{authorfullhash}{9e599213ec44accce94651d4c358f773}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{url}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Undated public catalogue and download page, accessed 8 September 2026; the archive itself contains no explicit open-data licence}
+      \field{title}{{NIR} Spectra of Pharmaceutical Tablets from ``Shootout''}
+      \field{urlday}{8}
+      \field{urlmonth}{9}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://eigenvector.com/resources/data-sets/
+      \endverb
+      \verb{url}
+      \verb https://eigenvector.com/resources/data-sets/
+      \endverb
+    \endentry
+    \entry{engl_hanke_neubauer_1996}{book}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=d15d30ccf2de399b6ccd6592e67df9ee}{%
+           family={Engl},
+           familyi={E\bibinitperiod},
+           given={Heinz\bibnamedelima W.},
+           giveni={H\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fa9b3b27bfabb55910b70e93671b1dd2}{%
+           family={Hanke},
+           familyi={H\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b25cac521e38b5d4385cd6d2a1e5bd55}{%
+           family={Neubauer},
+           familyi={N\bibinitperiod},
+           given={Andreas},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Dordrecht}%
+      }
+      \list{publisher}{1}{%
+        {Kluwer Academic Publishers}%
+      }
+      \strng{namehash}{3fefec5f0473157e1e9a245e962fed91}
+      \strng{fullhash}{f221c54bd093ec33cfdb71a27ea6f269}
+      \strng{bibnamehash}{f221c54bd093ec33cfdb71a27ea6f269}
+      \strng{authorbibnamehash}{f221c54bd093ec33cfdb71a27ea6f269}
+      \strng{authornamehash}{3fefec5f0473157e1e9a245e962fed91}
+      \strng{authorfullhash}{f221c54bd093ec33cfdb71a27ea6f269}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{series}{Mathematics and Its Applications}
+      \field{title}{Regularization of Inverse Problems}
+      \field{volume}{375}
+      \field{year}{1996}
+      \verb{doi}
+      \verb 10.1007/978-94-009-1740-8
+      \endverb
+    \endentry
+    \entry{febrero_bande_et_al_2017}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=c6e40a8b316a77bca00f147e74fb1c1b}{%
+           family={Febrero-Bande},
+           familyi={F\bibinithyphendelim B\bibinitperiod},
+           given={Manuel},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0ceb8c3ab1e1da44da96853947589184}{%
+           family={Galeano},
+           familyi={G\bibinitperiod},
+           given={Pedro},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ce57eb098168ef063492089b3d9e7273}{%
+           family={González-Manteiga},
+           familyi={G\bibinithyphendelim M\bibinitperiod},
+           given={Wenceslao},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{e936ad673b5d70503ab6e7c9e3883932}
+      \strng{fullhash}{e86ea9c532c703c0cec8ad1914faa736}
+      \strng{bibnamehash}{e86ea9c532c703c0cec8ad1914faa736}
+      \strng{authorbibnamehash}{e86ea9c532c703c0cec8ad1914faa736}
+      \strng{authornamehash}{e936ad673b5d70503ab6e7c9e3883932}
+      \strng{authorfullhash}{e86ea9c532c703c0cec8ad1914faa736}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Statistical Review}
+      \field{number}{1}
+      \field{title}{Functional Principal Component Regression and Functional Partial Least-Squares Regression: An Overview and a Comparative Study}
+      \field{volume}{85}
+      \field{year}{2017}
+      \field{pages}{61\bibrangedash 83}
+      \range{pages}{23}
+      \verb{doi}
+      \verb 10.1111/insr.12116
+      \endverb
+    \endentry
+    \entry{geladi_kowalski_1986}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=33beb61995bee952138fa81bb04ea4df}{%
+           family={Geladi},
+           familyi={G\bibinitperiod},
+           given={Paul},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a79686031ad8e394ac3582f4c3beaeb7}{%
+           family={Kowalski},
+           familyi={K\bibinitperiod},
+           given={Bruce\bibnamedelima R.},
+           giveni={B\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{3d608d266f4858c2bf128ace58558e9b}
+      \strng{fullhash}{3d608d266f4858c2bf128ace58558e9b}
+      \strng{bibnamehash}{3d608d266f4858c2bf128ace58558e9b}
+      \strng{authorbibnamehash}{3d608d266f4858c2bf128ace58558e9b}
+      \strng{authornamehash}{3d608d266f4858c2bf128ace58558e9b}
+      \strng{authorfullhash}{3d608d266f4858c2bf128ace58558e9b}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Analytica Chimica Acta}
+      \field{title}{Partial Least-Squares Regression: A Tutorial}
+      \field{volume}{185}
+      \field{year}{1986}
+      \field{pages}{1\bibrangedash 17}
+      \range{pages}{17}
+      \verb{doi}
+      \verb 10.1016/0003-2670(86)80028-9
+      \endverb
+    \endentry
+    \entry{hall_horowitz_2007}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=8922d50f77e8cc98c9ac19d6edca3701}{%
+           family={Hall},
+           familyi={H\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=87f6a405117184a61fdee3ec16dba75b}{%
+           family={Horowitz},
+           familyi={H\bibinitperiod},
+           given={Joel\bibnamedelima L.},
+           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{39a70c92125f3977fddebbb212c1ee4e}
+      \strng{fullhash}{39a70c92125f3977fddebbb212c1ee4e}
+      \strng{bibnamehash}{39a70c92125f3977fddebbb212c1ee4e}
+      \strng{authorbibnamehash}{39a70c92125f3977fddebbb212c1ee4e}
+      \strng{authornamehash}{39a70c92125f3977fddebbb212c1ee4e}
+      \strng{authorfullhash}{39a70c92125f3977fddebbb212c1ee4e}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The Annals of Statistics}
+      \field{number}{1}
+      \field{title}{Methodology and Convergence Rates for Functional Linear Regression}
+      \field{volume}{35}
+      \field{year}{2007}
+      \field{pages}{70\bibrangedash 91}
+      \range{pages}{22}
+      \verb{doi}
+      \verb 10.1214/009053606000000957
+      \endverb
+    \endentry
+    \entry{hanke_1995}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=fa9b3b27bfabb55910b70e93671b1dd2}{%
+           family={Hanke},
+           familyi={H\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Harlow}%
+      }
+      \list{publisher}{1}{%
+        {Longman Scientific \& Technical}%
+      }
+      \strng{namehash}{fa9b3b27bfabb55910b70e93671b1dd2}
+      \strng{fullhash}{fa9b3b27bfabb55910b70e93671b1dd2}
+      \strng{bibnamehash}{fa9b3b27bfabb55910b70e93671b1dd2}
+      \strng{authorbibnamehash}{fa9b3b27bfabb55910b70e93671b1dd2}
+      \strng{authornamehash}{fa9b3b27bfabb55910b70e93671b1dd2}
+      \strng{authorfullhash}{fa9b3b27bfabb55910b70e93671b1dd2}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{series}{Pitman Research Notes in Mathematics Series}
+      \field{title}{Conjugate Gradient Type Methods for Ill-Posed Problems}
+      \field{volume}{327}
+      \field{year}{1995}
+    \endentry
+    \entry{hestenes_stiefel_1952}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=f6c6be7ca0c4fd448c1ed3d1f5586b29}{%
+           family={Hestenes},
+           familyi={H\bibinitperiod},
+           given={Magnus\bibnamedelima R.},
+           giveni={M\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=21b4a8741247ba566d702dfa0c9fef9b}{%
+           family={Stiefel},
+           familyi={S\bibinitperiod},
+           given={Eduard},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{60eabe8de5d9700d9da9f2aee6e8c630}
+      \strng{fullhash}{60eabe8de5d9700d9da9f2aee6e8c630}
+      \strng{bibnamehash}{60eabe8de5d9700d9da9f2aee6e8c630}
+      \strng{authorbibnamehash}{60eabe8de5d9700d9da9f2aee6e8c630}
+      \strng{authornamehash}{60eabe8de5d9700d9da9f2aee6e8c630}
+      \strng{authorfullhash}{60eabe8de5d9700d9da9f2aee6e8c630}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Research of the National Bureau of Standards}
+      \field{number}{6}
+      \field{title}{Methods of Conjugate Gradients for Solving Linear Systems}
+      \field{volume}{49}
+      \field{year}{1952}
+      \field{pages}{409\bibrangedash 436}
+      \range{pages}{28}
+      \verb{doi}
+      \verb 10.6028/JRES.049.044
+      \endverb
+    \endentry
+    \entry{hopkins_2003}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=aa7fba73ae861eadf8304512e6e27707}{%
+           family={Hopkins},
+           familyi={H\bibinitperiod},
+           given={David\bibnamedelima W.},
+           giveni={D\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{aa7fba73ae861eadf8304512e6e27707}
+      \strng{fullhash}{aa7fba73ae861eadf8304512e6e27707}
+      \strng{bibnamehash}{aa7fba73ae861eadf8304512e6e27707}
+      \strng{authorbibnamehash}{aa7fba73ae861eadf8304512e6e27707}
+      \strng{authornamehash}{aa7fba73ae861eadf8304512e6e27707}
+      \strng{authorfullhash}{aa7fba73ae861eadf8304512e6e27707}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{{NIR News}}
+      \field{number}{5}
+      \field{title}{Shoot-out 2002: Transfer of Calibration for Content of Active in a Pharmaceutical Tablet}
+      \field{volume}{14}
+      \field{year}{2003}
+      \field{pages}{10\bibrangedash 13}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1255/nirn.735
+      \endverb
+    \endentry
+    \entry{horvath_kokoszka_2012}{book}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=2919dcd948c266ae6a5b887d1c3433f1}{%
+           family={Horváth},
+           familyi={H\bibinitperiod},
+           given={Lajos},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=66f98311069b2eb80843b774d51c21c1}{%
+           family={Kokoszka},
+           familyi={K\bibinitperiod},
+           given={Piotr},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{01eb4f83b8ca4777a94bc617db4d348e}
+      \strng{fullhash}{01eb4f83b8ca4777a94bc617db4d348e}
+      \strng{bibnamehash}{01eb4f83b8ca4777a94bc617db4d348e}
+      \strng{authorbibnamehash}{01eb4f83b8ca4777a94bc617db4d348e}
+      \strng{authornamehash}{01eb4f83b8ca4777a94bc617db4d348e}
+      \strng{authorfullhash}{01eb4f83b8ca4777a94bc617db4d348e}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{series}{Springer Series in Statistics}
+      \field{title}{Inference for Functional Data with Applications}
+      \field{year}{2012}
+      \verb{doi}
+      \verb 10.1007/978-1-4614-3655-3
+      \endverb
+    \endentry
+    \entry{hsing_eubank_2015}{book}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=396cd532137675b4da218b8464d025e8}{%
+           family={Hsing},
+           familyi={H\bibinitperiod},
+           given={Tailen},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=84251f2d50ed9850f6dd83b47cfc0d7f}{%
+           family={Eubank},
+           familyi={E\bibinitperiod},
+           given={Randall},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Chichester}%
+      }
+      \list{publisher}{1}{%
+        {John Wiley \& Sons}%
+      }
+      \strng{namehash}{8131b5fc038545972a47dc39fe385f9e}
+      \strng{fullhash}{8131b5fc038545972a47dc39fe385f9e}
+      \strng{bibnamehash}{8131b5fc038545972a47dc39fe385f9e}
+      \strng{authorbibnamehash}{8131b5fc038545972a47dc39fe385f9e}
+      \strng{authornamehash}{8131b5fc038545972a47dc39fe385f9e}
+      \strng{authorfullhash}{8131b5fc038545972a47dc39fe385f9e}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{series}{Wiley Series in Probability and Statistics}
+      \field{title}{Theoretical Foundations of Functional Data Analysis, with an Introduction to Linear Operators}
+      \field{year}{2015}
+      \verb{doi}
+      \verb 10.1002/9781118762547
+      \endverb
+    \endentry
+    \entry{dejong_1993}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=7ad8f3717803ee2700948cbb797463e8}{%
+           family={Jong},
+           familyi={J\bibinitperiod},
+           given={Sijmen},
+           giveni={S\bibinitperiod},
+           givenun=0,
+           prefix={de},
+           prefixi={d\bibinitperiod},
+           prefixun=0}}%
+      }
+      \strng{namehash}{7ad8f3717803ee2700948cbb797463e8}
+      \strng{fullhash}{7ad8f3717803ee2700948cbb797463e8}
+      \strng{bibnamehash}{7ad8f3717803ee2700948cbb797463e8}
+      \strng{authorbibnamehash}{7ad8f3717803ee2700948cbb797463e8}
+      \strng{authornamehash}{7ad8f3717803ee2700948cbb797463e8}
+      \strng{authorfullhash}{7ad8f3717803ee2700948cbb797463e8}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Chemometrics and Intelligent Laboratory Systems}
+      \field{number}{3}
+      \field{title}{{SIMPLS}: An Alternative Approach to Partial Least Squares Regression}
+      \field{volume}{18}
+      \field{year}{1993}
+      \field{pages}{251\bibrangedash 263}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1016/0169-7439(93)85002-X
+      \endverb
+    \endentry
+    \entry{kokoszka_reimherr_2017}{book}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=66f98311069b2eb80843b774d51c21c1}{%
+           family={Kokoszka},
+           familyi={K\bibinitperiod},
+           given={Piotr},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=77f3a68b5cbc43878a1ad2403ec8f0e9}{%
+           family={Reimherr},
+           familyi={R\bibinitperiod},
+           given={Matthew},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Boca Raton}%
+      }
+      \list{publisher}{1}{%
+        {CRC Press}%
+      }
+      \strng{namehash}{10de47ea5b23b4de5b295bb8b3115870}
+      \strng{fullhash}{10de47ea5b23b4de5b295bb8b3115870}
+      \strng{bibnamehash}{10de47ea5b23b4de5b295bb8b3115870}
+      \strng{authorbibnamehash}{10de47ea5b23b4de5b295bb8b3115870}
+      \strng{authornamehash}{10de47ea5b23b4de5b295bb8b3115870}
+      \strng{authorfullhash}{10de47ea5b23b4de5b295bb8b3115870}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{series}{Texts in Statistical Science}
+      \field{title}{Introduction to Functional Data Analysis}
+      \field{year}{2017}
+      \verb{doi}
+      \verb 10.1201/9781315117416
+      \endverb
+    \endentry
+    \entry{lin_mit_18102_2021}{misc}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=e6a82323be35483fe43e15ac3996a020}{%
+           family={Lin},
+           familyi={L\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{organization}{1}{%
+        {MIT OpenCourseWare}%
+      }
+      \strng{namehash}{e6a82323be35483fe43e15ac3996a020}
+      \strng{fullhash}{e6a82323be35483fe43e15ac3996a020}
+      \strng{bibnamehash}{e6a82323be35483fe43e15ac3996a020}
+      \strng{authorbibnamehash}{e6a82323be35483fe43e15ac3996a020}
+      \strng{authornamehash}{e6a82323be35483fe43e15ac3996a020}
+      \strng{authorfullhash}{e6a82323be35483fe43e15ac3996a020}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Notes for the Spring 2021 course taught by Casey Rodriguez}
+      \field{subtitle}{Complete Lecture Notes}
+      \field{title}{{18.102: Introduction to Functional Analysis}}
+      \field{urlday}{6}
+      \field{urlmonth}{9}
+      \field{urlyear}{2026}
+      \field{year}{2021}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://ocw.mit.edu/courses/18-102-introduction-to-functional-analysis-spring-2021/resources/complete-lecture-notes/
+      \endverb
+      \verb{url}
+      \verb https://ocw.mit.edu/courses/18-102-introduction-to-functional-analysis-spring-2021/resources/complete-lecture-notes/
+      \endverb
+    \endentry
+    \entry{phatak_dehoog_2002}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=1607667fe906841aa0bd8bea44307897}{%
+           family={Phatak},
+           familyi={P\bibinitperiod},
+           given={Aloke},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9ecb038c902ef04b371df9674ac19fae}{%
+           family={Hoog},
+           familyi={H\bibinitperiod},
+           given={Frank},
+           giveni={F\bibinitperiod},
+           givenun=0,
+           prefix={de},
+           prefixi={d\bibinitperiod},
+           prefixun=0}}%
+      }
+      \strng{namehash}{96d0d7f3c28e42f517fe43e5d30fa5ce}
+      \strng{fullhash}{96d0d7f3c28e42f517fe43e5d30fa5ce}
+      \strng{bibnamehash}{96d0d7f3c28e42f517fe43e5d30fa5ce}
+      \strng{authorbibnamehash}{96d0d7f3c28e42f517fe43e5d30fa5ce}
+      \strng{authornamehash}{96d0d7f3c28e42f517fe43e5d30fa5ce}
+      \strng{authorfullhash}{96d0d7f3c28e42f517fe43e5d30fa5ce}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Chemometrics}
+      \field{number}{7}
+      \field{title}{Exploiting the Connection between {PLS}, Lanczos Methods and Conjugate Gradients: Alternative Proofs of Some Properties of {PLS}}
+      \field{volume}{16}
+      \field{year}{2002}
+      \field{pages}{361\bibrangedash 367}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.1002/cem.728
+      \endverb
+    \endentry
+    \entry{preda_saporta_2005}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=265278163d77ca0d061271bcb0b8074e}{%
+           family={Preda},
+           familyi={P\bibinitperiod},
+           given={Cristian},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=bcb753ebd597aa303775e0e2c73083d7}{%
+           family={Saporta},
+           familyi={S\bibinitperiod},
+           given={Gilbert},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{e1f13217062257f642656813e9bcab16}
+      \strng{fullhash}{e1f13217062257f642656813e9bcab16}
+      \strng{bibnamehash}{e1f13217062257f642656813e9bcab16}
+      \strng{authorbibnamehash}{e1f13217062257f642656813e9bcab16}
+      \strng{authornamehash}{e1f13217062257f642656813e9bcab16}
+      \strng{authorfullhash}{e1f13217062257f642656813e9bcab16}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computational Statistics \& Data Analysis}
+      \field{number}{1}
+      \field{title}{{PLS} Regression on a Stochastic Process}
+      \field{volume}{48}
+      \field{year}{2005}
+      \field{pages}{149\bibrangedash 158}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1016/j.csda.2003.10.006
+      \endverb
+    \endentry
+    \entry{ramsay_silverman_2005}{book}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=741fcd931c694bc2a335abea7c9e086e}{%
+           family={Ramsay},
+           familyi={R\bibinitperiod},
+           given={James\bibnamedelima O.},
+           giveni={J\bibinitperiod\bibinitdelim O\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a4382e6b2a00123dfd0676e54180141c}{%
+           family={Silverman},
+           familyi={S\bibinitperiod},
+           given={Bernard\bibnamedelima W.},
+           giveni={B\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{0d67f55ba694c7bbad87701fde1a94c6}
+      \strng{fullhash}{0d67f55ba694c7bbad87701fde1a94c6}
+      \strng{bibnamehash}{0d67f55ba694c7bbad87701fde1a94c6}
+      \strng{authorbibnamehash}{0d67f55ba694c7bbad87701fde1a94c6}
+      \strng{authornamehash}{0d67f55ba694c7bbad87701fde1a94c6}
+      \strng{authorfullhash}{0d67f55ba694c7bbad87701fde1a94c6}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2}
+      \field{series}{Springer Series in Statistics}
+      \field{title}{Functional Data Analysis}
+      \field{year}{2005}
+      \verb{doi}
+      \verb 10.1007/b98888
+      \endverb
+    \endentry
+    \entry{wold_et_al_1984}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=633e6dcc2c798200dfa73780715ac047}{%
+           family={Wold},
+           familyi={W\bibinitperiod},
+           given={Svante},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=186e1dfc3183177dce89c3c592512de8}{%
+           family={Ruhe},
+           familyi={R\bibinitperiod},
+           given={Arnold},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c57b2e898fbf818a9d6cac52879f0ce6}{%
+           family={Wold},
+           familyi={W\bibinitperiod},
+           given={Herman},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b874228f265c4395b0a5c09f167bfa62}{%
+           family={Dunn},
+           familyi={D\bibinitperiod},
+           given={W.\bibnamedelimi J.},
+           giveni={W\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0,
+           suffix={III},
+           suffixi={I\bibinitperiod},
+           suffixun=0}}%
+      }
+      \strng{namehash}{2327184eef6cd65f3594c48584e767e5}
+      \strng{fullhash}{1022e9d63e055f10fec623dff9e976ce}
+      \strng{bibnamehash}{1022e9d63e055f10fec623dff9e976ce}
+      \strng{authorbibnamehash}{1022e9d63e055f10fec623dff9e976ce}
+      \strng{authornamehash}{2327184eef6cd65f3594c48584e767e5}
+      \strng{authorfullhash}{1022e9d63e055f10fec623dff9e976ce}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{{SIAM} Journal on Scientific and Statistical Computing}
+      \field{number}{3}
+      \field{title}{The Collinearity Problem in Linear Regression: The Partial Least Squares ({PLS}) Approach to Generalized Inverses}
+      \field{volume}{5}
+      \field{year}{1984}
+      \field{pages}{735\bibrangedash 743}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1137/0905052
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

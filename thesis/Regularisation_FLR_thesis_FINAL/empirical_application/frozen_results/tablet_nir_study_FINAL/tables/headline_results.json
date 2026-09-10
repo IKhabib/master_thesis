@@ -1,0 +1,10 @@
+{
+  "benchmark_tablets": 460,
+  "best_point_rmse": 4.606641496496936,
+  "best_point_rmse_method": "Raw FPLS",
+  "focal_contrast": "Raw FPLS - Arnoldi FPLS",
+  "focal_iid_ci_lower": -0.0565211260893708,
+  "focal_iid_ci_upper": -0.0169130487878245,
+  "focal_rmse_difference": -0.0362493538309021,
+  "primary_variant": "primary_instrument1_full"
+}

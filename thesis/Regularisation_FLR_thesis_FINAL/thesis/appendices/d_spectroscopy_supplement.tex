@@ -1,0 +1,559 @@
+\chapter{Supplementary Spectroscopy Analysis and Diagnostics}
+\label{app:spectroscopy-supplement}
+
+This appendix is the audit trail for Chapter
+\ref{chap:spectroscopy-application}.  It records the dataset identity, every
+preprocessing and validation rule, the complete development and sensitivity
+summaries, and the numerical diagnostics needed to distinguish finite
+prediction from reliable Krylov coordinates.  The chapter and appendix are
+derived from one frozen archive; the material below does not redefine the
+primary analysis after observing the benchmark results.
+
+\section{Data provenance and structural audit}
+\label{sec:app-spectroscopy-provenance}
+
+The source is the 2002 pharmaceutical-tablet NIR Shoot-out
+\parencite{hopkins_2003,eigenvector_tablets}.  The archive was downloaded from
+the Eigenvector Research data page on 8 September 2026.  Its identifiers are:
+\begin{itemize}
+    \item ZIP SHA-256:\par
+    {\footnotesize\ttfamily
+    04c03a4314ab8e8f63e0ecc788b657b5d1b5450791ce465ad41ad90cb5d52125};
+    \item contained MAT-file SHA-256:\par
+    {\footnotesize\ttfamily
+    129a32ec9e194e568cbd96a200c88aabeb347156081b5dfbb0120372fdd6c22a}.
+\end{itemize}
+The distributed file contains 155 calibration, 40 validation, and 460 test
+rows, giving 655 rather than the catalogue's stated 654 tablets.  All rows and
+all spectral entries are finite, and there are no exact duplicate spectra
+within either instrument.  Every complete row is retained.  Because the file
+does not supply global tablet identifiers, immutable analysis identifiers join
+the source split to one-based row order, for example
+\texttt{calibrate:001}.  Corresponding instrument-1 and instrument-2 rows are
+treated as paired observations.
+
+Table~\ref{tab:app-spectroscopy-splits} quantifies the response imbalance that
+is visible in Figure~\ref{fig:spectroscopy-overview}.  The validation response
+has sample standard deviation 2.393 and range 188.2--199.5, whereas the
+calibration and benchmark distributions are much wider.  In fact, 267 of the
+460 benchmark assay values fall outside the validation range.  Validation-set
+$R^2$ therefore has a small denominator and is not comparable with benchmark
+$R^2$.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption[Assay by supplied archive split]{Assay response by supplied archive split.  Standard deviations
+    use denominator $n-1$.}
+    \label{tab:app-spectroscopy-splits}
+    \begin{tabular}{@{}lrrrrr@{}}
+        \toprule
+        Split & $n$ & Mean & Standard deviation & Minimum & Maximum \\
+        \midrule
+        Calibration & 155 & 192.885 & 21.980 & 151.6 & 239.1 \\
+        Validation  &  40 & 194.795 &  2.393 & 188.2 & 199.5 \\
+        Benchmark   & 460 & 188.400 & 15.763 & 154.3 & 237.7 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The wavelength units and domain are supplied by the external description; they
+are not embedded as ordinary numeric metadata in the MAT object.  The archive
+and catalogue provide no explicit open-data licence.  The frozen empirical
+archive therefore contains checksums and a reproducible preparation workflow,
+but does not redistribute the source MAT file.
+
+\section{Functional representation and preprocessing}
+\label{sec:app-spectroscopy-preprocessing}
+
+Each spectrum is represented by its $T=650$ evaluations on the uniform
+600--1898~nm grid.  The discrete geometry is
+\begin{equation}
+    \langle f,g\rangle_T=\frac{1}{T}\sum_{j=1}^{T} f_jg_j,
+    \qquad T=650.
+    \label{eq:app-spectroscopy-inner-product}
+\end{equation}
+For a training sample $\mathcal A$, wavelength and response means are computed
+using only rows in $\mathcal A$.  The centred estimator has intercept
+\begin{equation}
+    \widehat\alpha_{\mathcal A}
+      =\overline Y_{\mathcal A}
+       -\frac{1}{T}\overline X_{\mathcal A}^{\top}
+        \widehat\beta_{\mathcal A},
+    \label{eq:app-spectroscopy-intercept}
+\end{equation}
+which is algebraically equivalent to the prediction form in
+\eqref{eq:spectroscopy-prediction}.  The training means are applied unchanged
+to held-out observations.  The source code also archives the resulting
+original-input coefficient vector and intercept for every fitted model, so its
+stored prediction can be reconstructed directly.
+
+No primary operation other than this fold-local centring is applied.  In
+particular, there is no variance scaling, smoothing, derivative construction,
+wavelength selection, standard-normal-variate transformation, multiplicative-
+scatter correction, or baseline correction.  These choices matter because
+every such operation can add regularisation or alter the covariance geometry.
+
+The primary final fit has $650>195$ and numerical covariance rank 194 after
+centring.  At least 456 grid-coordinate null directions therefore remain, so a
+unique unrestricted physical slope is not identified.  Coefficient vectors
+are archived for replay and numerical comparison, not interpreted as recovered
+chemical effects.
+
+Three alternatives were fixed before benchmark fitting:
+\begin{enumerate}
+    \item instrument~1 restricted to 600--1798~nm inclusive, retaining 600
+    wavelengths;
+    \item instrument~1 smoothed row by row with a 15-point cubic
+    Savitzky--Golay filter, derivative order zero and interpolation boundary
+    mode; and
+    \item the complete 650-wavelength instrument-2 spectrum for the same
+    tablets.
+\end{enumerate}
+Each transformed dataset is centred within the relevant training sample.  The
+fixed smoothing operator itself does not estimate parameters from held-out
+rows; all sample-dependent centring remains fold local.
+
+\section{Evaluation design and leakage safeguards}
+\label{sec:app-spectroscopy-validation}
+
+Table~\ref{tab:app-spectroscopy-validation-design} summarises the complete
+evaluation design.  Random folds are formed separately within the supplied
+calibration and validation sources.  Within each source, observations are
+ordered by assay in groups of five and assigned one of the five fold labels at
+random.  Every development outer fold thus contains exactly 31 calibration
+and 8 validation tablets.  This preserves source composition while avoiding
+folds dominated by one part of the response range.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption[Frozen spectroscopy evaluation design]{Frozen spectroscopy evaluation design.  Exact assignments and
+    resampling matrices, rather than only seeds, are included in the archive.}
+    \label{tab:app-spectroscopy-validation-design}
+    \begin{tabular}{@{}p{3.0cm}p{10.9cm}@{}}
+        \toprule
+        Stage & Frozen rule \\
+        \midrule
+        Repeated development
+          & Five repeats of five source-specific, assay-balanced outer folds;
+            one complete out-of-fold metric per repeat. \\
+        Inner selection
+          & New five-fold balanced partitions inside each outer training set;
+            Raw and Arnoldi share indices but choose independently. \\
+        Order sensitivity
+          & Five source-specific contiguous outer folds, each holding out 31
+            calibration and 8 validation rows. \\
+        Original split
+          & Fit and tune on 155 calibration tablets; evaluate once on the 40
+            validation tablets. \\
+        Final development fit
+          & Fit on all 195 development tablets; Raw and Arnoldi use one frozen
+            common balanced inner partition. \\
+        Designated benchmark
+          & Predict the 460 supplied test tablets once; no benchmark outcome
+            enters centring, tuning, repair, or variant selection. \\
+        Conditional bootstrap
+          & 10,000 paired iid draws and 10,000 circular moving-block draws at
+            each block length 5, 10, and 20; models are held fixed. \\
+        Randomness
+          & Master seed 20260908 with separate deterministic streams for outer
+            folds, inner folds, final tuning, iid bootstrap, and block
+            bootstrap. \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Across five repeats, $195\times5=975$ out-of-fold predictions are stored for
+each method.  These are repeated predictions of the same 195 tablets, not 975
+independent observations.  Correspondingly, repeat summaries and fold
+distributions are descriptive diagnostics rather than a basis for standard
+independent-sample tests.  The development completion record additionally
+states \texttt{benchmark\_variables\_loaded=false}: the development stage did
+not load the test variables.  Only after its checks passed was the full stage
+allowed to fit the 195-row models and evaluate the benchmark.
+
+The benchmark bootstrap resamples tablet indices in common across methods.
+This preserves pairing and estimates conditional variation over the supplied
+benchmark empirical distribution.  It does not refit centring, tuning, or the
+models and therefore excludes development-sample and selection uncertainty.
+The circular block calculations preserve local row-order sequences, but no
+batch or acquisition-order metadata are available to determine whether archive
+order has a physical interpretation.
+
+\section{Complete procedures and tuning rules}
+\label{sec:app-spectroscopy-tuning}
+
+The estimator formulas are given in Chapter~\ref{chap:methods}; Table
+\ref{tab:app-spectroscopy-procedures} records the application-specific tuning
+and diagnostics.  The requested path maximum is 70, further limited by grid
+size, centred training-sample size, numerical rank, and recurrence breakdown.
+
+\begin{table}[htbp]
+    \centering
+    \scriptsize
+    \caption[Regularisation rules in the empirical application]{Estimator-specific regularisation rules in the frozen application.
+    The procedures retain different finite-$m$ objectives and stopping rules.}
+    \label{tab:app-spectroscopy-procedures}
+    \begin{tabular}{@{}p{2.4cm}p{6.3cm}>{\raggedright\arraybackslash}p{5.1cm}@{}}
+        \toprule
+        Method & Regularisation choice & Principal diagnostics \\
+        \midrule
+        CG--FPLS
+          & Released-code conjugate-residual recurrence and first discrepancy
+            crossing; $\tau=1.01$, $\delta=0.10$, with an internal moment-GCV
+            FPCR variance pilot.
+          & Threshold, crossing status, moment-residual path, pilot dimension,
+            and variance estimate. \\
+        Raw FPLS
+          & Minimum five-fold inner prediction MSE over the unscaled raw Krylov
+            power sequence, fitted by response-space normal equations.
+          & Candidate validity, raw-basis and response-design condition numbers,
+            and Krylov column norms. \\
+        Arnoldi FPLS
+          & Independent minimum on the same inner folds, using twice
+            reorthogonalised Gram--Schmidt and response-space QR.
+          & Effective dimension, rank breakdown, response-design condition,
+            and basis orthogonality defect. \\
+        FPCR
+          & Response-space GCV over covariance-eigenvalue cut-offs.
+          & Numerical rank, retained eigenvalue, and retained spectral
+            condition number. \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Invalid or non-finite raw candidates are excluded from selection.  They are not
+silently repaired by a pseudoinverse, ridge penalty, or substitute method.  A
+complete method failure would remain in the diagnostics and create missing
+predictions rather than a dropped fold.  In the realised study, all 140 stored
+fits and all predictions are finite.  These safeguards make clear why selected
+component counts are method-specific indices rather than a common complexity
+scale.
+
+\section{Development evidence}
+\label{sec:app-spectroscopy-development}
+
+Table~\ref{tab:app-spectroscopy-development-rmse} gives the repeat-level
+development results.  Arnoldi has the smallest mean repeated-CV RMSE, while
+Raw has the second-smallest mean but a much larger standard deviation.  Raw's
+five repeat RMSEs are 4.850, 4.960, 5.997, 4.844, and 4.760; the single 5.997
+repeat creates its adverse tail.  The contiguous-fold check reverses the top
+pair, with Raw at 4.913 and Arnoldi at 5.120.  Hence development prediction
+supports Raw and Arnoldi as the leading pair but does not establish a stable
+ordering between them.
+
+\begin{table}[htbp]
+    \centering
+    \scriptsize
+    \caption[Repeated-development prediction errors]{Development RMSE.  The first three columns summarise five complete
+    repeated nested-CV out-of-fold estimates.  The final two columns are single
+    prespecified sensitivities.}
+    \label{tab:app-spectroscopy-development-rmse}
+    \begin{tabular}{@{}lrrrrr@{}}
+        \toprule
+        Method & Mean (SD) & Median & Range & Contiguous folds & Original validation \\
+        \midrule
+        CG--FPLS     & 5.924 (0.083) & 5.940 & 5.784--5.990 & 6.149 & 5.998 \\
+        Raw FPLS     & 5.082 (0.517) & 4.850 & 4.760--5.997 & 4.913 & 4.132 \\
+        Arnoldi FPLS & 4.917 (0.131) & 4.954 & 4.741--5.084 & 5.120 & 4.150 \\
+        FPCR         & 5.364 (0.219) & 5.396 & 5.074--5.624 & 5.349 & 3.978 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The original 155-to-40 split gives the metrics in Table
+\ref{tab:app-spectroscopy-original-split}.  All biases are positive, but the
+small validation set and its restricted assay support make this a weak basis
+for general calibration claims.  In particular, every $R^2$ is negative
+because its SSE is compared with the unusually small validation SST.  This is
+compatible with RMSE around four for three methods and does not contradict the
+broader benchmark signal.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption[Original calibration--validation split sensitivity]{Original supplied-split sensitivity: fitting on the 155
+    calibration tablets and evaluating on the 40 validation tablets.  Bias is
+    prediction minus observation.}
+    \label{tab:app-spectroscopy-original-split}
+    \begin{tabular}{@{}lrrrr@{}}
+        \toprule
+        Method & RMSE & MAE & Bias & $R^2$ \\
+        \midrule
+        CG--FPLS     & 5.998 & 4.820 & 2.109 & -5.442 \\
+        Raw FPLS     & 4.132 & 3.566 & 1.460 & -2.057 \\
+        Arnoldi FPLS & 4.150 & 3.558 & 1.406 & -2.085 \\
+        FPCR         & 3.978 & 3.431 & 1.512 & -1.834 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Selection is more revealing than the small differences among the leading
+development prediction errors.  Table
+\ref{tab:app-spectroscopy-selection-stability} records every outer-fit range.
+CG stops at three throughout.  Arnoldi remains tightly concentrated between
+four and six.  Raw spans almost the entire requested path, reaches the cap in
+two fits, and triggers the fixed instability rule in 24 of 25.  FPCR also
+varies widely, although its spectral truncation index is not directly
+comparable with a Krylov iteration.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption[Development selection and numerical stability]{Selection and numerical stability over 25 repeated-development
+    outer fits.  Quartiles use the stored selected indices.}
+    \label{tab:app-spectroscopy-selection-stability}
+    \begin{tabular}{@{}lrrrrrr@{}}
+        \toprule
+        Method & Minimum & Q1 & Median & Q3 & Maximum & Cap / flags \\
+        \midrule
+        CG--FPLS     & 3 & 3  & 3  & 3  & 3  & 0 / 0 \\
+        Raw FPLS     & 4 & 34 & 44 & 63 & 70 & 2 / 24 \\
+        Arnoldi FPLS & 4 & 5  & 5  & 6  & 6  & 0 / 0 \\
+        FPCR         & 7 & 12 & 21 & 39 & 57 & 0 / n/a \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Benchmark uncertainty and residuals}
+\label{sec:app-spectroscopy-uncertainty}
+
+Chapter~\ref{chap:spectroscopy-application} gives all four primary point
+estimates and marginal iid intervals.  Table
+\ref{tab:app-spectroscopy-rmse-contrasts} supplies the complete prespecified
+RMSE sensitivity for the three declared paired contrasts.  The focal
+Raw-minus-Arnoldi interval remains below zero for every block length, as do the
+larger CG-minus-Arnoldi and FPCR-minus-Arnoldi differences.  This order
+robustness applies to conditional RMSE contrasts.  Bias conclusions are less
+stable: the longer-block bias intervals for the secondary contrasts cross
+zero.
+
+\begin{table}[htbp]
+    \centering
+    \scriptsize
+    \caption[Paired benchmark RMSE contrasts and intervals]{Declared benchmark RMSE contrasts and paired 95\% percentile
+    intervals.  Circular blocks follow the supplied archive order.}
+    \label{tab:app-spectroscopy-rmse-contrasts}
+    \begin{tabular}{@{}lrrrrr@{}}
+        \toprule
+        Contrast & Estimate & Iid & Block 5 & Block 10 & Block 20 \\
+        \midrule
+        Raw $-$ Arnoldi
+          & -0.0363 & [-0.0565, -0.0169] & [-0.0595, -0.0158]
+          & [-0.0622, -0.0141] & [-0.0649, -0.0117] \\
+        CG $-$ Arnoldi
+          &  0.6500 & [ 0.3973,  0.9208] & [ 0.3286,  0.9783]
+          & [ 0.2565,  1.0169] & [ 0.1664,  1.0687] \\
+        FPCR $-$ Arnoldi
+          &  0.5420 & [ 0.2855,  0.8442] & [ 0.2403,  0.8839]
+          & [ 0.2015,  0.9218] & [ 0.1886,  0.9384] \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Figure~\ref{fig:app-spectroscopy-residuals} shows prediction-minus-observation
+residuals against observed assay.  The methods share a few large errors,
+including one high-assay tablet predicted near the centre of the range and a
+low-assay tablet overpredicted by all procedures.  These rows remain in every
+reported metric and in the bootstrap resampling population.  The common extremes widen marginal RMSE
+intervals while largely cancelling in paired method differences.  Their
+presence does not establish data error or a batch effect in the absence of
+supporting metadata.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth]{tablet_benchmark_residuals.pdf}
+    \caption[Benchmark residuals against observed assay]{Designated-benchmark residuals, defined as prediction minus
+    observation, plotted against observed assay.  All 460 tablets are retained.
+    Shared large residuals are descriptive; the archive contains no batch or
+    acquisition-order metadata with which to assign a physical cause.}
+    \label{fig:app-spectroscopy-residuals}
+\end{figure}
+
+\section{Final-fit numerical diagnostics}
+\label{sec:app-spectroscopy-numerics}
+
+Table~\ref{tab:app-spectroscopy-final-diagnostics} contrasts final training fit
+with numerical representation.  Raw and Arnoldi achieve nearly the same
+training RMSE and coefficient norm, but through sharply different coordinate
+systems.  Raw's selected condition numbers are at the reporting ceiling,
+whereas Arnoldi retains an orthonormal basis to machine precision.  FPCR has
+the smallest training RMSE and largest coefficient norm; these in-sample
+quantities do not override the benchmark ordering.
+
+\begin{table}[htbp]
+    \centering
+    \scriptsize
+    \caption[Final-fit numerical diagnostics]{Final fit on all 195 development tablets.  Coefficient norms use
+    the archived original-input vector under the $T^{-1}$ prediction
+    convention.}
+    \label{tab:app-spectroscopy-final-diagnostics}
+    \begin{tabular}{@{}lrrrp{6.0cm}@{}}
+        \toprule
+        Method & $m$ & Training RMSE & $\|\widehat\beta\|_2$ & Principal diagnostic \\
+        \midrule
+        CG--FPLS & 3 & 5.544 & 18,997
+          & Pilot $m=70$, $\widehat\sigma^2=10.467$; discrepancy threshold
+            0.191 was crossed. \\
+        Raw FPLS & 55 & 4.399 & 21,494
+          & Basis and response-design conditions both recorded at
+            $4.50\times10^{15}$; instability flag set. \\
+        Arnoldi FPLS & 5 & 4.395 & 21,573
+          & Basis condition 1; response-design condition 11.95; orthogonality
+            defect $7.40\times10^{-16}$. \\
+        FPCR & 53 & 3.400 & 45,334
+          & Retained eigenvalue $7.02\times10^{-7}$; retained spectral
+            condition 35,919. \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Figure~\ref{fig:app-spectroscopy-krylov-numerics} gives the complete relevant
+paths.  For Raw, the basis condition is already $5.74\times10^8$ at $m=6$,
+above the fixed $1/\sqrt{\epsilon_{\mathrm{mach}}}=6.71\times10^7$ threshold;
+the response design is still worse.  The raw Krylov column norm falls by more
+than 80 orders of magnitude by the selected $m=55$, and the aggregate inner-CV
+criterion contains invalid candidate dimensions.  Its finite selected
+prediction must therefore not be equated with stable continuation of the
+intended power basis.
+
+Arnoldi's basis condition remains one along the requested path, and its
+orthogonality defect stays near machine precision.  The defect is exactly zero
+at $m=1$, so that point is absent on the logarithmic vertical scale.  At the
+selected $m=5$, the response-space least-squares problem is also well
+conditioned.  Raw and Arnoldi nevertheless make almost identical benchmark
+predictions: correlation 0.999934, RMS paired difference 0.174, and maximum
+absolute difference 0.445 assay units.  The empirical role of orthogonalisation
+is thus reliable representation of essentially the same predictive relation,
+not guaranteed improvement of every realised loss.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.82\textwidth]{tablet_raw_arnoldi_numerical_diagnostics.pdf}
+    \caption[Final raw and Arnoldi Krylov diagnostics]{Final raw and Arnoldi Krylov diagnostics.  The upper panel shows
+    raw-basis and response-design condition numbers against the fixed
+    $1/\sqrt{\epsilon_{\mathrm{mach}}}$ flag threshold.  The lower panel shows
+    Arnoldi's spectral-norm orthogonality defect; its exactly zero $m=1$ value
+    is not displayed on the logarithmic scale.  Vertical markers identify the
+    selected dimensions 55 and 5.}
+    \label{fig:app-spectroscopy-krylov-numerics}
+\end{figure}
+
+\section{Preprocessing and instrument sensitivities}
+\label{sec:app-spectroscopy-sensitivity}
+
+Table~\ref{tab:app-spectroscopy-sensitivities} and Figure
+\ref{fig:app-spectroscopy-sensitivity} report every prespecified benchmark
+variant.  The full instrument-1 analysis remains the sole primary result.
+Trimming the high-wavelength tail improves CG--FPLS, Arnoldi, and FPCR and
+compresses the four-method RMSE range, but slightly worsens Raw.  Smoothing
+changes both errors and selected indices without uniformly improving them.
+Instrument~2 raises every RMSE; because it measures the same tablets, this is
+measurement-system sensitivity rather than independent replication.
+
+\begin{table}[htbp]
+    \centering
+    \scriptsize
+    \caption[Complete prespecified benchmark sensitivities]{Complete prespecified benchmark sensitivities.  Parenthesised
+    values in the RMSE column are selected component or stopping indices.
+    Sensitivity rows are descriptive point estimates without variant-specific
+    uncertainty intervals.}
+    \label{tab:app-spectroscopy-sensitivities}
+    \begin{tabular}{@{}llrrrr@{}}
+        \toprule
+        Variant & Method & RMSE ($m$) & MAE & Bias & $R^2$ \\
+        \midrule
+        Instrument 1, full
+          & CG--FPLS     & 5.293 (3)  & 3.673 &  0.177 & 0.887 \\
+          & Raw FPLS     & 4.607 (55) & 3.036 & -0.303 & 0.914 \\
+          & Arnoldi FPLS & 4.643 (5)  & 3.086 & -0.301 & 0.913 \\
+          & FPCR         & 5.185 (53) & 3.547 & -0.628 & 0.892 \\
+        \addlinespace
+        Instrument 1, 600--1798~nm
+          & CG--FPLS     & 4.669 (3)  & 3.007 & -0.456 & 0.912 \\
+          & Raw FPLS     & 4.767 (10) & 3.105 & -0.476 & 0.908 \\
+          & Arnoldi FPLS & 4.632 (8)  & 2.846 & -0.513 & 0.913 \\
+          & FPCR         & 4.719 (14) & 2.877 & -0.575 & 0.910 \\
+        \addlinespace
+        Instrument 1, SG smooth
+          & CG--FPLS     & 5.341 (3)  & 3.717 &  0.013 & 0.885 \\
+          & Raw FPLS     & 4.663 (18) & 3.056 & -0.497 & 0.912 \\
+          & Arnoldi FPLS & 4.953 (9)  & 3.042 & -0.491 & 0.901 \\
+          & FPCR         & 4.823 (27) & 3.053 & -0.444 & 0.906 \\
+        \addlinespace
+        Instrument 2, full
+          & CG--FPLS     & 6.764 (3)  & 5.100 &  1.022 & 0.815 \\
+          & Raw FPLS     & 5.042 (53) & 3.242 & -0.601 & 0.897 \\
+          & Arnoldi FPLS & 5.095 (5)  & 3.279 & -0.562 & 0.895 \\
+          & FPCR         & 6.395 (37) & 4.150 & -0.921 & 0.835 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.86\textwidth]{tablet_benchmark_sensitivity_rmse.pdf}
+    \caption[Benchmark RMSE across prespecified sensitivities]{RMSE across the primary analysis and three prespecified
+    sensitivities.  Points are descriptive benchmark estimates without
+    uncertainty intervals.  Horizontal comparisons change the spectral
+    representation or instrument and do not define a post hoc replacement for
+    the primary full-spectrum instrument-1 result.}
+    \label{fig:app-spectroscopy-sensitivity}
+\end{figure}
+
+The Raw--Arnoldi point ordering changes across variants, reinforcing that the
+primary 0.036-unit difference is not a universal ranking.  Trimming improves
+all methods except Raw, but this association does not prove that visible
+high-wavelength spikes caused the primary residuals.  Similarly, poorer
+instrument-2 results do not identify a transfer mechanism without a dedicated
+calibration-transfer design.
+
+\section{Reproducibility manifest}
+\label{sec:app-spectroscopy-reproducibility}
+
+The frozen directory \texttt{tablet\_nir\_study\_FINAL} contains 59 payload
+files plus its checksum list and manifest.  All listed SHA-256 checks pass.
+Independent replay reconstructs benchmark metrics from 7,360 prediction rows
+to within $1.8\times10^{-15}$, development metrics from 4,840 prediction rows
+to within $1.6\times10^{-14}$, and predictions from archived coefficients and
+intercepts to within $6.3\times10^{-13}$.  All outer, inner, and bootstrap
+indices regenerate exactly from the declared streams.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption[Frozen empirical archive map]{Frozen empirical archive map.}
+    \label{tab:app-spectroscopy-archive-map}
+    \begin{tabular}{@{}p{4.2cm}p{9.6cm}@{}}
+        \toprule
+        Location & Contents \\
+        \midrule
+        \texttt{provenance/}
+          & Frozen protocol, resolved configuration, exact source snapshots,
+            run invocation, code hashes, software, platform, and Git state. \\
+        \texttt{resampling/}
+          & Exact development outer and inner assignments, final inner
+            assignment, and compressed iid and block bootstrap index matrices. \\
+        \texttt{development/}
+          & Observation-level predictions, fold and repeat metrics, selected
+            coefficients, complete paths, and fit diagnostics. \\
+        \texttt{benchmark/}
+          & Predictions for all variants, primary bootstrap summaries and
+            draws, metrics, final coefficients, paths, and diagnostics. \\
+        \texttt{tables/}, \texttt{figures/}
+          & Deterministic reduced tables and scientific displays generated
+            from the preceding files. \\
+        Manifest and checksums
+          & File inventory, sizes, hashes, and whole-archive integrity check. \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The recorded environment is Python 3.12.13, NumPy 2.3.5, SciPy 1.17.0,
+pandas 2.2.3, Matplotlib 3.10.8, and OpenBLAS 0.3.30 with the numerical thread
+limit set to one.  The invocation and Git metadata are archived, including
+commit \texttt{75b3f069}, but the worktree was not clean.  Reproduction must
+therefore use the exact source snapshots and hashes stored under
+\texttt{provenance/source/}, rather than assuming that the commit alone
+identifies the executed program.

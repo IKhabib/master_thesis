@@ -1,0 +1,1472 @@
+% Mathematical appendix supporting the theoretical and simulation chapters.
+\chapter{Definitions and Supporting Proofs}
+\label{app:mathematical-proofs}
+
+This appendix collects the definitions and mathematical arguments used from
+Chapter~\ref{chap:introduction} through the estimation and inference
+chapters.  Its purpose is to
+make the main text self-contained without interrupting the exposition with
+long proofs.  A definition fixes the meaning of a term and therefore is not a
+statement that can be proved.  What can be proved are the properties and
+consequences that follow from those definitions.  Accordingly,
+Section~\ref{sec:app-definitions} records the terminology, and the remaining
+sections prove the results invoked in the thesis.  The presentation follows
+standard Hilbert-space and inverse-problem arguments; see
+\textcite{lin_mit_18102_2021}, \textcite{hsing_eubank_2015}, and
+\textcite{engl_hanke_neubauer_1996} for broader treatments.
+
+Throughout, $\mathcal H$ is a real separable Hilbert space with inner product
+$\langle\cdot,\cdot\rangle$ and norm $\|\cdot\|$.  In the functional
+regression model, $\mathcal H=L^2(\mathcal I)$ for a compact interval
+$\mathcal I$.  All equalities between elements of $L^2(\mathcal I)$ are
+understood up to sets of Lebesgue measure zero.
+When the covariance operator $K$ is not injective, slope parameters are
+reported through their minimum-norm representatives in the identified space
+\[
+    \mathcal H_{\mathrm{id}}
+    =\operatorname{Null}(K)^\perp
+    =\overline{\operatorname{Range}(K)}.
+\]
+Statements about a globally identified slope implicitly restrict the
+parameter space to $\mathcal H_{\mathrm{id}}$, unless injectivity of $K$ is
+assumed explicitly.
+
+\section{Definitions and notation}
+\label{sec:app-definitions}
+
+\begin{definition}[Inner product, norm, and orthogonality]
+An \emph{inner product} on a real vector space is a symmetric bilinear map
+$\langle\cdot,\cdot\rangle$ satisfying $\langle f,f\rangle>0$ for every
+$f\neq0$.  Its induced norm is $\|f\|=\langle f,f\rangle^{1/2}$.  Elements
+$f$ and $g$ are \emph{orthogonal}, written $f\perp g$, when
+$\langle f,g\rangle=0$.
+\end{definition}
+
+\begin{definition}[Hilbert space and orthonormal basis]
+A \emph{Hilbert space} is an inner-product space that is complete in its
+induced norm.  A sequence $\{e_j\}_{j\geq1}$ is \emph{orthonormal} if
+$\langle e_j,e_k\rangle$ equals one for $j=k$ and zero otherwise.  It is an
+\emph{orthonormal basis} if the closure of its linear span is the whole
+space.
+\end{definition}
+
+\begin{definition}[$\ell^p$ spaces, conjugate exponents, and dual balls]
+For $1\leq p<\infty$, the sequence space $\ell^p$ consists of all real
+sequences $x=(x_j)_{j\geq1}$ for which
+\[
+    \|x\|_p=\left(\sum_{j\geq1}|x_j|^p\right)^{1/p}<\infty.
+\]
+The space $\ell^\infty$ consists of bounded sequences and has norm
+$\|x\|_\infty=\sup_j|x_j|$.  Exponents $p,q\in[1,\infty]$ are
+\emph{H\"older conjugates} when $p^{-1}+q^{-1}=1$, using the convention
+$\infty^{-1}=0$.  The continuous dual $E^*$ of a normed space $E$ is the
+space of its continuous linear functionals, equipped with
+\[
+    \|\varphi\|_*=\sup_{\|x\|_E\leq1}|\varphi(x)|.
+\]
+In $\mathbb R^d$, write $B_p^d=\{x:\|x\|_p\leq1\}$.  Its polar under the
+standard pairing is
+\[
+    (B_p^d)^\circ
+    =\left\{y:\sup_{x\in B_p^d}|y^{\mathsf T}x|\leq1\right\}.
+\]
+The norm-induced distance is $d_p(x,z)=\|x-z\|_p$; its radius-$r$ ball
+centred at $z$ is $z+rB_p^d$.
+\end{definition}
+
+\begin{definition}[Linear operators]
+For a linear operator $A:\mathcal H\to\mathcal H$, its null space and range
+are
+\[
+    \operatorname{Null}(A)=\{f:Af=0\},
+    \qquad
+    \operatorname{Range}(A)=\{Af:f\in\mathcal H\}.
+\]
+The operator is \emph{injective} when $\operatorname{Null}(A)=\{0\}$ and is
+\emph{bounded} when its operator norm is finite, where
+\[
+    \|A\|_{\mathrm{op}}
+    =\sup_{\|f\|\leq1}\|Af\|.
+\]
+A bounded operator is \emph{self-adjoint} if
+$\langle Af,g\rangle=\langle f,Ag\rangle$ for all $f,g$, and
+\emph{non-negative} if $\langle Af,f\rangle\geq0$ for every $f$.  An
+\emph{eigenpair} $(\lambda,v)$ satisfies $Av=\lambda v$ with $v\neq0$.
+\end{definition}
+
+\begin{definition}[Compact and trace-class operators]
+A bounded operator $A$ is \emph{compact} if it maps every bounded sequence to
+a sequence whose image has a convergent subsequence.  A non-negative
+self-adjoint operator is \emph{trace class} if, for one and hence every
+orthonormal basis $\{e_j\}$,
+\(
+  \operatorname{tr}(A)=\sum_j\langle Ae_j,e_j\rangle<\infty.
+\)
+Every trace-class operator is compact.
+\end{definition}
+
+\begin{definition}[Rank-one and covariance operators]
+For $u,v\in\mathcal H$, the rank-one operator $u\otimes v$ is defined by
+$(u\otimes v)f=\langle v,f\rangle u$.  If $X$ is a random element with mean
+$\mu_X$ and $\mathbb E\|X\|^2<\infty$, its covariance operator is
+\[
+    K=\mathbb E\{(X-\mu_X)\otimes(X-\mu_X)\}.
+\]
+\end{definition}
+
+\begin{definition}[Well-posedness, ill-posedness, and regularisation]
+An inverse problem is \emph{well posed} in the sense relevant here if a
+solution exists, is unique on the chosen parameter space, and depends
+continuously on the observed moments.  Failure of one of these conditions
+makes the problem \emph{ill posed}.  A \emph{regularisation method} replaces
+an unstable inverse by a family of stable approximations indexed by a tuning
+parameter, truncation level, or stopping index.
+\end{definition}
+
+\begin{definition}[Condition number and Krylov subspace]
+For a tall matrix $A\in\mathbb R^{p\times m}$ with $p\geq m$, its spectral
+condition number is
+\[
+    \kappa_2(A)=\frac{\sigma_{\max}(A)}{\sigma_{\min}(A)}
+\]
+when $A$ has full column rank, and $\kappa_2(A)=\infty$ otherwise.  For a
+symmetric positive-definite square matrix this reduces to
+$\kappa_2(A)=\lambda_{\max}(A)/\lambda_{\min}(A)$.  For an operator $A$, a
+right-hand side $r$, and an integer $m\geq1$, the order-$m$ Krylov subspace is
+\[
+    \mathcal K_m(A,r)
+    =\operatorname{span}\{r,Ar,\ldots,A^{m-1}r\}.
+\]
+\end{definition}
+
+\begin{definition}[Sampling operator, adjoint, and moment residual]
+For centred functional observations $X_1^c,\ldots,X_n^c$, the sampling
+operator is $(T_nb)_i=\langle X_i^c,b\rangle$.  Relative to the sample inner
+product $\langle a,c\rangle_n=n^{-1}a^\top c$, its adjoint is
+$T_n^*a=n^{-1}\sum_i a_iX_i^c$.  Hence
+$\widehat K=T_n^*T_n$, $\widehat r=T_n^*y$, and the empirical moment residual
+at $b$ is $e(b)=\widehat r-\widehat Kb=T_n^*(y-T_nb)$.
+\end{definition}
+
+\begin{definition}[PLS1, NIPALS, and APLS]
+\emph{PLS1} denotes partial least squares with one scalar response.
+\emph{NIPALS} is a classical sequential PLS algorithm that constructs a
+response-covariant score, estimates predictor and response loadings, and
+deflates both residual objects after each component.  In the present
+functional setting, \emph{APLS} denotes the alternative representation that
+minimises response least squares over
+$\mathcal K_m(\widehat K,\widehat r)$.  Under the full-rank conditions stated
+below, these are two representations of the same fixed-component standard
+functional PLS fit.
+\end{definition}
+
+\begin{definition}[Arnoldi basis and conjugacy]
+An Arnoldi basis of $\mathcal K_m(A,r)$ is an orthonormal sequence generated
+by repeatedly applying $A$ to the latest basis vector and orthogonalising the
+result against the existing basis.  Non-zero vectors $p_0,\ldots,p_k$ are
+\emph{$A$-conjugate} if $\langle Ap_j,p_\ell\rangle=0$ whenever
+$j\neq\ell$.
+\end{definition}
+
+\begin{definition}[Stochastic order and weak convergence]
+For random quantities $Z_n$, the notation $Z_n=O_{\mathbb P}(1)$ means that
+$\{Z_n\}$ is bounded in probability, while $Z_n=o_{\mathbb P}(1)$ means
+$Z_n\to0$ in probability.  The notation $Z_n\rightsquigarrow Z$ denotes
+convergence in distribution.  These definitions also apply to norms of
+random elements in $\mathcal H$.
+\end{definition}
+
+\section{Hilbert-space geometry}
+\label{sec:app-hilbert-proofs}
+
+\begin{theorem}[H\"older duality for $\ell^p$]
+\label{thm:app-lp-duality}
+Let $1\leq p<\infty$ and let $q$ be its H\"older conjugate.  If
+$x\in\ell^p$ and $y\in\ell^q$, then
+\begin{equation}
+    \left|\sum_{j\geq1}x_jy_j\right|
+    \leq \|x\|_p\|y\|_q.
+    \label{eq:app-holder-sequence}
+\end{equation}
+The map $y\mapsto\varphi_y$, where
+$\varphi_y(x)=\sum_{j\geq1}x_jy_j$, is an isometric isomorphism from
+$\ell^q$ onto $(\ell^p)^*$.  In finite dimension this implies
+\[
+    (B_p^d)^\circ=B_q^d,
+    \qquad 1\leq p\leq\infty.
+\]
+Consequently, $\ell^2$ is self-dual and $(B_2^d)^\circ=B_2^d$.
+\end{theorem}
+
+\begin{proof}
+First suppose $1<p<\infty$.  Young's inequality
+$ab\leq a^p/p+b^q/q$ for $a,b\geq0$ gives, after normalising non-zero
+$x$ and $y$ by their respective norms,
+\[
+  \sum_{j\geq1}
+  \frac{|x_j|}{\|x\|_p}\frac{|y_j|}{\|y\|_q}
+  \leq
+  \frac1p\sum_{j\geq1}\frac{|x_j|^p}{\|x\|_p^p}
+  +\frac1q\sum_{j\geq1}\frac{|y_j|^q}{\|y\|_q^q}
+  =1.
+\]
+This proves \eqref{eq:app-holder-sequence}; if either sequence is zero the
+claim is immediate.  When $p=1$ and $q=\infty$, the same conclusion follows
+directly from
+$\sum_j|x_jy_j|\leq(\sup_j|y_j|)\sum_j|x_j|$.
+
+H\"older's inequality shows that every $y\in\ell^q$ defines a continuous
+functional with $\|\varphi_y\|_*\leq\|y\|_q$.  For
+$1<p<\infty$ and $y\neq0$, take $N$ such that
+$\sum_{k=1}^{N}|y_k|^q>0$; this holds for all sufficiently large $N$.
+Equality is obtained as a limit of the finite-support vectors
+\[
+  x_j^{(N)}=
+  \begin{cases}
+  \displaystyle
+  \frac{\operatorname{sgn}(y_j)|y_j|^{q-1}}
+       {\left(\sum_{k=1}^{N}|y_k|^q\right)^{(q-1)/q}},
+       &j\leq N,\\[1.2ex]
+  0,&j>N,
+  \end{cases}
+\]
+for which $\|x^{(N)}\|_p=1$ and
+$\varphi_y(x^{(N)})=(\sum_{j=1}^{N}|y_j|^q)^{1/q}$.
+For $p=1$, choose signed coordinate vectors whose coordinates approach
+$\|y\|_\infty$.  Hence $\|\varphi_y\|_*=\|y\|_q$ in both cases.
+
+Conversely, let $\varphi\in(\ell^p)^*$ and put
+$y_j=\varphi(e_j)$ for the standard coordinate vectors.  If $p=1$, then
+$|y_j|\leq\|\varphi\|_*$, so $y\in\ell^\infty$.  If $1<p<\infty$, apply
+$\varphi$ to the preceding norm-one construction based on
+$(y_1,\ldots,y_N)$ whenever its $q$th-power sum is positive.  When that
+sum is zero, the following inequality is immediate.  Thus, in either case,
+\[
+   \left(\sum_{j=1}^{N}|y_j|^q\right)^{1/q}
+   \leq\|\varphi\|_*
+   \qquad\text{for every }N,
+\]
+and therefore $y\in\ell^q$.  On every finitely supported $x$,
+$\varphi(x)=\sum_jx_jy_j$.  Such sequences are dense in $\ell^p$ for
+$p<\infty$, so continuity extends the identity to every $x\in\ell^p$.
+Thus $y\mapsto\varphi_y$ is onto as well as isometric.
+
+In $\mathbb R^d$, the dual-norm identity says
+$\sup_{x\in B_p^d}|y^{\mathsf T}x|=\|y\|_q$, which is exactly
+$(B_p^d)^\circ=B_q^d$.  The endpoint $p=\infty$, $q=1$ follows by taking
+$x_j=\operatorname{sgn}(y_j)$; this is a finite-dimensional polar identity,
+not an assertion that $(\ell^\infty)^*=\ell^1$.  Finally, $p=q=2$ yields
+self-duality.  The Hilbert-space version of the same identification is the
+Riesz representation theorem proved below.
+\end{proof}
+
+\begin{remark}[The $\ell^\infty$ endpoint]
+\label{rem:app-linfty-dual}
+The finite-dimensional identity $(B_\infty^d)^\circ=B_1^d$ does not extend
+to an identification $(\ell^\infty)^*=\ell^1$.  Every $y\in\ell^1$ does
+define a continuous functional on $\ell^\infty$ through coordinate pairing,
+but the full dual $(\ell^\infty)^*$ is strictly larger.  Establishing that
+strict inclusion requires additional functional-analysis machinery and is not
+used elsewhere in the thesis; it is stated here only to prevent the
+finite-dimensional drawing from being overinterpreted
+\parencite{lin_mit_18102_2021}.
+\end{remark}
+
+\begin{theorem}[Cauchy--Schwarz inequality]
+\label{thm:app-cauchy-schwarz}
+For all $f,g\in\mathcal H$,
+\[
+    |\langle f,g\rangle|\leq\|f\|\,\|g\|.
+\]
+\end{theorem}
+
+\begin{proof}
+If $g=0$, the assertion is immediate.  Otherwise, non-negativity of the
+squared norm gives, for every $t\in\mathbb R$,
+\[
+    0\leq\|f-tg\|^2
+    =\|f\|^2-2t\langle f,g\rangle+t^2\|g\|^2.
+\]
+Choose $t=\langle f,g\rangle/\|g\|^2$.  Substitution yields
+$0\leq\|f\|^2-|\langle f,g\rangle|^2/\|g\|^2$, which is equivalent to the
+claimed inequality.
+\end{proof}
+
+\begin{theorem}[Completeness and separability of \texorpdfstring{$L^2$}{L2}]
+\label{thm:app-l2-hilbert}
+For a compact interval $\mathcal I$, the space $L^2(\mathcal I)$ with its
+usual inner product is a separable Hilbert space.
+\end{theorem}
+
+\begin{proof}
+It remains to verify completeness and separability.  Let $\{f_n\}$ be Cauchy
+in $L^2(\mathcal I)$.  Choose a subsequence $\{f_{n_k}\}$ such that
+\[
+    \|f_{n_{k+1}}-f_{n_k}\|_2\leq2^{-k}.
+\]
+Put $g_k=f_{n_{k+1}}-f_{n_k}$.  Since $\mathcal I$ has finite measure,
+Cauchy--Schwarz gives
+$\|g_k\|_1\leq|\mathcal I|^{1/2}\|g_k\|_2$.  Hence
+$\sum_k\int_{\mathcal I}|g_k|<\infty$, so $\sum_k|g_k(t)|<\infty$ for almost
+every $t$.  Define $f=f_{n_1}+\sum_{k\geq1}g_k$ at those points.  Minkowski's
+inequality and Fatou's lemma imply
+\[
+ \left\|f-f_{n_m}\right\|_2
+ \leq\sum_{k=m}^{\infty}\|g_k\|_2
+ \leq\sum_{k=m}^{\infty}2^{-k}\longrightarrow0.
+\]
+Thus the subsequence converges in $L^2$; because the original sequence is
+Cauchy, the whole sequence converges to the same $f$.  This proves
+completeness.
+
+For separability, consider step functions taking rational values on finite
+partitions whose endpoints are rational points of $\mathcal I$.  This family
+is countable.  Simple functions are dense in $L^2$, and measurable sets of
+finite measure can be approximated in measure by finite unions of intervals;
+their endpoints and the corresponding function values can then be
+approximated by rationals.  The stated countable family is therefore dense in
+$L^2(\mathcal I)$.
+\end{proof}
+
+\begin{theorem}[Orthogonal projection]
+\label{thm:app-projection}
+Let $M$ be a closed linear subspace of $\mathcal H$.  For every
+$f\in\mathcal H$, there exists a unique $P_Mf\in M$ such that
+$f-P_Mf\perp M$.  Moreover,
+\[
+    \|f-P_Mf\|=\inf_{v\in M}\|f-v\|.
+\]
+If $M=\operatorname{span}\{e_1,\ldots,e_m\}$ for orthonormal vectors, then
+$P_Mf=\sum_{j=1}^m\langle f,e_j\rangle e_j$.
+\end{theorem}
+
+\begin{proof}
+Put $d=\inf_{v\in M}\|f-v\|$ and choose $v_n\in M$ with
+$\|f-v_n\|\to d$.  The parallelogram identity and
+$(v_n+v_k)/2\in M$ imply
+\[
+ \|v_n-v_k\|^2
+ \leq 2\|f-v_n\|^2+2\|f-v_k\|^2-4d^2,
+\]
+so $\{v_n\}$ is Cauchy.  Completeness of $\mathcal H$ and closedness of $M$
+give a limit $v\in M$ with $\|f-v\|=d$.  For $h\in M$, the function
+$t\mapsto\|f-v-th\|^2$ is minimised at zero; its linear term therefore
+vanishes, giving $\langle f-v,h\rangle=0$.  If $v'$ has the same property,
+then $v-v'\in M$ and $v-v'\perp M$, so $v=v'$.  This proves existence,
+orthogonality, and uniqueness.  Pythagoras gives
+$\|f-w\|^2=\|f-v\|^2+\|v-w\|^2$ for every $w\in M$, which establishes best
+approximation.  In the finite orthonormal case, direct substitution shows
+that $f-\sum_{j=1}^m\langle f,e_j\rangle e_j$ is orthogonal to every basis
+vector and hence to $M$.
+\end{proof}
+
+\begin{corollary}[Basis expansion and Parseval's identity]
+\label{cor:app-parseval}
+If $\{e_j\}_{j\geq1}$ is an orthonormal basis of $\mathcal H$, then, for
+every $f\in\mathcal H$,
+\[
+ f=\sum_{j=1}^{\infty}\langle f,e_j\rangle e_j,
+ \qquad
+ \|f\|^2=\sum_{j=1}^{\infty}|\langle f,e_j\rangle|^2,
+\]
+where the series converges in norm.
+\end{corollary}
+
+\begin{proof}
+Let $P_mf=\sum_{j=1}^m\langle f,e_j\rangle e_j$.  Because the linear span
+of the basis is dense, the best-approximation property in
+Theorem~\ref{thm:app-projection} implies $\|f-P_mf\|\to0$.  Orthogonality and
+Pythagoras give
+\[
+    \|f\|^2=\|f-P_mf\|^2
+       +\sum_{j=1}^m|\langle f,e_j\rangle|^2.
+\]
+Letting $m\to\infty$ proves both assertions.
+\end{proof}
+
+\begin{theorem}[Riesz representation]
+\label{thm:app-riesz}
+Every continuous linear functional $\ell:\mathcal H\to\mathbb R$ has a
+unique representative $b\in\mathcal H$ such that
+$\ell(f)=\langle f,b\rangle$ for all $f\in\mathcal H$.
+\end{theorem}
+
+\begin{proof}
+If $\ell=0$, take $b=0$.  Otherwise, $M=\operatorname{Null}(\ell)$ is a
+closed subspace.  Select $z\notin M$ and put $u=z-P_Mz$.  Then $u\neq0$ and
+$u\perp M$.  For arbitrary $f$, the element
+\[
+    f-\frac{\ell(f)}{\ell(u)}u
+\]
+belongs to $M$.  Consequently,
+$f=m+\{\ell(f)/\ell(u)\}u$ for some $m\in M$.  With
+$b=\ell(u)u/\|u\|^2$, orthogonality gives
+$\langle f,b\rangle=\ell(f)$.  If both $b$ and $b'$ represent $\ell$, then
+$\langle f,b-b'\rangle=0$ for every $f$; taking $f=b-b'$ proves $b=b'$.
+\end{proof}
+
+\section{Random functions and covariance operators}
+\label{sec:app-covariance-proofs}
+
+\begin{proposition}[Existence of the Hilbert-space mean]
+\label{prop:app-functional-mean}
+If $X$ is a random element of $\mathcal H$ with
+$\mathbb E\|X\|^2<\infty$, there is a unique $\mu_X\in\mathcal H$ satisfying
+\[
+    \langle\mu_X,f\rangle=\mathbb E\langle X,f\rangle
+    \quad\text{for every }f\in\mathcal H.
+\]
+Moreover, $\|\mu_X\|\leq(\mathbb E\|X\|^2)^{1/2}$.
+\end{proposition}
+
+\begin{proof}
+The map $\ell(f)=\mathbb E\langle X,f\rangle$ is linear.  By
+Theorem~\ref{thm:app-cauchy-schwarz} and Cauchy--Schwarz for scalar random
+variables,
+\[
+ |\ell(f)|\leq\mathbb E(\|X\|\|f\|)
+ \leq(\mathbb E\|X\|^2)^{1/2}\|f\|.
+\]
+It is therefore continuous.  Theorem~\ref{thm:app-riesz} gives the unique
+representative $\mu_X$, and the displayed bound gives the norm inequality.
+\end{proof}
+
+\begin{theorem}[Properties of a covariance operator]
+\label{thm:app-covariance-properties}
+Let $Z=X-\mu_X$ and suppose $\mathbb E\|Z\|^2<\infty$.  The operator
+\[
+    Kf=\mathbb E\{\langle Z,f\rangle Z\}
+\]
+is bounded, self-adjoint, non-negative, trace class, and compact.  In
+particular,
+\[
+    \|K\|_{\mathrm{op}}\leq\mathbb E\|Z\|^2,
+    \qquad
+    \operatorname{tr}(K)=\mathbb E\|Z\|^2.
+\]
+\end{theorem}
+
+\begin{proof}
+For $f,g\in\mathcal H$,
+\[
+ \langle Kf,g\rangle
+ =\mathbb E\{\langle Z,f\rangle\langle Z,g\rangle\}.
+\]
+The expression is symmetric in $f$ and $g$, proving self-adjointness.  With
+$g=f$ it is non-negative.  Moreover,
+\[
+ |\langle Kf,g\rangle|
+ \leq\mathbb E(\|Z\|^2)\|f\|\|g\|,
+\]
+which proves boundedness and the operator-norm bound.
+
+For any orthonormal basis $\{e_j\}$, Tonelli's theorem and
+Corollary~\ref{cor:app-parseval} yield
+\[
+ \sum_{j=1}^{\infty}\langle Ke_j,e_j\rangle
+ =\mathbb E\sum_{j=1}^{\infty}|\langle Z,e_j\rangle|^2
+ =\mathbb E\|Z\|^2<\infty.
+\]
+Thus, $K$ is trace class and has the asserted trace.
+
+For completeness, compactness can also be seen directly.  Let $P_m$ project
+onto
+\[
+    M_m=\operatorname{span}\{e_1,\ldots,e_m\},
+\]
+and set $K_m=P_mKP_m$, which has finite rank.  For unit vectors $f,g$,
+Cauchy--Schwarz gives
+\[
+ |\langle (I-P_m)Kf,g\rangle|
+ \leq
+ \{\mathbb E\|Z\|^2\}^{1/2}
+ \{\mathbb E\|(I-P_m)Z\|^2\}^{1/2}.
+\]
+The final expectation tends to zero by Parseval and dominated convergence.
+The same bound applies to $P_mK(I-P_m)$, so
+$\|K-K_m\|_{\mathrm{op}}\to0$.  An operator-norm limit of finite-rank
+operators is compact.
+\end{proof}
+
+\begin{proposition}[Covariance-kernel representation]
+\label{prop:app-covariance-kernel}
+Suppose that $Z=X-\mu_X$ has pointwise second moments and that the
+integrability conditions for Fubini's theorem hold.  If
+$c(s,t)=\mathbb E\{Z(s)Z(t)\}$, then, for almost every $s$,
+\[
+    (Kf)(s)=\int_{\mathcal I}c(s,t)f(t)\,\mathrm dt.
+\]
+\end{proposition}
+
+\begin{proof}
+Using the definition of $K$ and then Fubini's theorem,
+\begin{align*}
+ (Kf)(s)
+ &=\mathbb E\!\left[Z(s)
+      \int_{\mathcal I}Z(t)f(t)\,\mathrm dt\right] \\
+ &=\int_{\mathcal I}\mathbb E\{Z(s)Z(t)\}f(t)\,\mathrm dt
+ =\int_{\mathcal I}c(s,t)f(t)\,\mathrm dt.
+\end{align*}
+The stated integrability assumptions justify interchanging expectation and
+integration.
+\end{proof}
+
+\begin{theorem}[Spectral representation]
+\label{thm:app-spectral-representation}
+Let $K$ be compact, self-adjoint, and non-negative.  Its positive eigenvalues
+can be indexed as $\{\lambda_j:j\in\mathcal J_K\}$ in non-increasing order,
+where $\mathcal J_K=\{1,\ldots,q\}$ if $K$ has finite rank $q$ and
+$\mathcal J_K=\mathbb N$ if it has infinite rank (with
+$\mathcal J_K=\varnothing$ when $K=0$).  There are corresponding
+orthonormal eigenfunctions $\{v_j:j\in\mathcal J_K\}$ spanning
+$\overline{\operatorname{Range}(K)}$ such that
+\[
+    Kf=\sum_{j\in\mathcal J_K}
+        \lambda_j\langle f,v_j\rangle v_j.
+\]
+If $K$ has infinite rank, then $\lambda_j\to0$.
+\end{theorem}
+
+\begin{proof}
+If $K=0$, the result is immediate.  Otherwise, define the maximal Rayleigh
+quotient
+$\lambda_1=\sup_{\|f\|=1}\langle Kf,f\rangle>0$.  Take a maximising
+sequence.  The unit ball is weakly sequentially compact, and compactness of
+$K$ converts a weakly convergent subsequence $f_n\rightharpoonup v_1$ into
+strong convergence $Kf_n\to Kv_1$.  Hence
+$\langle Kf_n,f_n\rangle\to\langle Kv_1,v_1\rangle=\lambda_1$.  Since
+$\langle Kv_1,v_1\rangle\leq\lambda_1\|v_1\|^2$ and $\|v_1\|\leq1$, it
+follows that $\|v_1\|=1$.  Considering the Rayleigh quotient along
+$v_1+th$ for $h\perp v_1$ shows that $\langle Kv_1,h\rangle=0$; therefore
+$Kv_1=\lambda_1v_1$.
+
+Self-adjointness makes $v_1^\perp$ invariant under $K$.  Repeating the same
+argument on successive orthogonal complements produces orthonormal
+eigenvectors with non-increasing eigenvalues until the restriction of $K$
+is zero.  In the infinite-rank case, if infinitely many eigenvalues were
+bounded below by some $c>0$, then the sequence
+$Kv_j=\lambda_jv_j$ would have pairwise distances at least $\sqrt{2}c$ and
+hence no convergent subsequence, contradicting compactness.  Thus
+$\lambda_j\to0$ in that case.
+
+Finally, if a vector orthogonal to every constructed $v_j$ had non-zero
+image under $K$, the Rayleigh-quotient argument on that invariant orthogonal
+complement would produce a unit eigenvector with a positive eigenvalue
+$\rho$.  In a finite construction this contradicts termination.  In an
+infinite construction that vector belongs to every preceding orthogonal
+complement, so maximality of each Rayleigh quotient gives
+$\lambda_j\geq\rho$ for every $j$, contradicting $\lambda_j\to0$.
+Hence $K$ is zero on the remaining complement.  This gives the expansion, and the eigenvectors
+with positive eigenvalues span $\overline{\operatorname{Range}(K)}$.
+\end{proof}
+
+\begin{proposition}[Karhunen--Lo\`eve expansion and optimality]
+\label{prop:app-karhunen-loeve}
+Under the assumptions of Theorem~\ref{thm:app-covariance-properties}, let
+$(\lambda_j,v_j)$ be the positive eigenpairs of $K$ and set
+$\xi_j=\langle X-\mu_X,v_j\rangle$.  Then
+\[
+ X=\mu_X+\sum_{j\in\mathcal J_K}\xi_jv_j
+ \quad\text{in mean square},
+\]
+$\mathbb E\xi_j=0$, and
+$\mathbb E(\xi_j\xi_k)=\lambda_j$ for $j=k$ and zero otherwise.  For
+each $m\leq\operatorname{rank}(K)$, among all $m$-dimensional subspaces,
+$\operatorname{span}\{v_1,\ldots,v_m\}$ minimises the expected squared
+reconstruction error.  If $K$ has finite rank, the full expansion is the
+case $m=\operatorname{rank}(K)$.
+\end{proposition}
+
+\begin{proof}
+Centredness gives $\mathbb E\xi_j=0$, while
+\[
+ \mathbb E(\xi_j\xi_k)
+ =\langle Kv_j,v_k\rangle
+ =\lambda_j\langle v_j,v_k\rangle.
+\]
+Every component of $Z=X-\mu_X$ in $\operatorname{Null}(K)$ has zero second
+moment because, for $h\in\operatorname{Null}(K)$,
+\[
+    \mathbb E\langle Z,h\rangle^2=\langle Kh,h\rangle=0.
+\]
+For each $m\leq\operatorname{rank}(K)$, the trace identity therefore implies
+\[
+ \mathbb E\left\|Z-\sum_{j=1}^m\xi_jv_j\right\|^2
+ =\operatorname{tr}(K)-\sum_{j=1}^m\lambda_j.
+\]
+If $K$ has infinite rank, the right-hand side tends to zero as
+$m\to\infty$; if it has finite rank $q$, it equals zero at $m=q$.  This
+proves the asserted mean-square expansion.
+
+For any orthonormal $u_1,\ldots,u_m$, the expected reconstruction error is
+\[
+ \operatorname{tr}(K)-\sum_{\ell=1}^m\langle Ku_\ell,u_\ell\rangle.
+\]
+Writing each $u_\ell$ in the eigenbasis gives
+$\sum_\ell\langle Ku_\ell,u_\ell\rangle=\sum_j\lambda_ja_j$, where
+$0\leq a_j\leq1$ and $\sum_j a_j\leq m$.  Since the eigenvalues are ordered,
+this sum cannot exceed $\sum_{j=1}^m\lambda_j$.  Equality is attained by
+$u_\ell=v_\ell$, proving optimality.
+\end{proof}
+
+\begin{proposition}[Rank of the empirical covariance]
+\label{prop:app-empirical-rank}
+For observations $X_1,\ldots,X_n$ and a fixed population mean $\mu_X$, the
+population-centred empirical covariance operator
+\[
+ \widehat K_{\mu}f=\frac1n\sum_{i=1}^n
+ \langle X_i-\mu_X,f\rangle(X_i-\mu_X)
+\]
+has rank at most $n$.  The sample-centred empirical covariance operator
+\[
+ \widehat K_{\overline X}f=\frac1n\sum_{i=1}^n
+ \langle X_i-\overline X,f\rangle(X_i-\overline X)
+\]
+has rank at most $n-1$.
+\end{proposition}
+
+\begin{proof}
+The range of $\widehat K_{\mu}$ is contained in the span of the $n$ curves
+$X_i-\mu_X$, so its rank is at most $n$.  The range of
+$\widehat K_{\overline X}$ is contained in the span of the $n$ curves
+$X_i-\overline X$.  These curves sum to zero, so their span has dimension at
+most $n-1$.  The rank of the corresponding operator cannot exceed that
+dimension.
+\end{proof}
+
+\section{The functional normal equation and inverse problem}
+\label{sec:app-regression-proofs}
+
+\begin{proposition}[Centring and the normal equation]
+\label{prop:app-normal-equation}
+Suppose
+\[
+ Y=\alpha+\langle X,\beta\rangle+\varepsilon,
+ \qquad \mathbb E(\varepsilon\mid X)=0,
+\]
+with finite second moments.  Then
+$\alpha=\mu_Y-\langle\mu_X,\beta\rangle$, and the centred variables satisfy
+$Y^c=\langle X^c,\beta\rangle+\varepsilon$.  If
+$r=\mathbb E(Y^cX^c)$ and $K$ is the covariance operator of $X$, then
+$K\beta=r$.
+\end{proposition}
+
+\begin{proof}
+Taking expectations and using
+$\mathbb E\varepsilon=\mathbb E\{\mathbb E(\varepsilon\mid X)\}=0$ gives
+the formula for $\alpha$ and therefore the centred model.  For arbitrary
+$f\in\mathcal H$,
+\begin{align*}
+ \langle r,f\rangle
+ &=\mathbb E\{Y^c\langle X^c,f\rangle\} \\
+ &=\mathbb E\{\langle X^c,\beta\rangle\langle X^c,f\rangle\}
+   +\mathbb E\{\varepsilon\langle X^c,f\rangle\}.
+\end{align*}
+The last expectation is zero by iterated expectations.  The first equals
+$\langle K\beta,f\rangle$.  Since the equality holds for every $f$,
+$r=K\beta$.
+\end{proof}
+
+\begin{proposition}[Excess prediction risk]
+\label{prop:app-risk-identity}
+For $R(b)=\mathbb E\{Y^c-\langle X^c,b\rangle\}^2$ under the correctly
+specified model,
+\[
+ R(b)-R(\beta)
+ =\langle K(b-\beta),b-\beta\rangle
+ =\|K^{1/2}(b-\beta)\|^2.
+\]
+\end{proposition}
+
+\begin{proof}
+Let $h=b-\beta$.  The prediction residual at $b$ is
+$\varepsilon-\langle X^c,h\rangle$.  Expanding the square gives
+\[
+ R(b)=\mathbb E\varepsilon^2
+ -2\mathbb E\{\varepsilon\langle X^c,h\rangle\}
+ +\mathbb E\langle X^c,h\rangle^2.
+\]
+The middle term is zero by the conditional mean restriction, and the last
+term is $\langle Kh,h\rangle$.  Since $R(\beta)=\mathbb E\varepsilon^2$, the
+first equality follows.  The spectral representation defines
+$K^{1/2}f=\sum_j\lambda_j^{1/2}\langle f,v_j\rangle v_j$ and gives
+$\langle Kh,h\rangle=\|K^{1/2}h\|^2$.
+\end{proof}
+
+\begin{proposition}[Variance identities for the discrete simulation]
+\label{prop:app-simulation-variance}
+Let
+\[
+ X=\sum_{j=1}^{J}\sqrt{\lambda_j}Z_j\phi_j,
+ \qquad
+ Y=\langle X,\beta\rangle_T+\varepsilon,
+\]
+where the $Z_j$ are independent with mean zero and variance one,
+$\varepsilon$ is independent of them with mean zero and variance $\sigma^2$,
+and $\langle\cdot,\cdot\rangle_T$ is the discrete inner product.  Then
+\begin{align*}
+ \mathbb E\|X\|_T^2
+ &=\sum_{j=1}^{J}\lambda_j\|\phi_j\|_T^2,\\
+ \operatorname{Var}\{\langle X,\beta\rangle_T\}
+ &=\sum_{j=1}^{J}\lambda_j
+   \langle\phi_j,\beta\rangle_T^2,\\
+ \operatorname{Var}(Y)
+ &=\sum_{j=1}^{J}\lambda_j
+   \langle\phi_j,\beta\rangle_T^2+\sigma^2.
+\end{align*}
+\end{proposition}
+
+\begin{proof}
+Write $c_j=\langle\phi_j,\beta\rangle_T$.  Bilinearity gives
+\[
+ \langle X,\beta\rangle_T
+ =\sum_{j=1}^{J}\sqrt{\lambda_j}Z_jc_j.
+\]
+All cross-products have expectation zero because the scores are independent
+and centred, while $\mathbb E Z_j^2=1$.  Therefore the variance of this sum is
+$\sum_j\lambda_jc_j^2$.  Similarly,
+\[
+ \mathbb E\|X\|_T^2
+ =\sum_{j,k}\sqrt{\lambda_j\lambda_k}\,
+   \mathbb E(Z_jZ_k)\langle\phi_j,\phi_k\rangle_T
+ =\sum_j\lambda_j\|\phi_j\|_T^2.
+\]
+Finally, independence of $\varepsilon$ and the scores makes the covariance
+between the noiseless response and the error zero, so their variances add.
+No discrete orthogonality assumption on the $\phi_j$ is required.
+\end{proof}
+
+\begin{proposition}[Empirical bias--variance identity]
+\label{prop:app-mc-decomposition}
+For arbitrary $b_1,\ldots,b_R,\beta$ in a real Hilbert space, let
+$\overline b=R^{-1}\sum_{r=1}^{R}b_r$.  Then
+\[
+ \frac1R\sum_{r=1}^{R}\|b_r-\beta\|^2
+ =\|\overline b-\beta\|^2
+  +\frac1R\sum_{r=1}^{R}\|b_r-\overline b\|^2.
+\]
+\end{proposition}
+
+\begin{proof}
+For every $r$,
+\[
+ b_r-\beta=(b_r-\overline b)+(\overline b-\beta).
+\]
+Expanding the squared norm and averaging yields the two displayed squared
+terms plus
+\[
+ \frac{2}{R}\sum_{r=1}^{R}
+ \langle b_r-\overline b,\overline b-\beta\rangle.
+\]
+The cross-term is zero because
+$\sum_r(b_r-\overline b)=0$.  The argument applies in particular to the
+grid inner product used in the simulation and explains why the empirical
+variance uses divisor $R$ when an exact decomposition of the Monte Carlo mean
+squared error is desired.
+\end{proof}
+
+\begin{proposition}[Identification and the minimum-norm target]
+\label{prop:app-identification}
+Two slopes $\beta$ and $\widetilde\beta$ generate the same centred
+conditional mean if and only if
+$\widetilde\beta-\beta\in\operatorname{Null}(K)$.  In the uncentred model,
+if $h=\widetilde\beta-\beta\in\operatorname{Null}(K)$, the parameter pairs
+$(\alpha,\beta)$ and
+$(\alpha-\langle\mu_X,h\rangle,\widetilde\beta)$ generate the same
+conditional mean.  Hence the slope is fully identified exactly when $K$ is
+injective.  Otherwise, every identified equivalence class has a unique
+minimum-norm representative in
+\[
+ \operatorname{Null}(K)^\perp
+ =\overline{\operatorname{Range}(K)}.
+\]
+\end{proposition}
+
+\begin{proof}
+For $h=\widetilde\beta-\beta$,
+\[
+ \mathbb E\langle X^c,h\rangle^2=\langle Kh,h\rangle.
+\]
+If $Kh=0$, the non-negative random variable on the left has expectation
+zero, so $\langle X^c,h\rangle=0$ almost surely.  Conversely, this almost
+sure equality implies
+\[
+    Kh=\mathbb E\{\langle X^c,h\rangle X^c\}=0.
+\]
+This proves the centred equivalence and the injectivity statement.  If
+$h\in\operatorname{Null}(K)$, then
+$\langle X,h\rangle=\langle\mu_X,h\rangle$ almost surely.  Consequently,
+\[
+ \alpha-\langle\mu_X,h\rangle
+ +\langle X,\beta+h\rangle
+ =\alpha+\langle X,\beta\rangle
+ \quad\text{almost surely},
+\]
+which proves the uncentred assertion.
+
+Every $b\in\mathcal H$ has the orthogonal decomposition
+$b=b_0+h$ with $b_0\in\operatorname{Null}(K)^\perp$ and
+$h\in\operatorname{Null}(K)$.  All elements $b_0+h$ give the same
+conditional mean, while
+$\|b_0+h\|^2=\|b_0\|^2+\|h\|^2$ is uniquely minimised by $h=0$.  Finally,
+for every bounded operator,
+$\operatorname{Range}(K)^\perp=\operatorname{Null}(K^*)$; self-adjointness
+and taking orthogonal complements give
+$\overline{\operatorname{Range}(K)}=\operatorname{Null}(K)^\perp$.
+\end{proof}
+
+\begin{theorem}[Picard condition and instability of inversion]
+\label{thm:app-picard}
+Let $K$ be compact, self-adjoint, and non-negative, with positive eigenpairs
+$(\lambda_j,v_j)$.  The equation $K\beta=r$ has a solution if and only if
+$r\perp\operatorname{Null}(K)$ and
+\[
+    \sum_{j:\lambda_j>0}
+       \frac{|\langle r,v_j\rangle|^2}{\lambda_j^2}<\infty.
+\]
+When these conditions hold, the unique minimum-norm solution is
+\[
+ \beta^\dagger
+ =\sum_{j:\lambda_j>0}
+   \frac{\langle r,v_j\rangle}{\lambda_j}v_j.
+\]
+If $K$ has infinite rank, the restriction of the minimum-norm inverse to
+$\operatorname{Range}(K)$,
+$K^\dagger|_{\operatorname{Range}(K)}:\operatorname{Range}(K)
+\to\operatorname{Null}(K)^\perp$, is unbounded in the $\mathcal H$ norm.
+\end{theorem}
+
+\begin{proof}
+If $K\beta=r$, then $r$ lies in
+$\overline{\operatorname{Range}(K)}=\operatorname{Null}(K)^\perp$ and
+$\langle r,v_j\rangle=\lambda_j\langle\beta,v_j\rangle$.  Parseval therefore
+implies the summability condition.  Conversely, the displayed condition
+makes the proposed series for $\beta^\dagger$ square summable.  Applying $K$
+term by term yields the component of $r$ in
+$\operatorname{Null}(K)^\perp$, which equals $r$ by the first condition.
+All other solutions differ from $\beta^\dagger$ by an element of
+$\operatorname{Null}(K)$, so Proposition~\ref{prop:app-identification} gives
+the minimum-norm claim.
+
+For the final statement, $v_j\in\operatorname{Range}(K)$ because
+$v_j=K(v_j/\lambda_j)$.  Yet
+\[
+ \frac{\|K^\dagger v_j\|}{\|v_j\|}
+ =\frac1{\lambda_j}\longrightarrow\infty
+\]
+as $\lambda_j\to0$.  Thus no finite operator-norm bound for $K^\dagger$
+exists on $\operatorname{Range}(K)$.
+\end{proof}
+
+\section{Regularised and Krylov solutions}
+\label{sec:app-regularisation-proofs}
+
+\begin{proposition}[Tikhonov solution]
+\label{prop:app-tikhonov}
+For $\rho>0$, the criterion $R(b)+\rho\|b\|^2$ has the unique minimiser
+\[
+    \beta_\rho=(K+\rho I)^{-1}r.
+\]
+If $r\perp\operatorname{Null}(K)$, its spectral form is
+\[
+    \beta_\rho
+    =\sum_{j:\lambda_j>0}
+      \frac{\langle r,v_j\rangle}{\lambda_j+\rho}v_j.
+\]
+\end{proposition}
+
+\begin{proof}
+Apart from a constant independent of $b$, the population risk equals
+$\langle Kb,b\rangle-2\langle r,b\rangle$.  The spectral representation
+shows directly that $K+\rho I$ is invertible and that
+$\|(K+\rho I)^{-1}\|_{\mathrm{op}}\leq1/\rho$.  The directional derivative
+of the penalised criterion at $b$ in direction $h$ is
+\[
+ 2\langle (K+\rho I)b-r,h\rangle.
+\]
+It vanishes for every $h$ exactly when $(K+\rho I)b=r$.  Since
+$\langle (K+\rho I)h,h\rangle\geq\rho\|h\|^2$, the criterion is strictly
+convex and the solution is unique.  Expansion in the eigenbasis produces the
+stated filter.
+\end{proof}
+
+\begin{proposition}[FPCR restriction]
+\label{prop:app-fpcr}
+Let $V_m=\operatorname{span}\{v_1,\ldots,v_m\}$ with
+$\lambda_1,\ldots,\lambda_m>0$.  The minimiser of $R(b)$ over $V_m$ is
+\[
+    \beta_m^{\mathrm{FPCR}}
+    =\sum_{j=1}^m
+      \frac{\langle r,v_j\rangle}{\lambda_j}v_j.
+\]
+The empirical formula follows after replacing $(K,r)$ by
+$(\widehat K,\widehat r)$.
+\end{proposition}
+
+\begin{proof}
+Write $b=\sum_{j=1}^m b_jv_j$.  Up to an additive constant,
+\[
+ R(b)=\sum_{j=1}^m
+ \{\lambda_jb_j^2-2b_j\langle r,v_j\rangle\}.
+\]
+Each term is a strictly convex quadratic whose minimiser is
+$b_j=\langle r,v_j\rangle/\lambda_j$.  Combining the coefficients proves
+the result.
+\end{proof}
+
+\begin{proposition}[Polynomial form of Krylov estimators]
+\label{prop:app-krylov-polynomial}
+Every $\beta_m\in\mathcal K_m(K,r)$ can be written as
+$\beta_m=p_{m-1}(K)r$ for a polynomial of degree at most $m-1$.  Its moment
+residual satisfies
+\[
+ r-K\beta_m=\pi_m(K)r,
+ \qquad \pi_m(\lambda)=1-\lambda p_{m-1}(\lambda).
+\]
+\end{proposition}
+
+\begin{proof}
+Membership in $\mathcal K_m(K,r)$ means that there are coefficients
+$a_0,\ldots,a_{m-1}$ with
+$\beta_m=\sum_{j=0}^{m-1}a_jK^jr$.  Taking
+$p_{m-1}(\lambda)=\sum_{j=0}^{m-1}a_j\lambda^j$ gives the first assertion.
+Then
+$r-K\beta_m=\{I-Kp_{m-1}(K)\}r=\pi_m(K)r$ by direct algebra.
+\end{proof}
+
+\begin{proposition}[Raw and Arnoldi Krylov spaces]
+\label{prop:app-arnoldi-span}
+In exact arithmetic, if Arnoldi orthogonalisation does not break down before
+step $m$, its vectors $q_1,\ldots,q_m$ form an orthonormal basis of
+$\mathcal K_m(K,r)$.  Consequently, a uniquely defined restricted
+least-squares solution is invariant to whether the raw power basis or the
+Arnoldi basis is used.
+\end{proposition}
+
+\begin{proof}
+The first Arnoldi vector is $q_1=r/\|r\|$ and hence spans
+$\mathcal K_1(K,r)$.  Suppose inductively that
+$\operatorname{span}\{q_1,\ldots,q_j\}=\mathcal K_j(K,r)$.  Arnoldi forms
+$Kq_j$ and removes its projections onto the existing vectors.  The remainder
+therefore belongs to $\mathcal K_{j+1}(K,r)$ and is orthogonal to
+$\mathcal K_j(K,r)$.  Absence of breakdown means that this remainder is
+non-zero, so its normalisation adds one new direction and spans
+$\mathcal K_{j+1}(K,r)$.  Induction proves the first claim.  The optimisation
+problem depends on the subspace, not on its coordinates; uniqueness therefore
+makes its solution basis-invariant.  Finite-precision discrepancies arise
+because computed raw powers may lose linear independence, not because the
+exact subspaces differ.
+\end{proof}
+
+\begin{proposition}[Response-space Krylov characterisation]
+\label{prop:app-response-krylov-variational}
+Let $T:\mathcal H\to\mathbb R^n$ be bounded, let $K=T^*T$ and $r=T^*y$,
+and put $M_m=\mathcal K_m(K,r)$.  If $T$ is injective on $M_m$, the
+restricted response least-squares problem
+\[
+    \min_{b\in M_m}\|y-Tb\|_n^2
+\]
+has a unique solution $\beta_m^Y$.  Its moment residual
+$e_m^Y=r-K\beta_m^Y$ satisfies
+\[
+    e_m^Y\perp M_m.
+\]
+Equivalently, $\beta_m^Y$ uniquely minimises
+$\Phi(b)=\frac12\langle Kb,b\rangle-\langle r,b\rangle$ over $M_m$.
+\end{proposition}
+
+\begin{proof}
+Expanding the response criterion and using $K=T^*T$ and $r=T^*y$ gives
+\[
+ \frac12\|y-Tb\|_n^2
+ =\frac12\|y\|_n^2
+  +\frac12\langle Kb,b\rangle-\langle r,b\rangle.
+\]
+The first term is constant in $b$.  For $h\in M_m$, the directional
+derivative of the remaining expression is
+\[
+ \left.\frac{\mathrm d}{\mathrm dt}\Phi(\beta_m^Y+th)\right|_{t=0}
+ =\langle K\beta_m^Y-r,h\rangle.
+\]
+It vanishes for every $h\in M_m$ precisely when $e_m^Y\perp M_m$.
+Injectivity of $T$ on the finite-dimensional space gives
+$\langle Kh,h\rangle=\|Th\|_n^2>0$ for every non-zero $h\in M_m$.
+The criterion is therefore strictly convex on $M_m$, so this stationary point
+exists uniquely and is the claimed minimiser.
+\end{proof}
+
+\begin{proposition}[NIPALS--APLS equivalence]
+\label{prop:app-nipals-apls-equivalence}
+Let $T:\mathcal H\to\mathbb R^n$ be bounded, set $K=T^*T$ and $r=T^*y$,
+and consider scalar-response PLS with common centring and inner products.
+Suppose that the first $m$ score directions generated by the NIPALS-type
+score-and-deflation construction are non-zero and that $T$ is injective on
+$M_m=\mathcal K_m(K,r)$.  Then the NIPALS score space is $T M_m$, its fitted
+response is the orthogonal projection of $y$ onto $T M_m$, and its
+reconstructed slope equals the unique APLS solution in
+Proposition~\ref{prop:app-response-krylov-variational}.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+At the first step, the NIPALS weight is proportional to
+$T^*y=r$, so its score lies in $TM_1$.  Predictor deflation at each subsequent
+step replaces the current sampling operator $T_{h-1}$ by
+$(I-P_{t_h})T_{h-1}$, where $P_{t_h}$ is the response-space orthogonal
+projection onto the current score.  Response deflation applies the same
+projection to the current response.  Expanding these projections and
+repeatedly using $K=T^*T$ gives the standard PLS1 polynomial induction: the
+unnormalised $h$th weight has the form
+\[
+    c_h=\pi_{h-1}(K)r,
+\]
+where $\pi_{h-1}$ has degree $h-1$.  Its leading coefficient is non-zero
+whenever the new score is non-zero.  Consequently,
+\[
+ \operatorname{span}\{c_1,\ldots,c_h\}
+ =\operatorname{span}\{r,Kr,\ldots,K^{h-1}r\}=M_h,
+\]
+because the change-of-basis matrix between the two displayed sequences is
+triangular with non-zero diagonal.  Applying $T$ gives equality of the score
+space and $TM_h$.
+
+The predictor deflation makes successive scores mutually orthogonal.  At
+each step, the NIPALS response loading is the least-squares coefficient of the
+current residual response on the new score.  Hence the sum of the first $m$
+fitted score contributions is the orthogonal projection of $y$ onto their
+span, namely $TM_m$.  Minimising $\|y-Tb\|_n^2$ over $b\in M_m$ produces the
+same projection.  Injectivity on $M_m$ makes the restricted slope unique, so
+the reconstructed NIPALS slope and the APLS slope coincide.  This operator
+argument is the standard fixed-component equivalence established for
+functional PLS by \textcite{delaigle_hall_2012}.
+\end{proof}
+
+\begin{proposition}[Response and moment Krylov objectives]
+\label{prop:app-response-moment-krylov}
+Let $K$ be self-adjoint and non-negative, $r\in\mathcal H$, and
+$M_m=\mathcal K_m(K,r)$.  Assume that $\dim(M_m)=m$ and that $K$ is
+injective on $M_m$.  Then both restricted quadratic criteria below are
+strictly convex.  Define
+\[
+ \beta_m^Y
+ =\arg\min_{b\in M_m}
+   \left\{\frac12\langle Kb,b\rangle-\langle r,b\rangle\right\},
+ \qquad
+ \beta_m^M
+ =\arg\min_{b\in M_m}\frac12\|r-Kb\|^2.
+\]
+These response-space and moment-residual solutions are characterised by
+\begin{align*}
+    r-K\beta_m^Y&\perp M_m,\\
+    r-K\beta_m^M&\perp KM_m.
+\end{align*}
+With $g_j=K^{j-1}r$ and
+$\beta_m=\sum_{j=1}^{m}a_jg_j$, their coefficient systems are respectively
+\begin{align*}
+ \sum_{k=1}^{m}\langle r,K^{j+k-1}r\rangle a_k
+ &=\langle r,K^{j-1}r\rangle,\\
+ \sum_{k=1}^{m}\langle r,K^{j+k}r\rangle a_k
+ &=\langle r,K^jr\rangle,
+ \qquad j=1,\ldots,m.
+\end{align*}
+Thus, the two methods use the same Krylov space but do not generally have the
+same finite-$m$ solution.
+\end{proposition}
+
+\begin{proof}
+For the response criterion
+\[
+    \Phi(b)=\frac12\langle Kb,b\rangle-\langle r,b\rangle,
+\]
+the directional derivative at $b$ in direction $h\in M_m$ is
+\[
+    \left.\frac{\mathrm d}{\mathrm dt}\Phi(b+th)\right|_{t=0}
+    =-\langle r-Kb,h\rangle.
+\]
+It vanishes for every $h\in M_m$ if and only if
+$r-Kb\perp M_m$.  For the moment criterion
+\[
+    \Psi(b)=\frac12\|r-Kb\|^2,
+\]
+the directional derivative at $b$ in direction $h\in M_m$ is
+\[
+    \left.\frac{\mathrm d}{\mathrm dt}\Psi(b+th)\right|_{t=0}
+    =-\langle r-Kb,Kh\rangle.
+\]
+It vanishes for every $h\in M_m$ if and only if
+$r-Kb\perp KM_m$.  For non-zero $h\in M_m$, injectivity and
+non-negativity of $K$ imply $\langle Kh,h\rangle>0$ and
+$\|Kh\|^2>0$.  These are the quadratic forms governing the response and
+moment criteria, respectively, so both restrictions are strictly convex and
+the two stationarity conditions are sufficient and uniquely determine their
+minimisers.
+
+For the response solution, take the inner product of
+$r-K\sum_k a_kg_k$ with $g_j$.  Self-adjointness and
+$g_j=K^{j-1}r$ give
+\[
+ \langle Kg_k,g_j\rangle
+ =\langle K^kr,K^{j-1}r\rangle
+ =\langle r,K^{j+k-1}r\rangle,
+\]
+which yields the first coefficient system.  For the moment solution, take
+the inner product of the same residual with $Kg_j=K^jr$.  Then
+\[
+ \langle Kg_k,Kg_j\rangle
+ =\langle K^kr,K^jr\rangle
+ =\langle r,K^{j+k}r\rangle,
+\]
+which yields the second system.  The one-power shift proves that equality is
+not implied merely by using the same $M_m$.
+\end{proof}
+
+\begin{proposition}[Finite termination with conjugate directions]
+\label{prop:app-conjugate-direction-termination}
+Let $A\in\mathbb R^{d\times d}$ be symmetric positive definite and let
+$p_0,\ldots,p_{d-1}$ be non-zero, pairwise $A$-conjugate directions.  Starting
+from any $x_0$, successively minimise
+$f(x)=\frac12x^\top Ax-b^\top x$ along these directions without changing
+the coefficients already selected.  After at most $d$ directions, the
+iterate is the unique minimiser $A^{-1}b$.  Standard conjugate gradient
+constructs such directions in exact arithmetic.
+\end{proposition}
+
+\begin{proof}
+If $\sum_jc_jp_j=0$, multiplication by $p_k^\top A$ gives
+$c_kp_k^\top Ap_k=0$.  Positive definiteness implies $c_k=0$ for every $k$,
+so the $d$ directions are linearly independent and form a basis of
+$\mathbb R^d$.  Write an iterate as
+$x_0+\sum_j\eta_jp_j$.  Then
+\[
+ f\!\left(x_0+\sum_j\eta_jp_j\right)
+ =f(x_0)+\sum_j\eta_jp_j^\top(Ax_0-b)
+  +\frac12\sum_j\eta_j^2p_j^\top Ap_j,
+\]
+because all cross terms vanish by conjugacy.  The minimising coefficient for
+one direction is therefore independent of every other coefficient.  After
+all basis directions have been minimised, every directional derivative is
+zero; hence $Ax-b=0$ and $x=A^{-1}b$.  The standard CG recurrence produces
+pairwise $A$-conjugate search directions by induction from the residual
+orthogonality relations, so the conclusion applies to its exact-arithmetic
+iterates.  This result concerns the standard finite-dimensional CG geometry
+used in Figure~\ref{fig:methods-cg-sd-geometry}; the released functional
+recurrence is defined separately in \eqref{eq:methods-cg-alpha}--
+\eqref{eq:methods-cg-direction-update}.
+\end{proof}
+
+\section{Late stopping and inference}
+\label{sec:app-inference-proofs}
+
+The asymptotic arguments in this section follow the inference construction of
+\textcite{babii_carrasco_tsafack_2026}, with the identification qualification
+made explicit.
+
+The sampling operator retains the notation $T_n$ used throughout the
+thesis.  To avoid confusing that operator with the scalar test statistic,
+the latter is denoted by $\mathcal T_n$.  If $K$ is not injective, the
+statistically identifiable null is $H_0:K\beta=Kb$; this becomes the literal
+slope null $H_0:\beta=b$ when $\beta$ and $b$ lie in
+$\mathcal H_{\mathrm{id}}$.  Chapter~\ref{chap:inference-methodology} writes
+$\mathcal T_{n,m}$ when the finite iteration must be visible and abbreviates
+$\mathcal T_{n,m_n}$ to $\mathcal T_n$ for an inference-specific index
+sequence.
+
+\begin{proposition}[Finite-iteration decomposition]
+\label{prop:app-inference-decomposition}
+For any candidate slope $b$ and any iterate $\widehat\beta_m$, define
+\[
+ u_n(b)=\widehat r-\widehat Kb,
+ \qquad
+ e_m=\widehat r-\widehat K\widehat\beta_m.
+\]
+Then
+\[
+ \widehat K(\widehat\beta_m-b)=u_n(b)-e_m.
+\]
+\end{proposition}
+
+\begin{proof}
+Add and subtract $\widehat r$:
+\[
+ \widehat K(\widehat\beta_m-b)
+ =\widehat K\widehat\beta_m-\widehat Kb
+ =(\widehat r-\widehat Kb)
+  -(\widehat r-\widehat K\widehat\beta_m).
+\]
+\end{proof}
+
+\begin{theorem}[Late-stopping equivalence and null limit]
+\label{thm:app-late-stopping}
+Suppose that $(X_i,Y_i)_{i=1}^n$ are independent and identically distributed
+and satisfy
+\[
+    Y_i^c=\langle X_i^c,\beta\rangle+\varepsilon_i,
+    \qquad \mathbb E(\varepsilon_i\mid X_i)=0.
+\]
+Assume $\mathbb E\|X^c\|^4<\infty$ and
+$\mathbb E(\varepsilon^2\mid X)\leq\sigma_{\max}^2<\infty$ almost surely,
+and let the identifiable null
+$H_0:K\beta=Kb$ hold.  Equivalently, if $\beta,b\in
+\mathcal H_{\mathrm{id}}$, assume $H_0:\beta=b$.  If, for an index
+$m=m_n$ that may depend on $n$,
+\[
+ \sqrt n\,\|e_m\|=o_{\mathbb P}(1),
+\]
+then
+\[
+ \mathcal T_n(b)
+ =n\|\widehat K(\widehat\beta_m-b)\|^2
+ =n\|u_n(b)\|^2+o_{\mathbb P}(1).
+\]
+Let
+\[
+    V=\mathbb E\{\varepsilon^2(X^c\otimes X^c)\}
+\]
+be the covariance operator of $\varepsilon X^c$.  If its positive
+eigenvalues are $\{\omega_j:j\in\mathcal J_V\}$, where $\mathcal J_V$ is
+finite or countably infinite, then
+\[
+ \mathcal T_n(b)\rightsquigarrow
+ \sum_{j\in\mathcal J_V}\omega_jZ_j^2,
+ \qquad Z_j\stackrel{\mathrm{iid}}{\sim}\mathcal N(0,1).
+\]
+The sum is finite when $V$ has finite rank and converges almost surely and
+in $L^1$ otherwise.
+\end{theorem}
+
+\begin{proof}
+Under $H_0:K\beta=Kb$, Proposition~\ref{prop:app-identification} implies
+$\langle X^c,\beta-b\rangle=0$ almost surely.  With population centring,
+\[
+ u_n(b)=\frac1n\sum_{i=1}^n\varepsilon_iX_i^c.
+\]
+If sample means are used instead, the exact expression is
+\[
+ u_n(b)=\frac1n\sum_{i=1}^n\varepsilon_iX_i^c
+        -\overline\varepsilon\,\overline X^c.
+\]
+The two sample means are $O_{\mathbb P}(n^{-1/2})$ under the stated second
+moments, so their product is $O_{\mathbb P}(n^{-1})$ and is negligible after
+multiplication by $\sqrt n$.
+
+The random element $\varepsilon X^c$ is mean zero because
+$\mathbb E(\varepsilon\mid X)=0$, and it has a finite second moment by
+the conditional variance bound and $\mathbb E\|X^c\|^2<\infty$.  The central
+limit theorem for independent, identically
+distributed random elements in a separable Hilbert space therefore gives
+$\sqrt n\,u_n(b)\rightsquigarrow G$, where $G$ is a mean-zero Gaussian
+element with covariance operator $V$.  In particular,
+$\sqrt n\|u_n(b)\|=O_{\mathbb P}(1)$.
+
+By Proposition~\ref{prop:app-inference-decomposition},
+\begin{align*}
+ \left|\mathcal T_n(b)-n\|u_n(b)\|^2\right|
+ &\leq 2\sqrt n\|u_n(b)\|\sqrt n\|e_m\|
+       +n\|e_m\|^2 \\
+ &=o_{\mathbb P}(1).
+\end{align*}
+The continuous mapping theorem now gives
+$n\|u_n(b)\|^2\rightsquigarrow\|G\|^2$.  Applying the covariance spectral
+representation to $G$ yields
+$G=\sum_j\sqrt{\omega_j}Z_jw_j$ in mean square for orthonormal eigenfunctions
+$w_j$.  Parseval's identity therefore gives
+$\|G\|^2=\sum_j\omega_jZ_j^2$.  Since
+$\sum_j\omega_j=\operatorname{tr}(V)
+=\mathbb E\|\varepsilon X^c\|^2<\infty$, the non-negative series converges
+almost surely and in $L^1$, completing the proof.
+\end{proof}
+
+\begin{proposition}[Homoskedastic form of the variance operator]
+\label{prop:app-homoskedastic-variance}
+If $\mathbb E(\varepsilon^2\mid X)=\sigma^2$ almost surely, then the variance
+operator in Theorem~\ref{thm:app-late-stopping} satisfies
+\[
+    V=\sigma^2K.
+\]
+Consequently, if $Kv_j=\lambda_jv_j$, then
+$Vv_j=\sigma^2\lambda_jv_j$ and the null limit is
+$\sum_j\sigma^2\lambda_jZ_j^2$ over the positive spectral indices.
+\end{proposition}
+
+\begin{proof}
+For arbitrary $g,h\in\mathcal H$, iterated expectation gives
+\begin{align*}
+    \langle Vh,g\rangle
+    &=\mathbb E\!\left[
+       \varepsilon^2\langle X^c,h\rangle\langle X^c,g\rangle
+      \right] \\
+    &=\mathbb E\!\left[
+       \mathbb E(\varepsilon^2\mid X)
+       \langle X^c,h\rangle\langle X^c,g\rangle
+      \right] \\
+    &=\sigma^2\langle Kh,g\rangle.
+\end{align*}
+Equality of these bilinear forms for every $g$ and $h$ proves
+$V=\sigma^2K$.  The spectral conclusion follows immediately.
+\end{proof}
+
+\begin{corollary}[Asymptotic size]
+\label{cor:app-asymptotic-size}
+Suppose the conditions of Theorem~\ref{thm:app-late-stopping} hold and $V$ has
+at least one positive eigenvalue.  Let $q_{1-\alpha}$ be a continuity-point
+$(1-\alpha)$ quantile of $Q=\sum_j\omega_jZ_j^2$.  Then the rejection rule
+\[
+    \varphi_n(b)=\mathbf 1\{\mathcal T_n(b)>q_{1-\alpha}\}
+\]
+has limiting null rejection probability $\alpha$.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:app-late-stopping} gives
+$\mathcal T_n(b)\rightsquigarrow Q$.  Since at least one weight is positive,
+$Q$ has a continuous distribution: condition on all terms except one positive
+weighted chi-squared term and integrate its continuous distribution function.
+The portmanteau theorem at $q_{1-\alpha}$ therefore yields
+\[
+    \mathbb P\{\mathcal T_n(b)>q_{1-\alpha}\}
+    \longrightarrow
+    \mathbb P\{Q>q_{1-\alpha}\}=\alpha.
+\]
+\end{proof}
+
+\begin{proposition}[Inference under fixed and local alternatives]
+\label{prop:app-inference-alternatives}
+Assume the conditions needed for the Hilbert-space central limit theorem in
+Theorem~\ref{thm:app-late-stopping},
+$\|\widehat K-K\|_{\mathrm{op}}=o_{\mathbb P}(1)$, and
+$\sqrt n\|e_{m_n}\|=o_{\mathbb P}(1)$.
+
+For a fixed alternative satisfying $K(\beta-b)\neq0$,
+\[
+    n^{-1}\mathcal T_n(b)
+    \xrightarrow{\mathbb P}
+    \|K(\beta-b)\|^2,
+\]
+so $\mathcal T_n(b)\to\infty$ in probability.  For the triangular sequence
+$\beta_n=b+n^{-1/2}\Delta$ with fixed $\Delta\in\mathcal H$,
+\[
+    \mathcal T_n(b)\rightsquigarrow\|G+K\Delta\|^2.
+\]
+If $V\phi_j=\omega_j\phi_j$, the latter variable equals
+\[
+ \sum_j\omega_jZ_j^2
+ +2\sum_j\sqrt{\omega_j}Z_j\langle\phi_j,K\Delta\rangle
+ +\|K\Delta\|^2.
+\]
+\end{proposition}
+
+\begin{proof}
+Under a fixed alternative, the empirical null moment decomposes as
+\[
+ u_n(b)
+ =\frac1n\sum_{i=1}^n\varepsilon_iX_i^c
+  +\widehat K(\beta-b),
+\]
+apart from the lower-order sample-centring term treated in
+Theorem~\ref{thm:app-late-stopping}.  The first term is
+$O_{\mathbb P}(n^{-1/2})$, while operator convergence gives
+$\widehat K(\beta-b)\to_{\mathbb P}K(\beta-b)$.  Since
+$e_{m_n}=o_{\mathbb P}(n^{-1/2})$, Proposition
+\ref{prop:app-inference-decomposition} implies
+\[
+ \widehat K(\widehat\beta_{m_n}-b)
+ \xrightarrow{\mathbb P}K(\beta-b).
+\]
+Squaring the norm proves the first claim.
+
+Under $\beta_n=b+n^{-1/2}\Delta$, multiply the analogous decomposition by
+$\sqrt n$ to obtain
+\[
+ \sqrt n\,\widehat K(\widehat\beta_{m_n}-b)
+ =\frac1{\sqrt n}\sum_{i=1}^n\varepsilon_iX_i^c
+  +\widehat K\Delta-\sqrt n e_{m_n}+o_{\mathbb P}(1).
+\]
+The three displayed terms converge jointly to $G$, $K\Delta$, and zero,
+respectively.  Slutsky's theorem and the continuous mapping theorem give the
+local limit.  Finally write
+$G=\sum_j\sqrt{\omega_j}Z_j\phi_j$ and expand
+$\|G+K\Delta\|^2$; Parseval's identity justifies the displayed series.
+\end{proof}
+
+\begin{corollary}[Confidence sets by test inversion]
+\label{cor:app-confidence-inversion}
+Let $q_{1-\alpha}$ be a critical value for which the test that rejects when
+$\mathcal T_n(b)>q_{1-\alpha}$ has asymptotic size $\alpha$ on an identified
+parameter space $\Theta\subseteq\mathcal H_{\mathrm{id}}$.  Then
+\[
+ \mathcal C_{1-\alpha}
+ =\{b\in\Theta:\mathcal T_n(b)\leq q_{1-\alpha}\}
+\]
+is an asymptotic $(1-\alpha)$ confidence set for every $\beta\in\Theta$.
+\end{corollary}
+
+\begin{proof}
+By construction,
+\[
+ \mathbb P_\beta\{\beta\in\mathcal C_{1-\alpha}\}
+ =\mathbb P_\beta\{\mathcal T_n(\beta)\leq q_{1-\alpha}\}
+ =1-\mathbb P_\beta\{\mathcal T_n(\beta)>q_{1-\alpha}\}.
+\]
+The final rejection probability converges to $\alpha$, so the coverage
+probability converges to $1-\alpha$.
+\end{proof}
+
+\begin{proposition}[Finite-dimensional confidence ellipsoid and envelope]
+\label{prop:app-confidence-ellipsoid}
+Let $H\in\mathbb R^{T\times p}$ contain the values of $p$ candidate basis
+functions on an equally weighted grid, set $A=\widehat KH$, and let
+$f=\widehat K\widehat\beta_m$.  For a critical value $q>0$, define
+\[
+    C_q=\left\{c\in\mathbb R^p:
+      \frac nT\|f-Ac\|_2^2\leq q\right\}.
+\]
+If $A$ has full column rank, put
+\[
+    \widehat c=(A^\top A)^{-1}A^\top f,
+    \qquad
+    \rho^2=\frac{Tq}{n}-\|f-A\widehat c\|_2^2.
+\]
+Then $C_q$ is empty when $\rho^2<0$ and, when $\rho^2\geq0$,
+\[
+    C_q=\{c:(c-\widehat c)^\top A^\top A(c-\widehat c)
+                    \leq\rho^2\}.
+\]
+For an evaluation vector $h(s)=(h_1(s),\ldots,h_p(s))^\top$, the extrema of
+$h(s)^\top c$ over a non-empty $C_q$ are
+\[
+    h(s)^\top\widehat c
+    \mathbin{\pm}
+    \sqrt{\rho^2h(s)^\top(A^\top A)^{-1}h(s)}.
+\]
+If $A$ is rank deficient and $C_q$ is non-empty, its coefficient set is
+unbounded along $\operatorname{Null}(A)$; a pointwise functional envelope is
+unbounded wherever evaluation does not annihilate those directions.
+\end{proposition}
+
+\begin{proof}
+The least-squares residual $u=f-A\widehat c$ is orthogonal to
+$\operatorname{Range}(A)$.  Therefore, for every $c$,
+\begin{align*}
+    \|f-Ac\|_2^2
+    &=\|u+A(\widehat c-c)\|_2^2 \\
+    &=\|u\|_2^2
+      +(c-\widehat c)^\top A^\top A(c-\widehat c).
+\end{align*}
+Substitution into the defining inequality proves the empty-set and ellipsoid
+claims.  When $A$ has full column rank, write
+$d=(A^\top A)^{1/2}(c-\widehat c)$.  The constraint becomes
+$\|d\|_2\leq\rho$, and
+\[
+ h(s)^\top(c-\widehat c)
+ =\left\{(A^\top A)^{-1/2}h(s)\right\}^\top d.
+\]
+Cauchy--Schwarz gives the displayed upper and lower values, attained when $d$
+is parallel or antiparallel to $(A^\top A)^{-1/2}h(s)$.
+
+If $A$ is rank deficient, take non-zero $v\in\operatorname{Null}(A)$.  For
+any accepted $c$, every $c+tv$ has the same residual for all $t\in\mathbb R$.
+Thus the coefficient set is unbounded, and so is the value
+$h(s)^\top(c+tv)$ whenever $h(s)^\top v\neq0$.
+\end{proof}
+
+Late stopping removes iteration bias. Identifying a unique slope still
+requires restriction to $\operatorname{Null}(K)^\perp$.

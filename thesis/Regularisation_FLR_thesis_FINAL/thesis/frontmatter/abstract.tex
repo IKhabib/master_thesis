@@ -1,0 +1,35 @@
+\chapter*{Abstract}
+\phantomsection
+\addcontentsline{toc}{chapter}{Abstract}
+
+Scalar-on-function linear regression is an inverse problem in which the
+predictor covariance operator determines both identification and the
+stability of slope recovery.  This thesis examines how regularisation,
+numerical representation, and the purpose of an analysis interact.  It
+compares functional principal component regression, raw and Arnoldi
+implementations of functional partial least squares, and a released-code
+conjugate-gradient-type procedure based on moment-residual minimisation.
+
+The theoretical discussion distinguishes ordinary slope error,
+covariance-weighted prediction error, and the residual approximation needed
+for inference.  Monte Carlo experiments with 5,000 replications in each of
+three controlled designs show that the implemented early-stopping rule can
+reduce slope variance while leaving predictive signal unresolved.  Raw and
+orthogonalised Krylov fits agree closely when their coordinates are reliable,
+but rare ill-conditioned raw fits create severe error tails.  A separate
+inference study shows that an estimation-oriented stopping variant can leave
+a substantial moment residual on the root-$n$ scale.  Late iteration makes this
+algorithmic discrepancy negligible in the studied designs; calibration
+remains conditional on the reference distribution, discretisation, and
+finite-sample approximation.
+
+An application uses instrument-1 near-infrared spectra to predict assay for
+pharmaceutical tablets, with 195 development observations and a designated
+460-tablet benchmark.  Raw and Arnoldi FPLS achieve benchmark RMSEs of 4.607
+and 4.643 in the supplied assay units.  Their predictions are very close,
+while Arnoldi uses a stable five-dimensional representation and the selected
+raw representation is severely ill-conditioned.  The benchmark had been
+inspected during dataset selection, and the uncertainty intervals condition
+on the fitted models.  The findings support matching regularisation and
+stopping to the statistical target, monitoring numerical reliability, and
+distinguishing controlled inferential benchmarks from feasible data analysis.

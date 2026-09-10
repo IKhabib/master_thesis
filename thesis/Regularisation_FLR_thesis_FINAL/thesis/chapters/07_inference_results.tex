@@ -1,0 +1,447 @@
+% Chapter 7: inference results from the frozen R=5,000 archive.
+\chapter{Inference Results}
+\label{chap:inference-results}
+
+Chapter~\ref{chap:inference-methodology} separated two potential sources of
+discrepancy: the residual left by finite CG stopping and the approximation used
+to calibrate the resulting moment statistic.  The results therefore begin with
+the Krylov path itself.  Until $\mathcal T_{n,m}$ has approached its
+direct-moment target $\mathcal S_n$, departures from the weighted chi-square
+reference cannot be attributed primarily to calibration.  Once
+this approximation has been assessed, power and confidence-set inversion show
+what the test detects and which candidate slopes it retains.
+
+The results concern the inference-specific CG--FPLS path rather than a new
+comparison of all four estimators studied in Chapter~\ref{chap:estimation-results}.
+This narrower focus is important: raw FPLS, Arnoldi FPLS, and FPCR enter the
+thesis as estimation and prediction procedures, whereas the inferential theory
+examined here is built around the late-stopped CG moment residual.
+
+\section{Archive verification and reporting conventions}
+\label{sec:inference-results-verification}
+
+The frozen archive retains the configuration, replication-level statistics
+and diagnostics, five numerical summary tables, and five vector figures.
+Recomputing the summaries supported by the stored arrays recovers the
+corresponding reported quantities to floating-point precision.  No stored
+numerical array contains a missing or infinite value, and no replication is
+removed from the analysis.
+
+The four experimental branches retain the distinctions fixed in
+Table~\ref{tab:inference-design}.  Null calibration evaluates
+$\mathcal T_{n,70}$ at $n=100$ against a 50,000-draw continuous-design oracle
+weighted chi-square reference.  The stopping experiment compares fixed indices,
+the estimation-oriented adaptive variant, and the maximum-rank fit on a separate
+Monte Carlo stream.  Power uses the direct statistic $\mathcal S_n$ and an
+empirical null critical value for each model and sample size.  The inverted-set
+illustration instead uses $\mathcal T_{n,10}$, oracle calibration, and an
+analytic five-dimensional coefficient ellipsoid.  Each branch answers a
+distinct inferential question and is therefore interpreted using its own
+statistic and calibration.
+
+Unless stated otherwise, probabilities are based on 5,000 replications per
+model and design point.  Their reported Monte Carlo standard errors use
+\eqref{eq:simulation-mcse}.  They condition on the realised simulated critical
+value and therefore do not include uncertainty from estimating a 50,000-draw
+oracle quantile or a 5,000-draw empirical null quantile.  This additional
+uncertainty is not quantified in the archive.  The resulting error bars are
+therefore conditional Monte Carlo summaries, not complete uncertainty
+intervals for the calibration procedure.
+
+\section{From estimation stopping to inferential stopping}
+\label{sec:inference-results-stopping}
+
+The first question is whether an estimation-oriented discrepancy threshold
+also makes the CG fitting error negligible at the root-$n$ scale.  As specified
+in Section~\ref{sec:inference-implementation}, the adaptive comparator retains
+the earlier threshold formula and constants but caps its variance pilot at
+20 components rather than 70 and uses a stabilised moment-residual path rather
+than the short recurrence.  The results below concern this variant, rather
+than an unchanged rerun of the Chapter~\ref{chap:estimation-results} procedure.
+Figure~\ref{fig:inference-stopping-diagnostics} follows
+the path through three linked quantities: the scaled residual
+$\sqrt n\|e_m\|$, the difference
+$|\mathcal T_{n,m}-\mathcal S_n|$, and the resulting null rejection frequency.
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=\textwidth]{stopping_diagnostics.pdf}
+    \caption[Stopping diagnostics for inference]{Effect of the stopping index on CG--FPLS inference at $n=100$.
+    The top row shows the median scaled moment residual $\sqrt n\|e_m\|$
+    from \eqref{eq:inference-two-residuals}.  The dotted line is the median
+    estimation-oriented stopping threshold for $\sqrt n\|e_m\|$, not the
+    late-stopping target.
+    The middle row shows the median absolute difference between the finite-$m$
+    and direct statistics, and the bottom row shows rejection under the null
+    using the oracle 5\% critical value.  Circles denote fixed $m$, stars the
+    adaptive variant with a 20-component pilot cap, and diamonds the
+    maximum-rank fit.  Each summary uses 5,000
+    replications from the stopping-diagnostic stream.}
+    \label{fig:inference-stopping-diagnostics}
+\end{figure}
+
+Table~\ref{tab:inference-stopping-selected} extracts the adaptive rule and two
+fixed indices from the complete paths.  The adaptive rule selects a median of
+one, two, and one components in Models~1--3.  More specifically, it selects
+$m=1$ in 99.96\% of Model~1 samples, $m=2$ in 92.94\% of Model~2 samples, and
+$m=1$ in 63.88\% of Model~3 samples.  These choices are consistent with the
+rule's estimation objective, but the resulting null rejection frequencies are
+52.70\%, 96.02\%, and 71.94\%.  These large discrepancies show that the
+residual is not negligible in the first-order approximation and causes severe
+finite-sample distortion in these designs; theoretically, it can enter the
+statistic at first order rather than merely inducing a small
+calibration error.
+
+\begin{table}[htbp]
+    \centering
+    \scriptsize
+    \caption[Selected stopping diagnostics]{Selected stopping diagnostics from the separate 5,000-replication
+    experiment.  The residual and statistic-difference columns report medians;
+    the final column reports the empirical rejection percentage.}
+    \label{tab:inference-stopping-selected}
+    \begin{tabular}{@{}llrrrr@{}}
+        \toprule
+        Model & Rule & Median $m$ & Median $\sqrt n\|e_m\|$
+              & Median $|\mathcal T_{n,m}-\mathcal S_n|$ & Rejection (\%) \\
+        \midrule
+        Model 1 & Adaptive & 1  & 4.2452 & 7.6719 & 52.70 \\
+                & $m=10$   & 10 & 0.2392 & 0.05770 & 6.16 \\
+                & $m=70$   & 70 & 0.003113 & $1.05\times10^{-5}$ & 6.20 \\
+        \addlinespace
+        Model 2 & Adaptive & 2  & 9.4103 & 79.9799 & 96.02 \\
+                & $m=10$   & 10 & 0.2711 & 0.07506 & 5.88 \\
+                & $m=70$   & 70 & 0.003109 & $2.16\times10^{-5}$ & 6.00 \\
+        \addlinespace
+        Model 3 & Adaptive & 1  & 9.0848 & 69.7139 & 71.94 \\
+                & $m=10$   & 10 & 0.3005 & 0.08947 & 5.20 \\
+                & $m=70$   & 70 & 0.003113 & $1.01\times10^{-5}$ & 5.26 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The failure is not caused by the adaptive rule missing its own threshold.  All
+15,000 adaptive fits satisfy their realised estimation-oriented stopping
+threshold.  On the $\sqrt n$ scale, the median thresholds are 11.82, 12.57,
+and 15.25, all above the corresponding adaptive median residuals in
+Table~\ref{tab:inference-stopping-selected}.  The rule therefore stops as
+designed.  The problem is that an order-one threshold is compatible with
+regularised estimation but not with the vanishing requirement in
+\eqref{eq:inference-late-stopping-condition}.
+
+Rejection frequency is not monotone in $m$.  For example, fixed $m=2$ yields
+2.64\% rejection in Model~1 but 99.82\% in Model~2, while $m=3$ yields 3.12\%
+in Model~3.  At $m=5$, the three rejection frequencies happen to lie between
+4.40\% and 5.64\%, although the median statistic discrepancy still ranges from
+0.458 to 1.203.  An apparently satisfactory size at one intermediate index can
+therefore be accidental; the diagnostic evidence for late stopping is the
+systematic decay of the residual and statistic difference, not monotonic
+movement of the rejection rate toward 5\%.
+
+By $m=10$, the median statistic discrepancies have fallen below 0.09 and the
+three rejection frequencies are already close to their late-path values.  This
+numerical proximity motivates the separate $m_C=10$ confidence-set
+illustration in these designs, but it does not validate ten components as a
+general inference rule.  At $m=70$, all three median scaled residuals are approximately 0.0031
+and the median discrepancies are of order $10^{-5}$.  Continuing to maximum
+rank reduces both quantities to numerical roundoff without changing any
+rejection decision relative to $m=70$ in this stopping experiment.
+
+The separately generated principal size stream provides a decision-level
+check.  Across its 5,000 samples per model, the maximum absolute
+differences between $\mathcal T_{n,70}$ and $\mathcal S_n$ are
+$9.37\times10^{-5}$, $4.02\times10^{-4}$, and $1.18\times10^{-4}$, and the two
+statistics produce identical decisions at every stored 1\%, 5\%, and 10\%
+critical value.  Iteration error is therefore negligible for the recorded
+decisions.  The remaining departure from nominal size combines finite-sample
+calibration effects, the fixed-grid approximation described in
+\eqref{eq:inference-grid-oracle-law}, and Monte Carlo error in the reference
+distribution and critical value.  Increasing the CG index does not address
+those sources of discrepancy.
+
+\section{Finite-sample null law and empirical size}
+\label{sec:inference-results-null}
+
+Figure~\ref{fig:inference-null-calibration} compares the finite-sample law of
+$\mathcal T_{n,70}$ with the continuous-design oracle weighted chi-square
+reference from
+\eqref{eq:inference-oracle-law}.  The distributional centres are close in all
+three models, while the upper quantiles reveal the calibration discrepancy
+most relevant to testing.
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=\textwidth]{null_calibration.pdf}
+    \caption[Finite-sample null calibration]{Finite-sample null calibration of the late-stopped CG--FPLS test.
+    Rows correspond to Models~1--3.  The left column overlays the empirical density of $\mathcal T_{n,70}$ from
+    5,000 samples at $n=100$ with 50,000 draws from the continuous-design
+    oracle weighted chi-square reference.  The right column plots finite-sample
+    quantiles
+    horizontally and reference quantiles vertically against the identity
+    line.  Different density scales across models reflect the different null
+    dispersions.  Agreement is strongest in the centre; points below the line
+    in the upper tail indicate larger finite-sample quantiles.}
+    \label{fig:inference-null-calibration}
+\end{figure}
+
+The empirical and reference means in
+Table~\ref{tab:inference-null-summary} differ by only 0.05, 0.12, and 0.02 in
+Models~1--3.  Dispersion is less accurately reproduced.  The finite-sample
+variances exceed their simulated reference values by 11.6\%, 20.9\%, and
+15.6\%, respectively.  Correspondingly, the empirical 95th percentiles are
+3.47\%, 3.87\%, and 3.71\% above the oracle quantiles.  The Q--Q panels express
+the same pattern: central points follow the diagonal closely, but the
+finite-sample right tail is heavier than the continuous-design reference
+predicts.  Because the sampled basis is not exactly orthonormal, this
+comparison also includes a grid discrepancy that persists when $n$ increases
+at fixed $T$.
+
+\begin{table}[htbp]
+    \centering
+    \scriptsize
+    \caption[Null distributions and empirical test size]{Null-distribution and empirical-size summary at $n=100$.
+    Quantities labelled ``reference'' use the 50,000-draw continuous-design
+    oracle weighted chi-square sample.  Rejection entries are percentages
+    based on 5,000 finite-sample replications.}
+    \label{tab:inference-null-summary}
+    \begin{tabular}{@{}lrrrrrrr@{}}
+        \toprule
+        & \multicolumn{2}{c}{Mean}
+        & \multicolumn{2}{c}{$q_{0.95}$}
+        & \multicolumn{3}{c}{Rejection probability} \\
+        \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-8}
+        Model & Empirical & Reference & Empirical & Reference
+              & 1\% level & 5\% level & 10\% level \\
+        \midrule
+        Model 1 & 8.590 & 8.543 & 15.582 & 15.059 & 1.20 & 5.90 & 11.18 \\
+        Model 2 & 8.666 & 8.542 & 15.762 & 15.176 & 1.48 & 5.84 & 11.72 \\
+        Model 3 & 14.273 & 14.253 & 27.333 & 26.355 & 1.46 & 6.10 & 10.72 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Models~1 and 2 have the same population score variances and error variance, so
+their direct-moment null laws and weighted chi-square limits are identical even
+though their slopes differ.  Under the null, the slope cancels exactly from
+the direct score average in
+\eqref{eq:inference-null-score-average}.  Their small differences in the table
+come from independent finite-sample and oracle simulation draws; the negligible
+$m=70$ residual can add only a numerical difference to this comparison.
+Model~3 has
+a different covariance design and consequently a wider reference law, with a
+95th percentile near 26.36 rather than 15.1.
+
+At the principal 5\% level, the oracle-calibrated rejection frequencies are
+5.90\%, 5.84\%, and 6.10\%, with conditional Monte Carlo standard errors of
+approximately 0.33--0.34 percentage points.  The common direction of the
+differences indicates mild liberal behaviour at $n=100$, although inference
+about exact calibration would also need to account for uncertainty in the
+simulated critical values.  The 1\% and 10\% results show the same broad
+tendency, with magnitudes that vary across levels and models.
+Figure~\ref{fig:app-inference-calibration-comparison} in
+Appendix~\ref{app:inference-diagnostics} displays the 5\% result with
+conditional Monte Carlo error bars.
+
+The direction of the distortion agrees with the quantile comparison: the
+oracle reference understates the finite-sample right tail and therefore rejects
+slightly too often.  Because the $m=70$ and direct statistics are already
+numerically indistinguishable, additional CG iterations would not correct this
+feature.  For the power experiment, the analysis instead uses empirical null
+critical values so that detectability is not confounded with this modest
+oracle-calibration error.
+
+\section{Power against fixed perturbations}
+\label{sec:inference-results-power}
+
+The power experiment tests the baseline candidate $b=\beta$ while generating
+responses from $\beta_\delta(s)=\beta(s)+\delta s$.  Each non-zero value of
+$\delta$ is a fixed alternative at the stated sample size; the curves should
+not be read as a direct simulation of the root-$n$ local sequence in
+\eqref{eq:inference-local-alternative}.  Moreover, the plotted statistic is
+$\mathcal S_n$, not a finite-$m=70$ CG statistic.  Its critical value is the
+empirical 95th percentile of a separate null distribution for each model and
+$n$, as specified in Section~\ref{sec:inference-power}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{power_curves.pdf}
+    \caption[Empirical power under fixed alternatives]{Empirical power against
+    $\beta_\delta(s)=\beta(s)+\delta s$.  Solid and dashed curves correspond to
+    $n=100$ and $n=200$, respectively, and the dotted line marks 5\%.  Every
+    point uses 5,000 alternative samples and the direct-moment statistic
+    $\mathcal S_n$ with a model- and sample-size-specific empirical null
+    critical value.  The alternatives use fixed $\delta$; the figure is not a
+    finite-$m=70$ power calculation or a literal root-$n$ local-power
+    experiment.}
+    \label{fig:inference-power-curves}
+\end{figure}
+
+At $\delta=0$, rejection remains close to 5\% in all six model--sample-size
+combinations, as shown in Table~\ref{tab:inference-power-selected}.  These
+values are not forced to equal 5\%: the empirical critical value is obtained
+from one null sample, whereas the plotted $\delta=0$ point uses another.  The
+curves are approximately symmetric around zero, as expected for this two-sided
+quadratic statistic under the symmetric Gaussian design.  Across the complete
+grid, the largest difference between rejection at $\delta$ and $-\delta$ is
+1.38 percentage points.  Because the two rejection rates come from separate
+alternative samples, the standard error of their difference can be about one
+percentage point; the observed asymmetry is modest relative to Monte Carlo
+variation.
+
+\begin{table}[htbp]
+    \centering
+    \scriptsize
+    \caption[Selected empirical power values]{Selected empirical rejection probabilities from the power curves
+    (percent).  The displayed non-zero values use the positive branch of the
+    approximately symmetric alternative grid.}
+    \label{tab:inference-power-selected}
+    \begin{tabular}{@{}lrrrrrr@{}}
+        \toprule
+        & \multicolumn{3}{c}{$n=100$}
+        & \multicolumn{3}{c}{$n=200$} \\
+        \cmidrule(lr){2-4}\cmidrule(l){5-7}
+        Model & $\delta=0$ & $\delta=0.25$ & $\delta=0.50$
+              & $\delta=0$ & $\delta=0.25$ & $\delta=0.50$ \\
+        \midrule
+        Model 1 & 5.08 & 37.88 & 89.84 & 5.08 & 64.82 & 99.74 \\
+        Model 2 & 5.24 & 36.70 & 89.34 & 4.58 & 64.80 & 99.54 \\
+        Model 3 & 4.78 & 23.60 & 75.58 & 4.90 & 44.56 & 97.26 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Doubling the sample size materially steepens every curve.  At
+$\delta=0.25$, power rises from approximately 37\% to 65\% in Models~1 and 2
+and from 23.6\% to 44.6\% in Model~3.  At $\delta=0.50$, Models~1 and 2 move
+from about 90\% power to more than 99.5\%, while Model~3 rises from 75.6\% to
+97.3\%.  These are fixed-alternative comparisons: increasing $n$ separates a
+fixed covariance-weighted displacement more clearly from the null score
+variation.
+
+Models~1 and 2 again have nearly coincident curves.  They share the same
+covariance operator and perturbation direction; because the null candidate is
+the baseline $b=\beta$, subtracting $\langle X,b\rangle$ leaves
+$\delta\langle X,s\rangle+\varepsilon$ in both models.  The small plotted
+differences are Monte Carlo variation.  Model~3 is less
+powerful over moderate values of $|\delta|$ for this particular direction.
+That comparison reflects the joint effect of $K\Delta$ and the wider null law;
+it is not evidence that Model~3 is uniformly less informative against every
+functional alternative.
+
+The power results are consistent with the theoretical consistency result and
+demonstrate a clear finite-sample gain for the direct-moment target along
+$\Delta(s)=s$.  They do not separately verify
+the finite-$m$ CG approximation under every alternative, and empirical-null
+calibration is not feasible from a single observed dataset.  Both limitations
+matter when the simulation result is transferred to an application.
+
+\section{Finite-dimensional inverted-set illustration}
+\label{sec:inference-results-confidence}
+
+The final experiment inverts $\mathcal T_{n,10}$ over the first five simulation
+basis functions.  Figure~\ref{fig:inference-confidence-sets} displays the
+resulting functional envelopes, while
+Table~\ref{tab:inference-confidence-summary} separates three notions that a
+plot alone cannot distinguish: non-rejection at the complete simulated slope,
+acceptance of its five-term truncation, and the pointwise width of the
+five-dimensional inverted set.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{confidence_sets.pdf}
+    \caption[Five-dimensional inverted-set envelopes]{Finite-dimensional inverted-set illustration at $n=100$ using
+    $m_C=10$, a five-dimensional analytic ellipsoid, and the oracle 5\%
+    critical value.  The black curve is the complete true slope.  The grey
+    region joins the pointwise medians of the lower and upper endpoints over
+    5,000 separately realised envelopes; it is not one realised 95\%
+    confidence band.  Dashed curves show the replication whose mean envelope
+    width is closest to the median width.  All grey and dashed envelopes range
+    only over the five-dimensional basis span.  Pointwise visual containment
+    does not imply simultaneous membership in the coefficient ellipsoid.}
+    \label{fig:inference-confidence-sets}
+\end{figure}
+
+\begin{table}[htbp]
+    \centering
+    \scriptsize
+    \caption[Five-dimensional inverted-set summaries]{Summary of the analytic five-dimensional inverted sets.  The
+    first two entries are acceptance frequencies in percent.  For each
+    replication, width is averaged over the 200-point functional grid; the
+    table then reports the mean and median of these replication-level widths.
+    The final entry gives empty and unbounded frequencies in percent.  Every
+    quantity uses 5,000 replications.}
+    \label{tab:inference-confidence-summary}
+    \begin{tabular}{@{}lccrrcc@{}}
+        \toprule
+        Model & \shortstack{Full-slope\\non-rejection}
+              & \shortstack{Five-term\\acceptance}
+              & \shortstack{Mean\\width}
+              & \shortstack{Median\\width}
+              & \shortstack{Median\\rank}
+              & \shortstack{Empty/\\unbounded} \\
+        \midrule
+        Model 1 & 94.20 & 94.32 & 2.810 & 2.798 & 5 & 0/0 \\
+        Model 2 & 94.20 & 94.12 & 2.824 & 2.817 & 5 & 0/0 \\
+        Model 3 & 94.02 & 93.94 & 1.118 & 1.114 & 5 & 0/0 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+All 15,000 replication-specific inverted sets are non-empty, bounded, and have
+rank five.  The
+full-slope non-rejection frequencies are 94.20\%, 94.20\%, and 94.02\%, while
+the five-term candidate is accepted in 94.32\%, 94.12\%, and 93.94\% of
+samples.  The latter is the acceptance frequency of the five-term truncated
+candidate in the candidate space underlying the display.  It should
+nevertheless be interpreted with care: the data are generated from the
+complete slope, whose non-zero tail is not treated as a nuisance component in
+a separate projection model.
+
+The full-slope values are paired with, but are not exactly one minus, the
+principal size frequencies.  The confidence branch regenerates the same
+samples and uses the same oracle critical values, but evaluates
+$\mathcal T_{n,10}$ rather than $\mathcal T_{n,70}$.  The two stopping indices
+change only 5, 6, and 6 of the 5,000 classifications in Models~1--3, producing
+94.20\%, 94.20\%, and 94.02\% non-rejection at $m_C=10$, compared with
+94.10\%, 94.16\%, and 93.90\% obtained by complementing the reported
+$m=70$ sizes.  The closeness is consistent with the stopping diagnostics, but
+the shared samples make this a paired check rather than independent coverage
+evidence.
+
+Models~1 and 2 have almost identical mean widths, about 2.81 and 2.82,
+consistent with their shared predictor covariance geometry.  Model~3's mean
+width is 1.12, approximately 60\% smaller in this five-dimensional
+representation.
+The stronger leading score variances provide more information for the
+displayed coefficient directions, even after allowing for Model~3's larger
+critical value.  This is a statement about the chosen leading subspace and
+parameterisation, not uniformly narrower uncertainty for the entire
+infinite-dimensional slope.
+
+The display is descriptive: neither the pointwise median envelope nor the
+representative boundaries constitute a realised simultaneous confidence band.
+Moreover, the interpretation of the $m_C=10$ inversion remains specific to
+these designs and conditional on the finite-iteration residual being
+sufficiently small.
+
+Taken together, the experiments identify a coherent sequence.  The
+estimation-oriented adaptive variant stops with a moment residual that is
+large on the root-$n$ scale and, in these designs, severely distorts the test.
+Continuing the stabilised Krylov path makes that algorithmic error negligible;
+at $m=70$, the test calibrated against the continuous-design oracle reference
+is only mildly liberal at $n=100$.  The remaining discrepancy includes
+finite-sample, grid, and reference-simulation effects.  Empirically calibrated
+direct-moment power then increases sharply with sample size, and inversion yields non-empty,
+bounded, full-rank finite-dimensional sets in all three controlled designs.
+
+The scope is correspondingly limited.  The evidence uses dense Gaussian
+curves, homoskedastic errors, a single perturbation direction, and either
+oracle or simulation-specific empirical calibration.  No stored result
+establishes the performance of a feasible plug-in or bootstrap calibration on
+observed data.  Chapter~\ref{chap:spectroscopy-application} therefore shifts
+from oracle-assisted inferential benchmarking to prediction with the four
+regularisation procedures on spectroscopy curves.  A formal test in that
+application would require a feasible calibration whose finite-sample behaviour
+has not been evaluated here.  The principal empirical comparison is kept
+concise in Chapter~\ref{chap:spectroscopy-application}; the complete
+preprocessing, tuning, stability, and sensitivity record is reserved for
+Appendix~\ref{app:spectroscopy-supplement}.

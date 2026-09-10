@@ -1,0 +1,90 @@
+% Provisional thesis draft. Citation commands assume biblatex with authoryear style.
+\chapter{Introduction}
+\label{chap:introduction}
+
+Many modern data sets contain observations that are most naturally represented as functions rather than as finite collections of unrelated measurements. Examples include growth trajectories, spectrometric curves, electricity-demand profiles, biomedical signals, and records collected continuously over time or space. Treating such observations as functional data preserves their ordering and smooth structure and makes it possible to study features of the complete trajectory. Functional data analysis provides the statistical framework for this purpose; see, for example, \textcite{ramsay_silverman_2005}. One of its central regression models relates a scalar response to a functional predictor. For a square-integrable random function $X$ on a compact interval $\mathcal{I}$, the scalar-on-function linear model is
+\begin{equation}
+    Y = \alpha + \int_{\mathcal{I}} X(s)\beta(s)\,\mathrm{d}s + \varepsilon,
+    \label{eq:intro-functional-linear-model}
+\end{equation}
+where $Y$ is a scalar response, $\alpha$ is an intercept, $\beta$ is an unknown slope function, and $\varepsilon$ is an error term with conditional mean zero. The function $\beta$ describes how variation in the predictor at different locations of its domain is associated with the response. This model is conceptually similar to multiple linear regression, but estimation is substantially more difficult because the unknown parameter belongs to an infinite-dimensional function space \parencite{cardot_ferraty_sarda_1999,hall_horowitz_2007}.
+
+After centring $X$ and $Y$ and, for notational simplicity, denoting the centred
+variables again by $X$ and $Y$, the population normal equation corresponding to
+\eqref{eq:intro-functional-linear-model} can be written as
+\begin{equation}
+    K\beta=r,
+    \label{eq:intro-normal-equation}
+\end{equation}
+where $K$ is the covariance operator of $X$ and $r=\mathbb{E}(YX)$ is the
+cross-covariance element between the response and the predictor.  If $K$ has a
+non-trivial null space, the data identify $\beta$ only up to additions from
+$\operatorname{Null}(K)$; the conventional target is the minimum-norm
+representative $\beta^\dagger=K^\dagger r$ in the identified space
+$\mathcal H_{\mathrm{id}}:=\operatorname{Null}(K)^\perp$.  Unless the distinction is material, the
+notation $\beta$ below refers to this identified representative.  In typical
+functional settings, $K$ is compact.  When it has infinite rank, its positive
+eigenvalues decrease to zero and its generalised inverse is unbounded: small
+sampling errors in directions associated with small eigenvalues may be greatly
+magnified when \eqref{eq:intro-normal-equation} is solved.  Estimating the
+identified slope is therefore an ill-posed inverse problem even when it is
+unique on the chosen parameter space.  A direct
+solution of the empirical normal equation is generally unstable, including
+after the functional observations have been represented on a finite basis.
+Some form of regularisation is indispensable
+\parencite{engl_hanke_neubauer_1996,hall_horowitz_2007}.
+
+Regularisation deliberately restricts or modifies the inverse problem so that the estimator does not attempt to recover directions that are weakly identified by the data. In functional principal component regression (FPCR), the covariance operator is replaced by a truncated spectral expansion and the inverse is computed only on the span of selected empirical eigenfunctions. This produces an interpretable and widely used estimator, and the truncation level acts as the regularisation parameter. Its components, however, are ordered according to variation in the predictor alone; a direction that explains relatively little variation in $X$ may still be important for predicting $Y$. Functional partial least squares (FPLS) instead constructs response-informed directions and has consequently become an important alternative to purely spectral regularisation \parencite{preda_saporta_2005,delaigle_hall_2012,febrero_bande_et_al_2017}.
+
+An especially useful view of FPLS is obtained through Krylov subspaces. At iteration $m$, the estimator is sought in
+\begin{equation}
+    \mathcal{K}_m(K,r)
+    =\operatorname{span}\{r,Kr,K^2r,\ldots,K^{m-1}r\}.
+    \label{eq:intro-krylov-space}
+\end{equation}
+This formulation shows that the method progressively explores directions determined jointly by the covariance structure of $X$ and its relationship with $Y$. It also connects FPLS with the conjugate-gradient (CG) algorithm for linear systems and inverse problems \parencite{hestenes_stiefel_1952,phatak_dehoog_2002,babii_carrasco_tsafack_2026}. The connection is statistically important because the number of Krylov iterations is itself a regularisation parameter. Early iterations recover well-identified signal directions, whereas later iterations increasingly expose the solution to sampling noise in small-eigenvalue directions. Early stopping can therefore regularise the functional inverse problem without explicitly truncating an eigendecomposition \parencite{blanchard_kramer_2016,babii_carrasco_tsafack_2026}.
+
+The mathematical equivalence of alternative Krylov formulations does not imply identical numerical behaviour. A direct implementation of \eqref{eq:intro-krylov-space} uses successive powers of the empirical covariance operator. These vectors can become nearly linearly dependent, causing the associated Gram matrix to be severely ill-conditioned. In exact arithmetic, this construction spans the intended space; in finite-precision arithmetic, however, loss of independence can produce unstable coefficients and occasionally very large estimation errors. Orthogonal Krylov algorithms such as Arnoldi replace the raw power basis by an orthonormal basis, while CG generates the relevant iterates through short recurrences. The practical performance of regularisation therefore has both a statistical and a numerical dimension: one must decide how far to iterate and how to represent the space explored by those iterations.
+
+This thesis studies that interaction through four estimators: FPCR, raw FPLS based on unorthogonalised Krylov powers, Arnoldi FPLS with two-pass classical Gram--Schmidt orthogonalisation, and a direct CG--FPLS implementation with a data-dependent stopping rule. These estimators represent two broad regularisation principles. FPCR uses a spectral cut-off, while the three FPLS implementations use response-informed Krylov spaces and iterative regularisation. At a common component count and under the required rank conditions, raw and Arnoldi FPLS target the same restricted response fit, so their comparison isolates the effect of numerical stabilisation. CG--FPLS, in turn, permits a direct examination of early stopping and of the computational geometry underlying FPLS.
+
+The study is organised around four questions. First, how do spectral and iterative regularisation methods compare in slope estimation and out-of-sample prediction when the covariance structure and slope smoothness change? Second, when theoretically equivalent FPLS formulations are implemented in finite precision, how strongly do Krylov-basis conditioning and orthogonalisation affect their reliability? Third, how does the CG stopping index affect the validity of statistical inference, and why may an inference-compatible index differ from one chosen for estimation or prediction? Fourth, how do these regularisation and stability trade-offs appear in a real spectroscopic prediction problem?
+
+The third question reflects a fundamental distinction. For estimation and prediction, stopping CG early controls variance and prevents weakly identified directions from dominating the slope estimate. For inference on the moment equation, the remaining algorithmic residual must instead be negligible relative to sampling uncertainty. Following \textcite{babii_carrasco_tsafack_2026}, this thesis considers, for $b\in\mathcal H_{\mathrm{id}}$, the global hypothesis
+\begin{equation}
+    H_0:\beta=b
+    \qquad\text{against}\qquad
+    H_1:\beta\neq b,
+    \label{eq:intro-null-hypothesis}
+\end{equation}
+using the statistic
+\begin{equation}
+    \mathcal T_n(b)
+    =n\left\|\widehat K\bigl(\widehat\beta_m-b\bigr)\right\|_{L^2}^{2}.
+    \label{eq:intro-test-statistic}
+\end{equation}
+For this statistic, iteration must continue until the moment residual
+$\widehat r-\widehat K\widehat\beta_m$ is negligible at the root-$n$ sampling
+scale. Under the conditions developed later, this makes
+$\mathcal T_n(b)$ asymptotically equivalent to a direct-moment statistic and
+supports testing, power analysis, and confidence sets obtained by inversion.
+The essential contrast is one of purpose: early stopping regularises
+estimation, whereas inference requires the algorithmic residual to be
+asymptotically negligible.
+
+The simulation programme has two connected components. The first is a reproducible Monte Carlo comparison of the four regularised estimators across three functional linear models. Performance is evaluated through integrated squared error for the slope, mean squared prediction error, selected complexity, conditioning, and complete error distributions. Particular attention is paid to rare numerical failures, since averages or medians alone can conceal the practical consequences of an unstable Krylov basis. The second component studies CG--FPLS inference through null calibration, empirical size, power, confidence-set coverage, and convergence of the finite-iteration statistic towards its direct-moment limit. These controlled studies are complemented by a concise spectroscopy application, which asks whether the statistical and numerical trade-offs isolated in simulation remain visible with observed functional predictors. Chapter~\ref{chap:spectroscopy-application} reports the principal empirical evidence; Appendix~\ref{app:spectroscopy-supplement} records the complete protocol, diagnostics, and sensitivity analysis.
+
+The contribution is therefore methodological, computational, and expository rather than a new asymptotic theory. The thesis brings spectral regularisation, raw and orthogonalised Krylov formulations, direct CG iteration, and CG-based inference into a common, reproducible analysis. Its evidence yields conditional trade-offs rather than a universal method ranking: performance depends jointly on the target geometry, tuning rule, numerical representation, and data structure. The later application provides a first assessment of how those mechanisms transfer beyond the controlled designs.
+
+The argument proceeds in four stages. Chapters~\ref{chap:background} and
+\ref{chap:methods} develop the functional-analytic foundation and turn it into
+four fully specified estimators. Chapters~\ref{chap:simulation-design} and
+\ref{chap:estimation-results} use controlled changes in the slope and covariance
+structure to study estimation, prediction, and numerical stability.
+Chapters~\ref{chap:inference-methodology} and \ref{chap:inference-results}
+then develop and evaluate the late-stopped inference procedure.
+Chapter~\ref{chap:spectroscopy-application} applies the four methods to
+spectroscopic data and relates the empirical findings to the mechanisms
+isolated in simulation; Appendix~\ref{app:spectroscopy-supplement} provides
+the full supporting analysis. Chapter~\ref{chap:conclusion} closes by
+synthesising the results, limitations, and implications for further work.

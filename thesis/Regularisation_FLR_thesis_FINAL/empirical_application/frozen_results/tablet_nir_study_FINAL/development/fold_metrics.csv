@@ -1,0 +1,125 @@
+analysis,variant,variant_role,instrument,repeat,outer_fold,evaluation_index_scope,method,fit_status,evaluation_status,evaluation_prediction_finite,selected_components,rmse,mae,bias,r2
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,1,development_combined,CG-FPLS-code,ok,ok,True,3,5.716983978480173,4.365734435849284,-0.03869555706198578,0.9172260134361713
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,1,development_combined,Raw FPLS,ok,ok,True,41,4.972745921675494,3.453066968661748,-0.6095202088212768,0.9373743189657456
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,1,development_combined,Arnoldi FPLS,ok,ok,True,5,4.973779832640761,3.4638073361219384,-0.6084173982670222,0.9373482745586722
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,1,development_combined,FPCR,ok,ok,True,33,6.598633016514516,4.406973855785976,0.04191138377413495,0.8897273342590624
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,2,development_combined,CG-FPLS-code,ok,ok,True,3,5.519138618325047,4.643503137329161,0.5461303561257157,0.9225387612790846
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,2,development_combined,Raw FPLS,ok,ok,True,63,4.589857736580907,2.9771506684293305,-0.042354043067427065,0.9464277010923291
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,2,development_combined,Arnoldi FPLS,ok,ok,True,6,4.410257058507097,2.9230740734589915,-0.1439215489383332,0.9505382314003633
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,2,development_combined,FPCR,ok,ok,True,14,4.583169821051155,3.0828775993048714,0.013784181674755048,0.9465837085326707
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,3,development_combined,CG-FPLS-code,ok,ok,True,3,6.179269382053381,4.529203381922145,-0.1443941955190524,0.8961583611767842
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,3,development_combined,Raw FPLS,ok,ok,True,66,5.705057490128616,4.26068937776331,-0.1696077444553798,0.9114849076214397
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,3,development_combined,Arnoldi FPLS,ok,ok,True,5,5.376597731821995,3.920173913361482,0.11451024399738831,0.9213837424934289
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,3,development_combined,FPCR,ok,ok,True,39,6.08617390938078,4.339459079500406,0.26125251091289964,0.8992637006710221
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,4,development_combined,CG-FPLS-code,ok,ok,True,3,6.016822478121987,4.72257681330637,0.2861525824775886,0.9031875892565528
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,4,development_combined,Raw FPLS,ok,ok,True,20,4.69346691426672,3.408056619286957,0.36418029822304915,0.9410906596195578
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,4,development_combined,Arnoldi FPLS,ok,ok,True,5,4.698712879693614,3.4139450972116707,0.36150546426700114,0.9409588981408358
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,4,development_combined,FPCR,ok,ok,True,56,6.1637287605686835,4.647988440591399,2.050769436919184,0.8984023467679249
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,5,development_combined,CG-FPLS-code,ok,ok,True,3,6.469455914494732,5.1264675013535355,-0.5209478330366044,0.8917508972454888
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,5,development_combined,Raw FPLS,ok,ok,True,4,4.149408246000147,3.2580195074019533,-0.12431690792913831,0.9554691360386884
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,5,development_combined,Arnoldi FPLS,ok,ok,True,4,4.149408177851634,3.2580194913829894,-0.12431687169565354,0.9554691375014088
+development_repeated_nested_cv,primary_instrument1_full,primary,1,1,5,development_combined,FPCR,ok,ok,True,7,4.306704136016821,3.4382222653688985,0.10260422045417254,0.9520289897490269
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,1,development_combined,CG-FPLS-code,ok,ok,True,3,7.083525298500137,5.578436579154676,-1.2794229952113285,0.8738080821298644
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,1,development_combined,Raw FPLS,ok,ok,True,15,5.8555316979934995,3.928894901083436,-1.2675612655711825,0.9137686242780503
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,1,development_combined,Arnoldi FPLS,ok,ok,True,6,6.197456119500642,3.882278615315016,-1.2140638668912844,0.9034039065120185
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,1,development_combined,FPCR,ok,ok,True,39,7.1072106984157095,4.089482763181494,-1.6017213052985693,0.8729627676959015
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,2,development_combined,CG-FPLS-code,ok,ok,True,3,5.415293703390767,4.39345878863574,-0.011506886205954569,0.9209719953589816
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,2,development_combined,Raw FPLS,ok,ok,True,70,4.682552659859693,3.433872210410369,-0.7250005709596034,0.9409115871069403
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,2,development_combined,Arnoldi FPLS,ok,ok,True,5,4.378417170597929,3.323079687171061,-0.538968225812472,0.9483379944971695
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,2,development_combined,FPCR,ok,ok,True,8,4.56017756257922,3.403463662804587,-0.5212921290115224,0.94395969483344
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,3,development_combined,CG-FPLS-code,ok,ok,True,3,5.929456140653755,4.694405886155753,0.18169358362645083,0.9067984183085275
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,3,development_combined,Raw FPLS,ok,ok,True,16,3.8725571298242385,2.971992719472995,-0.6327060453635479,0.9602452316220665
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,3,development_combined,Arnoldi FPLS,ok,ok,True,4,4.248329131901551,3.1047034640017923,-0.1384723633925288,0.952155736689149
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,3,development_combined,FPCR,ok,ok,True,11,3.836402079141705,2.9894925153799434,-0.5752778742254131,0.9609840850337158
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,4,development_combined,CG-FPLS-code,ok,ok,True,3,5.998687593585465,4.763194339469531,0.15644208801178322,0.9073047015039336
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,4,development_combined,Raw FPLS,ok,ok,True,52,5.369369494592285,3.9547003516442962,0.6956523775608769,0.9257336979193692
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,4,development_combined,Arnoldi FPLS,ok,ok,True,6,5.536086546166423,3.9282914742884683,0.22031318520483048,0.9210502136037432
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,4,development_combined,FPCR,ok,ok,True,21,5.832929146868202,4.29984377560074,0.16308687459165327,0.9123567205503287
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,5,development_combined,CG-FPLS-code,ok,ok,True,3,4.98418835987564,3.5753781601292562,1.0995652591244731,0.9350225392504345
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,5,development_combined,Raw FPLS,ok,ok,True,44,4.7918117797559185,3.4733068620811456,1.1044001764056912,0.9399416572610478
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,5,development_combined,Arnoldi FPLS,ok,ok,True,5,4.790621899408465,3.472241919058985,1.1058849869274245,0.9399714803728162
+development_repeated_nested_cv,primary_instrument1_full,primary,1,2,5,development_combined,FPCR,ok,ok,True,52,5.608975048262384,4.354160641395012,0.2634261577669489,0.9177111754981403
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,1,development_combined,CG-FPLS-code,ok,ok,True,3,6.215123461935854,4.898868672523447,0.7022736843025191,0.8968534108648183
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,1,development_combined,Raw FPLS,ok,ok,True,62,5.354772207523239,4.257887661886065,0.1767159347041153,0.9234337544104276
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,1,development_combined,Arnoldi FPLS,ok,ok,True,5,4.085455632172185,3.200456548482497,0.8797961437970448,0.9554306451440011
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,1,development_combined,FPCR,ok,ok,True,10,4.262556448145766,3.3449997471262063,0.6902136253684614,0.951482810245746
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,2,development_combined,CG-FPLS-code,ok,ok,True,3,6.262965425724077,4.675266431807126,-0.16749378387104505,0.8997402667863917
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,2,development_combined,Raw FPLS,ok,ok,True,52,8.631465023535934,6.369182750897474,-1.7625118608189776,0.8095699215773453
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,2,development_combined,Arnoldi FPLS,ok,ok,True,6,5.7022207236115845,3.7709393749406863,-0.5828759368227583,0.9168897546366641
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,2,development_combined,FPCR,ok,ok,True,55,5.9115795063224725,3.7895851518066332,-1.2716973733703691,0.9106748845874547
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,3,development_combined,CG-FPLS-code,ok,ok,True,3,6.179149688939517,4.814425162304673,0.5654679710337529,0.9017230071334504
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,3,development_combined,Raw FPLS,ok,ok,True,64,5.102582158267096,3.6387620848667734,-0.8945087447177531,0.9329846269603284
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,3,development_combined,Arnoldi FPLS,ok,ok,True,5,4.988263748087473,3.529575885826206,-0.7596407401301352,0.9359538182475958
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,3,development_combined,FPCR,ok,ok,True,35,5.643786434602381,3.874082977009873,-0.8797912024880733,0.9180147793577399
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,4,development_combined,CG-FPLS-code,ok,ok,True,3,4.918119298335883,4.081826308111551,0.5328091649967217,0.9335877153521889
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,4,development_combined,Raw FPLS,ok,ok,True,41,5.3790798742484265,4.302066093609673,-0.4067554873186033,0.9205550513438976
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,4,development_combined,Arnoldi FPLS,ok,ok,True,4,4.6146573628936896,3.6060984465987915,0.6119320962759713,0.9415305211464644
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,4,development_combined,FPCR,ok,ok,True,19,4.314092430624244,3.462745488402679,-0.022671263698075796,0.9488990241399307
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,5,development_combined,CG-FPLS-code,ok,ok,True,3,6.224649960864996,4.468359864834868,-1.684408766901851,0.9025610537387045
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,5,development_combined,Raw FPLS,ok,ok,True,42,4.657239521723752,3.3287864926771316,-0.44531514473314215,0.9454543829804252
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,5,development_combined,Arnoldi FPLS,ok,ok,True,5,4.653833238590416,3.3284021081782975,-0.4350632061518816,0.9455341426185369
+development_repeated_nested_cv,primary_instrument1_full,primary,1,3,5,development_combined,FPCR,ok,ok,True,14,5.015366859112809,3.509298908232247,-0.47049052718570766,0.9367430683623105
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,1,development_combined,CG-FPLS-code,ok,ok,True,3,5.608630643823479,4.402532330627042,0.3575199488295642,0.923657389391828
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,1,development_combined,Raw FPLS,ok,ok,True,69,4.34746878487889,3.4173804639533545,0.7150499439800706,0.9541302608071988
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,1,development_combined,Arnoldi FPLS,ok,ok,True,5,4.336740973687073,3.4129491999008033,0.7021268197427876,0.9543563577823835
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,1,development_combined,FPCR,ok,ok,True,7,4.500212622041607,3.4694810661678956,0.6651761912498105,0.9508504673254922
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,2,development_combined,CG-FPLS-code,ok,ok,True,3,6.6890553806668,4.863911649692296,-0.8062984851367196,0.8805848007541265
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,2,development_combined,Raw FPLS,ok,ok,True,34,5.881893826595978,4.127120942107185,-0.7863578717865363,0.9076654183035855
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,2,development_combined,Arnoldi FPLS,ok,ok,True,6,6.3594876837009915,4.384127549555795,-0.8585097103089229,0.8920620201795177
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,2,development_combined,FPCR,ok,ok,True,57,6.410270840972192,4.7049374927356515,-0.3912137738255126,0.8903312778824637
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,3,development_combined,CG-FPLS-code,ok,ok,True,3,5.693791634291855,4.478739465928813,0.3393636734678762,0.9137149629390185
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,3,development_combined,Raw FPLS,ok,ok,True,44,3.398337601922271,2.6412524674856175,0.26510805944344423,0.9692627229383223
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,3,development_combined,Arnoldi FPLS,ok,ok,True,5,3.349612136153605,2.6258980932872644,0.21143367547110523,0.9701378279848942
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,3,development_combined,FPCR,ok,ok,True,12,3.6579678082357963,2.8645992099297914,0.23598479727972213,0.9643867090037681
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,4,development_combined,CG-FPLS-code,ok,ok,True,3,5.302566502787434,4.163655522484157,0.2768451027202657,0.9257606795293317
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,4,development_combined,Raw FPLS,ok,ok,True,45,4.867649883801109,3.4623430635789103,0.2082538348502294,0.9374394718751482
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,4,development_combined,Arnoldi FPLS,ok,ok,True,5,4.8383669211392535,3.4793491163317922,0.31192434614666736,0.9381899150164678
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,4,development_combined,FPCR,ok,ok,True,44,6.21157060511944,4.346452433448148,-0.4478481342329205,0.898125710646141
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,5,development_combined,CG-FPLS-code,ok,ok,True,3,5.52671289379996,4.207379339229685,-0.09869636378902467,0.9185809098211717
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,5,development_combined,Raw FPLS,ok,ok,True,37,5.347441089358244,3.895107841959866,-0.41656166778579606,0.9237772778879181
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,5,development_combined,Arnoldi FPLS,ok,ok,True,5,5.370250333003192,3.9025129983824605,-0.440714470726418,0.9231256426367194
+development_repeated_nested_cv,primary_instrument1_full,primary,1,4,5,development_combined,FPCR,ok,ok,True,30,5.68067396226486,4.245130296720499,0.24791500927290144,0.9139814406064036
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,1,development_combined,CG-FPLS-code,ok,ok,True,3,5.770145370358172,4.18181935708481,-1.5711296329770437,0.9067052444197997
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,1,development_combined,Raw FPLS,ok,ok,True,65,5.755565832913754,4.016811548413652,-1.5872154663624576,0.9071761081088346
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,1,development_combined,Arnoldi FPLS,ok,ok,True,6,5.962656670882685,3.901860417524912,-1.5976105943726315,0.9003761482763095
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,1,development_combined,FPCR,ok,ok,True,39,6.030060984155872,3.8679304027767,-1.5263024113241035,0.898111039726213
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,2,development_combined,CG-FPLS-code,ok,ok,True,3,6.889689354830647,5.3102223107855675,0.6523374533170111,0.8765829322411334
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,2,development_combined,Raw FPLS,ok,ok,True,14,5.166752709104333,3.636395602173791,0.6267971991689595,0.9305917181012682
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,2,development_combined,Arnoldi FPLS,ok,ok,True,5,5.186174481324272,3.635853288220525,0.581271080631499,0.9300689272744498
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,2,development_combined,FPCR,ok,ok,True,18,5.1006265433698825,3.6861760947390017,0.7865136359626476,0.9323569789445524
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,3,development_combined,CG-FPLS-code,ok,ok,True,3,6.105649621475169,4.609087919557876,1.008957869025004,0.9071108882095913
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,3,development_combined,Raw FPLS,ok,ok,True,70,4.711064156674845,3.685854229885126,1.0717179428467019,0.944698222459095
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,3,development_combined,Arnoldi FPLS,ok,ok,True,5,4.688979886600676,3.6606432014423556,1.0760368806154663,0.945215488528873
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,3,development_combined,FPCR,ok,ok,True,7,4.73383680271288,3.5354491339695495,1.2076067476918557,0.9441622876596838
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,4,development_combined,CG-FPLS-code,ok,ok,True,3,5.910631897433412,4.202407717843214,-0.6206052648021563,0.9115046143531489
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,4,development_combined,Raw FPLS,ok,ok,True,15,4.432141187803824,3.281048856620733,-0.6966225211240111,0.9502400456826877
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,4,development_combined,Arnoldi FPLS,ok,ok,True,6,5.260519892219687,3.814398446339468,-1.2156741669321036,0.9299012725188436
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,4,development_combined,FPCR,ok,ok,True,47,6.336180393462112,4.1945373351687705,-2.0434901398702627,0.8983030644670233
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,5,development_combined,CG-FPLS-code,ok,ok,True,3,4.838574249877486,4.05998265739971,0.3702689176112014,0.9381782260868787
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,5,development_combined,Raw FPLS,ok,ok,True,61,3.4092160222613863,2.605726685025945,0.5271541768955654,0.9693086717238811
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,5,development_combined,Arnoldi FPLS,ok,ok,True,5,3.340663606620677,2.5913145083407048,0.5859582719810317,0.9705305429393333
+development_repeated_nested_cv,primary_instrument1_full,primary,1,5,5,development_combined,FPCR,ok,ok,True,13,3.3801911975917793,2.591342157687291,0.5679916711783451,0.9698290367570188
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,1,development_combined,CG-FPLS-code,ok,ok,True,3,6.1693717485397155,4.85270252578266,-1.0610965997643462,0.8891162608158695
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,1,development_combined,Raw FPLS,ok,ok,True,42,4.689517365091487,3.6044827316135195,-0.9770510216036209,0.9359318359909414
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,1,development_combined,Arnoldi FPLS,ok,ok,True,5,4.677444524619121,3.5553684105331045,-0.9007098005895824,0.936261289545174
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,1,development_combined,FPCR,ok,ok,True,7,4.819533169044182,3.6848423300872852,-1.1413606191802017,0.932330038567317
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,2,development_combined,CG-FPLS-code,ok,ok,True,3,4.497219826418899,3.869348288564411,0.9628090786811899,0.955412178896147
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,2,development_combined,Raw FPLS,ok,ok,True,25,3.5479362554325173,2.9166368819356805,0.670090633146404,0.9722489363492216
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,2,development_combined,Arnoldi FPLS,ok,ok,True,5,3.396709359288304,2.7557196842509515,0.6357904714922114,0.9745642356674739
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,2,development_combined,FPCR,ok,ok,True,23,3.739066971540014,3.06290908412789,0.8512320753859243,0.9691784479170892
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,3,development_combined,CG-FPLS-code,ok,ok,True,3,4.2313392310966025,3.5003118795550883,2.321371125309009,0.9527199844913834
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,3,development_combined,Raw FPLS,ok,ok,True,62,3.478264289348474,2.8877854469177193,1.4831534781828872,0.9680517497876934
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,3,development_combined,Arnoldi FPLS,ok,ok,True,4,3.6838264616048906,3.0780307681038486,1.3349221756199872,0.9641639406228228
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,3,development_combined,FPCR,ok,ok,True,7,3.6469027291715337,2.919686808622256,1.7244477333089914,0.9648787244089824
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,4,development_combined,CG-FPLS-code,ok,ok,True,3,5.161684377588264,3.6932566245509952,0.2237553330593439,0.9470161127642418
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,4,development_combined,Raw FPLS,ok,ok,True,36,4.7622339788108405,3.360323119355819,0.9589604586743931,0.9548993930731116
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,4,development_combined,Arnoldi FPLS,ok,ok,True,5,4.744422149782864,3.354568228193332,0.997319893938577,0.9552361350291712
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,4,development_combined,FPCR,ok,ok,True,7,5.0346750439450325,3.6537515703855186,1.2059912799282086,0.9495914950306668
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,5,development_combined,CG-FPLS-code,ok,ok,True,3,9.284227979794226,7.664440341034842,-2.511751593484669,0.5554825398327505
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,5,development_combined,Raw FPLS,ok,ok,True,36,7.163502962241299,5.393845583356742,-2.069917448753622,0.7353644888055432
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,5,development_combined,Arnoldi FPLS,ok,ok,True,8,7.847304732913918,5.756232865754876,-2.1956467439473952,0.6824308787242452
+development_source_contiguous_cv,primary_instrument1_full,primary,1,1,5,development_combined,FPCR,ok,ok,True,46,8.195977609929754,5.803633674193858,-1.614685041732455,0.6535833493920197
+original_split_sensitivity,primary_instrument1_full,primary,1,1,1,validation_split_local,CG-FPLS-code,ok,ok,True,3,5.99785494213711,4.820366810676183,2.1086347447876825,-5.442409767085701
+original_split_sensitivity,primary_instrument1_full,primary,1,1,1,validation_split_local,Raw FPLS,ok,ok,True,8,4.131718219707992,3.5664614231366407,1.4600468011936663,-2.057157537054856
+original_split_sensitivity,primary_instrument1_full,primary,1,1,1,validation_split_local,Arnoldi FPLS,ok,ok,True,5,4.150192479370548,3.5581865497925405,1.405693300669269,-2.084557754858758
+original_split_sensitivity,primary_instrument1_full,primary,1,1,1,validation_split_local,FPCR,ok,ok,True,7,3.977993120824332,3.4305364499152526,1.5115564928500695,-1.8338997553096363

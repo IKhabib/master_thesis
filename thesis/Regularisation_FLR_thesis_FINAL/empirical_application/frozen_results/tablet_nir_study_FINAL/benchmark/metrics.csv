@@ -1,0 +1,17 @@
+analysis,variant,variant_role,instrument,evaluation_index_scope,method,fit_status,evaluation_status,evaluation_prediction_finite,selected_components,rmse,mae,bias,r2
+designated_benchmark,primary_instrument1_full,primary,1,test_split_local,CG-FPLS-code,ok,ok,True,3,5.292926323157189,3.673027051020165,0.17704974768264442,0.8869998610336582
+designated_benchmark,primary_instrument1_full,primary,1,test_split_local,Raw FPLS,ok,ok,True,55,4.606641496496936,3.035924610107879,-0.3030719091320316,0.9144034795054297
+designated_benchmark,primary_instrument1_full,primary,1,test_split_local,Arnoldi FPLS,ok,ok,True,5,4.642890850327838,3.0857567232311407,-0.3009259960435098,0.9130510727699263
+designated_benchmark,primary_instrument1_full,primary,1,test_split_local,FPCR,ok,ok,True,53,5.184853201162265,3.5470971055223135,-0.6277393536954069,0.8915673155715959
+designated_benchmark,sensitivity_instrument1_trim1798,sensitivity,1,test_split_local,CG-FPLS-code,ok,ok,True,3,4.669187609482842,3.0069818435082505,-0.4564928712436365,0.9120633475669111
+designated_benchmark,sensitivity_instrument1_trim1798,sensitivity,1,test_split_local,Raw FPLS,ok,ok,True,10,4.766703216359799,3.1045728662252623,-0.4758696085545004,0.9083518915739742
+designated_benchmark,sensitivity_instrument1_trim1798,sensitivity,1,test_split_local,Arnoldi FPLS,ok,ok,True,8,4.631892529272446,2.8460717100468402,-0.5128081338562093,0.9134625231315854
+designated_benchmark,sensitivity_instrument1_trim1798,sensitivity,1,test_split_local,FPCR,ok,ok,True,14,4.719406879351419,2.8773873463690864,-0.5754459905006978,0.9101615764122972
+designated_benchmark,sensitivity_instrument1_savgol_smooth,sensitivity,1,test_split_local,CG-FPLS-code,ok,ok,True,3,5.340826426330487,3.716537009562561,0.01339225571829985,0.8849453414414669
+designated_benchmark,sensitivity_instrument1_savgol_smooth,sensitivity,1,test_split_local,Raw FPLS,ok,ok,True,18,4.662871198923878,3.0556878640900407,-0.4970578007323903,0.9123011055445306
+designated_benchmark,sensitivity_instrument1_savgol_smooth,sensitivity,1,test_split_local,Arnoldi FPLS,ok,ok,True,9,4.95314843481133,3.0420517952425588,-0.4910629512483037,0.9010422149117103
+designated_benchmark,sensitivity_instrument1_savgol_smooth,sensitivity,1,test_split_local,FPCR,ok,ok,True,27,4.82346013608771,3.053281321167386,-0.44396099191503136,0.9061563983424117
+designated_benchmark,sensitivity_instrument2_full,sensitivity,2,test_split_local,CG-FPLS-code,ok,ok,True,3,6.763588075793093,5.099940253485328,1.0222265866221683,0.8154807928857457
+designated_benchmark,sensitivity_instrument2_full,sensitivity,2,test_split_local,Raw FPLS,ok,ok,True,53,5.041971725436889,3.241722341201236,-0.6012157747167783,0.897461232746333
+designated_benchmark,sensitivity_instrument2_full,sensitivity,2,test_split_local,Arnoldi FPLS,ok,ok,True,5,5.0954611447474525,3.2788294672309752,-0.561814447584984,0.8952740596525285
+designated_benchmark,sensitivity_instrument2_full,sensitivity,2,test_split_local,FPCR,ok,ok,True,37,6.395008438840214,4.149674937139447,-0.9210329619569182,0.8350434655610435

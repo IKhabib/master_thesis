@@ -1,0 +1,197 @@
+\documentclass[12pt,a4paper,oneside]{report}
+
+% -----------------------------------------------------------------------------
+% Thesis metadata: complete author_details.tex before final submission.
+% -----------------------------------------------------------------------------
+\newcommand{\ThesisTitle}{Regularisation in Functional Linear Regression:\ Theory, Methods, and Applications}
+\input{author_details}
+
+% -----------------------------------------------------------------------------
+% Language, typography, mathematics, figures, and tables.
+% -----------------------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[british]{babel}
+\usepackage{microtype}
+\usepackage[a4paper,left=3cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{setspace}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{subcaption}
+\usepackage{csquotes}
+\usepackage{xcolor}
+
+% -----------------------------------------------------------------------------
+% References. BibLaTeX/Biber is preferred. A Natbib/BibTeX fallback keeps the
+% project buildable on minimal TeX installations without changing citations.
+% -----------------------------------------------------------------------------
+\newif\ifusebiblatex
+\ifdefined\UseBibTeX
+    \usebiblatexfalse
+\else
+    \IfFileExists{biblatex.sty}{\usebiblatextrue}{\usebiblatexfalse}
+\fi
+\ifusebiblatex
+    \usepackage[
+        backend=biber,
+        style=authoryear,
+        maxcitenames=2,
+        maxbibnames=99,
+        giveninits=true,
+        uniquename=init,
+        doi=true,
+        isbn=false,
+        url=true
+    ]{biblatex}
+    \addbibresource{thesis_bibliography.bib}
+\else
+    % Minimal-TeX fallback: map T1 text through scalable Computer Modern fonts.
+    \usepackage{ae}
+    \pdfmapfile{+cmextra.map}
+    \pdfmapfile{+symbols.map}
+    \renewcommand{\labelitemi}{\(\bullet\)}
+    \usepackage[authoryear,round]{natbib}
+    \usepackage{xurl}
+    \newcommand{\textcite}{\citet}
+    \newcommand{\parencite}{\citep}
+\fi
+
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+    pdftitle={\ThesisTitle},
+    pdfauthor={\ThesisAuthor}
+}
+
+\graphicspath{{figures/}}
+\onehalfspacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\theoremstyle{plain}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{corollary}[definition]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+
+\newcommand{\chapterdraftnotice}[1]{%
+    \begin{quote}
+        \itshape #1
+    \end{quote}
+}
+
+\begin{document}
+
+% -----------------------------------------------------------------------------
+% Front matter.
+% -----------------------------------------------------------------------------
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+    \centering
+    \vspace*{1.2cm}
+
+    {\Large Master's Thesis\par}
+    \vspace{1.4cm}
+    {\huge\bfseries \ThesisTitle\par}
+
+    \vfill
+    {\large
+        Presented to the\\
+        \DepartmentName\\
+        \UniversityName\par
+    }
+
+    \vspace{1.3cm}
+    {\large
+        In partial fulfilment of the requirements for the degree of\\
+        \DegreeName\par
+    }
+
+    \vfill
+    \begin{tabular}{@{}ll@{}}
+        Author: & \ThesisAuthor \\
+        Matriculation number: & \MatriculationNumber \\
+        Supervisor: & \SupervisorName \\
+        Submission date: & \SubmissionDate
+    \end{tabular}
+
+    \vspace*{1cm}
+\end{titlepage}
+\hypersetup{pageanchor=true}
+
+\pagenumbering{roman}
+\input{frontmatter/abstract}
+\clearpage
+% Add any institution-required declaration or acknowledgements here.
+% Their wording must follow the author's own university requirements.
+\tableofcontents
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
+\begingroup
+\small
+\singlespacing
+\setlength{\parskip}{0pt}
+\listoffigures
+\endgroup
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listtablename}
+\begingroup
+\small
+\singlespacing
+\setlength{\parskip}{0pt}
+\listoftables
+\endgroup
+\clearpage
+
+% -----------------------------------------------------------------------------
+% Main matter. Chapters 1--9 are complete; each chapter remains in a separate
+% source file for maintainability.
+% -----------------------------------------------------------------------------
+\pagenumbering{arabic}
+\input{chapters/01_introduction}
+\input{chapters/02_background}
+\input{chapters/03_methods}
+\input{chapters/04_simulation_design}
+\input{chapters/05_estimation_results}
+\input{chapters/06_inference_methodology}
+\input{chapters/07_inference_results}
+\input{chapters/08_spectroscopy_application}
+\input{chapters/09_conclusion}
+
+\clearpage
+\ifusebiblatex
+    \printbibliography[heading=bibintoc,title={References}]
+\else
+    \renewcommand{\bibname}{References}
+    \phantomsection
+    \addcontentsline{toc}{chapter}{References}
+    \bibliographystyle{plainnat}
+    \bibliography{thesis_bibliography}
+\fi
+
+% -----------------------------------------------------------------------------
+% Appendices are placed after the references, following the structure of the
+% reference thesis.  Appendix A contains mathematical proofs; Appendix B
+% contains the detailed simulation diagnostics supporting Chapter 5,
+% Appendix C retains the supplementary inference display supporting Chapter 7,
+% and Appendix D contains the complete spectroscopy analysis supporting the
+% compact empirical Chapter 8.
+% -----------------------------------------------------------------------------
+\clearpage
+\appendix
+\input{appendices/a_mathematical_proofs}
+\input{appendices/b_simulation_diagnostics}
+\input{appendices/c_inference_diagnostics}
+\input{appendices/d_spectroscopy_supplement}
+
+\end{document}

@@ -1,0 +1,5 @@
+method,fits,failures,selected_min,selected_q25,selected_median,selected_q75,selected_max,selected_at_cap_rate,instability_rate
+CG-FPLS-code,25,0,3.0,3.0,3.0,3.0,3.0,0.0,0.0
+Raw FPLS,25,0,4.0,34.0,44.0,63.0,70.0,0.08,0.96
+Arnoldi FPLS,25,0,4.0,5.0,5.0,6.0,6.0,0.0,0.0
+FPCR,25,0,7.0,12.0,21.0,39.0,57.0,0.0,0.0

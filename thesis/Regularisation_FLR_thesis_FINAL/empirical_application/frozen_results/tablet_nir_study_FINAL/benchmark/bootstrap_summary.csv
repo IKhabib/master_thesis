@@ -1,0 +1,641 @@
+scheme,result_type,method_left,method_right,contrast_label,metric,estimate,ci_lower,ci_upper,confidence,replicates,finite_replicates,variant,variant_role,contrast_scope
+iid,method_metric,CG-FPLS-code,,,rmse,5.292926323157189,4.367254742853995,6.476672822908716,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+iid,method_metric,CG-FPLS-code,,,mae,3.673027051020165,3.349445772487828,4.044962793404738,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+iid,method_metric,CG-FPLS-code,,,bias,0.17704974768264442,-0.32082019426165626,0.6524385108509348,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+iid,method_metric,CG-FPLS-code,,,r2,0.8869998610336582,0.831572078119768,0.9235657702980142,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+iid,method_metric,Raw FPLS,,,rmse,4.606641496496936,3.6452081670415275,5.784762099803444,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+iid,method_metric,Raw FPLS,,,mae,3.035924610107879,2.7458629818570355,3.3807563705649413,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+iid,method_metric,Raw FPLS,,,bias,-0.3030719091320316,-0.7277985567114296,0.09718767486259017,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+iid,method_metric,Raw FPLS,,,r2,0.9144034795054297,0.8651994712106592,0.9467947718410502,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+iid,method_metric,Arnoldi FPLS,,,rmse,4.642890850327838,3.6932717170162817,5.8049515439230985,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+iid,method_metric,Arnoldi FPLS,,,mae,3.0857567232311407,2.7946075718162646,3.430389312145025,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+iid,method_metric,Arnoldi FPLS,,,bias,-0.3009259960435098,-0.7300554754573177,0.1050445594957278,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+iid,method_metric,Arnoldi FPLS,,,r2,0.9130510727699263,0.8638825387205981,0.9453957032442747,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+iid,method_metric,FPCR,,,rmse,5.184853201162265,4.299360081833107,6.254510644119606,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+iid,method_metric,FPCR,,,mae,3.5470971055223135,3.228617984793734,3.9129577694061712,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+iid,method_metric,FPCR,,,bias,-0.6277393536954069,-1.0926112039021503,-0.16980651525855198,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+iid,method_metric,FPCR,,,r2,0.8915673155715959,0.8419662928124304,0.9259583241244538,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,-0.03624935383090211,-0.056521126089370856,-0.016913048787824538,0.95,10000,10000,primary_instrument1_full,primary,focal
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,-0.049832113123261745,-0.06484410089290289,-0.03463143569566416,0.95,10000,10000,primary_instrument1_full,primary,focal
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,-0.0021459130885218003,-0.017847222514393524,0.013418569332759355,0.95,10000,10000,primary_instrument1_full,primary,focal
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,0.0013524067355034086,0.0007145694144226417,0.00198662426951047,0.95,10000,10000,primary_instrument1_full,primary,focal
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,0.6500354728293507,0.3973242142715794,0.920779085370502,0.95,10000,10000,primary_instrument1_full,primary,secondary
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,0.5872703277890241,0.3159371965793602,0.8548915364209955,0.95,10000,10000,primary_instrument1_full,primary,secondary
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,0.4779757437261542,0.14395036925119511,0.814602495071364,0.95,10000,10000,primary_instrument1_full,primary,secondary
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.02605121173626801,-0.03831225221185918,-0.01495157580585484,0.95,10000,10000,primary_instrument1_full,primary,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,0.5419623508344271,0.2855147378250177,0.8442165254916416,0.95,10000,10000,primary_instrument1_full,primary,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.4613403822911728,0.23288962739883098,0.6978120136487029,0.95,10000,10000,primary_instrument1_full,primary,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,-0.3268133576518971,-0.6011410749743589,-0.05454090523296962,0.95,10000,10000,primary_instrument1_full,primary,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,-0.0214837571983304,-0.03346409473323475,-0.011277501919465742,0.95,10000,10000,primary_instrument1_full,primary,secondary
+iid,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,rmse,0.6862848266602528,0.44460377433063053,0.9515090410131622,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+iid,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,mae,0.6371024409122859,0.371287681680117,0.8983512989592921,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+iid,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,bias,0.480121656814676,0.15673197307497064,0.8074100238628933,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+iid,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,r2,-0.027403618471771418,-0.039288566472480205,-0.016679722833504662,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+iid,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,rmse,0.10807312199492358,-0.30055123547779483,0.49982511438873195,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+iid,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,mae,0.1259299454978513,-0.20750356661525735,0.4629477285229158,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+iid,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,bias,0.8047891013780513,0.36041291052346214,1.261002867980016,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+iid,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,r2,-0.00456745453793761,-0.021857274051082703,0.012378899698409959,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+iid,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,rmse,-0.5782117046653292,-0.8899558921028162,-0.3076080525383355,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+iid,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,mae,-0.5111724954144345,-0.7487901838862959,-0.28347366202788904,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+iid,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,bias,0.3246674445633753,0.05007680187072641,0.6010923662117859,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+iid,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,r2,0.02283616393383381,0.012502509315581285,0.03501328441691488,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_5,method_metric,CG-FPLS-code,,,rmse,5.292926323157189,4.281218238273625,6.483594290431713,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_5,method_metric,CG-FPLS-code,,,mae,3.673027051020165,3.302628590275684,4.0918228367383005,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_5,method_metric,CG-FPLS-code,,,bias,0.17704974768264442,-0.4511598804334454,0.8037672604463058,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_5,method_metric,CG-FPLS-code,,,r2,0.8869998610336582,0.8316207182883395,0.9257405351167224,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_5,method_metric,Raw FPLS,,,rmse,4.606641496496936,3.556490095884421,5.794725090325097,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_5,method_metric,Raw FPLS,,,mae,3.035924610107879,2.6723901477300074,3.4426155179859834,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_5,method_metric,Raw FPLS,,,bias,-0.3030719091320316,-0.911109543074189,0.28884560875701737,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_5,method_metric,Raw FPLS,,,r2,0.9144034795054297,0.8649375344638462,0.949330394296469,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_5,method_metric,Arnoldi FPLS,,,rmse,4.642890850327838,3.603139448092425,5.820784017627211,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_5,method_metric,Arnoldi FPLS,,,mae,3.0857567232311407,2.721880392335384,3.4918734115963224,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_5,method_metric,Arnoldi FPLS,,,bias,-0.3009259960435098,-0.9119587685897234,0.2982371018936705,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_5,method_metric,Arnoldi FPLS,,,r2,0.9130510727699263,0.8638358381085853,0.9479740721226655,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_5,method_metric,FPCR,,,rmse,5.184853201162265,4.165755746999629,6.305834376586794,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_5,method_metric,FPCR,,,mae,3.5470971055223135,3.156600582218998,3.991243090403534,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_5,method_metric,FPCR,,,bias,-0.6277393536954069,-1.2848778475649525,0.02632389754833423,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_5,method_metric,FPCR,,,r2,0.8915673155715959,0.8382599813495577,0.9309234695328453,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,-0.03624935383090211,-0.05952273220819665,-0.015754730679992918,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,-0.049832113123261745,-0.06882033330034394,-0.030406616636139607,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,-0.0021459130885218003,-0.022023378375659,0.01783862590624075,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,0.0013524067355034086,0.0006423770793459128,0.002157248746914922,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,0.6500354728293507,0.3285722247181775,0.9783301504432851,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,0.5872703277890241,0.23320953676172998,0.9244753868954834,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,0.4779757437261542,0.03552694940850904,0.9001845539152079,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.02605121173626801,-0.039550063954172425,-0.012859414026157064,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,0.5419623508344271,0.24032759302263626,0.8838797402724362,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.4613403822911728,0.18984090358248318,0.7392463396298031,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,-0.3268133576518971,-0.6875456165518243,0.027624858412622348,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,-0.0214837571983304,-0.03656286297810126,-0.009311719315776693,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,rmse,0.6862848266602528,0.37753592980901307,1.0102587976478938,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,mae,0.6371024409122859,0.2875691587664738,0.9663597636783483,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,bias,0.480121656814676,0.0499492507505891,0.8911996861435527,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,r2,-0.027403618471771418,-0.04048239540213748,-0.014785409590913363,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,rmse,0.10807312199492358,-0.41654882239690394,0.58969977321796,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,mae,0.1259299454978513,-0.30778361014065786,0.5405413431963606,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,bias,0.8047891013780513,0.21344839196715337,1.4017559243312514,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,r2,-0.00456745453793761,-0.02503374913501683,0.018159558343376594,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_5,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,rmse,-0.5782117046653292,-0.935248462803509,-0.2635967675844227,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_5,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,mae,-0.5111724954144345,-0.7938450016963958,-0.2379739334530712,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_5,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,bias,0.3246674445633753,-0.035327989294854,0.6900513643488511,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_5,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,r2,0.02283616393383381,0.010377433607789952,0.03835660646755524,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_10,method_metric,CG-FPLS-code,,,rmse,5.292926323157189,4.245696358861272,6.448414965711557,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_10,method_metric,CG-FPLS-code,,,mae,3.673027051020165,3.2788392197779745,4.112922784496309,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_10,method_metric,CG-FPLS-code,,,bias,0.17704974768264442,-0.5727013743010858,0.9338410985926888,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_10,method_metric,CG-FPLS-code,,,r2,0.8869998610336582,0.8337015128900458,0.9271914767712857,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_10,method_metric,Raw FPLS,,,rmse,4.606641496496936,3.523200741021712,5.755461620680088,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_10,method_metric,Raw FPLS,,,mae,3.035924610107879,2.6348536425834364,3.4682158693251424,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_10,method_metric,Raw FPLS,,,bias,-0.3030719091320316,-1.0227150268308203,0.4546297126073675,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_10,method_metric,Raw FPLS,,,r2,0.9144034795054297,0.8663567469015901,0.9506748724395409,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_10,method_metric,Arnoldi FPLS,,,rmse,4.642890850327838,3.576494575374981,5.774331318685509,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_10,method_metric,Arnoldi FPLS,,,mae,3.0857567232311407,2.680491211989439,3.5193018225211694,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_10,method_metric,Arnoldi FPLS,,,bias,-0.3009259960435098,-1.026816218227295,0.4637869422355383,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_10,method_metric,Arnoldi FPLS,,,r2,0.9130510727699263,0.865099079060399,0.9493944444721488,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_10,method_metric,FPCR,,,rmse,5.184853201162265,4.14674208338634,6.275335461928867,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_10,method_metric,FPCR,,,mae,3.5470971055223135,3.1246615405280123,4.010945273437919,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_10,method_metric,FPCR,,,bias,-0.6277393536954069,-1.3811335696313851,0.1479829915399775,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_10,method_metric,FPCR,,,r2,0.8915673155715959,0.8375513786156533,0.9320918867281217,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,-0.03624935383090211,-0.062199279585018585,-0.014085593100732157,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,-0.049832113123261745,-0.07197823640851594,-0.02741716224394386,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,-0.0021459130885218003,-0.024347520216819737,0.02027046879348086,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,0.0013524067355034086,0.0005502916741497028,0.0023532042436523763,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,0.6500354728293507,0.2565479749249288,1.0169142244832095,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,0.5872703277890241,0.1410519291493682,0.992092087570194,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,0.4779757437261542,-0.05377320761183991,0.9816418086316183,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.02605121173626801,-0.041502939295080706,-0.010546898252831987,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,0.5419623508344271,0.20148493568340833,0.9218196674105973,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.4613403822911728,0.1504374933847396,0.7579107248451543,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,-0.3268133576518971,-0.7158824200657923,0.09603014221490991,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,-0.0214837571983304,-0.04001271328030187,-0.00780775725557384,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,rmse,0.6862848266602528,0.306848532138783,1.0481537652250144,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,mae,0.6371024409122859,0.1976904260045726,1.033782247637314,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,bias,0.480121656814676,-0.03555768817441271,0.967919592963177,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,r2,-0.027403618471771418,-0.042485590794021484,-0.012449242187511507,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,rmse,0.10807312199492358,-0.5069775955249954,0.6538644308429785,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,mae,0.1259299454978513,-0.39106228282810385,0.6087450393501803,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,bias,0.8047891013780513,0.07047152833424584,1.4930327912530004,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,r2,-0.00456745453793761,-0.02790560432160216,0.022641880999854248,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_10,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,rmse,-0.5782117046653292,-0.9741607138345173,-0.22713857565026918,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_10,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,mae,-0.5111724954144345,-0.8118128116404508,-0.1936914781888792,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_10,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,bias,0.3246674445633753,-0.10499790225506783,0.7143500362243006,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_10,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,r2,0.02283616393383381,0.008750998248998743,0.04177699633947793,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_20,method_metric,CG-FPLS-code,,,rmse,5.292926323157189,4.2197089833376005,6.421913719000827,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_20,method_metric,CG-FPLS-code,,,mae,3.673027051020165,3.2437457213321914,4.130585180853836,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_20,method_metric,CG-FPLS-code,,,bias,0.17704974768264442,-0.7558249732806602,1.115647661172538,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_20,method_metric,CG-FPLS-code,,,r2,0.8869998610336582,0.8314807616311862,0.9264759835779526,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_20,method_metric,Raw FPLS,,,rmse,4.606641496496936,3.572951563547868,5.697444669990927,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_20,method_metric,Raw FPLS,,,mae,3.035924610107879,2.6162209015849403,3.470965418268223,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_20,method_metric,Raw FPLS,,,bias,-0.3030719091320316,-1.1826962111918289,0.5756609890318622,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_20,method_metric,Raw FPLS,,,r2,0.9144034795054297,0.8652370785755976,0.9492776568516406,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_20,method_metric,Arnoldi FPLS,,,rmse,4.642890850327838,3.6259843848002644,5.718466625454195,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_20,method_metric,Arnoldi FPLS,,,mae,3.0857567232311407,2.6651362166847012,3.52203289183035,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_20,method_metric,Arnoldi FPLS,,,bias,-0.3009259960435098,-1.1877179409257914,0.5854061910011219,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_20,method_metric,Arnoldi FPLS,,,r2,0.9130510727699263,0.8637667655495486,0.9480785248330135,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_20,method_metric,FPCR,,,rmse,5.184853201162265,4.213313444660199,6.2055817833477445,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_20,method_metric,FPCR,,,mae,3.5470971055223135,3.1454074791850455,4.00215506348277,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_20,method_metric,FPCR,,,bias,-0.6277393536954069,-1.5515581662679245,0.28689305179007224,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_20,method_metric,FPCR,,,r2,0.8915673155715959,0.8338689061113963,0.9299538500791777,0.95,10000,10000,primary_instrument1_full,primary,not_applicable
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,-0.03624935383090211,-0.06488688320086874,-0.011735770531914443,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,-0.049832113123261745,-0.07411713890302192,-0.025569660415806245,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,-0.0021459130885218003,-0.026054544450512956,0.022874385734255244,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,0.0013524067355034086,0.0004523597681481473,0.00264469763808556,0.95,10000,10000,primary_instrument1_full,primary,focal
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,0.6500354728293507,0.166375418800197,1.0686553229477762,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,0.5872703277890241,0.04341223387636531,1.0648524011995684,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,0.4779757437261542,-0.13761393581290668,1.0685518577644735,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.02605121173626801,-0.044536423249024334,-0.007252762725228941,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,0.5419623508344271,0.18860902570504567,0.938444762092533,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.4613403822911728,0.151255099836015,0.7613236965249737,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,-0.3268133576518971,-0.7629134531678481,0.1383851097918256,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,-0.0214837571983304,-0.04240854982838633,-0.007673649204919052,0.95,10000,10000,primary_instrument1_full,primary,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,rmse,0.6862848266602528,0.22124107839500734,1.0996054877793882,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,mae,0.6371024409122859,0.10141468937743779,1.1061759044342276,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,bias,0.480121656814676,-0.12460465828161389,1.053194066858695,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,r2,-0.027403618471771418,-0.04564086647019487,-0.009499028034991946,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,rmse,0.10807312199492358,-0.5921286884533196,0.6920222700816407,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,mae,0.1259299454978513,-0.4680859297271391,0.6367870979083718,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,bias,0.8047891013780513,-0.10995557851942447,1.6432496723266607,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,r2,-0.00456745453793761,-0.029854532980626597,0.027761595089915547,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_20,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,rmse,-0.5782117046653292,-0.9911008812966852,-0.2129437031160553,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_20,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,mae,-0.5111724954144345,-0.8144488420962056,-0.1988517782315554,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_20,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,bias,0.3246674445633753,-0.14728217610014185,0.7690630762842786,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+moving_block_20,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,r2,0.02283616393383381,0.008560748739627769,0.0444723716709002,0.95,10000,10000,primary_instrument1_full,primary,exploratory
+iid,method_metric,CG-FPLS-code,,,rmse,4.669187609482842,3.6371523513972597,5.926129134344963,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+iid,method_metric,CG-FPLS-code,,,mae,3.0069818435082505,2.710219918566644,3.3588447050367476,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+iid,method_metric,CG-FPLS-code,,,bias,-0.4564928712436365,-0.8892011481273022,-0.04519696991630597,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+iid,method_metric,CG-FPLS-code,,,r2,0.9120633475669111,0.8588351075806896,0.9467967544541466,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+iid,method_metric,Raw FPLS,,,rmse,4.766703216359799,3.7782651570766537,5.976569800611003,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+iid,method_metric,Raw FPLS,,,mae,3.1045728662252623,2.8016377376057604,3.457512795564438,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+iid,method_metric,Raw FPLS,,,bias,-0.4758696085545004,-0.916507542287183,-0.05021686154528168,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+iid,method_metric,Raw FPLS,,,r2,0.9083518915739742,0.8560410226189014,0.9428044065251504,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+iid,method_metric,Arnoldi FPLS,,,rmse,4.631892529272446,3.596278458853978,5.892188747322215,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+iid,method_metric,Arnoldi FPLS,,,mae,2.8460717100468402,2.5378057118935264,3.2101180391905793,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+iid,method_metric,Arnoldi FPLS,,,bias,-0.5128081338562093,-0.9347290857846867,-0.10363361961006295,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+iid,method_metric,Arnoldi FPLS,,,r2,0.9134625231315854,0.8594347856476585,0.9482805574386108,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+iid,method_metric,FPCR,,,rmse,4.719406879351419,3.7053572732357294,5.951010236157776,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+iid,method_metric,FPCR,,,mae,2.8773873463690864,2.5669128359586937,3.243708149502412,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+iid,method_metric,FPCR,,,bias,-0.5754459905006978,-1.0098438237917322,-0.1616485370372829,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+iid,method_metric,FPCR,,,r2,0.9101615764122972,0.8562650230544231,0.9451598076691761,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,0.1348106870873531,-0.025446234263903297,0.32227935868760677,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,focal
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,0.25850115617842206,0.07102865828472044,0.44525627676002366,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,focal
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,0.03693852530170888,-0.1968868920625427,0.2701076327703777,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,focal
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,-0.005110631557611156,-0.011347879303442906,0.0010398731906805458,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,focal
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,0.03729508021039596,-0.13545032605190674,0.2169760390357481,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,0.16091013346141025,-0.037668669192038824,0.35905634397109076,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,0.05631526261257275,-0.19842352266383892,0.3064949543996278,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.001399175564674282,-0.007940521642998213,0.005037382845673063,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,0.08751435007897257,0.013505887823007993,0.17819093541627384,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.03131563632224621,-0.029778153270803496,0.09492745836668948,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,-0.06263785664448851,-0.1303073326397358,0.00442361358219678,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,-0.003300946719288156,-0.006588340010682955,-0.0005038263045875238,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+iid,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,rmse,-0.09751560687695715,-0.20774138354393046,-0.001756498665225723,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,mae,-0.09759102271701181,-0.1975610721495213,0.006093583523493057,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,bias,0.019376737310863867,-0.08783911711322762,0.12578689500724058,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,r2,0.003711455992936874,6.766860109237183e-05,0.007461504621491592,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,rmse,-0.05021926986857661,-0.24116005995342757,0.13534087230423414,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,mae,0.12959449713916404,-0.059720623985763645,0.3224908935620255,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,bias,0.11895311925706126,-0.11778662212312412,0.34982677800710216,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,r2,0.0019017711546138738,-0.004916158085489788,0.009028160717909633,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+iid,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,rmse,0.04729633700838054,-0.11524916269623452,0.22319664103838918,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+iid,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,mae,0.22718551985617585,0.0525452380508084,0.4032980564122469,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+iid,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,bias,0.09957638194619739,-0.11713853964165788,0.3171521368869075,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+iid,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,r2,-0.0018096848383230002,-0.007959045243945775,0.004610170985155087,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_5,method_metric,CG-FPLS-code,,,rmse,4.669187609482842,3.534290354640161,5.924630080143496,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_5,method_metric,CG-FPLS-code,,,mae,3.0069818435082505,2.6344772880289717,3.424558819258847,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_5,method_metric,CG-FPLS-code,,,bias,-0.4564928712436365,-1.0674556257862222,0.15295104576366003,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_5,method_metric,CG-FPLS-code,,,r2,0.9120633475669111,0.8584375181399367,0.9500690611217204,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_5,method_metric,Raw FPLS,,,rmse,4.766703216359799,3.6737807640557616,5.986242553383341,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_5,method_metric,Raw FPLS,,,mae,3.1045728662252623,2.7099086633029366,3.5419421439887127,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_5,method_metric,Raw FPLS,,,bias,-0.4758696085545004,-1.1301600707320218,0.16052482433481013,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_5,method_metric,Raw FPLS,,,r2,0.9083518915739742,0.8548023040033967,0.9461612841624002,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_5,method_metric,Arnoldi FPLS,,,rmse,4.631892529272446,3.4760425439151867,5.912965419959343,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_5,method_metric,Arnoldi FPLS,,,mae,2.8460717100468402,2.4491315070750797,3.2768247097660264,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_5,method_metric,Arnoldi FPLS,,,bias,-0.5128081338562093,-1.1130344433645936,0.07325560859836593,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_5,method_metric,Arnoldi FPLS,,,r2,0.9134625231315854,0.8588780828024202,0.9516525414137736,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_5,method_metric,FPCR,,,rmse,4.719406879351419,3.5635645137231804,5.996627460495149,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_5,method_metric,FPCR,,,mae,2.8773873463690864,2.4435098075305506,3.3521397818821597,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_5,method_metric,FPCR,,,bias,-0.5754459905006978,-1.2235083153575306,0.04064858875872399,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_5,method_metric,FPCR,,,r2,0.9101615764122972,0.8547229766653847,0.9494966331679447,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,0.1348106870873531,-0.06060626120484748,0.368911211364774,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,focal
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,0.25850115617842206,0.0290681910097867,0.49089295366822866,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,focal
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,0.03693852530170888,-0.2977495190132049,0.3559048675259575,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,focal
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,-0.005110631557611156,-0.013121611796818157,0.002386094066553615,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,focal
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,0.03729508021039596,-0.2142738709621517,0.3024146344868391,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,0.16091013346141025,-0.11126207805062835,0.4359820482165018,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,0.05631526261257275,-0.32188665728982474,0.4159571992064279,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.001399175564674282,-0.010880416178114194,0.008068368247841224,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,0.08751435007897257,-0.027221247831709056,0.22265410251018444,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.03131563632224621,-0.06173430884730743,0.1305189570959388,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,-0.06263785664448851,-0.1754745059182906,0.04564347343117133,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,-0.003300946719288156,-0.008623810171254341,0.000983940829420303,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,rmse,-0.09751560687695715,-0.24785882905063789,0.024219002801907554,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,mae,-0.09759102271701181,-0.23734369909240222,0.034316971012666175,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,bias,0.019376737310863867,-0.12894970831859617,0.16886856641210135,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,r2,0.003711455992936874,-0.0009220857037842004,0.009184408142187043,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,rmse,-0.05021926986857661,-0.3685448086416117,0.2547138263093906,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,mae,0.12959449713916404,-0.17194532821216174,0.4259120189752798,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,bias,0.11895311925706126,-0.24841580500449406,0.47956841349375096,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,r2,0.0019017711546138738,-0.00913707172706143,0.014294199374281858,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_5,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,rmse,0.04729633700838054,-0.17790134656096326,0.2967918029580385,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_5,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,mae,0.22718551985617585,-0.004356177936500119,0.45993958195885165,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_5,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,bias,0.09957638194619739,-0.2110578323930125,0.3958283926736482,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_5,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,r2,-0.0018096848383230002,-0.010473843898457267,0.007166482334905556,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_10,method_metric,CG-FPLS-code,,,rmse,4.669187609482842,3.499323375652366,5.893585706869073,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_10,method_metric,CG-FPLS-code,,,mae,3.0069818435082505,2.5993533692659536,3.4487988997490464,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_10,method_metric,CG-FPLS-code,,,bias,-0.4564928712436365,-1.1885451357566563,0.2960152406017619,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_10,method_metric,CG-FPLS-code,,,r2,0.9120633475669111,0.859594080060026,0.951201422846611,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_10,method_metric,Raw FPLS,,,rmse,4.766703216359799,3.6359261573499033,5.9467646495430815,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_10,method_metric,Raw FPLS,,,mae,3.1045728662252623,2.6585660249077323,3.5858789543632903,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_10,method_metric,Raw FPLS,,,bias,-0.4758696085545004,-1.2719409615472068,0.32727634679697676,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_10,method_metric,Raw FPLS,,,r2,0.9083518915739742,0.8553926828049769,0.9477944440664079,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_10,method_metric,Arnoldi FPLS,,,rmse,4.631892529272446,3.445072323347004,5.865438851054805,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_10,method_metric,Arnoldi FPLS,,,mae,2.8460717100468402,2.398097682592331,3.3312749340860113,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_10,method_metric,Arnoldi FPLS,,,bias,-0.5128081338562093,-1.2184645364477094,0.21418204942280725,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_10,method_metric,Arnoldi FPLS,,,r2,0.9134625231315854,0.8599562140286563,0.9528640191750972,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_10,method_metric,FPCR,,,rmse,4.719406879351419,3.508304168206547,5.949826159523249,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_10,method_metric,FPCR,,,mae,2.8773873463690864,2.367594502980001,3.4312708032730823,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_10,method_metric,FPCR,,,bias,-0.5754459905006978,-1.3550169335421514,0.1911594545626239,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_10,method_metric,FPCR,,,r2,0.9101615764122972,0.8548691127312195,0.9516261109720222,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,0.1348106870873531,-0.07661598144000885,0.38532273876712764,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,focal
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,0.25850115617842206,0.0009373464657883468,0.5228757385641731,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,focal
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,0.03693852530170888,-0.3745134916856409,0.41450789824515005,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,focal
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,-0.005110631557611156,-0.014174011229502828,0.003064225493274889,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,focal
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,0.03729508021039596,-0.2531941969066592,0.36035770860835875,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,0.16091013346141025,-0.1500157833052086,0.49588951682985094,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,0.05631526261257275,-0.4035120232255278,0.4666317725965176,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.001399175564674282,-0.013211307859836131,0.009795088138798187,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,0.08751435007897257,-0.05726462706640237,0.25561187863583107,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.03131563632224621,-0.08207567539714025,0.15572550530134113,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,-0.06263785664448851,-0.2096498276052999,0.07966592842685265,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,-0.003300946719288156,-0.01058403300729293,0.0020203035644417015,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,rmse,-0.09751560687695715,-0.2686698758583564,0.046343344534804175,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,mae,-0.09759102271701181,-0.25982440549307684,0.05823280852513221,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,bias,0.019376737310863867,-0.1489830166605196,0.20052864527096348,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,r2,0.003711455992936874,-0.0018062633456682375,0.010497481791175796,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,rmse,-0.05021926986857661,-0.4356933898604723,0.34005272240175677,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,mae,0.12959449713916404,-0.22922864916576652,0.4968480671538183,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,bias,0.11895311925706126,-0.3338233665725635,0.5379581838970352,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,r2,0.0019017711546138738,-0.012200455378820025,0.017343177631166995,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_10,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,rmse,0.04729633700838054,-0.20331270729834766,0.33792726071741963,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_10,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,mae,0.22718551985617585,-0.036987219027534476,0.5022976184427999,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_10,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,bias,0.09957638194619739,-0.28890654240309876,0.45309775979042827,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_10,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,r2,-0.0018096848383230002,-0.012151868086919704,0.008704468923653202,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_20,method_metric,CG-FPLS-code,,,rmse,4.669187609482842,3.553642908578531,5.845763542294874,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_20,method_metric,CG-FPLS-code,,,mae,3.0069818435082505,2.568282115119522,3.47040957937481,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_20,method_metric,CG-FPLS-code,,,bias,-0.4564928712436365,-1.3504381219553772,0.4467256212082802,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_20,method_metric,CG-FPLS-code,,,r2,0.9120633475669111,0.8589165258530285,0.9497766373624398,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_20,method_metric,Raw FPLS,,,rmse,4.766703216359799,3.679960857052957,5.895394096331601,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_20,method_metric,Raw FPLS,,,mae,3.1045728662252623,2.6313290971611374,3.612693469348944,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_20,method_metric,Raw FPLS,,,bias,-0.4758696085545004,-1.4444848803581294,0.48046096709613734,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_20,method_metric,Raw FPLS,,,r2,0.9083518915739742,0.8542558257869748,0.946606298028843,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_20,method_metric,Arnoldi FPLS,,,rmse,4.631892529272446,3.4846755300380314,5.811131735770867,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_20,method_metric,Arnoldi FPLS,,,mae,2.8460717100468402,2.3610412311722815,3.3736741937729895,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_20,method_metric,Arnoldi FPLS,,,bias,-0.5128081338562093,-1.3432995424924001,0.31181766739965633,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_20,method_metric,Arnoldi FPLS,,,r2,0.9134625231315854,0.8581269093046096,0.9519748168055622,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_20,method_metric,FPCR,,,rmse,4.719406879351419,3.5403403448647985,5.893940410754788,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_20,method_metric,FPCR,,,mae,2.8773873463690864,2.326156519938656,3.487440860535049,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_20,method_metric,FPCR,,,bias,-0.5754459905006978,-1.499098729513802,0.30662609016390796,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_20,method_metric,FPCR,,,r2,0.9101615764122972,0.8514340857949898,0.9504803914883668,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,not_applicable
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,0.1348106870873531,-0.0878272797802266,0.39182426333252574,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,focal
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,0.25850115617842206,-0.022611761074180996,0.5290328930518086,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,focal
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,0.03693852530170888,-0.4445620014134932,0.48934444763291246,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,focal
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,-0.005110631557611156,-0.015252749796023169,0.0034472097851480266,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,focal
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,0.03729508021039596,-0.28500638545476237,0.3722057219344909,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,0.16091013346141025,-0.1897111584084271,0.5169192519568575,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,0.05631526261257275,-0.4874853260120834,0.5425753541132375,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.001399175564674282,-0.014415409500837629,0.011536366427293152,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,0.08751435007897257,-0.08377055510391188,0.2927860225235149,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.03131563632224621,-0.0995595648605492,0.18155135643003206,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,-0.06263785664448851,-0.2535598406710091,0.10767198237979445,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,-0.003300946719288156,-0.013053991207215742,0.0029198129046350686,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,rmse,-0.09751560687695715,-0.2921408431734216,0.0560991580398189,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,mae,-0.09759102271701181,-0.2790647702400147,0.06581116625140479,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,bias,0.019376737310863867,-0.1602191799337721,0.22762189319512244,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,r2,0.003711455992936874,-0.002153949666767945,0.01218726319832963,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,rmse,-0.05021926986857661,-0.49285933307741564,0.3621985458202401,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,mae,0.12959449713916404,-0.27350909448277627,0.5216718557077596,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,bias,0.11895311925706126,-0.411381940139594,0.6082804568076194,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,r2,0.0019017711546138738,-0.01361586780836343,0.021058087514838134,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_20,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,rmse,0.04729633700838054,-0.22925929202871892,0.3481138997278707,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_20,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,mae,0.22718551985617585,-0.060258053545777616,0.5164677790556235,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_20,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,bias,0.09957638194619739,-0.3328792225216539,0.4951275465453619,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+moving_block_20,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,r2,-0.0018096848383230002,-0.012986135133936184,0.009949033193759362,0.95,10000,10000,sensitivity_instrument1_trim1798,sensitivity,exploratory
+iid,method_metric,CG-FPLS-code,,,rmse,5.340826426330487,4.401532741937877,6.52201304971745,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+iid,method_metric,CG-FPLS-code,,,mae,3.716537009562561,3.3912572235609946,4.094699539961675,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+iid,method_metric,CG-FPLS-code,,,bias,0.01339225571829985,-0.4854894841791253,0.4942684033366447,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+iid,method_metric,CG-FPLS-code,,,r2,0.8849453414414669,0.8286503674787195,0.9222203423923047,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+iid,method_metric,Raw FPLS,,,rmse,4.662871198923878,3.69641704098898,5.8639885358297015,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+iid,method_metric,Raw FPLS,,,mae,3.0556878640900407,2.7605538586205007,3.4061229395865045,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+iid,method_metric,Raw FPLS,,,bias,-0.4970578007323903,-0.9265535692798504,-0.08837639363135881,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+iid,method_metric,Raw FPLS,,,r2,0.9123011055445306,0.8614087228658314,0.9455180048402214,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+iid,method_metric,Arnoldi FPLS,,,rmse,4.95314843481133,3.984202889703925,6.145971681661758,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+iid,method_metric,Arnoldi FPLS,,,mae,3.0420517952425588,2.7090683821138284,3.420596780104721,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+iid,method_metric,Arnoldi FPLS,,,bias,-0.4910629512483037,-0.9478892429157967,-0.053405373642370996,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+iid,method_metric,Arnoldi FPLS,,,r2,0.9010422149117103,0.8470636992380405,0.9370374272414618,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+iid,method_metric,FPCR,,,rmse,4.82346013608771,3.8434176364524664,6.006596531817483,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+iid,method_metric,FPCR,,,mae,3.053281321167386,2.7409993284023457,3.4215458080586627,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+iid,method_metric,FPCR,,,bias,-0.44396099191503136,-0.8771524631509852,-0.017722292806957283,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+iid,method_metric,FPCR,,,r2,0.9061563983424117,0.853887291413489,0.9408518997893573,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,-0.29027723588745147,-0.5127727661918481,-0.08196452889456228,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,focal
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,0.01363606884748192,-0.18514961688486753,0.21245268433056816,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,focal
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,-0.005994849484086628,-0.23969209305526687,0.21889499965986273,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,focal
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,0.011258890632820262,0.0029647536949212404,0.020841542260391633,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,focal
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,0.3876779915191575,0.04158718800918071,0.7534370401691731,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,0.6744852143200024,0.34705931168492343,1.0072255446957774,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,0.5044552069666035,0.0929811294273422,0.9226562164372641,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.016096873470243467,-0.030507476465261633,-0.0017080757369966049,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,-0.12968829872361987,-0.2842310350083327,0.028479795356669654,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.0112295259248274,-0.12043058015818231,0.1452646268780092,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,0.047101959333272325,-0.09509991226257654,0.19201015421400847,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,0.005114183430701358,-0.0010488858940554567,0.011366381221033514,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+iid,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,rmse,0.677955227406609,0.43841481713396946,0.9480257644573952,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,mae,0.6608491454725205,0.4018875478844914,0.9226073253826795,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,bias,0.5104500564506902,0.19041948036967218,0.8374352995755224,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,r2,-0.02735576410306373,-0.0388137550767409,-0.016962448431135264,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,rmse,0.5173662902427774,0.20393582036179997,0.8423641097437643,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,mae,0.663255688395175,0.351036669063138,0.9722260415795003,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,bias,0.4573532476333312,0.044200921236308276,0.8783618233598721,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,r2,-0.021211056900944825,-0.03453828730541794,-0.00818281851559523,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+iid,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,rmse,-0.1605889371638316,-0.37954605103523437,0.03929842331865788,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+iid,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,mae,0.00240654292265452,-0.19670582795746774,0.19947810559023987,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+iid,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,bias,-0.053096808817358954,-0.2877659159577245,0.17660321055866207,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+iid,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,r2,0.006144707202118904,-0.0014084194781923487,0.014798932340214573,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_5,method_metric,CG-FPLS-code,,,rmse,5.340826426330487,4.320090627024392,6.539146716071221,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_5,method_metric,CG-FPLS-code,,,mae,3.716537009562561,3.348534910989642,4.1308590055552035,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_5,method_metric,CG-FPLS-code,,,bias,0.01339225571829985,-0.6364209456182208,0.6587603779829794,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_5,method_metric,CG-FPLS-code,,,r2,0.8849453414414669,0.8283161165997422,0.9247243376716292,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_5,method_metric,Raw FPLS,,,rmse,4.662871198923878,3.5891995997230035,5.865133493070321,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_5,method_metric,Raw FPLS,,,mae,3.0556878640900407,2.681984136570324,3.4732041934714517,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_5,method_metric,Raw FPLS,,,bias,-0.4970578007323903,-1.1233960378928667,0.11985215786410316,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_5,method_metric,Raw FPLS,,,r2,0.9123011055445306,0.860989184146406,0.9485662015374531,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_5,method_metric,Arnoldi FPLS,,,rmse,4.95314843481133,3.793019788306502,6.193859789639707,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_5,method_metric,Arnoldi FPLS,,,mae,3.0420517952425588,2.5499015250382633,3.580538127509744,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_5,method_metric,Arnoldi FPLS,,,bias,-0.4910629512483037,-1.2175801964530082,0.18846956167989778,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_5,method_metric,Arnoldi FPLS,,,r2,0.9010422149117103,0.8427884514658593,0.9433076684904431,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_5,method_metric,FPCR,,,rmse,4.82346013608771,3.699904350007589,6.056523632010456,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_5,method_metric,FPCR,,,mae,3.053281321167386,2.6464580460685205,3.5047763631398103,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_5,method_metric,FPCR,,,bias,-0.44396099191503136,-1.0720289384816795,0.16810269980473633,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_5,method_metric,FPCR,,,r2,0.9061563983424117,0.8514576652227657,0.9452061085272834,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,-0.29027723588745147,-0.6693798631638088,0.06900459807007607,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,focal
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,0.01363606884748192,-0.3084751756007974,0.3243978962248834,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,focal
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,-0.005994849484086628,-0.41317045654063755,0.394558619603715,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,focal
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,0.011258890632820262,-0.0024409227199278867,0.028592959772618005,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,focal
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,0.3876779915191575,-0.20803895936505024,0.9701103572684383,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,0.6744852143200024,0.11798733602973249,1.185414247439301,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,0.5044552069666035,-0.15406779657441627,1.1501652006948944,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.016096873470243467,-0.03727853989907322,0.009110589099290032,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,-0.12968829872361987,-0.3820921331673687,0.1127079204386673,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.0112295259248274,-0.19306662439998482,0.20568951842061478,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,0.047101959333272325,-0.16509650917927315,0.2637673291825418,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,0.005114183430701358,-0.004012406503389658,0.016457972325092593,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,rmse,0.677955227406609,0.36565561787342077,1.0047567216354423,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,mae,0.6608491454725205,0.3188871336632934,0.9871158268600903,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,bias,0.5104500564506902,0.09330149070037314,0.9087845325585026,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,r2,-0.02735576410306373,-0.04033381203102061,-0.014640784707083423,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,rmse,0.5173662902427774,0.09286565708898331,0.9664300982445466,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,mae,0.663255688395175,0.24005838096435472,1.074391107346529,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,bias,0.4573532476333312,-0.08714810946903881,0.9984346044672634,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,r2,-0.021211056900944825,-0.037687445940149646,-0.0038467014812280853,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_5,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,rmse,-0.1605889371638316,-0.41251889594895746,0.10290085834960162,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_5,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,mae,0.00240654292265452,-0.24012211851033072,0.2509281819782195,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_5,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,bias,-0.053096808817358954,-0.37825360210413855,0.2723796396432792,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_5,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,r2,0.006144707202118904,-0.0036059846424393817,0.016587839852872845,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_10,method_metric,CG-FPLS-code,,,rmse,5.340826426330487,4.285330457719196,6.492799453310457,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_10,method_metric,CG-FPLS-code,,,mae,3.716537009562561,3.3316095847124108,4.14580844922275,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_10,method_metric,CG-FPLS-code,,,bias,0.01339225571829985,-0.7541440470643167,0.7900473231713342,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_10,method_metric,CG-FPLS-code,,,r2,0.8849453414414669,0.8307673715216823,0.9258457893439971,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_10,method_metric,Raw FPLS,,,rmse,4.662871198923878,3.56287145030392,5.824453317500003,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_10,method_metric,Raw FPLS,,,mae,3.0556878640900407,2.6330691566016267,3.510902074106224,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_10,method_metric,Raw FPLS,,,bias,-0.4970578007323903,-1.252825152073671,0.286308620579883,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_10,method_metric,Raw FPLS,,,r2,0.9123011055445306,0.8616035527278099,0.9497607499516955,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_10,method_metric,Arnoldi FPLS,,,rmse,4.95314843481133,3.7093191588894787,6.174025952141512,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_10,method_metric,Arnoldi FPLS,,,mae,3.0420517952425588,2.457372811703904,3.700699858877786,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_10,method_metric,Arnoldi FPLS,,,bias,-0.4910629512483037,-1.3972896224547549,0.37166453602419686,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_10,method_metric,Arnoldi FPLS,,,r2,0.9010422149117103,0.8403792677848654,0.9460001836114984,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_10,method_metric,FPCR,,,rmse,4.82346013608771,3.6576644497812736,6.021709628794104,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_10,method_metric,FPCR,,,mae,3.053281321167386,2.589057205404641,3.5609489889438426,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_10,method_metric,FPCR,,,bias,-0.44396099191503136,-1.1791978995075632,0.2980635385127652,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_10,method_metric,FPCR,,,r2,0.9061563983424117,0.8513327881452463,0.9466852106657342,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,-0.29027723588745147,-0.764576049477837,0.18015508333819927,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,focal
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,0.01363606884748192,-0.4027499106027433,0.407263947437779,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,focal
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,-0.005994849484086628,-0.5397584087747753,0.4954802736021439,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,focal
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,0.011258890632820262,-0.006224684827807534,0.034100372861573996,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,focal
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,0.3876779915191575,-0.38103148755765687,1.1207804795470306,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,0.6744852143200024,-0.0575854042668124,1.332740313714127,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,0.5044552069666035,-0.3423802578214185,1.2948927677388242,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.016096873470243467,-0.04404684607658837,0.01787396756671257,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,-0.12968829872361987,-0.4500178396759703,0.1807833237106689,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.0112295259248274,-0.24971847814052048,0.25611414412706696,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,0.047101959333272325,-0.2180102201122291,0.32332233395901316,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,0.005114183430701358,-0.006271668324557686,0.020192074802753313,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,rmse,0.677955227406609,0.2913206057312846,1.0576136972597487,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,mae,0.6608491454725205,0.22835314757661612,1.0599354894816646,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,bias,0.5104500564506902,0.016421012865513823,0.979576726759855,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,r2,-0.02735576410306373,-0.04282021240663743,-0.012063777878315847,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,rmse,0.5173662902427774,-0.00712104062765445,1.0381566781000997,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,mae,0.663255688395175,0.13530239416682702,1.1516687174936004,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,bias,0.4573532476333312,-0.21055625461973096,1.081848954652241,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,r2,-0.021211056900944825,-0.04114212720001766,0.00033143073701960893,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_10,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,rmse,-0.1605889371638316,-0.4382680781656878,0.13029080969771026,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_10,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,mae,0.00240654292265452,-0.262424616948228,0.2855796263845302,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_10,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,bias,-0.053096808817358954,-0.4526583730586279,0.3228415490867441,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_10,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,r2,0.006144707202118904,-0.004734055312726024,0.018206334047576666,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_20,method_metric,CG-FPLS-code,,,rmse,5.340826426330487,4.278373353821407,6.474427301149782,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_20,method_metric,CG-FPLS-code,,,mae,3.716537009562561,3.305964292538876,4.167479987056267,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_20,method_metric,CG-FPLS-code,,,bias,0.01339225571829985,-0.9503714768393517,0.9813312900255556,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_20,method_metric,CG-FPLS-code,,,r2,0.8849453414414669,0.8280785337491362,0.9251616584668656,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_20,method_metric,Raw FPLS,,,rmse,4.662871198923878,3.614505497864836,5.765125626371838,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_20,method_metric,Raw FPLS,,,mae,3.0556878640900407,2.6043872837469073,3.5235790497879216,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_20,method_metric,Raw FPLS,,,bias,-0.4970578007323903,-1.4162437067501068,0.4218508978304618,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_20,method_metric,Raw FPLS,,,r2,0.9123011055445306,0.8604012901330835,0.9485908934467989,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_20,method_metric,Arnoldi FPLS,,,rmse,4.95314843481133,3.722041003588487,6.149854850758779,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_20,method_metric,Arnoldi FPLS,,,mae,3.0420517952425588,2.398891589720496,3.8013250841442265,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_20,method_metric,Arnoldi FPLS,,,bias,-0.4910629512483037,-1.5344596462709288,0.49895396403992653,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_20,method_metric,Arnoldi FPLS,,,r2,0.9010422149117103,0.8321566861912812,0.9460952578226518,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_20,method_metric,FPCR,,,rmse,4.82346013608771,3.711407079472348,5.958471421906498,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_20,method_metric,FPCR,,,mae,3.053281321167386,2.5631032779130782,3.597659427795644,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_20,method_metric,FPCR,,,bias,-0.44396099191503136,-1.3116829485237418,0.39924837301918326,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_20,method_metric,FPCR,,,r2,0.9061563983424117,0.848584970546288,0.9459154294031018,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,not_applicable
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,-0.29027723588745147,-0.8546753057325392,0.22455814564947535,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,focal
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,0.01363606884748192,-0.46856139152792003,0.4357163892956464,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,focal
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,-0.005994849484086628,-0.6654264332749956,0.6037650417071067,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,focal
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,0.011258890632820262,-0.007805011347463151,0.0410945725477323,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,focal
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,0.3876779915191575,-0.5777694113511511,1.2226301535105724,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,0.6744852143200024,-0.2413024492874762,1.4261580736066728,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,0.5044552069666035,-0.5535043612433833,1.4744436121406816,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.016096873470243467,-0.048221833386877515,0.028238982375677624,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,-0.12968829872361987,-0.5265753279840598,0.23525669228865037,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.0112295259248274,-0.32330893381278764,0.30266298667234426,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,0.047101959333272325,-0.2905374424250983,0.3671252910997295,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,0.005114183430701358,-0.008085423658164038,0.026192114481983372,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,rmse,0.677955227406609,0.19938152717026164,1.1102049179500881,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,mae,0.6608491454725205,0.1190990467501241,1.1325205618526306,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,bias,0.5104500564506902,-0.06453266476811784,1.059992970479919,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,r2,-0.02735576410306373,-0.045942802891001076,-0.008619782310268,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,rmse,0.5173662902427774,-0.09910203018980762,1.0642933348443484,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,mae,0.663255688395175,0.03272198690145765,1.2008620544401885,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,bias,0.4573532476333312,-0.34740624879457954,1.1927066423283494,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,r2,-0.021211056900944825,-0.0432013311188302,0.00449061380615983,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_20,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,rmse,-0.1605889371638316,-0.45703597078053176,0.150397727627783,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_20,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,mae,0.00240654292265452,-0.28292537070933554,0.3131792225657863,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_20,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,bias,-0.053096808817358954,-0.5109140236174344,0.38680687223637944,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+moving_block_20,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,r2,0.006144707202118904,-0.005596534898556758,0.019798067288351564,0.95,10000,10000,sensitivity_instrument1_savgol_smooth,sensitivity,exploratory
+iid,method_metric,CG-FPLS-code,,,rmse,6.763588075793093,5.998477956924072,7.6774004923313335,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+iid,method_metric,CG-FPLS-code,,,mae,5.099940253485328,4.708790819214472,5.5153807716533585,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+iid,method_metric,CG-FPLS-code,,,bias,1.0222265866221683,0.40775188939507007,1.6187333827270447,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+iid,method_metric,CG-FPLS-code,,,r2,0.8154807928857457,0.760565471644482,0.8564030685204076,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+iid,method_metric,Raw FPLS,,,rmse,5.041971725436889,4.065133073689093,6.225041341102164,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+iid,method_metric,Raw FPLS,,,mae,3.241722341201236,2.913908546191852,3.6166956951040965,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+iid,method_metric,Raw FPLS,,,bias,-0.6012157747167783,-1.0673651288051302,-0.15627012279100588,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+iid,method_metric,Raw FPLS,,,r2,0.897461232746333,0.8430244100796049,0.9340489356835386,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+iid,method_metric,Arnoldi FPLS,,,rmse,5.0954611447474525,4.1287806675155405,6.259676419469658,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+iid,method_metric,Arnoldi FPLS,,,mae,3.2788294672309752,2.944617228562238,3.654458988680133,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+iid,method_metric,Arnoldi FPLS,,,bias,-0.561814447584984,-1.0324879295670852,-0.11408578580926251,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+iid,method_metric,Arnoldi FPLS,,,r2,0.8952740596525285,0.8411895128312064,0.9318121227448785,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+iid,method_metric,FPCR,,,rmse,6.395008438840214,5.538393242305044,7.315049330216951,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+iid,method_metric,FPCR,,,mae,4.149674937139447,3.7238727436716177,4.603827344217428,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+iid,method_metric,FPCR,,,bias,-0.9210329619569182,-1.5013886206357137,-0.3642043282994181,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+iid,method_metric,FPCR,,,r2,0.8350434655610435,0.7791237559486499,0.8791512391725633,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,-0.05348941931056306,-0.11666718366307349,-0.002810114339719009,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,focal
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,-0.03710712602973931,-0.08982969136057614,0.014545090737151904,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,focal
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,-0.03940132713179434,-0.09412841422570684,0.01672679071098592,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,focal
+iid,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,0.002187173093804562,0.00011129157828734812,0.004564916030034996,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,focal
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,1.6681269310456406,1.1947675365217616,2.162909139733658,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,1.8211107862543527,1.4793276514140454,2.161795789592267,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,1.5840410342071523,1.0644707383807142,2.116768570914925,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+iid,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.07979326676678278,-0.10154597937159135,-0.060337942636650356,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,1.2995472940927613,0.7920215258625714,1.8371160785155967,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.8708454699084718,0.6205971349822713,1.12148832327218,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,-0.3592185143719342,-0.6474955175568375,-0.07909351669338638,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+iid,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,-0.06023059409148501,-0.08786079718695657,-0.03676367119991201,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+iid,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,rmse,1.7216163503562036,1.2432332426240522,2.218033053234893,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,mae,1.858217912284092,1.5245211309135709,2.193450459178054,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,bias,1.6234423613389466,1.1189644477937124,2.1352980493464773,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,r2,-0.08198043986058734,-0.10366288504363656,-0.062419978302487356,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,rmse,0.3685796369528793,-0.26751784049867494,0.9996683702991195,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,mae,0.950265316345881,0.47574028298432325,1.4173360928885488,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,bias,1.9432595485790864,1.2525818538425482,2.6481385096917816,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+iid,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,r2,-0.019562672675297765,-0.05155481615432261,0.014823336814552269,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+iid,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,rmse,-1.3530367134033243,-1.9196582812152978,-0.8232234474958133,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+iid,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,mae,-0.9079525959382111,-1.1726404982250347,-0.6437875445005433,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+iid,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,bias,0.31981718724013986,0.021506973762955517,0.6245364515436844,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+iid,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,r2,0.062417767185289574,0.03803394121208295,0.09109424100592083,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_5,method_metric,CG-FPLS-code,,,rmse,6.763588075793093,5.831164814277012,7.834102747473651,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_5,method_metric,CG-FPLS-code,,,mae,5.099940253485328,4.637808886647373,5.631596762295061,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_5,method_metric,CG-FPLS-code,,,bias,1.0222265866221683,0.18085304949033135,1.8672032209451048,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_5,method_metric,CG-FPLS-code,,,r2,0.8154807928857457,0.7509605289350589,0.8626805659644946,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_5,method_metric,Raw FPLS,,,rmse,5.041971725436889,3.875394901857677,6.288444968162185,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_5,method_metric,Raw FPLS,,,mae,3.241722341201236,2.773710812708912,3.757796047249783,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_5,method_metric,Raw FPLS,,,bias,-0.6012157747167783,-1.3229330419738872,0.09794484243102133,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_5,method_metric,Raw FPLS,,,r2,0.897461232746333,0.8390495221805736,0.9400779176239409,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_5,method_metric,Arnoldi FPLS,,,rmse,5.0954611447474525,3.9527624423653274,6.328935771959952,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_5,method_metric,Arnoldi FPLS,,,mae,3.2788294672309752,2.8026425662024472,3.8064131051533803,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_5,method_metric,Arnoldi FPLS,,,bias,-0.561814447584984,-1.2909584331506847,0.1481671663427892,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_5,method_metric,Arnoldi FPLS,,,r2,0.8952740596525285,0.8367955220860908,0.9379775045411771,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_5,method_metric,FPCR,,,rmse,6.395008438840214,5.142947024830548,7.574349819596668,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_5,method_metric,FPCR,,,mae,4.149674937139447,3.4684659772406365,4.932215372843113,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_5,method_metric,FPCR,,,bias,-0.9210329619569182,-1.9544733353377453,0.031681556013554275,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_5,method_metric,FPCR,,,r2,0.8350434655610435,0.7535119259442514,0.8969638323447408,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,-0.05348941931056306,-0.12414206329587481,0.003077467476726292,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,focal
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,-0.03710712602973931,-0.09119955437722091,0.014374365324377504,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,focal
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,-0.03940132713179434,-0.10017383534800887,0.023394810671057708,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,focal
+moving_block_5,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,0.002187173093804562,-0.00012502433646032615,0.005012534645715188,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,focal
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,1.6681269310456406,1.1339641346607836,2.2458979601478015,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,1.8211107862543527,1.3378379125043893,2.2906021132245686,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,1.5840410342071523,0.7296555303109088,2.4812805269261164,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.07979326676678278,-0.10511969135233713,-0.05679986192795466,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,1.2995472940927613,0.5437523001181921,2.131940681360957,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.8708454699084718,0.48725175930311254,1.299174637946496,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,-0.3592185143719342,-0.8359154444585767,0.0776486489338335,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_5,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,-0.06023059409148501,-0.11115434660372768,-0.023544086812512407,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_5,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,rmse,1.7216163503562036,1.1958658636515516,2.29446316596844,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,mae,1.858217912284092,1.3865710655633945,2.3123629498472553,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,bias,1.6234423613389466,0.7857650042460458,2.4994112169591993,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,r2,-0.08198043986058734,-0.10679309829263746,-0.05990307873745044,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,rmse,0.3685796369528793,-0.7480993346950423,1.4391390361259802,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,mae,0.950265316345881,0.14244287230301392,1.6901075031631971,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,bias,1.9432595485790864,0.7979121644598578,3.191509555768042,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_5,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,r2,-0.019562672675297765,-0.07083440861457942,0.04365871961112266,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_5,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,rmse,-1.3530367134033243,-2.240008262126279,-0.5533144947977049,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_5,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,mae,-0.9079525959382111,-1.35917215514183,-0.5021660000387135,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_5,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,bias,0.31981718724013986,-0.14470170275196367,0.8273928809809532,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_5,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,r2,0.062417767185289574,0.02411625184208267,0.11527320619325838,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_10,method_metric,CG-FPLS-code,,,rmse,6.763588075793093,5.72179773112137,7.883096912740347,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_10,method_metric,CG-FPLS-code,,,mae,5.099940253485328,4.564487873569976,5.701716100483368,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_10,method_metric,CG-FPLS-code,,,bias,1.0222265866221683,-0.0281327256866142,2.0411089276270453,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_10,method_metric,CG-FPLS-code,,,r2,0.8154807928857457,0.7482231769131173,0.866591574579424,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_10,method_metric,Raw FPLS,,,rmse,5.041971725436889,3.812758091237383,6.275732412635087,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_10,method_metric,Raw FPLS,,,mae,3.241722341201236,2.7002027375454443,3.8437189110953973,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_10,method_metric,Raw FPLS,,,bias,-0.6012157747167783,-1.49302536300515,0.28817786065216905,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_10,method_metric,Raw FPLS,,,r2,0.897461232746333,0.8376734655003969,0.9428861404921127,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_10,method_metric,Arnoldi FPLS,,,rmse,5.0954611447474525,3.8842933869048673,6.316937984662813,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_10,method_metric,Arnoldi FPLS,,,mae,3.2788294672309752,2.7230142854595516,3.8934052290703813,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_10,method_metric,Arnoldi FPLS,,,bias,-0.561814447584984,-1.4709951220420583,0.3311881426018755,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_10,method_metric,Arnoldi FPLS,,,r2,0.8952740596525285,0.834695109285334,0.9409260268895682,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_10,method_metric,FPCR,,,rmse,6.395008438840214,4.877568884236905,7.801097822351122,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_10,method_metric,FPCR,,,mae,4.149674937139447,3.3112473733962013,5.1334195995379615,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_10,method_metric,FPCR,,,bias,-0.9210329619569182,-2.21688731747199,0.23966239296347397,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_10,method_metric,FPCR,,,r2,0.8350434655610435,0.7293018952947017,0.9079190108507462,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,-0.05348941931056306,-0.12899145462327452,0.008214628152960817,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,focal
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,-0.03710712602973931,-0.0899002519854587,0.01582048350141283,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,focal
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,-0.03940132713179434,-0.10858404264412483,0.02895092207408984,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,focal
+moving_block_10,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,0.002187173093804562,-0.0003257336549370991,0.00547573412494372,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,focal
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,1.6681269310456406,1.0491349111307489,2.2947818451465025,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,1.8211107862543527,1.2126285651181314,2.3852306962523446,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,1.5840410342071523,0.4697007265719048,2.7667384842786067,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.07979326676678278,-0.10864659486353132,-0.05296930015987986,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,1.2995472940927613,0.35627742906214654,2.285772621362375,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.8708454699084718,0.39005392022360996,1.4096898453391116,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,-0.3592185143719342,-0.9498536771266926,0.177718116759046,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_10,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,-0.06023059409148501,-0.12846271698666042,-0.013903763105507911,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_10,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,rmse,1.7216163503562036,1.126780859230136,2.333394238335048,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,mae,1.858217912284092,1.2736604342482591,2.4084961888959624,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,bias,1.6234423613389466,0.5378461605159585,2.781376587919207,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,r2,-0.08198043986058734,-0.10979891607663682,-0.05630945585647053,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,rmse,0.3685796369528793,-1.0512342400934311,1.7170885048678404,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,mae,0.950265316345881,-0.07167126648173636,1.8541811506926158,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,bias,1.9432595485790864,0.4710303287039734,3.5911083204460983,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_10,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,r2,-0.019562672675297765,-0.08208256895205901,0.06468967273172813,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_10,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,rmse,-1.3530367134033243,-2.4012436284155965,-0.3613433560770433,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_10,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,mae,-0.9079525959382111,-1.4828842033484124,-0.39527374441815794,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_10,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,bias,0.31981718724013986,-0.25738791944847034,0.9525328500980798,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_10,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,r2,0.062417767185289574,0.014114159123276992,0.1333914276320821,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_20,method_metric,CG-FPLS-code,,,rmse,6.763588075793093,5.624750200508705,7.97244859345609,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_20,method_metric,CG-FPLS-code,,,mae,5.099940253485328,4.502536226400676,5.792586171157032,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_20,method_metric,CG-FPLS-code,,,bias,1.0222265866221683,-0.3042034578840256,2.339623264013114,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_20,method_metric,CG-FPLS-code,,,r2,0.8154807928857457,0.7377177995065033,0.8684835880971485,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_20,method_metric,Raw FPLS,,,rmse,5.041971725436889,3.8440317287370345,6.2172731060927315,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_20,method_metric,Raw FPLS,,,mae,3.241722341201236,2.6509291610136074,3.9070877111742646,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_20,method_metric,Raw FPLS,,,bias,-0.6012157747167783,-1.6775742784947263,0.46008312886658254,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_20,method_metric,Raw FPLS,,,r2,0.897461232746333,0.8335207195237361,0.9420975808381362,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_20,method_metric,Arnoldi FPLS,,,rmse,5.0954611447474525,3.9029754588841272,6.261062155063951,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_20,method_metric,Arnoldi FPLS,,,mae,3.2788294672309752,2.6769513370653293,3.9624711195459663,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_20,method_metric,Arnoldi FPLS,,,bias,-0.561814447584984,-1.647798215751376,0.499210383458996,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_20,method_metric,Arnoldi FPLS,,,r2,0.8952740596525285,0.829937662147013,0.9404451907604102,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_20,method_metric,FPCR,,,rmse,6.395008438840214,4.754950298834558,7.979723107538509,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_20,method_metric,FPCR,,,mae,4.149674937139447,3.2160622234275777,5.336418145979747,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_20,method_metric,FPCR,,,bias,-0.9210329619569182,-2.48525876857419,0.43041172812551676,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_20,method_metric,FPCR,,,r2,0.8350434655610435,0.6911335590792685,0.9143889190101873,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,not_applicable
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,rmse,-0.05348941931056306,-0.13930194696315001,0.011542917853188504,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,focal
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,mae,-0.03710712602973931,-0.09276444470234914,0.015241813581003804,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,focal
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,bias,-0.03940132713179434,-0.11747466613052235,0.038910615568769145,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,focal
+moving_block_20,method_contrast,Raw FPLS,Arnoldi FPLS,Raw FPLS - Arnoldi FPLS,r2,0.002187173093804562,-0.0004716316430235456,0.006471896087634076,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,focal
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,rmse,1.6681269310456406,0.9226185635221308,2.3762561298457325,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,mae,1.8211107862543527,1.0639281198957353,2.5177099049973997,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,bias,1.5840410342071523,0.22532432722594942,3.107873438192488,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Arnoldi FPLS,CG-FPLS-code - Arnoldi FPLS,r2,-0.07979326676678278,-0.1141787100634341,-0.048425143275616464,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,rmse,1.2995472940927613,0.17655972030981268,2.463115052931845,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,mae,0.8708454699084718,0.3133604411768425,1.5447277599727642,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,bias,-0.3592185143719342,-1.0621587079720787,0.25713514030245527,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_20,method_contrast,FPCR,Arnoldi FPLS,FPCR - Arnoldi FPLS,r2,-0.06023059409148501,-0.15506038679135548,-0.006650483914773606,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,secondary
+moving_block_20,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,rmse,1.7216163503562036,1.0181759337183167,2.3975322446619445,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,mae,1.858217912284092,1.1315492986315754,2.531202076285081,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,bias,1.6234423613389466,0.28329291176039334,3.1139982091001515,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,Raw FPLS,CG-FPLS-code - Raw FPLS,r2,-0.08198043986058734,-0.11536083818460299,-0.05252173452666002,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,rmse,0.3685796369528793,-1.4143659332817666,1.9792534372529529,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,mae,0.950265316345881,-0.36648767712633384,2.0581994547395803,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,bias,1.9432595485790864,0.20128943221509804,4.014499726211191,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_20,method_contrast,CG-FPLS-code,FPCR,CG-FPLS-code - FPCR,r2,-0.019562672675297765,-0.09351339153098508,0.09493497696326739,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_20,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,rmse,-1.3530367134033243,-2.58573986980451,-0.17561386754454875,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_20,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,mae,-0.9079525959382111,-1.6228394064063052,-0.31547943716695226,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_20,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,bias,0.31981718724013986,-0.34689091214180645,1.068230892693507,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory
+moving_block_20,method_contrast,Raw FPLS,FPCR,Raw FPLS - FPCR,r2,0.062417767185289574,0.006556871202122708,0.16034594767297,0.95,10000,10000,sensitivity_instrument2_full,sensitivity,exploratory

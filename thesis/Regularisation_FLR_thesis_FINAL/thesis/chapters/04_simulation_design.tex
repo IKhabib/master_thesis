@@ -1,0 +1,644 @@
+% Monte Carlo design: all definitions and constants match the final six-file
+% four-method Python workflow.
+\chapter{Monte Carlo Design}
+\label{chap:simulation-design}
+
+This chapter specifies the experiment used to compare the four estimators
+developed in Chapter~\ref{chap:methods}.  Its purpose is to separate the
+scientific design from the numerical findings.  The data-generating process,
+component-selection rules, diagnostic thresholds, loss functions, and random
+number streams recorded here define the frozen final experiment; none is
+redefined using the outcomes reported in the next chapter.  The design retains
+the three functional linear models and principal numerical settings used in
+the replication study of \textcite{babii_carrasco_tsafack_2026}, while
+restricting the comparison to the four estimators relevant to this thesis:
+released-code CG--FPLS, raw FPLS, Arnoldi FPLS, and FPCR.
+
+The three models form controlled comparisons.  Model~2 changes only the slope
+relative to Model~1, whereas Model~3 changes only the score-variance sequence
+that determines the predictor covariance.
+Within every Monte Carlo replication, all four estimators receive exactly the
+same training and test observations.  Differences between methods within a
+model therefore reflect estimation, tuning, and numerical implementation
+rather than different simulated samples.
+
+\section{Discretised functional data-generating process}
+\label{sec:simulation-dgp}
+
+\subsection{Grid, basis, and inner product}
+
+The functional domain is $\mathcal I=[0,1]$.  Each curve is observed without
+additional measurement error on the endpoint-inclusive grid
+\begin{equation}
+    s_t=\frac{t-1}{T-1},
+    \qquad t=1,\ldots,T,
+    \qquad T=200.
+    \label{eq:simulation-grid}
+\end{equation}
+All integrals used by the estimators and evaluation criteria are represented
+by the equal-weight discrete inner product
+\begin{equation}
+    \langle f,g\rangle_T
+    =\frac1T\sum_{t=1}^{T}f(s_t)g(s_t).
+    \label{eq:simulation-inner-product}
+\end{equation}
+This is the endpoint average used in the code, rather than a trapezoidal rule.
+Consequently, every displayed finite-sample formula is interpreted under the
+same numerical geometry as the estimators.
+
+The fixed dictionary contains $J=100$ functions.  Following the indexing in
+the released replication code, it is
+\begin{equation}
+    \phi_1(s)=1,
+    \qquad
+    \phi_j(s)=\sqrt{2}\cos(j\pi s),
+    \quad j=2,\ldots,J.
+    \label{eq:simulation-basis}
+\end{equation}
+The indexing in \eqref{eq:simulation-basis} is intentional.  The code first
+constructs cosine frequencies $1,\ldots,J$ and then replaces its first column
+by the constant function; hence $\sqrt{2}\cos(\pi s)$ is not included.  Stating
+this convention explicitly prevents an apparently harmless re-indexing from
+creating a different experiment.  In continuous $L^2[0,1]$ the retained
+functions are mutually orthonormal.  On the finite endpoint grid their
+inner products are evaluated exactly by \eqref{eq:simulation-inner-product}
+and are not assumed to equal their continuum values.
+
+\subsection{Predictors and responses}
+
+For observation $i$, draw independent standard normal scores
+\begin{equation}
+    Z_{ij}\stackrel{\mathrm{iid}}{\sim}\mathcal N(0,1),
+    \qquad j=1,\ldots,J,
+\end{equation}
+and construct the functional predictor
+\begin{equation}
+    X_i(s_t)
+    =\sum_{j=1}^{J}\sqrt{\lambda_j}\,Z_{ij}\phi_j(s_t).
+    \label{eq:simulation-predictor}
+\end{equation}
+Here $\lambda_j$ is exactly the variance multiplier of the independent score
+$Z_{ij}$.  In the underlying continuous orthonormal system these quantities
+are covariance eigenvalues.  Because the endpoint-grid inner product does not
+make the retained dictionary exactly orthonormal, however, they should be read
+as score variances---not as the exact eigenvalues of the finite $T\times T$
+discrete covariance matrix.  This distinction does not affect any formula
+below, which is evaluated directly under the discrete geometry.
+The scalar response is generated from
+\begin{equation}
+    Y_i
+    =\langle X_i,\beta\rangle_T+\varepsilon_i
+    =\frac1T\sum_{t=1}^{T}X_i(s_t)\beta(s_t)+\varepsilon_i,
+    \qquad
+    \varepsilon_i\stackrel{\mathrm{iid}}{\sim}\mathcal N(0,\sigma^2),
+    \label{eq:simulation-response}
+\end{equation}
+where $\sigma=1$ and the errors are independent of all scores.  The population
+means of $X_i$ and $Y_i$ are therefore zero and the intercept is known to be
+zero.  The simulation passes the generated observations directly to all four
+estimators; it does not subtract realised sample means.  This common convention
+isolates regularisation and numerical effects from an additional centring
+step.
+
+For a coefficient vector $b=(b_1,\ldots,b_J)^\top$, the slope evaluated on the
+grid is
+\begin{equation}
+    \beta(s_t)=\sum_{j=1}^{J}b_j\phi_j(s_t).
+    \label{eq:simulation-slope-expansion}
+\end{equation}
+Equations \eqref{eq:simulation-predictor}--\eqref{eq:simulation-slope-expansion}
+define the data directly at the $T$ grid points.  There is thus no preliminary
+smoothing, basis estimation, or interpolation stage in this controlled study.
+
+\section{The three controlled models}
+\label{sec:simulation-models}
+
+Define baseline slope coefficients and score variances by
+\begin{equation}
+    b_j^{(0)}=\frac{4}{j^{2.7}},
+    \qquad
+    \lambda_j^{(0)}=\frac{2}{j^{1.1}},
+    \qquad j=1,\ldots,J.
+    \label{eq:simulation-baseline-sequences}
+\end{equation}
+Two targeted modifications are then introduced:
+\begin{align}
+    b_j^{(1)}
+    &=
+    \begin{cases}
+        4, & j\leq5,\\
+        4j^{-2.7}, & j>5,
+    \end{cases}
+    \label{eq:simulation-modified-slope}\\
+    \lambda_j^{(1)}
+    &=
+    \begin{cases}
+        2, & j\leq5,\\
+        2j^{-1.1}, & j>5.
+    \end{cases}
+    \label{eq:simulation-modified-spectrum}
+\end{align}
+The resulting combinations are summarised in
+Table~\ref{tab:simulation-model-definitions}.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption[Definitions and roles of the simulation models]{Definition and controlled role of the three simulation models.}
+    \label{tab:simulation-model-definitions}
+    \begin{tabular}{@{}
+        >{\raggedright\arraybackslash}p{1.7cm}
+        >{\centering\arraybackslash}p{2.3cm}
+        >{\centering\arraybackslash}p{2.3cm}
+        >{\raggedright\arraybackslash}p{6.1cm}@{}}
+        \toprule
+        Model & Slope coefficients & Score variances & Controlled role \\
+        \midrule
+        Model 1
+        & $b^{(0)}$
+        & $\lambda^{(0)}$
+        & Baseline: rapidly decaying slope coefficients and a power-law
+          score-variance sequence. \\
+
+        Model 2
+        & $b^{(1)}$
+        & $\lambda^{(0)}$
+        & Slope-only change: the first five coefficients are set to $4$, so
+          coefficients $2$--$5$ increase while the first remains unchanged;
+          the predictor distribution is unchanged. \\
+
+        Model 3
+        & $b^{(0)}$
+        & $\lambda^{(1)}$
+        & Predictor-only change: the first five score variances are set to
+          $2$, so variances $2$--$5$ increase while the first remains
+          unchanged; the true slope is unchanged. \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Figure~\ref{fig:simulation-slope-structure} shows both the true slopes and the
+first twenty coefficient magnitudes.  Models~1 and 3 have the same target
+function.  Model~2 distributes substantial slope energy across the first five
+directions and is therefore more oscillatory.  This distinction tests whether
+a supervised method can exploit response-relevant directions differently from
+a method ordered only by predictor variance.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.99\textwidth]{true_slope_structure.pdf}
+    \caption[True slopes and coefficient magnitudes]{True slope functions and coefficient magnitudes in the three
+    Monte Carlo models.  The curves use $J=100$ functions and are evaluated on
+    the $T=200$ grid.  Only the first twenty coefficients are shown in the
+    right-hand panels; all one hundred enter the data-generating process.
+    Rows correspond to Models~1--3, with the slope functions on the left.}
+    \label{fig:simulation-slope-structure}
+\end{figure}
+
+Figure~\ref{fig:simulation-covariance-spectrum} isolates the predictor-side
+change.  Models~1 and 2 share the power-law score-variance sequence
+$2j^{-1.1}$.  Model~3 has a flat leading block of five score variances followed
+by the same tail.  The second panel reports cumulative predictor variation,
+not predictive signal: these two quantities need not rank directions in the
+same way.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.96\textwidth]{covariance_spectrum.pdf}
+    \caption[Designed covariance spectra]{Designed covariance structure.  The left panel displays the
+    first thirty score variances---the covariance eigenvalues in the
+    continuous design---on a logarithmic scale; the right panel shows their
+    cumulative share over all $J=100$ components.  The dotted vertical line
+    separates the leading block from the common tail.}
+    \label{fig:simulation-covariance-spectrum}
+\end{figure}
+
+\section{Signal strength and effective directionality}
+\label{sec:simulation-signal}
+
+The scale of a slope alone does not determine prediction difficulty.  Let
+\begin{equation}
+    c_j=\langle\beta,\phi_j\rangle_T,
+    \qquad
+    q_j=\lambda_jc_j^2.
+    \label{eq:simulation-signal-contribution}
+\end{equation}
+Because the scores are independent and standard normal, $q_j$ is the exact
+discrete contribution of component $j$ to the variance of the noiseless
+response.  In particular,
+\begin{align}
+    \mathbb E\|X\|_T^2
+    &=\sum_{j=1}^{J}\lambda_j\|\phi_j\|_T^2,
+    \label{eq:simulation-predictor-variance}\\
+    \operatorname{Var}\{\langle X,\beta\rangle_T\}
+    &=\sum_{j=1}^{J}q_j,
+    \label{eq:simulation-signal-variance}\\
+    \operatorname{Var}(Y)
+    &=\sum_{j=1}^{J}q_j+\sigma^2.
+    \label{eq:simulation-response-variance}
+\end{align}
+Appendix Proposition~\ref{prop:app-simulation-variance} proves these identities.
+The signal-to-noise ratio is defined as
+\begin{equation}
+    \operatorname{SNR}
+    =\frac{\sum_{j=1}^{J}q_j}{\sigma^2}.
+    \label{eq:simulation-snr}
+\end{equation}
+
+Table~\ref{tab:simulation-derived-properties} reports values computed from the
+finite $J=100$, $T=200$ design itself; they are not Monte Carlo estimates.
+Since $\sigma^2=1$, signal variance and SNR are numerically identical.  The
+substantially larger signal variance in Model~2 also means that raw prediction
+errors should primarily be compared across methods within a model, not used as
+an unnormalised measure of which model is intrinsically easiest.
+
+\begin{table}[htbp]
+    \centering
+    \scriptsize
+    \caption[Exact properties of the discrete generating design]{Exact derived properties under the discrete data-generating
+    process.  The final column gives the first component counts reaching
+    $90\%$, $95\%$, and $99\%$ of predictive signal.}
+    \label{tab:simulation-derived-properties}
+    \begin{tabular}{@{}lrrrrrc@{}}
+        \toprule
+        Model
+        & $\|\beta\|_T^2$
+        & $\mathbb E\|X\|_T^2$
+        & $\operatorname{Var}\{\langle X,\beta\rangle_T\}$
+        & SNR
+        & First-five share
+        & $m_{90}/m_{95}/m_{99}$ \\
+        \midrule
+        Model 1 & 16.484 & 8.589  & 32.520 & 32.520 & 99.986\% & $1/1/2$ \\
+        Model 2 & 81.439 & 8.589  & 71.306 & 71.306 & 99.937\% & $4/5/5$ \\
+        Model 3 & 16.484 & 14.311 & 33.061 & 33.061 & 99.986\% & $1/1/2$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The allocation is made explicit in
+Figure~\ref{fig:simulation-signal-allocation}.  Model~2 needs five components
+to reach $99\%$ of the exact predictive signal, whereas Models~1 and 3 reach
+that level after two.  This statement describes the population design; it does
+not predetermine how many empirical components a noisy, data-driven estimator
+will select.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.96\textwidth]{predictive_signal_allocation.pdf}
+    \caption[Predictive-signal allocation]{Componentwise and cumulative predictive-signal allocation,
+    calculated as $q_j=\lambda_j\langle\beta,\phi_j\rangle_T^2$ under the
+    exact discrete design.  Open markers denote the first component count
+    exceeding $99\%$ of total signal.}
+    \label{fig:simulation-signal-allocation}
+\end{figure}
+
+Representative predictor curves are shown in
+Figure~\ref{fig:simulation-predictor-examples}.  Models~1 and 2 have the same
+predictor distribution and therefore share a panel.  For this setup
+illustration only, the same Gaussian score draws are used in both panels so
+that the visibly larger variation for Model~3 can be attributed to its
+modified spectrum.  The shaded regions are exact pointwise $90\%$ Gaussian
+bands under the corresponding finite data-generating process.  They are not
+estimated confidence bands and are not used by any estimator.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.96\textwidth]{functional_predictor_examples.pdf}
+    \caption[Functional predictors and pointwise population bands]{Representative functional predictors and their exact pointwise
+    $90\%$ bands: Models~1 and 2 above, Model~3 below.  The shared score draws make the spectrum change visually
+    comparable; the actual Monte Carlo models use independent random-number
+    streams.}
+    \label{fig:simulation-predictor-examples}
+\end{figure}
+
+These population contrasts define the signal each estimator must recover.
+The Monte Carlo protocol now determines how sampling variation and
+data-driven tuning act on those contrasts.
+
+\section{Monte Carlo protocol}
+\label{sec:simulation-protocol}
+
+The full experiment uses $R=5{,}000$ independent replications for each of the
+three models.  Within replication $r$ of a given model, the following protocol
+is applied.
+\begin{enumerate}
+    \item Generate a training sample of $n=100$ curve--response pairs from
+    \eqref{eq:simulation-predictor}--\eqref{eq:simulation-response}.
+
+    \item Construct the empirical moments
+    \begin{equation}
+        \widehat K=\frac{X^\top X}{nT},
+        \qquad
+        \widehat r=\frac{X^\top y}{n},
+        \label{eq:simulation-empirical-moments}
+    \end{equation}
+    and fit all four methods to the same training sample.
+
+    \item Generate an independent test sample of $n_{\mathrm{test}}=100$ from
+    the same model.  No test observation is used for tuning.
+
+    \item Store the selected dimension, slope and prediction errors, and
+    method-specific numerical diagnostics.
+\end{enumerate}
+
+The candidate set is $m\in\{1,\ldots,70\}$ for every method.  Thus $m=0$ is
+never reported as an estimator.  For CG--FPLS, absence of a threshold crossing
+returns the $m=70$ estimate.  The common upper bound keeps the candidate
+complexities comparable while remaining below the empirical rank limit; the
+point selected along that path is nevertheless method-specific.  Methods are
+paired within a replication, but the three model streams are independent.
+
+\section{Estimator-specific tuning}
+\label{sec:simulation-tuning}
+
+The method labels refer to complete procedures, including their own tuning
+rules.  Table~\ref{tab:simulation-method-tuning} provides an overview; the
+details below fix the criteria and constants.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption[Estimators and tuning mechanisms]{The four reported estimators and their tuning mechanisms.}
+    \label{tab:simulation-method-tuning}
+    \begin{tabular}{@{}
+        >{\raggedright\arraybackslash}p{2.1cm}
+        >{\raggedright\arraybackslash}p{2.6cm}
+        >{\raggedright\arraybackslash}p{3.2cm}
+        >{\raggedright\arraybackslash}p{3.8cm}@{}}
+        \toprule
+        Method & Restricted problem & Selection of $m$ & Numerical construction \\
+        \midrule
+        CG--FPLS
+        & Moment-residual least squares
+        & First discrepancy-threshold crossing; $\tau=1.01$, $\delta=0.1$
+        & Released short recurrence; internal FPCR noise pilot \\
+
+        Raw FPLS
+        & Response least squares on $\widehat{\mathcal K}_m$
+        & Five-fold prediction cross-validation
+        & Unscaled covariance powers and normal equations \\
+
+        Arnoldi FPLS
+        & Same response least-squares problem as raw FPLS
+        & Five-fold prediction cross-validation
+        & CGS2 Arnoldi basis and response-space QR; rank tolerance $10^{-10}$ \\
+
+        FPCR
+        & Response least squares on leading empirical eigenvectors
+        & Response-space GCV
+        & Symmetric eigendecomposition and spectral cut-off \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Five-fold tuning of raw and Arnoldi FPLS}
+
+One random partition $I_1,\ldots,I_5$ is generated in each replication and is
+used by both FPLS implementations.  For method $a\in\{\mathrm{Raw},
+\mathrm{Arnoldi}\}$, let $\widehat\beta_{m,a}^{(-k)}$ be the estimate fitted
+without fold $I_k$.  Its criterion is
+\begin{equation}
+    \operatorname{CV}_{a}(m)
+    =\frac1n\sum_{k=1}^{5}\sum_{i\in I_k}
+      \left\{Y_i-\langle X_i,
+      \widehat\beta_{m,a}^{(-k)}\rangle_T\right\}^{2}.
+    \label{eq:simulation-fpls-cv}
+\end{equation}
+Each method minimises its own curve.  The common folds remove avoidable Monte
+Carlo variation, but separate minimisation allows finite-precision instability
+in the raw basis to affect the complete procedure honestly.  A raw component
+count is eligible only when its fit is finite and valid in the full sample and
+in every training fold.  Arnoldi uses two-pass classical Gram--Schmidt (CGS2)
+with rank tolerance $10^{-10}$.  If several eligible values attain the same
+minimum numerically, the smallest is retained.
+
+\subsection{Response-GCV tuning of FPCR}
+
+FPCR uses the response-space criterion already introduced in
+\eqref{eq:methods-response-gcv}:
+\begin{equation}
+    \operatorname{GCV}_{Y}(m)
+    =\frac{n^{-1}\|y-X\widehat\beta_m^{\mathrm{FPCR}}/T\|_2^2}
+           {(1-m/n)^2}.
+    \label{eq:simulation-fpcr-gcv}
+\end{equation}
+Only numerically positive empirical eigenvalues are eligible.  Under the
+present $m_{\max}=70<n-1$ design, the shared upper bound is the active path
+limit.  The smallest minimiser of \eqref{eq:simulation-fpcr-gcv} is selected.
+
+\subsection{Discrepancy tuning of CG--FPLS}
+
+For CG--FPLS, define the discrete moment norm and predictor-energy estimate by
+\begin{equation}
+    \|e_m\|_T
+    =\left(\frac1T e_m^\top e_m\right)^{1/2},
+    \qquad
+    \widehat E_X
+    =\frac1n\sum_{i=1}^{n}\frac1T X_i^\top X_i,
+    \label{eq:simulation-cg-norms}
+\end{equation}
+where $e_m=\widehat r-\widehat K\widehat\beta_m^{\mathrm{CG}}$.  The noise
+pilot is constructed from the same FPCR path but is selected internally by
+moment-space GCV,
+\begin{equation}
+    \operatorname{GCV}_{M}(q)
+    =\frac{T^{-1}\|\widehat r-\widehat K
+      \widehat\beta_q^{\mathrm{FPCR}}\|_2^2}
+           {(1-q/T)^2}.
+    \label{eq:simulation-moment-gcv}
+\end{equation}
+If $\widehat q$ minimises this criterion, then
+\begin{equation}
+    \widehat\sigma^2
+    =\frac1n\|y-X\widehat\beta_{\widehat q}^{\mathrm{FPCR}}/T\|_2^2.
+    \label{eq:simulation-cg-sigma-pilot}
+\end{equation}
+This moment-GCV calculation is used only to estimate the threshold scale; it
+is neither the reported FPCR fit nor a fifth comparator.
+
+For interpretation, an ideal version of the discrepancy scale would replace
+the unknown quantities below by the population error variance and predictor
+energy.  The implemented rule is feasible instead: it uses the internally
+estimated $\widehat\sigma^2$ in
+\eqref{eq:simulation-cg-sigma-pilot} and the sample energy
+$\widehat E_X$.  Thus $\widehat\nu_n$ is a plug-in threshold, not an oracle
+threshold supplied with the true $\sigma^2$ or the population covariance.
+The selected component count is the first $m\geq1$ satisfying
+\begin{equation}
+    \|e_m\|_T
+    \leq
+    \widehat\nu_n
+    =1.01\left(
+      \frac{2\widehat\sigma^2\widehat E_X}{0.1n}
+      \right)^{1/2}.
+    \label{eq:simulation-cg-threshold}
+\end{equation}
+If no iterate crosses the threshold, $m=70$ is used and the absence of a
+crossing is recorded.  Together with the cross-validation and GCV rules above,
+this defines the four complete procedures whose consequences are evaluated
+through slope and prediction loss.  The rule in
+\eqref{eq:simulation-cg-threshold} is the single CG selection procedure in the
+final workflow; no oracle or supplementary CG variant is included.
+
+\section{Performance measures and summaries}
+\label{sec:simulation-criteria}
+
+\subsection{Slope estimation and independent prediction}
+
+For method $a$, the integrated squared error in one replication is the
+discrete loss
+\begin{equation}
+    \operatorname{ISE}_{a}
+    =\|\widehat\beta_a-\beta\|_T^2
+    =\frac1T\sum_{t=1}^{T}
+      \{\widehat\beta_a(s_t)-\beta(s_t)\}^2.
+    \label{eq:simulation-ise}
+\end{equation}
+The independent test mean squared prediction error is
+\begin{equation}
+    \operatorname{MSPE}_{a}
+    =\frac1{n_{\mathrm{test}}}
+      \sum_{i=1}^{n_{\mathrm{test}}}
+      \{Y_i^{\mathrm{test}}
+      -\langle X_i^{\mathrm{test}},\widehat\beta_a\rangle_T\}^2.
+    \label{eq:simulation-mspe}
+\end{equation}
+MSPE includes irreducible response noise.  Conditional on a training-sample
+estimate and averaging over a new test observation,
+\begin{equation}
+    \mathbb E\{\operatorname{MSPE}_{a}\mid\widehat\beta_a\}
+    =\sigma^2+
+      \sum_{j=1}^{J}\lambda_j
+      \langle\phi_j,\widehat\beta_a-\beta\rangle_T^2.
+    \label{eq:simulation-mspe-risk}
+\end{equation}
+Thus the oracle noise floor is $\sigma^2=1$, while the second term is excess
+prediction risk.  Equation \eqref{eq:simulation-mspe-risk} is the discrete
+counterpart of Appendix Proposition~\ref{prop:app-risk-identity}.
+
+For every model--method pair, the archive reports the mean and its Monte Carlo
+standard error, the median, the $90$th and $99$th percentiles, and the maximum
+of both ISE and MSPE.  If $L_1,\ldots,L_{R_f}$ are the finite values of a loss,
+the reported standard error is
+\begin{equation}
+    \operatorname{MCSE}(\overline L)
+    =\frac{s_L}{\sqrt{R_f}},
+    \label{eq:simulation-mcse}
+\end{equation}
+where $s_L$ is their sample standard deviation.  Medians and upper quantiles
+are reported alongside means because rare numerical failures can make the
+error distributions extremely right-skewed.
+
+\subsection{Bias--variance decomposition}
+
+The deterministic replay stage reconstructs each selected slope whenever the
+fit is numerically reproducible.  Unstable raw fits are omitted only from
+replay-based function-valued diagnostics---the bias--variance decomposition,
+basis-coefficient distributions, pointwise distributions, and normal
+quantile--quantile plots.  They remain in every primary ISE and MSPE summary.
+With
+$\overline\beta_a=R^{-1}\sum_{r=1}^{R}\widehat\beta_{a,r}$, the empirical
+slope decomposition is
+\begin{equation}
+    \frac1R\sum_{r=1}^{R}
+      \|\widehat\beta_{a,r}-\beta\|_T^2
+    =\|\overline\beta_a-\beta\|_T^2
+     +\frac1R\sum_{r=1}^{R}
+       \|\widehat\beta_{a,r}-\overline\beta_a\|_T^2.
+    \label{eq:simulation-bias-variance}
+\end{equation}
+The two right-hand terms are labelled squared bias and variance.  Prediction
+error is decomposed analogously after weighting the coordinatewise bias and
+variance by $\lambda_j$, with $\sigma^2$ added as irreducible noise.
+Appendix Proposition~\ref{prop:app-mc-decomposition} proves the finite-$R$
+identity.  The factor $R^{-1}$, rather than $(R-1)^{-1}$, is used so the two
+terms add exactly to the Monte Carlo mean squared error.
+
+The primary risk summaries retain every finite replication.  A secondary
+paired raw-stable subset is used only for a like-for-like bias--variance
+display when the selected raw power-basis fit can be reconstructed reliably.
+Whenever that subset is used, the same replications are retained for all four
+methods and the restriction is labelled explicitly.  It does not replace the
+full-sample ISE or MSPE comparison.
+
+\subsection{Complexity, instability, and tail events}
+
+Selected component count is recorded for every fit and summarised by its mean
+and median.  Complexity is not itself an accuracy measure, but it shows how
+aggressively each tuning rule regularises the inverse problem.
+
+The simulation also distinguishes statistical error from numerical failure.
+For raw FPLS, let $G_m$ be the raw Krylov power matrix and
+$Z_m=XG_m/T$ its response-space design.  Let $\widetilde G_m$ and
+$\widetilde Z_m$ denote the same matrices after normalising every column to
+unit Euclidean length.  The diagnostic is
+\begin{equation}
+    \Delta_m^{\mathrm{Raw}}
+    =\max\{\kappa_2(\widetilde G_m),\kappa_2(\widetilde Z_m)\}.
+    \label{eq:simulation-raw-condition}
+\end{equation}
+The column normalisation removes trivial scale growth and focuses the measure
+on near-collinearity.  A selected raw fit is flagged as numerically unstable
+when its loss is non-finite or
+\begin{equation}
+    \Delta_m^{\mathrm{Raw}}
+    \geq\varepsilon_{\mathrm{mach}}^{-1/2}
+    \approx 6.71\times10^7.
+    \label{eq:simulation-raw-threshold}
+\end{equation}
+
+For Arnoldi FPLS the corresponding diagnostic is the spectral-norm
+orthogonality defect
+\begin{equation}
+    \Delta_m^{\mathrm{Arnoldi}}
+    =\|Q_m^\top Q_m-I_m\|_2.
+    \label{eq:simulation-arnoldi-defect}
+\end{equation}
+A fit is flagged when its loss is non-finite or the defect is at least
+$\varepsilon_{\mathrm{mach}}^{1/2}\approx1.49\times10^{-8}$.  CG--FPLS and
+FPCR are flagged only if ISE or MSPE is non-finite because their relevant path
+diagnostics are already governed by the recurrence and positive-eigenvalue
+checks.
+
+Finally, a finite ISE or MSPE value is marked as an extreme tail event if it
+exceeds $100$ times the positive median for its own model--method pair.  This
+threshold is descriptive rather than a deletion rule: extreme observations
+remain in means, maxima, archives, and full-distribution figures.  Reporting
+failure rates, instability rates, and tail counts alongside robust summaries
+prevents a numerically fragile procedure from appearing reliable merely
+because its typical replication is accurate.  Because these classifications
+must themselves be reproducible, the random streams and replay rules are fixed
+as carefully as the losses and thresholds.
+
+\section{Randomness and reproducibility}
+\label{sec:simulation-reproducibility}
+
+The top-level seed is $2026$.  A NumPy \texttt{SeedSequence} deterministically
+spawns one independent child stream for each model.  Within a model, the
+training sample is generated first, followed by the random five-fold
+partition and then the independent test sample.  The order matters for exact
+replay.  The four methods share the training and test data, and raw and
+Arnoldi FPLS additionally share the folds.  Models do not share their realised
+samples.
+
+The final plotting stage deterministically regenerates selected estimates
+from the seed, model definition, and archived component counts before checking
+their ISE and MSPE against the frozen archive.  This replay validation is an
+audit of internal consistency, not a second simulation or an exclusion rule.
+The exact command, file manifest, validation tolerances, and environment fields
+to record are kept in the accompanying reproducibility documentation rather
+than in the statistical argument.
+
+Exact reproduction of the stabilised methods is expected on a common software
+stack.  Small platform differences are more plausible for raw FPLS because
+ill-conditioned linear algebra is deliberately part of the method being
+diagnosed; the archived configuration and validation report make those
+differences visible.
+
+Because the models isolate slope and covariance changes while every method
+receives the same samples, the results can separate statistical regularisation
+from numerical implementation.  The fixed tuning and replay rules also ensure
+that adverse tail behaviour remains part of the comparison.
+Chapter~\ref{chap:estimation-results} examines how those mechanisms appear in
+slope recovery and prediction.

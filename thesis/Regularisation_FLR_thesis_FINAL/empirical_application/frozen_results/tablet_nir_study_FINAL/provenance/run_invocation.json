@@ -1,0 +1,19 @@
+{
+  "archive": "/workspace/scratch/544cc718ff18/upload/nir_shootout_2002.mat_.zip",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "run_tablet_nir_study.py",
+    "--stage",
+    "full",
+    "--archive",
+    "/workspace/scratch/544cc718ff18/upload/nir_shootout_2002.mat_.zip",
+    "--output",
+    "/workspace/scratch/544cc718ff18/review/code/Functional_Regression/tablet_nir_study_FINAL"
+  ],
+  "config": "/workspace/scratch/544cc718ff18/review/code/Functional_Regression/spectroscopy_config.json",
+  "cwd": "/workspace/scratch/544cc718ff18/review/code/Functional_Regression",
+  "output": "/workspace/scratch/544cc718ff18/review/code/Functional_Regression/tablet_nir_study_FINAL",
+  "protocol": "/workspace/scratch/544cc718ff18/review/code/Functional_Regression/SPECTROSCOPY_PROTOCOL.md",
+  "stage": "full",
+  "timestamp_utc": "2026-09-08T20:01:26.991138+00:00"
+}
