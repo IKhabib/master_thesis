@@ -1,50 +1,47 @@
-%Chapter 8. Empirical application from the frozen 2002 pharmaceutical-tablet NIR archive.
+% Empirical application using the 2002 pharmaceutical-tablet NIR data.
 \chapter{Empirical Application: Pharmaceutical-Tablet Spectroscopy}
 \label{chap:spectroscopy-application}
 
-The controlled experiments in Chapters~\ref{chap:estimation-results} and
-\ref{chap:inference-results} separate statistical regularisation from
-numerical approximation because the data-generating slope and covariance
-operator are known.  This chapter asks whether the resulting mechanisms remain
-visible in an observed functional regression problem.  Near-infrared (NIR)
-spectra are used to predict the active-ingredient assay of pharmaceutical
-tablets with the four complete procedures studied in the thesis: CG--FPLS,
-raw FPLS, Arnoldi FPLS, and FPCR.  The application concerns prediction and
-numerical stability.  The physical slope is unknown, so it cannot assess slope
-recovery or support the oracle-assisted inference studied in Chapters
-\ref{chap:inference-methodology}--\ref{chap:inference-results}.
+In Chapters~\ref{chap:estimation-results} and \ref{chap:inference-results},
+the known slope and covariance operator made it possible to distinguish the
+effects of regularisation from numerical error.  This chapter examines
+whether the same patterns appear in observed data.  It uses near-infrared
+(NIR) spectra to predict the active-ingredient assay of pharmaceutical
+tablets with CG--FPLS, raw FPLS, Arnoldi FPLS, and FPCR.  The focus is
+prediction and numerical stability.  Because the true slope is unknown,
+the application cannot assess slope recovery or use the oracle-assisted
+inference studied in Chapters~\ref{chap:inference-methodology}--\ref{chap:inference-results}.
 
-The empirical protocol was frozen before any of the four procedures was fitted
-to the supplied test observations.  That test set is nevertheless described
-as a \emph{designated benchmark}, not a prospectively blind holdout: its
-responses and preliminary ordinary PCR/PLS performance had already been
-inspected while selecting a dataset.  This qualification is material to the
-scope of the evidence.  The chapter therefore reports a conditional method
-comparison on the supplied tablets rather than an estimate of future
-deployment performance.
+The evaluation rules were fixed before the four final models were applied
+to the supplied test set.  However, the test responses and preliminary
+ordinary PCR/PLS results had already been inspected during dataset
+selection.  The test set is therefore called a \emph{designated benchmark},
+rather than a prospectively blind holdout.  The results compare the fitted
+procedures on these tablets; they do not establish how well the methods
+would perform in future use.
 
 \section{Data and prediction problem}
 \label{sec:spectroscopy-data}
 
 The data come from the 2002 pharmaceutical-tablet NIR ``Shoot-out'' described
 by \textcite{hopkins_2003} and distributed in MATLAB format by
-\textcite{eigenvector_tablets}.  The archive contains spectra from two
-spectrometers and three supplied splits: 155 calibration tablets, 40
-validation tablets, and 460 test tablets.  These add to 655 tablets, although
-the online catalogue reports 654.  All 655 complete archive rows are retained,
-and the discrepancy is recorded rather than resolved through an undocumented
-deletion.  The two instruments measure the same tablets; they are paired
-measurements and are never stacked as independent observations.
+\textcite{eigenvector_tablets}.  The supplied file contains measurements
+from two spectrometers, divided into 155 calibration tablets, 40 validation
+tablets, and 460 test tablets.  The total is 655, although the online
+catalogue reports 654.  All 655 complete records are retained, and this
+discrepancy is documented.  Both instruments measured the same tablets, so
+their spectra are treated as paired measurements, not additional independent
+observations.
 
-The primary predictor is the instrument-1 spectrum at all $T=650$ wavelengths
-from 600 to 1898~nm in 2-nm increments.  The sole response is assay, the
-archive's third response column.  Its physical unit is not stated in the
-distributed object, so prediction errors are reported in the supplied assay
-units.  The calibration and validation rows form a 195-tablet development
-sample, while the 460 test rows form the designated benchmark.  Figure
-\ref{fig:spectroscopy-overview} shows substantial common spectral structure,
-a visibly less regular high-wavelength tail, and the unusually narrow assay
-range of the supplied validation split.
+The main analysis uses instrument~1 and all $T=650$ wavelengths, from 600
+to 1898~nm at 2-nm intervals.  Assay, the third response column in the data
+file, is the sole response.  The file does not specify its physical unit,
+so errors are reported in the supplied assay units.  Combining the
+calibration and validation tablets gives a development sample of 195;
+the 460 test tablets form the designated benchmark.
+Figure~\ref{fig:spectroscopy-overview} shows common patterns across the
+spectra, a less regular high-wavelength tail, and an unusually narrow assay
+range in the validation split.
 
 \begin{figure}[htbp]
     \centering
@@ -58,12 +55,14 @@ range of the supplied validation split.
     \label{fig:spectroscopy-overview}
 \end{figure}
 
-This is an empirically ill-posed functional regression problem.  There are
-650 grid coordinates but only 195 development observations, and sample
-centring limits the fitted covariance rank to at most 194.  At least 456 grid
-directions are consequently unidentified from the development sample.  The
-equal-grid convention from Section~\ref{sec:methods-empirical-operator} is
-retained:
+There are 650 spectral coordinates and only 195 development observations.  After
+centring, the sample covariance has rank at most 194, leaving at least
+456 directions that the development data cannot identify.  This is the
+finite-sample form of the ill-posed problem discussed earlier.
+
+\begin{samepage}
+The equally weighted grid convention from
+Section~\ref{sec:methods-empirical-operator} is retained:
 \begin{equation}
     \langle f,g\rangle_T=T^{-1}f^\top g,
     \qquad
@@ -72,68 +71,74 @@ retained:
     \widehat r=\frac{X^\top y}{n}.
     \label{eq:spectroscopy-grid-geometry}
 \end{equation}
+\end{samepage}
 The resulting prediction for a new spectrum $x$ is
 \begin{equation}
     \widehat Y(x)=\bar Y_{\mathrm{train}}
       +\frac{1}{T}(x-\bar X_{\mathrm{train}})^\top\widehat\beta .
     \label{eq:spectroscopy-prediction}
 \end{equation}
-This preserves the scale of the existing implementation and makes the
-training-sample intercept explicit.
+The prediction uses the means calculated from the training sample and
+preserves the scaling used throughout the thesis.
 
-\section{Frozen evaluation protocol}
+\section{Evaluation procedure}
 \label{sec:spectroscopy-protocol}
 
-The primary spectra are otherwise unprocessed.  Every wavelength and the
-response are centred within each training fold, and those training means are
-then applied unchanged to the corresponding validation observations.  There
-is no primary variance scaling, smoothing, differentiation, standard-normal-
-variate transformation, multiplicative-scatter correction, baseline
-correction, or wavelength selection.  This restrained primary analysis
-keeps preprocessing from becoming an unreported regulariser.  Prespecified
-trimmed-spectrum, smoothed-spectrum, and instrument-2 analyses are reported as
-sensitivities in Appendix~\ref{app:spectroscopy-supplement}.
+In the main analysis, each wavelength and the response are centred using
+only the observations in the training fold.  The same training means are
+then used for the corresponding validation observations.  No other
+preprocessing is applied: there is no variance scaling, smoothing,
+differentiation, standard-normal-variate transformation, multiplicative-scatter
+correction, baseline correction, or wavelength selection.  This keeps
+additional regularisation through preprocessing out of the main comparison.
+The planned analyses of trimmed spectra, smoothed spectra, and instrument~2
+are reported in Appendix~\ref{app:spectroscopy-supplement}.
 
-The complete procedures retain their native regularisation rules.  Raw and
-Arnoldi FPLS independently minimise prediction mean squared error over at most
+Each method keeps its own regularisation rule.  Raw and Arnoldi FPLS
+independently select a dimension by minimising prediction mean squared error over at most
 70 requested Krylov dimensions, using the same five inner folds.  Raw FPLS
-uses unscaled covariance powers and response-space normal equations; Arnoldi
-uses twice reorthogonalised Gram--Schmidt and response-space QR.  FPCR uses
-response-space GCV over its spectral cut-offs.  CG--FPLS uses the released-code
-conjugate-residual recurrence and discrepancy rule with $\tau=1.01$ and
-$\delta=0.10$, including its internal moment-GCV variance pilot.  Component
-counts therefore do not represent common effective degrees of freedom.  The
-comparison concerns four complete regularisation procedures, consistent with
-the three-axis framework in Section~\ref{sec:methods-comparison-framework}.
+uses unscaled covariance powers and response-space normal equations.
+Arnoldi uses twice reorthogonalised Gram--Schmidt and response-space QR.
+FPCR selects a spectral cut-off by response-space GCV.  CG--FPLS uses the
+conjugate-residual recurrence from the estimation study and the discrepancy
+rule with $\tau=1.01$ and $\delta=0.10$, including its internal moment-GCV
+variance pilot.  A component count therefore does not represent the same
+effective degrees of freedom across methods.  The comparison evaluates the
+four complete procedures, following the three-axis framework in
+Section~\ref{sec:methods-comparison-framework}.
 
-Development performance is assessed by five repeats of five-fold outer
-cross-validation.  Folds are constructed separately within the supplied
-calibration and validation rows and balanced over assay, so every outer fold
-contains 31 calibration and 8 validation tablets.  Raw and Arnoldi receive a
-new common five-fold inner partition inside each outer training sample.  The
-five repeat-level out-of-fold summaries describe development behaviour; the
-25 overlapping fits are not treated as independent replications.
+Development performance is assessed using five repeats of five-fold outer
+cross-validation.  The calibration and validation tablets are split
+separately, with folds balanced over assay.  Each outer fold contains
+31 calibration and 8 validation tablets.  Within every outer training
+sample, Raw and Arnoldi share a new five-fold inner partition for tuning.
+Each repeat gives an out-of-fold performance summary.  The five summaries
+describe development performance, while the 25 overlapping fits are not
+treated as independent experiments.
 
-After development checks and code review, each method is fitted once to all
-195 development tablets.  A single frozen, common inner partition tunes Raw
-and Arnoldi, and the resulting models predict the 460 benchmark tablets once.
-The primary endpoint is RMSE.  MAE, signed bias (prediction minus observation),
-and $R^2=1-\mathrm{SSE}/\mathrm{SST}$ are secondary.  Conditional uncertainty
-is summarised by 10,000 paired iid bootstrap resamples of the benchmark
-tablets.  The same resampled tablet indices are used for every method, but the
-models are not refitted.  Circular moving-block bootstraps of lengths 5, 10,
-and 20 assess possible row-order dependence.  Exact folds and bootstrap
-indices are retained in the frozen archive.
+After the development analysis and implementation checks, each method is
+fitted once to all 195 development tablets.  Raw and Arnoldi use one fixed,
+shared inner partition for final tuning.  The fitted models then predict
+the 460 benchmark tablets once.  RMSE is the primary measure of performance;
+MAE, signed bias (prediction minus observation), and
+$R^2=1-\mathrm{SSE}/\mathrm{SST}$ are secondary measures.
+
+Uncertainty is summarised using 10,000 paired iid bootstrap resamples of
+the benchmark tablets.  Every method uses the same resampled tablets,
+and the fitted models are held fixed.  Circular moving-block bootstraps
+with lengths 5, 10, and 20 assess sensitivity to possible dependence in
+the ordering of the rows.  The exact cross-validation folds and bootstrap
+indices are saved with the supporting results.
 
 \section{Benchmark prediction}
 \label{sec:spectroscopy-benchmark}
 
-All four final fits and all benchmark predictions are finite.  Table
-\ref{tab:spectroscopy-primary-results} reports the prespecified metrics.
-Every method explains substantial variation in the supplied benchmark assay,
-with $R^2$ between 0.887 and 0.914.  Raw FPLS has the smallest point RMSE,
-4.607, followed by Arnoldi FPLS at 4.643.  FPCR and CG--FPLS have RMSEs of
-5.185 and 5.293, respectively.
+All four final fits and their benchmark predictions are finite.
+Table~\ref{tab:spectroscopy-primary-results} reports the measures chosen
+in advance.  Every method explains substantial variation in benchmark
+assay, with $R^2$ between 0.887 and 0.914.  Raw FPLS has the lowest point
+estimate of RMSE, 4.607, followed by Arnoldi FPLS at 4.643.  FPCR and
+CG--FPLS have RMSEs of 5.185 and 5.293, respectively.
 
 \begin{table}[htbp]
     \centering
@@ -141,8 +146,8 @@ with $R^2$ between 0.887 and 0.914.  Raw FPLS has the smallest point RMSE,
     \caption[Primary designated-benchmark results]{Primary designated-benchmark results for full-spectrum
     instrument~1 ($n=460$).  Brackets give 95\% percentile intervals from
     10,000 paired iid bootstrap resamples of the benchmark tablets.  The
-    intervals shown beside RMSE are marginal method intervals, whereas method
-    comparisons use paired contrasts in Table
+    intervals beside RMSE describe each method separately.  Differences
+    between methods are assessed using paired contrasts in Table
     \ref{tab:spectroscopy-paired-contrasts}.}
     \label{tab:spectroscopy-primary-results}
     \begin{tabular}{@{}lrrrrr@{}}
@@ -167,37 +172,39 @@ with $R^2$ between 0.887 and 0.914.  Raw FPLS has the smallest point RMSE,
     \label{fig:spectroscopy-observed-predicted}
 \end{figure}
 
-Figure~\ref{fig:spectroscopy-observed-predicted} shows that the four methods
-largely make the same errors.  The raw and Arnoldi predictions are especially
-close: their correlation is 0.999934, the root mean squared difference between
-paired predictions is 0.174 assay units, and the maximum difference is 0.445.
-This pairing explains why the two wide marginal RMSE intervals in Figure
-\ref{fig:spectroscopy-rmse-intervals} can overlap almost completely while the
-paired contrast is estimated much more precisely.
+Figure~\ref{fig:spectroscopy-observed-predicted} shows that the methods tend
+to struggle with the same tablets.  Raw and Arnoldi give particularly
+similar predictions: their correlation is 0.999934, their root mean squared
+difference is 0.174 assay units, and their maximum difference is 0.445.
+The close agreement allows their RMSE difference to be estimated more
+precisely than either RMSE alone.  Thus the wide individual intervals in
+Figure~\ref{fig:spectroscopy-rmse-intervals} can overlap almost completely
+while the paired comparison gives a much narrower interval.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.78\textwidth]{tablet_benchmark_rmse_intervals.pdf}
-    \caption[Benchmark RMSE estimates and bootstrap intervals]{Benchmark RMSE point estimates and marginal 95\% percentile
-    intervals from the paired iid bootstrap.  Overlap of these marginal
-    intervals is not a test of a paired method contrast; the declared paired
-    differences are reported in Table
+    \caption[Benchmark RMSE estimates and bootstrap intervals]{Benchmark RMSE estimates and individual 95\% percentile
+    intervals from the paired iid bootstrap.  Their overlap does not test
+    whether two methods differ.  The prespecified paired differences are reported in Table
     \ref{tab:spectroscopy-paired-contrasts}.}
     \label{fig:spectroscopy-rmse-intervals}
 \end{figure}
 
-The focal paired difference in Table
-\ref{tab:spectroscopy-paired-contrasts} is
+\begin{samepage}
+The main paired comparison in Table~\ref{tab:spectroscopy-paired-contrasts} is
 $\mathrm{RMSE}_{\mathrm{raw}}-\mathrm{RMSE}_{\mathrm{Arnoldi}}=-0.036$ assay
 units.  Its iid percentile interval excludes zero, as do all three
-moving-block sensitivity intervals.  The numerical difference is nevertheless
-only 0.78\% of the Arnoldi RMSE.  It is small relative to the benchmark
-prediction errors; its practical importance cannot be determined without an
-assay scale and an application-specific tolerance.  The interval describes a
-conditional difference between two already fitted models on these tablets and
-does not establish general superiority of the raw representation.  Arnoldi's
-advantages over CG--FPLS and FPCR are larger, approximately 0.65 and 0.54
-RMSE units, and also persist under the principal block-length-10 bootstrap.
+moving-block intervals.  Yet the difference is only 0.78\% of the Arnoldi
+RMSE and is small relative to the prediction errors themselves.  Judging
+its practical importance would require a known assay scale and an
+application-specific tolerance.  The interval compares these two fitted
+models on the supplied tablets; it does not show that the raw
+representation is generally better.  Arnoldi's RMSE advantages over
+CG--FPLS and FPCR are larger, approximately 0.65 and 0.54 units, and remain
+under the principal block-length-10 bootstrap.
+\par
+\end{samepage}
 
 \begin{table}[htbp]
     \centering
@@ -221,16 +228,16 @@ RMSE units, and also persist under the principal block-length-10 bootstrap.
 \section{Selection and numerical stability}
 \label{sec:spectroscopy-stability}
 
-Prediction alone obscures a much sharper difference between the two leading
-procedures.  Across the 25 development outer fits, Arnoldi selects between
-four and six components, with median five and no numerical flag.  Raw FPLS
-selects between four and 70 requested components, with median 44, reaches the
-cap twice, and is flagged in 24 of 25 fits.  Its mean repeated-CV RMSE is also
-more variable across the five repeats: $5.082\pm0.517$, compared with
-$4.917\pm0.131$ for Arnoldi.  One adverse raw repeat accounts for much of that
-difference, and a contiguous-fold sensitivity reverses the leading pair.
-These dependent CV summaries therefore diagnose procedure stability rather
-than establish another inferential ranking.
+The leading pair differs more in numerical stability than in prediction.
+Across the 25 development outer fits, Arnoldi
+selects between four and six components, with median five and no numerical
+flag.  Raw FPLS selects between four and 70 requested components, with median
+44.  It reaches the cap twice and is flagged in 24 of 25 fits.  Across the
+five repeats, RMSE has mean and standard deviation $5.082\pm0.517$ for Raw,
+compared with $4.917\pm0.131$ for Arnoldi.  Much of this
+difference comes from one poor raw repeat, and the order of the two methods
+reverses when contiguous folds are used.  These CV results share observations:
+they describe stability, without establishing a separate statistical ranking.
 
 \begin{figure}[htbp]
     \centering
@@ -238,63 +245,71 @@ than establish another inferential ranking.
     \caption[Development selection and stopping indices]{Selection and stopping indices across the 25 development outer
     fits.  Points show individual fits and boxes summarise their distributions.
     Raw and Arnoldi use inner cross-validation, FPCR uses GCV, and CG--FPLS
-    uses discrepancy stopping; counts are therefore not common effective
-    degrees of freedom.}
+    uses discrepancy stopping.  These counts therefore do not measure the
+    same effective degrees of freedom.}
     \label{fig:spectroscopy-selected-components}
 \end{figure}
 
-The final raw fit selects nominal dimension 55.  At that point both its
-normalised power-basis condition number and its response-design condition
-number are recorded at the reporting ceiling, $4.50\times10^{15}$, and the fit
-is flagged.  The fixed $1/\sqrt{\epsilon}$ threshold is already crossed by
-$m=6$.  Finite predictions do not make those raw coordinates numerically
-trustworthy.  Arnoldi selects five components, has basis condition number one,
-response-design condition number 11.95, and orthogonality defect
-$7.4\times10^{-16}$.  The central empirical finding is consequently not that
-one representation wins on predictive loss: Arnoldi realises essentially the
-same predictive relation as Raw through stable five-dimensional coordinates.
-The complete paths are shown in Appendix~\ref{app:spectroscopy-supplement}.
+The final raw fit selects nominal dimension 55.  Both its normalised
+power-basis condition number and its response-design condition number reach
+the reporting ceiling, $4.50\times10^{15}$, and the fit is flagged.  The
+reported value is capped, so it should not be read as an exact condition
+number.  The fixed
+$1/\sqrt{\epsilon}$ threshold is already crossed
+by $m=6$.  Thus, finite predictions alone do not show that the raw coordinates
+are numerically reliable.  Arnoldi selects five components, with basis
+condition number one, response-design condition number 11.95, and
+orthogonality defect $7.4\times10^{-16}$.  It therefore achieves essentially
+the same predictions as Raw using stable five-dimensional coordinates.
+The complete paths appear in Appendix~\ref{app:spectroscopy-supplement}.
 
+\begin{samepage}
 CG--FPLS stops at three components in every development fit and in the final
-fit.  This stable but strongly regularising behaviour accompanies its larger
-prediction error.  The finding concerns the implemented discrepancy rule,
-including its variance pilot, rather than a general inferiority of conjugate-
-gradient regularisation.  FPCR selects between seven and 57 components in
-development and 53 in the final fit, illustrating again that nominal component
-counts cannot be compared mechanically across different search spaces and
-tuning criteria.
+fit.  This consistent early stopping applies strong regularisation and
+accompanies a larger prediction error.  The result concerns the particular
+discrepancy rule used here, including its variance pilot; it does not show
+that conjugate-gradient regularisation is generally inferior.  FPCR selects
+between seven and 57 components in development and 53 in the final fit.
+Component counts therefore reflect different search spaces and tuning rules;
+they are not directly comparable measures of complexity.
+\par
+\end{samepage}
 
 \section{Robustness, interpretation, and scope}
 \label{sec:spectroscopy-scope}
 
-The prespecified sensitivities confirm that the detailed ranking is conditional
-on the measurement and preprocessing choices.  Truncating instrument~1 at
-1798~nm reduces the RMSEs of CG--FPLS, Arnoldi, and FPCR and compresses all
-four results to 4.63--4.77; Arnoldi then has the smallest point RMSE.  Fixed
-Savitzky--Golay smoothing favours Raw at 4.66 but does not improve every
-procedure.  Full-spectrum instrument~2 produces larger RMSEs for all four
-methods, with Raw and Arnoldi again the leading pair.  Instrument~2 is a paired
-robustness analysis of the same tablets, not an external replication or a
-calibration-transfer experiment.  These patterns show preprocessing and
-instrument dependence, but do not establish that the visible high-wavelength
-spikes caused particular prediction errors.
+The planned sensitivity analyses show that the detailed ranking depends on
+the instrument and preprocessing choices.  Truncating instrument~1 at
+1798~nm lowers the RMSEs of CG--FPLS, Arnoldi, and FPCR, bringing all four
+results into the range 4.63--4.77.  Arnoldi then has the smallest point RMSE.
+Fixed Savitzky--Golay smoothing favours Raw at 4.66, but does not improve every
+method.  Using the full spectrum from instrument~2 increases RMSE for all
+four methods, with Raw and Arnoldi again leading.  Instrument~2 measures the
+same tablets, so this comparison assesses sensitivity to the instrument;
+it provides neither independent external validation nor a calibration-transfer
+experiment.  These changes do not establish that the visible spikes at high
+wavelengths caused particular prediction errors.
 
-The residual displays in Appendix~\ref{app:spectroscopy-supplement} contain a
-few large, common errors and regression toward the centre of the assay range.
-All such tablets remain in the analysis.  Without batch, acquisition-order, or
-laboratory metadata, row-order patterns cannot be assigned a physical cause.
-Likewise, the fitted coefficient vectors identify neither a unique functional
-slope nor chemically causal wavelengths in this $650$-coordinate,
-rank-$194$ problem.
+\begin{samepage}
+The residual plots in Appendix~\ref{app:spectroscopy-supplement} show a few
+large errors shared by the methods, as well as predictions drawn toward the
+centre of the assay range.  All these tablets remain in the analysis.
+Without batch, acquisition-order, or laboratory information, patterns in row
+order cannot be given a physical explanation.  Nor can the fitted coefficient
+vectors identify a unique functional slope or wavelengths with a chemically
+causal role in this problem with $650$ coordinates and rank at most $194$.
+\par
+\end{samepage}
 
-Three limitations govern the result.  First, the designated benchmark had
-been inspected during dataset selection, so the reported errors are not a
-prospectively blind validation.  Second, paired-bootstrap intervals condition
-on the fitted models and the supplied benchmark tablets; they omit development-
-sample, preprocessing, and tuning uncertainty.  Third, the study contains one
-response from one tablet archive and no independent batch, laboratory, or
-acquisition-period validation.  Subject to those limits, it transfers two
-mechanisms from the controlled experiments to an observed problem: aggressive
-early stopping can sacrifice prediction, and algebraically related Krylov
-fits can have almost identical predictions while their finite-precision
-representations have radically different reliability.
+Three limitations are central to interpreting the results.  First, the
+designated benchmark had been inspected during dataset selection, so the
+reported errors do not come from a prospectively blind validation.  Second,
+the paired-bootstrap intervals resample the supplied benchmark tablets while
+keeping the fitted models fixed.  They do not include uncertainty from the
+development sample, preprocessing, or tuning.  Third, the study examines one
+response from one tablet dataset, without independent validation across
+batches, laboratories, or acquisition periods.  Within this scope, the
+application illustrates two findings from the controlled experiments:
+stopping too early can reduce prediction accuracy, and related Krylov fits
+can give almost identical predictions despite large differences in their
+numerical reliability.

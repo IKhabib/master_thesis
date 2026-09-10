@@ -1,0 +1,45 @@
+\babel@toc {british}{}\relax 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Unit-ball geometry and $\ell ^p$ duality}}{10}{figure.caption.8}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Raw and Arnoldi representations of the Krylov space}}{29}{figure.caption.10}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Steepest descent and conjugate-gradient trajectories}}{32}{figure.caption.11}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces True slopes and coefficient magnitudes}}{38}{figure.caption.14}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Designed covariance spectra}}{40}{figure.caption.15}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Predictive-signal allocation}}{41}{figure.caption.17}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Functional predictors and pointwise population bands}}{42}{figure.caption.18}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Full distributions of estimation and prediction errors}}{50}{figure.caption.21}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Bias--variance decomposition using all simulation runs}}{55}{figure.caption.24}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Bias--variance decomposition on the paired stable subset}}{57}{figure.caption.26}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Stopping diagnostics for inference}}{73}{figure.caption.32}%
+\contentsline {figure}{\numberline {7.2}{\ignorespaces Finite-sample null calibration}}{75}{figure.caption.34}%
+\contentsline {figure}{\numberline {7.3}{\ignorespaces Empirical power under fixed alternatives}}{77}{figure.caption.36}%
+\contentsline {figure}{\numberline {7.4}{\ignorespaces Five-dimensional inverted-set envelopes}}{79}{figure.caption.38}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {8.1}{\ignorespaces Instrument-1 spectra and assay distributions}}{82}{figure.caption.40}%
+\contentsline {figure}{\numberline {8.2}{\ignorespaces Observed and predicted benchmark assay}}{85}{figure.caption.42}%
+\contentsline {figure}{\numberline {8.3}{\ignorespaces Benchmark RMSE estimates and bootstrap intervals}}{85}{figure.caption.43}%
+\contentsline {figure}{\numberline {8.4}{\ignorespaces Development selection and stopping indices}}{87}{figure.caption.45}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {B.1}{\ignorespaces Leading coefficient distributions: Model 1}}{123}{figure.caption.47}%
+\contentsline {figure}{\numberline {B.2}{\ignorespaces Leading coefficient distributions: Model 2}}{124}{figure.caption.48}%
+\contentsline {figure}{\numberline {B.3}{\ignorespaces Leading coefficient distributions: Model 3}}{125}{figure.caption.49}%
+\contentsline {figure}{\numberline {B.4}{\ignorespaces Pointwise slope distributions: Model 1}}{126}{figure.caption.50}%
+\contentsline {figure}{\numberline {B.5}{\ignorespaces Pointwise slope distributions: Model 2}}{127}{figure.caption.51}%
+\contentsline {figure}{\numberline {B.6}{\ignorespaces Pointwise slope distributions: Model 3}}{128}{figure.caption.52}%
+\contentsline {figure}{\numberline {B.7}{\ignorespaces Coefficient normal quantile plots: Model 1}}{129}{figure.caption.53}%
+\contentsline {figure}{\numberline {B.8}{\ignorespaces Coefficient normal quantile plots: Model 2}}{130}{figure.caption.54}%
+\contentsline {figure}{\numberline {B.9}{\ignorespaces Coefficient normal quantile plots: Model 3}}{131}{figure.caption.55}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {C.1}{\ignorespaces Oracle-calibrated null rejection probabilities}}{133}{figure.caption.56}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {D.1}{\ignorespaces Benchmark residuals against observed assay}}{140}{figure.caption.64}%
+\contentsline {figure}{\numberline {D.2}{\ignorespaces Final raw and Arnoldi Krylov diagnostics}}{142}{figure.caption.66}%
+\contentsline {figure}{\numberline {D.3}{\ignorespaces Benchmark RMSE across prespecified sensitivities}}{144}{figure.caption.68}%

@@ -2,31 +2,29 @@
 \chapter{Inference Methodology}
 \label{chap:inference-methodology}
 
-Chapter~\ref{chap:estimation-results} showed that the estimation performance of
-CG--FPLS can rest on aggressive stopping.  For inference, the residual left by
-that stopping rule becomes a potential first-order distortion.  The question
-is therefore not whether regularisation remains useful, but how far the
-Krylov path must be continued before its approximation error disappears
-relative to sampling uncertainty.  Estimation balances approximation bias
-against sampling variance in $\widehat\beta_m$.  The inferential procedure of
-\textcite{babii_carrasco_tsafack_2026} instead requires the fitted empirical
-moment $\widehat K\widehat\beta_m$ to reproduce $\widehat r$ to an error
-smaller than the root-$n$ sampling fluctuation.  This chapter makes that
-distinction operational.
+Chapter~\ref{chap:estimation-results} showed that stopping CG--FPLS early can
+improve estimation of the slope function.  Hypothesis testing places a
+different demand on the method.  If the iterations stop too soon, the error
+remaining in the fitted equation can affect the test result.  The procedure
+of \textcite{babii_carrasco_tsafack_2026} therefore continues until the fitted
+empirical moment $\widehat K\widehat\beta_m$ is sufficiently close to
+$\widehat r$: their difference must become negligible relative to the
+root-$n$ sampling fluctuation.  This chapter explains why that requirement
+matters and how it is assessed.
 
-The analysis concerns the moment-residual CG--FPLS path defined in
-Section~\ref{sec:methods-cg}.  It is not a new comparison of all four
-estimators from Chapter~\ref{chap:estimation-results}, and its conclusions do
-not automatically extend to raw FPLS, Arnoldi response-space FPLS, or FPCR.
-The analysis moves from the hypothesis and test statistic to the
-late-stopping requirement, null law, power behaviour, and inverted confidence
-set.  Its implementation is then fixed before the numerical evidence is read
-in Chapter~\ref{chap:inference-results}.
+The analysis focuses on the moment-residual CG--FPLS method defined in
+Section~\ref{sec:methods-cg}.  Its conclusions apply to this method and do
+not automatically extend to raw FPLS, Arnoldi response-space FPLS, or FPCR
+from Chapter~\ref{chap:estimation-results}.  The chapter introduces the
+hypothesis and test statistic, explains the stopping requirement and choice
+of critical value, and then considers power and confidence sets.  The final
+section describes the simulation design used to assess these ideas in
+Chapter~\ref{chap:inference-results}.
 
-\section{Inferential target and test statistic}
+\section{Hypothesis and test statistic}
 \label{sec:inference-target}
 
-Retain the centred scalar-on-function model
+The starting point is the centred scalar-on-function model
 \begin{equation}
     Y_i^c=\langle X_i^c,\beta\rangle+\varepsilon_i,
     \qquad
@@ -34,41 +32,42 @@ Retain the centred scalar-on-function model
     \label{eq:inference-model}
 \end{equation}
 and the normal equation $K\beta=r$.  The empirical moments
-$\widehat K$ and $\widehat r$ are those in
-\eqref{eq:methods-empirical-moments}; their grid implementation is given by
-\eqref{eq:methods-grid-moments}.  For a known candidate function $b$, the
-nominal hypothesis is
+$\widehat K$ and $\widehat r$ are defined in
+\eqref{eq:methods-empirical-moments}, with their discrete versions given in
+\eqref{eq:methods-grid-moments}.  For a specified candidate slope $b$, the
+question is whether the true slope equals this function:
 \begin{equation}
     H_0:\beta=b
     \qquad\text{against}\qquad
     H_1:\beta\neq b.
     \label{eq:inference-hypothesis}
 \end{equation}
-This is a global hypothesis about the slope function rather than a pointwise
-claim about $\beta(s)$ at one argument.  Choosing $b=0$ gives the important
-special case of no functional effect, but the procedure is not restricted to
-that null.  In the Monte Carlo size experiment, $b$ is the known true slope of
-the data-generating model.
+The hypothesis concerns the whole slope function.  It does not ask only
+whether $\beta(s)$ takes a particular value at one point.  Choosing $b=0$
+tests whether the functional predictor has any effect, although other
+candidate slopes can also be tested.  To assess how often the test rejects
+a true null hypothesis, the simulation uses the known generating slope as $b$.
 
-The qualification from Section~\ref{sec:identification-illposedness} remains
-essential.  When $K$ is not injective, the observations identify only
-$K\beta$ and cannot distinguish functions that differ by an element of
-$\operatorname{Null}(K)$.  The statistically meaningful unrestricted null is
-therefore
+There is an identification limit, as explained in
+Section~\ref{sec:identification-illposedness}.  If $K$ is not injective, the
+observations determine only $K\beta$.  They cannot distinguish two slopes
+whose difference lies in $\operatorname{Null}(K)$.  Without further
+restrictions, the hypothesis that can be tested is therefore
 \begin{equation}
     H_0:K\beta=Kb.
     \label{eq:inference-moment-null}
 \end{equation}
-If $\beta$ and $b$ are restricted to
-$\mathcal H_{\mathrm{id}}=\operatorname{Null}(K)^\perp$, this moment null is
-equivalent to \eqref{eq:inference-hypothesis}.  All references below to the
-slope null are understood on this identified space.  In particular, no test
-based on the functional linear model can have power against a perturbation
-lying entirely in $\operatorname{Null}(K)$.
+Restricting $\beta$ and $b$ to
+$\mathcal H_{\mathrm{id}}=\operatorname{Null}(K)^\perp$ makes this hypothesis
+equivalent to \eqref{eq:inference-hypothesis}.  References to testing the
+slope below use this restriction.  A change lying entirely in
+$\operatorname{Null}(K)$ cannot be detected by a test based on the functional
+linear model.
 
-Let $\widehat\beta_m^{\mathrm{CG}}$ minimise the empirical moment residual over
-the $m$th Krylov space as in \eqref{eq:methods-cg-moment-objective}.  It is
-useful to make the iteration index explicit and write
+Let $\widehat\beta_m^{\mathrm{CG}}$ be the estimate that minimises the
+empirical moment residual in the $m$th Krylov space, as defined in
+\eqref{eq:methods-cg-moment-objective}.  The test statistic after $m$
+iterations is
 \begin{equation}
     \mathcal T_{n,m}(b)
     =n\left\|
@@ -76,40 +75,42 @@ useful to make the iteration index explicit and write
       \right\|^2.
     \label{eq:inference-finite-m-statistic}
 \end{equation}
-For an inference-specific sequence $m=m_n$, the shorter notation
-$\mathcal T_n(b)=\mathcal T_{n,m_n}(b)$ recovers
-\eqref{eq:intro-test-statistic}.  The symbol $T_n$ remains reserved for the
-sampling operator introduced in Chapter~\ref{chap:methods}; the calligraphic
-symbol denotes the scalar test statistic.
+When the stopping index depends on sample size, write $m=m_n$ and use
+$\mathcal T_n(b)=\mathcal T_{n,m_n}(b)$, as in
+\eqref{eq:intro-test-statistic}.  The calligraphic symbol $\mathcal T_n$
+denotes this scalar statistic; $T_n$ continues to denote the sampling
+operator introduced in Chapter~\ref{chap:methods}.
 
-Weighting the slope difference by $\widehat K$ is decisive.  Direct inference
-on $\|\widehat\beta_m-b\|$ would inherit the unstable inversion of small
-covariance eigenvalues.  By contrast,
-$\widehat K(\widehat\beta_m-b)$ lives in moment space, where the sampling
-fluctuation has a root-$n$ limit under ordinary moment conditions.  The
-procedure consequently tests the covariance-visible part of the slope without
-requiring an asymptotically regular estimator of the unweighted slope itself.
+The multiplication by $\widehat K$ has a practical purpose.  A test based
+directly on $\|\widehat\beta_m-b\|$ would be affected by the instability of
+estimating slope components associated with small covariance eigenvalues.
+For $\widehat K(\widehat\beta_m-b)$, the sampling fluctuation has a root-$n$
+limit under the moment conditions stated below.  This allows inference about
+the identifiable part of the slope without requiring the unweighted slope
+estimate itself to have such a limit.
 
-\section{Late stopping and the direct-moment statistic}
+\section{Why inference requires later stopping}
 \label{sec:inference-late-stopping}
 
-Define the null moment and the CG fitting residual by
+Two differences explain the role of stopping.  The first measures how well
+the candidate slope $b$ satisfies the empirical equation; the second is the
+error remaining after $m$ CG iterations:
 \begin{equation}
     u_n(b)=\widehat r-\widehat Kb,
     \qquad
     e_m=\widehat r-\widehat K\widehat\beta_m^{\mathrm{CG}}.
     \label{eq:inference-two-residuals}
 \end{equation}
-The exact decomposition previewed in
-\eqref{eq:inference-residual-decomposition-background} is
+They give the exact identity introduced in
+\eqref{eq:inference-residual-decomposition-background}:
 \begin{equation}
     \widehat K(\widehat\beta_m^{\mathrm{CG}}-b)
     =u_n(b)-e_m.
     \label{eq:inference-residual-decomposition}
 \end{equation}
-It separates statistical error in the empirical null moment from algorithmic
-error left by terminating the iterative solution.  The corresponding
-direct-moment statistic is
+Under the null, $u_n(b)$ reflects sampling variation, while $e_m$ reflects
+the error left by stopping the iterations.  A statistic based directly on
+the empirical equation is
 \begin{equation}
     \mathcal S_n(b)
     =n\|u_n(b)\|^2
@@ -132,9 +133,10 @@ and hence
  \label{eq:inference-statistic-bound}
 \end{equation}
 
-Under the null, $\sqrt n\|u_n(b)\|=O_{\mathbb P}(1)$.  It follows from
-\eqref{eq:inference-statistic-bound} that the sufficient late-stopping
-condition is
+Under the null, $\sqrt n\|u_n(b)\|=O_{\mathbb P}(1)$.  The bound in
+\eqref{eq:inference-statistic-bound} therefore shows that the two statistics
+become equivalent if the fitting residual decreases faster than $n^{-1/2}$.
+This gives the sufficient late-stopping condition
 \begin{equation}
     \sqrt n\,
     \|\widehat r-\widehat K\widehat\beta_{m_n}^{\mathrm{CG}}\|
@@ -142,35 +144,37 @@ condition is
     \label{eq:inference-late-stopping-condition}
 \end{equation}
 When this condition holds,
-$\mathcal T_{n,m_n}(b)=\mathcal S_n(b)+o_{\mathbb P}(1)$.  The detailed
-argument appears in Proposition~\ref{prop:app-inference-decomposition} and
+$\mathcal T_{n,m_n}(b)=\mathcal S_n(b)+o_{\mathbb P}(1)$: the error caused by
+stopping no longer affects the limiting null distribution.  The argument is
+given in Proposition~\ref{prop:app-inference-decomposition} and
 Theorem~\ref{thm:app-late-stopping}.
 
-Condition \eqref{eq:inference-late-stopping-condition} is stricter than the
-estimation rule in \eqref{eq:methods-cg-stopping-rule}.  The latter stops when
-$\|e_m\|$ falls below a data-dependent constant multiple of $n^{-1/2}$; that
-is appropriate for regularisation, but does not by itself make
-$\sqrt n\|e_m\|$ vanish.  Continuing the path can therefore worsen the
-unweighted slope estimate while improving the approximation relevant to the
-test.  Inference asks for an accurate fitted moment, not an unregularised
-slope estimate.
+The condition in \eqref{eq:inference-late-stopping-condition} is stronger
+than the estimation rule in
+\eqref{eq:methods-cg-stopping-rule}.  That rule stops when $\|e_m\|$ falls
+below a data-dependent constant multiple of $n^{-1/2}$.  Such a threshold
+can provide useful regularisation, but it does not ensure that
+$\sqrt n\|e_m\|$ tends to zero.  Additional iterations can therefore make
+the unweighted slope estimate less accurate while making the test statistic
+more accurate.  The two tasks place different demands on the fitted moment.
 
-The theory does not prescribe a universal component count.  In finite samples
-the required index depends on the covariance spectrum, realised Krylov path,
-sample size, and numerical precision.  The paper's null-distribution
-experiment and the present null-law and fixed-index stopping branches use
-$m_{\mathrm{late}}=70$ as a conservative diagnostic choice at
-$n=100$.  The power branch instead uses the direct-moment target, while the
-confidence illustration uses the separate choice $m_C=10$.  The mathematical
-requirement is
-\eqref{eq:inference-late-stopping-condition}, not the number 70.  At the full
-empirical Krylov dimension, the residual is zero in exact arithmetic whenever
-$\widehat r$ lies in $\operatorname{Range}(\widehat K)$, but moving that far is
-neither necessary for first-order inference nor attractive for slope
-estimation.  The stopping experiment therefore examines the entire path
-rather than treating a chosen index as self-validating.
+The number of iterations needed depends on the covariance spectrum, the
+sample and resulting Krylov spaces, and numerical precision.  Following the
+paper's null-distribution experiment, the present null-law study and the
+fixed-index stopping comparison use $m_{\mathrm{late}}=70$ at $n=100$ as a
+conservative choice to be checked.  Power is studied using the direct-moment
+statistic, while the confidence-set illustration uses $m_C=10$.  Neither
+fixed iteration count replaces the requirement in
+\eqref{eq:inference-late-stopping-condition}.
 
-\section{Null distribution and critical-value calibration}
+At the full empirical Krylov dimension, the residual is zero in exact
+arithmetic whenever $\widehat r$ lies in
+$\operatorname{Range}(\widehat K)$.  Reaching that dimension is unnecessary
+for first-order inference if the residual is already small enough, and can
+be undesirable for slope estimation.  The stopping study therefore examines
+how the residual and test statistic change as the iterations continue.
+
+\section{The null distribution and choice of critical value}
 \label{sec:inference-calibration}
 
 Suppose the observations are independent and identically distributed,
@@ -182,10 +186,9 @@ empirical null moment is exactly
     u_n(b)=\frac1n\sum_{i=1}^{n}\varepsilon_iX_i^c.
     \label{eq:inference-null-score-average}
 \end{equation}
-If population means are replaced by sample means in an empirical application,
-the corresponding centring term is asymptotically negligible under the stated
-moment conditions.
-Let the covariance operator of the random score $\varepsilon X^c$ be
+If sample means are used instead, the additional centring term is
+asymptotically negligible under these moment conditions.  The covariance
+operator of the random score $\varepsilon X^c$ is
 \begin{equation}
     V
     =\mathbb E\!\left\{\varepsilon^2
@@ -201,8 +204,10 @@ The Hilbert-space central limit theorem yields
     \qquad G\sim\mathcal N_{\mathcal H}(0,V).
     \label{eq:inference-hilbert-clt}
 \end{equation}
-If $\{\omega_j\}$ are the positive eigenvalues of $V$, the spectral
-representation of $G$ and Parseval's identity imply
+When the late-stopping condition holds, the test statistic has the same
+limit as $\mathcal S_n(b)$.  Letting $\{\omega_j\}$ denote the positive
+eigenvalues of $V$, the spectral representation of $G$ and Parseval's
+identity give
 \begin{equation}
     \mathcal T_n(b)
     \rightsquigarrow
@@ -211,10 +216,11 @@ representation of $G$ and Parseval's identity imply
     \qquad Z_j\stackrel{\mathrm{iid}}{\sim}\mathcal N(0,1).
     \label{eq:inference-weighted-chi-square}
 \end{equation}
-The series is well defined because $V$ is trace class under the stated moment
-conditions.  Unlike an ordinary chi-square statistic with known degrees of
-freedom, this distribution is not pivotal: its weights depend on the joint
-distribution of $X$ and the regression error.
+The series is well defined because $V$ is trace class under the stated
+moment conditions.  Its weights depend on the joint distribution of $X$ and
+the regression error, so the limiting law contains unknown population
+quantities.  This is why a critical value cannot simply be taken from an
+ordinary chi-square distribution with known degrees of freedom.
 
 When the errors are conditionally homoskedastic,
 $\mathbb E(\varepsilon^2\mid X)=\sigma^2$, then
@@ -236,26 +242,32 @@ Let $q_{1-\alpha}$ denote the $(1-\alpha)$ quantile of the law in
     =\mathbf 1\{\mathcal T_n(b)>q_{1-\alpha}\}.
     \label{eq:inference-rejection-rule}
 \end{equation}
-Provided the limiting law is non-degenerate, it is continuous at its quantile,
-and the rejection probability converges to $\alpha$ under the null.  The
-formal statement is Corollary~\ref{cor:app-asymptotic-size}.
+If the limiting law is non-degenerate, it is continuous at this quantile.
+The probability of rejecting a true null hypothesis then approaches
+$\alpha$, as stated in Corollary~\ref{cor:app-asymptotic-size}.  This is an
+asymptotic result; it does not guarantee an exact rejection rate in a finite
+sample.
 
-Three calibration concepts are relevant and play different roles.
+The study distinguishes three ways of choosing critical values.
 
-\paragraph{Oracle weighted chi-square calibration.}
-In this simulation the continuous-design score variances and error variance
-are known.  The oracle benchmark draws independent $Z_j$ and simulates
+\paragraph{Using the known simulation model: oracle calibration.}
+The simulation specifies the score variances of the continuous model and
+the error variance.  These known values allow independent $Z_j$ to be drawn
+and combined as
 \begin{equation}
     Q^{\mathrm{oracle}}
     =\sum_{j=1}^{J}\sigma^2\lambda_jZ_j^2,
     \label{eq:inference-oracle-law}
 \end{equation}
-then uses its empirical quantile.  The reported experiment uses $50{,}000$ such
-draws.  The label \emph{oracle} means that unknown population information is
-supplied by the data-generating design.  It does not mean that the resulting
-test is exact at finite $n$.  The implemented weights describe the continuous
-design; the endpoint-inclusive, equally weighted grid only approximates its
-orthonormality.  To make the distinction precise, let
+and the critical value is estimated from $50{,}000$ draws of this quantity.
+The term \emph{oracle} indicates that the calculation uses population
+information supplied by the simulation design.  Even with this information,
+the test need not have exact size at finite $n$.
+
+There is also a distinction between the continuous model and its numerical
+grid.  The equally weighted grid includes both endpoints, so the basis
+functions are only approximately orthonormal under the grid inner product.
+To describe the resulting difference, let
 $\Phi=(\phi_j(s_t))_{j,t}\in\mathbb R^{J\times T}$,
 $G_T=T^{-1}\Phi\Phi^\top$, and
 $\Lambda=\operatorname{diag}(\lambda_1,\ldots,\lambda_J)$.
@@ -266,33 +278,33 @@ $\nu_{T,j}$, with zeros included if necessary, gives the fixed-grid limit
     Q_T=\sum_{j=1}^{J}\sigma^2\nu_{T,j}Z_j^2.
     \label{eq:inference-grid-oracle-law}
 \end{equation}
-With $T=200$ held fixed, increasing $n$ does not remove the difference between
-$\nu_{T,j}$ and $\lambda_j$.  For fixed $J$, grid refinement gives
-$G_T\to I_J$ and recovers the continuous-design reference.  The stored
-experiment uses \eqref{eq:inference-oracle-law}, so its calibration discrepancy
-combines finite-sample effects, grid approximation, and Monte Carlo error in
-the simulated reference distribution and quantile.  It does not isolate
-finite-sample error relative to the exact fixed-grid limit.
+With $T=200$ held fixed, a larger sample does not remove the difference
+between $\nu_{T,j}$ and $\lambda_j$.  For fixed $J$, a finer grid gives
+$G_T\to I_J$ and recovers the continuous-model reference.  The reported
+experiment uses \eqref{eq:inference-oracle-law}.  Any disagreement with that
+reference can therefore reflect finite-sample effects, grid approximation,
+and Monte Carlo error in the simulated distribution and critical value.
+It cannot be attributed solely to finite-sample error relative to the exact
+fixed-grid limit.
 
-Independent oracle draws are generated for each model.  Consequently, two
-models with the same theoretical weight
-sequence can receive slightly different simulated quantiles; such a difference
-is calibration Monte Carlo error rather than a substantive change in the null
-law.
+The oracle draws are generated independently for each model.  Models with
+the same theoretical weights may consequently receive slightly different
+estimated critical values.  These small differences arise from simulation
+uncertainty and do not indicate different theoretical null distributions.
 
-\paragraph{Empirical-null calibration.}
-When repeated null samples are available in a Monte Carlo experiment, one can
-take the desired quantile of their realised null statistics.  This avoids
-relying on the continuous-design weighted chi-square approximation, while
-retaining Monte Carlo uncertainty in the estimated critical value.  It is
-used for the reported power curves, separately for each
-model and sample size.  Such calibration is also simulation-specific: a real
-dataset does not provide thousands of independent samples generated under a
-known null.
+\paragraph{Using simulated null samples: empirical-null calibration.}
+A second approach repeatedly generates samples under a known null
+hypothesis and takes the required quantile of their test statistics.
+This avoids the continuous-model weighted chi-square approximation,
+although the estimated critical value still has Monte Carlo uncertainty.
+The power study uses this approach separately for each model and sample
+size.  It is available because the null model is known in the simulation;
+an observed dataset alone does not provide independent samples from a known
+null model.
 
-\paragraph{Feasible calibration for data analysis.}
-With observed data, the nuisance distribution must be estimated.  For a
-specified null, define the observable null residual
+\paragraph{Estimating critical values from observed data.}
+In an application, the unknown features of the null distribution must be
+estimated.  For a specified null, define the residual
 $\widehat\varepsilon_i(b)=Y_i^c-\langle X_i^c,b\rangle$.  One route replaces
 $V$ by the covariance estimator
 \begin{equation}
@@ -302,37 +314,42 @@ $V$ by the covariance estimator
       (X_i^c\otimes X_i^c)
     \label{eq:inference-plugin-variance}
 \end{equation}
-and simulates a weighted chi-square variable using its estimated eigenvalues.
-Alternatively, a non-parametric bootstrap can approximate the null law.  These
-two feasible directions are discussed by
-\textcite{babii_carrasco_tsafack_2026}.  The supplied Python program also
-contains an exploratory centred-multiplier option, but the stored archive uses
-only the oracle benchmark for null size and confidence-set calculations.
-Consequently, Chapter~\ref{chap:inference-results} makes no empirical claim
-about the unreported feasible calibrations.
+and uses its estimated eigenvalues to simulate a weighted chi-square
+distribution.  A non-parametric bootstrap offers another way to approximate
+the null law.  Both approaches are discussed by
+\textcite{babii_carrasco_tsafack_2026}.  A centred-multiplier method is also
+available as an exploratory option in the accompanying implementation.
+The reported null-size and confidence-set results, however, use only oracle
+calibration.  Chapter~\ref{chap:inference-results} therefore provides no
+empirical assessment of these methods for estimating critical values from
+observed data.
 
 \section{Alternatives and power}
 \label{sec:inference-power}
 
-Under a fixed alternative with $K(\beta-b)\neq0$, consistency follows from
+Power is the probability that a test detects a departure from the null
+hypothesis.  For a fixed alternative with $K(\beta-b)\neq0$, and with the
+required moment convergence and sufficiently late stopping,
 \begin{equation}
     \frac1n\mathcal T_n(b)
     \xrightarrow{\mathbb P}
     \|K(\beta-b)\|^2>0.
     \label{eq:inference-fixed-alternative}
 \end{equation}
-Thus $\mathcal T_n(b)$ diverges and the probability of rejection approaches
-one.  The qualification $K(\beta-b)\neq0$ again excludes observationally
-invisible null-space directions.
+The statistic therefore grows without bound and the probability of
+rejection approaches one.  The condition $K(\beta-b)\neq0$ excludes changes
+in the slope that lie in the null space and are invisible in the data.
 
-Non-trivial asymptotic power is described by the triangular sequence
+A more demanding question is whether the test can detect departures that
+become smaller as the sample grows.  Consider
 \begin{equation}
     H_{1,n}:\quad
     \beta_n=b+n^{-1/2}\Delta,
     \qquad \Delta\in\mathcal H.
     \label{eq:inference-local-alternative}
 \end{equation}
-Under the same late-stopping condition,
+Here the departure is in a fixed direction $\Delta$, with magnitude
+decreasing at rate $n^{-1/2}$.  Under the same late-stopping condition,
 \begin{equation}
     \mathcal T_n(b)
     \rightsquigarrow
@@ -348,22 +365,25 @@ Writing $V\phi_j=\omega_j\phi_j$ makes the shift explicit:
        +\|K\Delta\|^2.
     \label{eq:inference-local-expansion}
 \end{align}
-Hence detectability is governed by the covariance-weighted displacement
-$K\Delta$, not by $\|\Delta\|$ alone.  Under homoskedasticity, if
-$\Delta=\sum_j d_jv_j$ in the eigenbasis of $K$, then
+The change that enters the limiting statistic is $K\Delta$.  Thus the size
+of a slope difference alone does not determine how easily it can be
+detected.  Under homoskedasticity, writing $\Delta=\sum_j d_jv_j$ in the
+eigenbasis of $K$ gives
 \begin{equation}
     \|K\Delta\|^2
     =\sum_{j\geq1}\lambda_j^2d_j^2.
     \label{eq:inference-detectability}
 \end{equation}
-For alternatives of comparable coefficient norm, the deterministic shift is
-less attenuated in leading covariance directions and such departures are
-typically easier to detect than departures concentrated in weak directions.
-More generally, local power depends on the orientation of $K\Delta$ relative
-to the covariance operator $V$, not on $\|K\Delta\|$ alone.  This is a
-pointwise local-power statement; it does not imply uniform power over all
-unit-norm directions in an ill-posed problem.  A proof of the fixed and local
-claims is given in Proposition~\ref{prop:app-inference-alternatives}.
+For slope changes with comparable coefficient norms, components associated
+with larger covariance eigenvalues contribute more to this shift.
+Departures in these directions are typically easier to detect than those
+concentrated in weak directions.  More generally, power also depends on how
+$K\Delta$ is oriented relative to the covariance operator $V$, so
+$\|K\Delta\|$ alone does not determine it.  These local results concern
+each fixed direction separately; they do not guarantee uniform power over
+all unit-norm directions in an ill-posed problem.  The fixed and local
+alternative results are proved in
+Proposition~\ref{prop:app-inference-alternatives}.
 
 The finite-sample power experiment uses the perturbation family
 \begin{equation}
@@ -374,33 +394,33 @@ The finite-sample power experiment uses the perturbation family
     \delta\in\{-1,-0.95,\ldots,0.95,1\}.
     \label{eq:inference-power-family}
 \end{equation}
-The tested candidate remains the baseline $b=\beta$.  Thus $\delta=0$ is the
-null and every fixed non-zero $\delta$ is a fixed alternative at a given
-sample size.  It corresponds to the theoretical local sequence only if
-$\delta= c/\sqrt n$ for a fixed constant $c$.  This distinction prevents the
-simulation grid from being mistaken for the literal triangular alternative
-in \eqref{eq:inference-local-alternative}.
+The candidate being tested remains the baseline $b=\beta$.  At $\delta=0$
+the null is true; each fixed non-zero $\delta$ gives a fixed departure from
+it at the chosen sample size.  To represent the shrinking alternatives in
+\eqref{eq:inference-local-alternative}, $\delta$ would instead need to vary
+with sample size as $\delta= c/\sqrt n$ for a fixed constant $c$.
 
-To make the large experiment computationally feasible, power is calculated
-with the direct statistic $\mathcal S_n(b)$ in
+The power study uses the direct statistic $\mathcal S_n(b)$ in
 \eqref{eq:inference-direct-statistic}, evaluated exactly in the generating
-score coordinates.  It is not obtained by running 70 CG iterations for every
-alternative replication.  The reported curves therefore describe the
-finite-sample power of the direct-moment target, which is the first-order limit
-of sufficiently late-stopped inference; they are not finite-$m=70$ power
-curves.  The stopping experiment separately assesses the approximation under
-the null designs.  At the 5\% level, empirical null quantiles are computed for
-each model and for $n\in\{100,200\}$.  Monte Carlo standard errors for the
-resulting rejection frequencies use the binomial formula in
-\eqref{eq:simulation-mcse}.  These standard errors condition on the realised
-simulated critical values; they do not propagate the additional Monte Carlo
-uncertainty from estimating an oracle or empirical-null quantile.
+score coordinates.  This keeps the large experiment manageable and measures
+the finite-sample power of the statistic that sufficiently late-stopped
+CG--FPLS approximates to first order.  The curves do not measure power after
+a fixed $m=70$ iterations.  A separate stopping study checks the quality of
+that approximation under the null.
+
+For each model and $n\in\{100,200\}$, the power study uses an empirical null
+quantile at the 5\% level.  Monte Carlo standard errors for the rejection
+frequencies follow the binomial formula in \eqref{eq:simulation-mcse}.
+They measure uncertainty conditional on the simulated critical values and
+do not include the additional uncertainty from estimating an oracle or
+empirical-null quantile.
 
 \section{Confidence sets by test inversion}
 \label{sec:inference-confidence}
 
-Any level-$\alpha$ test can be inverted.  On an identified parameter space
-$\Theta\subseteq\mathcal H_{\mathrm{id}}$, define
+A confidence set can be formed by collecting all candidate slopes that the
+test does not reject.  For a level-$\alpha$ test on an identified parameter
+space $\Theta\subseteq\mathcal H_{\mathrm{id}}$, this gives
 \begin{equation}
     \mathcal C_{1-\alpha}
     =\left\{b\in\Theta:
@@ -409,14 +429,15 @@ $\Theta\subseteq\mathcal H_{\mathrm{id}}$, define
 \end{equation}
 If the test has asymptotic size $\alpha$, then
 $\mathbb P_\beta\{\beta\in\mathcal C_{1-\alpha}\}\to1-\alpha$; see
-Corollary~\ref{cor:app-confidence-inversion}.  Without the identification
-restriction, the set is invariant along $\operatorname{Null}(K)$ and describes
-an equivalence class rather than a unique slope.  In a finite sample,
-$\widehat K$ is itself finite rank, so unrestricted directions in
-$\operatorname{Null}(\widehat K)$ also make the raw inverted set unbounded.
+Corollary~\ref{cor:app-confidence-inversion}.  The identification restriction
+matters here too.  Without it, adding a function in $\operatorname{Null}(K)$
+does not change the test, so the set describes slopes that the data cannot
+distinguish.  In a finite sample, $\widehat K$ also has finite rank.  An
+unrestricted inverted set therefore extends without bound in directions in
+$\operatorname{Null}(\widehat K)$.
 
-For visualisation, the computation restricts candidate functions to a
-$p$-dimensional space
+To make the set easier to display, candidate functions are restricted to a
+$p$-dimensional space:
 \begin{equation}
     \mathcal H_p
     =\operatorname{span}\{h_1,\ldots,h_p\},
@@ -424,9 +445,9 @@ $p$-dimensional space
     b_c(s)=\sum_{j=1}^{p}c_jh_j(s),
     \label{eq:inference-truncated-space}
 \end{equation}
-using the first $p=5$ cosine functions from the simulation basis.  Let $H$ be
-the $T\times p$ matrix whose $j$th column contains $h_j$ on the numerical
-grid, let
+where the illustration uses the first $p=5$ cosine functions from the
+simulation basis.  Let $H$ be the $T\times p$ matrix whose $j$th column
+contains $h_j$ on the numerical grid, and define
 \begin{equation}
     A=\widehat K H,
     \qquad
@@ -451,14 +472,16 @@ When $A$ has full column rank, let
              \|f-A\widehat c\|_2^2.
     \label{eq:inference-ellipsoid-parameters}
 \end{equation}
-If $\rho^2<0$, the restricted set is empty.  Otherwise it is the ellipsoid
+If $\rho^2<0$, no candidate in the restricted space is accepted and the set
+is empty.  Otherwise, the accepted coefficients form the ellipsoid
 \begin{equation}
     (c-\widehat c)^\top A^\top A(c-\widehat c)
     \leq\rho^2.
     \label{eq:inference-confidence-ellipsoid}
 \end{equation}
-For the row vector $h(s)^\top=(h_1(s),\ldots,h_p(s))$, its pointwise extrema
-are
+\begin{samepage}
+For the row vector $h(s)^\top=(h_1(s),\ldots,h_p(s))$, the smallest and largest
+accepted function values at each point $s$ are
 \begin{equation}
     h(s)^\top\widehat c
     \mathbin{\pm}
@@ -467,66 +490,67 @@ are
     \right\}^{1/2}.
     \label{eq:inference-envelope}
 \end{equation}
+\end{samepage}
 Proposition~\ref{prop:app-confidence-ellipsoid} derives
 \eqref{eq:inference-confidence-ellipsoid}--\eqref{eq:inference-envelope} and
-records the rank-deficient cases.  This analytic calculation gives the exact
-envelope of the full ellipsoid in $\mathbb R^5$, without the notebook's
-additional coefficient-box restriction.  It replaces the reference
-notebook's discrete search over $20^5$ coefficient vectors in $[0,4.5]^5$;
-the two algorithms therefore illustrate the same test-inversion idea but do
-not define identical finite grids.
+describes the cases where $A$ is rank deficient.  The analytic calculation
+gives the exact envelope of the full ellipsoid in $\mathbb R^5$.  The
+reference illustration instead searches over $20^5$ coefficient vectors in
+$[0,4.5]^5$.  Both approaches invert the test, but the earlier search also
+restricts the coefficients to a box and checks only finitely many points.
+The displayed sets therefore need not coincide.
 
-The confidence experiment uses $m_C=10$, retaining the reference notebook's
-separate choice for this illustration, whereas the null-law experiment uses
-$m_{\mathrm{late}}=70$.  Choosing ten components does not by itself prove
-\eqref{eq:inference-late-stopping-condition}; its adequacy must be judged from
-finite-sample coverage and residual diagnostics.  Thus $m_C=10$ reproduces a
-feature of the reference illustration; it is not presented as a generally
-valid inference-stopping recommendation.  Its formal confidence interpretation
-therefore remains conditional on the moment residual being sufficiently small.
-Nor is the five-dimensional display the full functional confidence set: the
-data-generating slopes have
-non-zero coefficients beyond the fifth basis function.  Three reported
-summaries are therefore related but different:
+The confidence illustration uses $m_C=10$, following the separate choice in
+the reference study; the null-law experiment uses
+$m_{\mathrm{late}}=70$.  Ten components do not by themselves establish
+\eqref{eq:inference-late-stopping-condition}.  Their adequacy must be assessed
+through finite-sample coverage and residual diagnostics.  This choice is
+therefore specific to the illustration, and its interpretation as a
+confidence set remains conditional on a sufficiently small moment residual.
+
+There is also a distinction between the full slope and its five-term
+approximation.  The simulated true slopes have non-zero coefficients beyond
+the fifth basis function, so they do not belong to the space used for the
+display.  The study accordingly reports three different summaries:
 \begin{enumerate}
-    \item non-rejection when the test statistic is evaluated at the full true
-          simulated slope;
-    \item acceptance of the true slope's five-term projection within
+    \item how often the test does not reject the full true simulated slope;
+    \item how often the true slope's five-term projection is accepted within
           $\mathcal H_5$; and
     \item the lower and upper pointwise envelope of the accepted
           five-dimensional coefficient set.
 \end{enumerate}
-The shaded region drawn in Chapter~\ref{chap:inference-results} is formed from
-the pointwise medians of 5,000 lower and upper envelopes.  It is a Monte Carlo
-summary of many realised sets, not one observed-sample 95\% confidence band.
-Visual containment of the true curve in that median region is consequently not
-a coverage statement.  The full-slope acceptance indicator deliberately reuses
-the null-size data stream, but it is evaluated at $m_C=10$ rather than
-$m_{\mathrm{late}}=70$.  Its average is therefore closely comparable with,
-but not algebraically complementary to, the reported late-stopped size.
-Acceptance and rejection are exact complements only when the same stopping
-index and critical value are used; the reused samples do not provide an
-independent validation of the size result.
+The shaded region in Chapter~\ref{chap:inference-results} combines the
+pointwise medians of 5,000 lower and upper envelopes.  It shows a typical
+range across many simulated samples.  It is not a 95\% confidence band from
+one observed sample, and whether it contains the true curve does not measure
+coverage.
+
+The full-slope acceptance calculation uses the same samples as the null-size
+experiment, but applies $m_C=10$ in place of $m_{\mathrm{late}}=70$.  Its
+average can therefore be compared with the reported late-stopped size,
+although the two need not add to one.  Acceptance and rejection are exact
+complements only when the stopping index and critical value are the same.
+Because the samples are shared, this comparison is not an independent check
+of the size result.
 
 \section{Implementation and diagnostic design}
 \label{sec:inference-implementation}
 
-The inference study reuses the three data-generating models in
-Sections~\ref{sec:simulation-dgp} and \ref{sec:simulation-models}.  It therefore
-inherits the same 100-term Gaussian score expansion, 200-point grid, Babii
-cosine convention, and homoskedastic error standard deviation one.  Reusing
-the design connects the inferential evidence to the estimation mechanisms
-already isolated, while using a separate seed prevents accidental dependence
-between the two Monte Carlo archives.
+The inference study uses the three models in
+Sections~\ref{sec:simulation-dgp} and \ref{sec:simulation-models}: the same
+100-term Gaussian score expansion, 200-point grid, Babii cosine convention,
+and homoskedastic error standard deviation one.  Keeping these features
+allows the inference results to be related to the estimation results.  A
+separate random seed keeps the two simulation studies separate.
 
-Table~\ref{tab:inference-design} records the inference-specific choices.  Each
-listed replication count is per model and, for power, per sample size and
-perturbation value.  The size study includes 1\%, 5\%, and 10\% nominal levels;
-the other branches use 5\%.
+Table~\ref{tab:inference-design} gives the choices specific to inference.
+The number of simulated samples applies to every model and, for power, to
+every combination of sample size and perturbation value.  The size study examines
+nominal levels of 1\%, 5\%, and 10\%; the other parts use 5\%.
 
 \begin{table}[htbp]
     \centering
-    \caption[Frozen inference-study design]{Stored design of the CG--FPLS inference study.}
+    \caption[Inference-study design]{Design of the CG--FPLS inference study.}
     \label{tab:inference-design}
     \small
     \begin{tabular}{@{}
@@ -563,22 +587,23 @@ the other branches use 5\%.
     \end{tabular}
 \end{table}
 
-For the stopping branch, the adaptive comparator uses the same
-estimation-oriented discrepancy formula and constants as
+The stopping comparison includes an adaptive rule intended for estimation.
+It uses the discrepancy formula and constants from
 Chapter~\ref{chap:methods}, with $\tau=1.01$ and
-$\delta_{\mathrm{stop}}=0.1$.  Its internal FPCR moment-GCV variance pilot
-uses \eqref{eq:simulation-moment-gcv}--\eqref{eq:simulation-cg-sigma-pilot},
-but is capped at 20 components, compared with 70 in the estimation experiment.
-It also uses the stabilised moment-residual path described below in place of
-the estimation study's short recurrence.  The stopping experiment therefore
-assesses an estimation-oriented variant; it does not reproduce the complete
-Chapter~\ref{chap:estimation-results} procedure unchanged.  The pilot cap can
-alter the variance estimate, discrepancy threshold, and selected index.
-Writing
-$\delta_{\mathrm{stop}}$ distinguishes this tuning constant from the power
-perturbation $\delta$ in \eqref{eq:inference-power-family}.  The maximum-rank
-benchmark projects $\widehat r$ onto the numerical range of $\widehat K$.
-For every stopping rule, the diagnostics retain
+$\delta_{\mathrm{stop}}=0.1$.  Its FPCR moment-GCV variance pilot follows
+\eqref{eq:simulation-moment-gcv}--\eqref{eq:simulation-cg-sigma-pilot}, but
+uses at most 20 components, compared with 70 in the estimation experiment.
+The comparison also uses the stabilised moment-residual path described below
+in place of the estimation study's short recurrence.  These differences
+matter: the smaller pilot cap can change the estimated variance, the
+discrepancy threshold, and the selected stopping index.  This is therefore a
+variant of the procedure in Chapter~\ref{chap:estimation-results}.
+
+The notation $\delta_{\mathrm{stop}}$ distinguishes the tuning constant from
+the power perturbation $\delta$ in \eqref{eq:inference-power-family}.  A
+maximum-rank fit provides another benchmark by projecting $\widehat r$ onto
+the numerical range of $\widehat K$.  For every stopping rule, the study
+records
 \begin{equation}
     \sqrt n\|e_m\|,
     \qquad
@@ -587,14 +612,16 @@ For every stopping rule, the diagnostics retain
     \mathbf 1\{\mathcal T_{n,m}(b)>q_{0.95}\},
     \label{eq:inference-stopping-diagnostics}
 \end{equation}
-as well as the selected or fixed index.  Together these quantities show
-whether a path has approached the inferential target and what size distortion
-remains; merely reporting $m$ would not.
+together with the selected or fixed index.  These quantities show how much
+moment residual remains, how closely the fitted statistic matches the direct
+statistic, and whether the test rejects.  They allow the effect of stopping
+on null rejection rates to be assessed.
 
-The reported archive uses a numerically stabilised realisation of the
-moment-residual path.  At each dimension, a two-pass reorthogonalisation forms
-an orthonormal basis $Q_m$ for
-$\widehat{\mathcal K}_m(\widehat K,\widehat r)$, after which a QR solve computes
+The moment-residual path is computed in a numerically stabilised form because
+the inference study takes many more iterations than the estimation rule.
+At each dimension, two-pass reorthogonalisation forms an orthonormal basis
+$Q_m$ for $\widehat{\mathcal K}_m(\widehat K,\widehat r)$, and a QR solve
+computes
 \begin{equation}
     \widehat a_m
     \in\arg\min_{a\in\mathbb R^m}
@@ -603,31 +630,27 @@ $\widehat{\mathcal K}_m(\widehat K,\widehat r)$, after which a QR solve computes
     \widehat\beta_m^{\mathrm{CG}}=Q_m\widehat a_m.
     \label{eq:inference-stable-engine}
 \end{equation}
-In exact arithmetic this solves the same nested minimum-moment-residual
-problem as the released recurrence; the coordinate system and finite-precision
-path are stabilised because inference deliberately proceeds much farther than
-the estimation rule.  This solver is distinct from the Arnoldi FPLS estimator
-in Chapter~\ref{chap:methods}: both use an orthogonal Krylov basis,
-but Arnoldi FPLS minimises response error, whereas
-\eqref{eq:inference-stable-engine} retains the CG--FPLS moment-residual
-objective.  Propositions~\ref{prop:app-arnoldi-span} and
-\ref{prop:app-response-moment-krylov} establish the relevant span and objective
-distinctions.
+In exact arithmetic, this solves the same minimum-moment-residual problem at
+each dimension as the original short recurrence.  The orthogonal basis
+improves numerical stability and can change the path in finite precision.
+It does not change the objective to that of Arnoldi FPLS in
+Chapter~\ref{chap:methods}.  Both methods use an orthogonal Krylov basis, but
+Arnoldi FPLS minimises response error, while
+\eqref{eq:inference-stable-engine} minimises the CG--FPLS moment residual.
+Propositions~\ref{prop:app-arnoldi-span} and
+\ref{prop:app-response-moment-krylov} establish the relevant distinctions
+between their spaces and objectives.
 
-All random quantities derive reproducibly from the master seed 2025.  Dedicated
-streams separate the stopping experiment and the alternative power samples,
-while several reuses are intentional: the confidence experiment regenerates
-the null-size samples, the $n=100$ empirical power calibration reuses the
-direct null statistics, and the oracle draws serve all relevant branches.  The
-archive retains the configuration, replication-level arrays, summary tables,
-and vector figures.  The executable command and output manifest are recorded
-in the reproducibility notes rather than embedded in the methodological
-argument.  This separation is deliberate: the chapter fixes the estimand,
-statistic, approximation, and calibration, while the archive makes their
-numerical implementation auditable.
+All random quantities are generated from the master seed 2025.  Separate
+random streams are used for the stopping experiment and the alternative
+power samples.  Some quantities are deliberately shared: the confidence
+experiment uses the null-size samples, the $n=100$ empirical power
+calibration uses the direct null statistics, and the same oracle draws serve
+all relevant parts of the study.  These choices make the calculations
+repeatable and clarify which comparisons share simulated information.
 
-This ordering is essential for interpreting the evidence that follows.
-Before rejection frequencies can be attributed to calibration or power, the
-iterative approximation must be shown to be negligible.  Chapter
-\ref{chap:inference-results} therefore begins with the stopping diagnostics and
-then turns to null size, power, and confidence-set behaviour.
+Interpreting the results first requires checking whether the remaining
+moment residual is small enough for the fitted statistic to behave like the
+direct statistic.  Chapter~\ref{chap:inference-results} therefore begins
+with the stopping diagnostics, followed by null size, power, and
+confidence-set behaviour.
