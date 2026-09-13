@@ -45,7 +45,3 @@ The input is **`main.tex`**, not `main.pdf`. If switching bibliography backends,
 | `REVISION_NOTES.md` | Chapter mapping, checks, and remaining submission tasks |
 | `TEMPLATE_NOTES.md` | Layout settings and template attribution |
 | `original_upload.zip` | Unchanged copy of the source ZIP supplied for this revision |
-
-Compilation uses the saved figures and does **not** rerun the numerical studies. This package contains the LaTeX project and figure scripts available in `thesis.zip`; the full simulation, inference, and empirical analysis programs and raw dataset were not in that upload. Keep the separate analysis repository for rerunning those studies.
-
-Before submission, review the AI-assistance disclosure with the supervisor, verify the author details and declaration, and add the required date and original handwritten signature. The university's formal submission process is separate from sending a review copy to the supervisor.
