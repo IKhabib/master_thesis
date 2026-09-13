@@ -1,10 +1,13 @@
-% Chapter 3. Methods chapter: exact definitions match the final four-method Python study.
-\chapter{FPLS, Krylov Methods, and Regularisation}
+% Extended methods: definitions match the final four-method Python study.
+\chapter{Extended Methods and Numerical Implementation}
 \label{chap:methods}
 
-Chapter~\ref{chap:background} showed that functional linear regression leads
+This appendix gives the full estimator definitions and numerical conventions underlying
+Chapter~\ref{chap:main-methods}.
+
+Appendix~\ref{chap:background} showed that functional linear regression leads
 to a compact-operator equation whose direct inverse is unstable.  This
-chapter develops the four regularised estimators used in the Monte Carlo
+appendix develops the four regularised estimators used in the Monte Carlo
 study: FPCR, raw FPLS, Arnoldi FPLS, and the CG--FPLS procedure
 of \textcite{babii_carrasco_tsafack_2026}.  Particular attention is paid to a
 terminological point that otherwise causes confusion.  Classical functional
@@ -677,13 +680,13 @@ and restricted objective coincide.
     \centering
     \small
     \caption[Roles and equivalence boundaries of the methods]{Roles and exact equivalence boundaries of the methods discussed
-    in this chapter.}
+    in this appendix.}
     \label{tab:methods-equivalence}
     \begin{tabular}{@{}
-        >{\raggedright\arraybackslash}p{2.7cm}
-        >{\raggedright\arraybackslash}p{3.3cm}
-        >{\raggedright\arraybackslash}p{3.6cm}
-        >{\raggedright\arraybackslash}p{4.3cm}@{}}
+        >{\raggedright\arraybackslash}p{2.4cm}
+        >{\raggedright\arraybackslash}p{3.0cm}
+        >{\raggedright\arraybackslash}p{3.2cm}
+        >{\raggedright\arraybackslash}p{4.4cm}@{}}
         \toprule
         Procedure & Search space & Finite-$m$ criterion & Relationship and tuning \\
         \midrule
@@ -724,6 +727,6 @@ whether coordinate instability changes an otherwise common APLS target,
 whereas the Arnoldi--CG contrast changes the finite-step objective itself.
 
 These contrasts determine the Monte Carlo design in
-Chapter~\ref{chap:simulation-design}, which holds the observations and
+Appendix~\ref{chap:simulation-design}, which holds the observations and
 candidate path common while preserving each procedure's objective, tuning
 rule, and numerical representation.

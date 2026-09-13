@@ -1,22 +1,25 @@
-% Chapter 7: inference results from the fixed simulation study.
-\chapter{Inference Results}
+% Extended inference results from the fixed simulation study.
+\chapter{Detailed Inference Results}
 \label{chap:inference-results}
 
-This chapter examines how well the CG--FPLS test performs in the three
-simulation models.  Chapter~\ref{chap:inference-methodology} identified two
+This appendix provides the complete inference results and diagnostics supporting
+Chapter~\ref{chap:main-inference}.
+
+This appendix examines how well the CG--FPLS test performs in the three
+simulation models.  Appendix~\ref{chap:inference-methodology} identified two
 reasons why its rejection rate may differ from the intended level: stopping
 the iterations too early, and using an approximate null distribution to
 choose the critical value.  The results first check whether
 $\mathcal T_{n,m}$ is sufficiently close to the direct statistic
 $\mathcal S_n$.  This check is needed before differences from the weighted
-chi-square reference can be attributed mainly to calibration.  The chapter
+chi-square reference can be attributed mainly to calibration.  The appendix
 then examines rejection under the null, power against departures from it,
 and the candidate slopes accepted by test inversion.
 
 The focus is the CG--FPLS procedure for inference.  The theory studied here
 depends on continuing the CG iterations until the moment residual is small
 enough.  Raw FPLS, Arnoldi FPLS, and FPCR retain their roles as estimation and
-prediction methods in Chapter~\ref{chap:estimation-results}; the present
+prediction methods in Appendix~\ref{chap:estimation-results}; the present
 results do not provide a further comparison of all four methods.
 
 \section{Results and reporting conventions}
@@ -60,7 +63,7 @@ described in Section~\ref{sec:inference-implementation}: its variance pilot
 is limited to 20 components instead of 70, and the iterations use a
 stabilised moment-residual calculation in place of the short recurrence.
 The results therefore concern a variant of the procedure studied in
-Chapter~\ref{chap:estimation-results}.
+Appendix~\ref{chap:estimation-results}.
 
 Figure~\ref{fig:inference-stopping-diagnostics} shows how three quantities
 change as the iterations continue: the scaled residual $\sqrt n\|e_m\|$,
@@ -97,7 +100,7 @@ small error in calibration.
 
 \begin{table}[htbp]
     \centering
-    \scriptsize
+    \small
     \caption[Selected stopping diagnostics]{Selected stopping diagnostics from the separate study of 5,000
     simulated samples per model.  The residual and statistic-difference columns report medians;
     the final column reports the empirical rejection percentage.}
@@ -200,7 +203,7 @@ $n$ increases if $T$ remains fixed.
 
 \begin{table}[htbp]
     \centering
-    \scriptsize
+    \small
     \caption[Null distributions and empirical test size]{Null-distribution and empirical-size summary at $n=100$.
     Quantities labelled ``reference'' use the 50,000-draw continuous-design
     oracle weighted chi-square sample.  Rejection entries are percentages
@@ -288,7 +291,7 @@ simulation variation.
 
 \begin{table}[htbp]
     \centering
-    \scriptsize
+    \small
     \caption[Selected empirical power values]{Selected rejection probabilities
     from the power curves (percent).  The non-zero values shown here are from
     the positive branch of the approximately symmetric alternative grid.}
@@ -357,7 +360,7 @@ five-dimensional set.
 
 \begin{table}[htbp]
     \centering
-    \scriptsize
+    \small
     \caption[Five-dimensional inverted-set summaries]{Summary of the analytic
     five-dimensional inverted sets.  The first two entries are acceptance
     frequencies in percent.  For each sample, width is averaged over the
@@ -428,7 +431,7 @@ finite-dimensional sets in all three designs.
 These findings concern dense Gaussian curves, homoskedastic errors, one
 perturbation direction, and oracle or simulation-based null calibration.
 They do not establish the performance of feasible plug-in or bootstrap
-calibration.  Chapter~\ref{chap:spectroscopy-application} examines prediction
+calibration.  Appendix~\ref{chap:spectroscopy-application} examines prediction
 with the four regularisation procedures on spectroscopy curves.  Formal
 testing there would require feasible calibration whose finite-sample
 behaviour has yet to be assessed.  Appendix~\ref{app:spectroscopy-supplement}

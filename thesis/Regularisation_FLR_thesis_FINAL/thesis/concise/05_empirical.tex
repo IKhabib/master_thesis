@@ -1,0 +1,184 @@
+\chapter{Empirical Application: Tablet Spectroscopy}
+\label{chap:main-empirical}
+
+The simulations distinguish slope recovery, prediction, and numerical
+stability because the generating model is known.  This application examines
+prediction and stability in pharmaceutical-tablet data.  The true slope is
+unknown, so slope ISE cannot be assessed. Formal inference would additionally
+require feasible calibration, whose performance was not evaluated in
+Chapter~\ref{chap:main-inference}.  The detailed analysis is
+preserved in Appendix~\ref{chap:spectroscopy-application}, with the complete
+protocol and diagnostics in Appendix~\ref{app:spectroscopy-supplement}.
+
+\section{Data and evaluation}
+\label{main:sec:empirical-design}
+
+The 2002 pharmaceutical-tablet NIR Shoot-out contains near-infrared spectra
+from two instruments \parencite{hopkins_2003,eigenvector_tablets}.  Its 155
+calibration, 40 validation, and 460 test tablets total 655, although the
+catalogue states 654.  All complete records are retained.  The instruments
+measured the same tablets, so their observations are paired.  The primary
+analysis uses instrument~1 and all 650 wavelengths from 600 to 1898~nm in
+2-nm steps.  Assay, the third response column, is the sole response; its
+physical unit is unspecified, and errors use the supplied assay units.
+
+Figure~\ref{main:fig:empirical-overview} shows the functional predictors and
+the response distributions.  The spectra share broad shapes across the
+development and benchmark samples, with a less regular region at the
+long-wavelength end.  The comparison therefore asks how effectively each
+procedure extracts predictive information from strongly related spectral
+coordinates.  The visible tail motivates the prespecified trimming
+sensitivity; its appearance alone does not establish that it is noise.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.82\textwidth]{tablet_spectra_assay_overview.pdf}
+    \caption[Tablet spectra and assay distributions]{Instrument-1 spectra and
+    assay distributions.  The spectral panel shows the median and
+    10th--90th percentile band for development and benchmark samples.  The
+    dashed line marks 1798~nm, the boundary used only in the trimming
+    sensitivity.  The response panel retains the three supplied splits.}
+    \label{main:fig:empirical-overview}
+\end{figure}
+
+The validation split has a particularly narrow assay range, 188.2--199.5;
+267 of the 460 benchmark responses lie outside it.  Its response standard
+deviation is 2.393, compared with 21.980 in calibration and 15.763 in the
+benchmark.  Consequently, validation-set $R^2$ has a much smaller
+denominator and is not directly comparable with benchmark $R^2$.
+
+Calibration and validation form a development sample of 195 tablets; the
+460 test tablets form the designated benchmark.  The final evaluation rules
+were fixed before fitting the four benchmark models.  However, benchmark
+responses and preliminary ordinary PCR/PLS results had been inspected during
+dataset selection.  This is therefore a designated benchmark, not a
+prospectively blind validation of future performance.
+
+Every training fold supplies its own wavelength and response means, which
+are then applied unchanged to its validation observations.  The means are
+recalculated when the training sample changes, including for the final fit
+to all development tablets.  Benchmark observations never contribute to
+these fitted means.  There is no additional
+preprocessing in the primary analysis.  The equally weighted inner product
+from Chapter~\ref{chap:main-methods} gives predictions
+$\widehat Y(x)=\bar Y_{\mathrm{train}}+
+(x-\bar X_{\mathrm{train}})^\top\widehat\beta/650$.
+The centred development covariance has rank at most 194, leaving at least
+456 unidentified coordinate directions.
+
+Each method retains its own tuning rule.  Raw and Arnoldi FPLS independently
+minimise prediction error over at most 70 requested dimensions using the
+same five inner folds.  Raw uses unscaled covariance powers and
+response-space normal equations; Arnoldi uses twice reorthogonalised
+Gram--Schmidt and response-space QR.  FPCR selects its cut-off by
+response-space GCV.  CG--FPLS uses the estimation study's conjugate-residual
+recurrence and discrepancy rule, with $\tau=1.01$, $\delta=0.10$, and its
+internal moment-GCV variance pilot.  These are comparisons of complete
+procedures; component counts are not common effective degrees of freedom.
+
+Development evaluation uses five repeats of five-fold outer
+cross-validation, stratified by source split and balanced over assay.
+Every outer fold contains 31 calibration and eight validation tablets;
+tuning occurs within the remaining observations.  Each repeat provides one
+out-of-fold summary.  The 25 overlapping fits are not independent
+experiments.  Each final model is then fitted to all 195 development
+tablets and predicts the 460 benchmark tablets once.
+
+RMSE is the primary measure.  Uncertainty uses 10,000 paired iid bootstrap
+resamples, with identical tablet indices across methods and fixed fitted
+models.  Circular moving-block resamples of lengths 5, 10, and 20 assess
+sensitivity to row ordering.  These intervals are conditional on the fitted
+models and supplied benchmark: they omit development-sample, tuning, and
+preprocessing uncertainty.
+
+\section{Prediction and numerical stability}
+\label{main:sec:empirical-results}
+
+All four procedures give finite predictions and explain substantial assay
+variation (Table~\ref{main:tab:empirical-results}).  Raw and Arnoldi have the
+smallest benchmark RMSEs, followed by FPCR and CG--FPLS.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption[Primary tablet benchmark results]{Instrument-1 benchmark results
+    ($n=460$).  Brackets give individual 95\% percentile intervals from
+    10,000 paired iid bootstrap resamples.  Bias is prediction minus
+    observation; $m$ is the selected dimension or stopping index.}
+    \label{main:tab:empirical-results}
+    \begin{tabular}{@{}lrrrrr@{}}
+        \toprule
+        Method & $m$ & RMSE [95\% interval] & MAE & Bias & $R^2$ \\
+        \midrule
+        CG--FPLS     & 3  & 5.293 [4.367, 6.477] & 3.673 &  0.177 & 0.887 \\
+        Raw FPLS     & 55 & 4.607 [3.645, 5.785] & 3.036 & -0.303 & 0.914 \\
+        Arnoldi FPLS & 5  & 4.643 [3.693, 5.805] & 3.086 & -0.301 & 0.913 \\
+        FPCR         & 53 & 5.185 [4.299, 6.255] & 3.547 & -0.628 & 0.892 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The methods share several difficult tablets
+(Figure~\ref{main:fig:empirical-predictions}).  Raw and Arnoldi predictions
+have correlation 0.999934 and root mean squared difference 0.174 assay units.
+Their paired RMSE difference, Raw minus Arnoldi, is $-0.036$, with iid
+interval $[-0.057,-0.017]$ and block-length-10 interval
+$[-0.062,-0.014]$.  The difference is only 0.78\% of Arnoldi's RMSE;
+its practical importance cannot be judged without an assay scale and
+application-specific tolerance.  The narrow paired interval reflects close
+agreement between the predictions and does not establish general superiority
+of the raw representation.  CG-minus-Arnoldi and FPCR-minus-Arnoldi RMSEs
+are 0.650 and 0.542, respectively; their iid and block-length-10 intervals
+remain above zero.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.82\textwidth]{tablet_benchmark_observed_vs_predicted.pdf}
+    \caption[Observed and predicted tablet assay]{Observed and predicted assay
+    for the 460 benchmark tablets.  The diagonal denotes perfect prediction.
+    Several large errors are shared across methods; all tablets remain in
+    the comparison.}
+    \label{main:fig:empirical-predictions}
+\end{figure}
+
+The leading pair differs much more in numerical stability.  Arnoldi selects
+four to six components across the 25 development fits, with median five and
+no numerical flags.  Raw selects four to 70, with median 44, reaches the
+cap twice, and is flagged in 24 of 25 fits.  Across the five repeats,
+RMSE has mean and standard deviation $5.082\pm0.517$ for Raw versus
+$4.917\pm0.131$ for Arnoldi.  One poor raw repeat contributes substantially,
+and contiguous folds reverse their order, so these summaries do not
+establish an independent performance ranking.
+
+The final raw fit selects nominal dimension 55 and is flagged.  Its
+normalised power-basis and response-design condition numbers reach the
+reporting ceiling $4.50\times10^{15}$, not an exact measured value.  The
+$1/\sqrt{\epsilon}$ threshold is crossed by dimension six.  Arnoldi selects
+five components, with basis condition number one, design condition number
+11.95, and orthogonality defect $7.4\times10^{-16}$.  Nearly identical
+predictions therefore coexist with sharply different coordinate stability.
+
+CG--FPLS stops at three components in every development and final fit.
+Its larger error accompanies strong early regularisation, but this
+comparison does not isolate the effect of extra CG iterations or show that
+CG regularisation is generally inferior.  FPCR selects seven to 57
+components in development and 53 in the final fit.
+
+\section{Sensitivity and interpretation}
+\label{main:sec:empirical-scope}
+
+Prespecified sensitivity analyses change the detailed ranking.  Trimming
+instrument~1 at 1798~nm brings all four RMSEs into the range 4.63--4.77,
+with Arnoldi lowest.  Savitzky--Golay smoothing favours Raw at 4.66 but does
+not improve every method.  Instrument~2 increases all four RMSEs; because
+it measures the same tablets, this is an instrument sensitivity analysis,
+not external validation or calibration transfer.
+
+These findings neither identify a chemically causal slope nor establish
+that visible spectral spikes caused particular errors.  Without batch,
+acquisition-order, or laboratory metadata, residual patterns cannot be
+assigned a physical explanation.  Within one response and one dataset, the
+application supports the distinction established in
+Chapter~\ref{chap:main-simulation}: useful prediction can coexist with
+unreliable raw coordinates, and a numerically stable representation need
+not change the predictions substantially.

@@ -1,14 +1,16 @@
-% Chapter 2 finalised. This chapter combines the literature review with
-% the mathematical background needed for the methods and inference chapters.
+% Extended literature review and mathematical background.
 \chapter{Literature and Functional Regression Background}
 \label{chap:background}
 
-The scalar-on-function linear model is easy to state but cannot be understood fully through finite-dimensional regression intuition alone. Its regressor is a random element of a function space, its covariance is a linear operator rather than a matrix, and estimation of the slope requires the inversion of that operator. This chapter introduces the mathematical objects needed to formulate the problem precisely and places the regularisation methods studied in this thesis within the functional regression literature. The presentation draws on the functional-analysis material developed in the MIT 18.102 lecture notes \parencite{lin_mit_18102_2021}, the operator-theoretic treatment of \textcite{hsing_eubank_2015}, and the statistical accounts of \textcite{ramsay_silverman_2005}, \textcite{horvath_kokoszka_2012}, and \textcite{kokoszka_reimherr_2017}.
+This appendix provides the extended literature review and functional-analysis background for
+Chapter~\ref{chap:main-methods}.
+
+The scalar-on-function linear model is easy to state but cannot be understood fully through finite-dimensional regression intuition alone. Its regressor is a random element of a function space, its covariance is a linear operator rather than a matrix, and estimation of the slope requires the inversion of that operator. This appendix introduces the mathematical objects needed to formulate the problem precisely and places the regularisation methods studied in this thesis within the functional regression literature. The presentation draws on the functional-analysis material developed in the MIT 18.102 lecture notes \parencite{lin_mit_18102_2021}, the operator-theoretic treatment of \textcite{hsing_eubank_2015}, and the statistical accounts of \textcite{ramsay_silverman_2005}, \textcite{horvath_kokoszka_2012}, and \textcite{kokoszka_reimherr_2017}.
 
 Definitions and proofs of the foundational results used below are collected
 in Appendix~\ref{app:mathematical-proofs}.  Keeping the arguments there makes
 the assumptions and derivations available for reference while allowing this
-chapter to retain a continuous statistical narrative.
+appendix to retain a continuous statistical narrative.
 
 \section{Functional observations from discrete measurements}
 \label{sec:functional-observations}
@@ -22,7 +24,7 @@ Suppose that the $i$th curve is observed at grid points $t_1,\ldots,t_T$. A func
 \end{equation}
 where $\phi_1,\ldots,\phi_J$ may be Fourier, spline, wavelet, or other basis functions. The coefficient vector in \eqref{eq:basis-representation} is a computational representation of the curve, not a change in the conceptual model: the statistical object remains a function. Increasing the grid size or the number of basis functions allows progressively richer variation and therefore exposes the infinite-dimensional character of the problem.
 
-Functional observations may be densely and regularly sampled, sparsely sampled, or contaminated by measurement error. These regimes require different preliminary reconstruction methods. The simulations in this thesis use densely evaluated curves generated from a known basis, so reconstruction uncertainty is deliberately separated from regularisation of the regression slope. This controlled setting allows the comparison to focus on the inverse problem and on the numerical behaviour of the four estimators. The spectroscopy application in Chapter~\ref{chap:spectroscopy-application} will state the preprocessing choices needed to interpret its principal findings, while Appendix~\ref{app:spectroscopy-supplement} will document them in full, since smoothing, registration, and scaling can form an additional layer of regularisation with observed curves.
+Functional observations may be densely and regularly sampled, sparsely sampled, or contaminated by measurement error. These regimes require different preliminary reconstruction methods. The simulations in this thesis use densely evaluated curves generated from a known basis, so reconstruction uncertainty is deliberately separated from regularisation of the regression slope. This controlled setting allows the comparison to focus on the inverse problem and on the numerical behaviour of the four estimators. The spectroscopy application in Appendix~\ref{chap:spectroscopy-application} states the preprocessing choices needed to interpret its principal findings, while Appendix~\ref{app:spectroscopy-supplement} documents them in full, since smoothing, registration, and scaling can form an additional layer of regularisation with observed curves.
 
 Once a curve has been reconstructed, its statistical analysis requires a geometry in which distances, projections, and linear functionals are well defined. The square-integrable function space introduced next supplies that geometry.
 
@@ -231,7 +233,7 @@ The eigenfunctions define the functional principal component directions. With sc
     X=\mu_X+\sum_{j\in\mathcal J_K}\xi_jv_j,
     \label{eq:karhunen-loeve}
 \end{equation}
-with convergence in mean square. The scores are uncorrelated, $\mathbb E\xi_j=0$, $\mathbb E(\xi_j\xi_k)=0$ for $j\neq k$, and $\mathbb E\xi_j^2=\lambda_j$. When at least $m$ positive eigenvalues exist, the first $m$ eigenfunctions span the $m$-dimensional subspace that minimises the expected squared reconstruction error of $X$ among all $m$-dimensional subspaces. This optimality concerns reconstruction of the predictor; it does not by itself guarantee that the same directions are the most informative for a response variable.
+with convergence in mean square. The scores are uncorrelated, $\mathbb E\xi_j=0$, $\mathbb E(\xi_j\xi_k)=0$ for $j\neq k$, and $\mathbb E\xi_j^2=\lambda_j$. When at least $m$ positive eigenvalues exist, the first $m$ eigenfunctions span the $m$-dimensional subspace that minimises the expected squared reconstruction error of the centred predictor $X^c$ among all $m$-dimensional subspaces. This optimality concerns reconstruction of the predictor; it does not by itself guarantee that the same directions are the most informative for a response variable.
 
 Given independent observations $X_1,\ldots,X_n$, the empirical mean and covariance operator are
 \begin{align}
@@ -301,7 +303,7 @@ The error orthogonality condition gives the risk identity
     =\left\|K^{1/2}(b-\beta)\right\|^2.
     \label{eq:prediction-risk-identity}
 \end{equation}
-Thus, prediction error and slope estimation error use different geometries. Integrated squared error is $\|b-\beta\|^2$, whereas excess prediction risk is the weaker covariance-weighted seminorm $\|K^{1/2}(b-\beta)\|^2$ on $\mathcal H$. It becomes a norm after the parameter space is restricted to $\operatorname{Null}(K)^\perp$. Directions with small eigenvalues contribute little to prediction but may contribute substantially to integrated slope error. The distinction is central to the theoretical results of \textcite{cai_hall_2006} and motivates reporting both criteria in the simulation study.
+Thus, prediction error and slope estimation error use different geometries. Integrated squared error is $\|b-\beta\|^2$, whereas excess prediction risk is the weaker covariance-weighted squared seminorm $\|K^{1/2}(b-\beta)\|^2$ on $\mathcal H$. It becomes a squared norm after the parameter space is restricted to $\operatorname{Null}(K)^\perp$. Directions with small eigenvalues contribute little to prediction but may contribute substantially to integrated slope error. The distinction is central to the theoretical results of \textcite{cai_hall_2006} and motivates reporting both criteria in the simulation study.
 
 The empirical counterparts of $r$ and the normal equation are
 \begin{align}
@@ -344,8 +346,7 @@ canonical parameter space
 where the conditional-mean map is injective.  The identified representative is
 the unique minimum-norm element of $[\beta]$; it is denoted by
 $\beta^\dagger$.  Full identification on all of $\mathcal H$ occurs if and only
-if $\operatorname{Null}(K)=\{0\}$.  When the distinction is not material, later
-chapters write $\beta$ for the canonical representative $\beta^\dagger$.
+if $\operatorname{Null}(K)=\{0\}$.  When the distinction is not material, the subsequent exposition writes $\beta$ for the canonical representative $\beta^\dagger$.
 
 Expand $\beta^\dagger$ and $r$ in the positive-eigenvalue system of $K$:
 \begin{equation}
@@ -521,7 +522,7 @@ The literature reviewed above shows that the quality of a regularisation method 
 For the hypothesis $H_0:\beta=b$, with
 $b\in\mathcal H_{\mathrm{id}}$, \textcite{babii_carrasco_tsafack_2026} base inference on
 the covariance-weighted difference appearing in
-$\mathcal T_n(b)$ from \eqref{eq:intro-test-statistic}:
+$\mathcal T_n(b)$ from \eqref{main:eq-inference-statistic}:
 \begin{equation}
     \widehat K(\widehat\beta_m-b)
     =(\widehat r-\widehat Kb)
@@ -549,8 +550,8 @@ This generally calls for later stopping than estimation or prediction.  Under
 \eqref{eq:background-late-stopping}, the finite-iteration statistic has the same
 first-order limit as the direct-moment statistic
 $n\|\widehat r-\widehat Kb\|^2$, and the spectral representation of $G$ leads
-to a weighted chi-square law.  Chapter~\ref{chap:inference-methodology} states
-the full testing and calibration argument; Chapter~\ref{chap:inference-results}
+to a weighted chi-square law.  Appendix~\ref{chap:inference-methodology} states
+the full testing and calibration argument; Appendix~\ref{chap:inference-results}
 then evaluates its finite-sample behaviour.
 
 This separation also clarifies why late stopping does not claim to improve the slope estimate. The inferential statistic depends on $\widehat K\widehat\beta_m$, for which the weakly identified slope directions are attenuated by $\widehat K$. Late iteration is used to solve the sample moment equation accurately, not to recover $\beta$ accurately in the unweighted $L^2$ norm. These target-dependent requirements have so far been expressed at the operator level. Their implementation introduces approximation and floating-point effects in addition to sampling error, motivating the distinction considered next.
@@ -558,7 +559,7 @@ This separation also clarifies why late stopping does not claim to improve the s
 \section{Discretisation and the population--computation distinction}
 \label{sec:discretisation-distinction}
 
-Theoretical objects in this chapter live in $L^2(\mathcal I)$, whereas computation uses vectors and matrices. Let $t_1,\ldots,t_T$ be a numerical grid with quadrature weights $w_1,\ldots,w_T$. Then
+Theoretical objects in this appendix live in $L^2(\mathcal I)$, whereas computation uses vectors and matrices. Let $t_1,\ldots,t_T$ be a numerical grid with quadrature weights $w_1,\ldots,w_T$. Then
 \begin{equation}
     \langle f,g\rangle
     \approx\sum_{\ell=1}^{T}w_\ell f(t_\ell)g(t_\ell).
@@ -575,4 +576,4 @@ This distinction is also important for interpreting a successful matrix computat
 
 The functional linear model and its principal-component estimators are well established \parencite{cardot_ferraty_sarda_1999,hall_horowitz_2007}. Penalised and spline approaches provide alternative ways to encode smoothness \parencite{crambes_kneip_sarda_2009}, while the different statistical difficulty of slope recovery and prediction has been studied explicitly \parencite{cai_hall_2006}. The FPLS literature introduced response-guided dimension reduction and later supplied a Krylov representation and convergence theory \parencite{preda_saporta_2005,delaigle_hall_2012}. Comparative evidence indicates that neither FPCR nor FPLS can dominate independently of the covariance spectrum, slope alignment, and tuning design \parencite{febrero_bande_et_al_2017}. The question pursued here lies where those statistical principles meet finite-precision computation: a Krylov subspace can remain mathematically well defined even when its coordinates have become numerically unusable.
 
-The study isolates that interaction through controlled contrasts. FPCR changes how the search space is selected; raw and Arnoldi FPLS hold the Krylov space and response objective fixed while changing its coordinates and linear solver; and CG--FPLS retains the nested spaces but changes the finite-step objective and stopping rule. The separate inference study then asks how far the moment-residual Krylov path must be continued when the target changes from regularised estimation to testing. With the operator, identification, and target geometries now in place, Chapter~\ref{chap:methods} turns these contrasts into four fully specified estimators.
+The study isolates that interaction through controlled contrasts. FPCR changes how the search space is selected; raw and Arnoldi FPLS hold the Krylov space and response objective fixed while changing its coordinates and linear solver; and CG--FPLS retains the nested spaces but changes the finite-step objective and stopping rule. The separate inference study then asks how far the moment-residual Krylov path must be continued when the target changes from regularised estimation to testing. With the operator, identification, and target geometries now in place, Appendix~\ref{chap:methods} turns these contrasts into four fully specified estimators.

@@ -2,6 +2,7 @@
 """Build the thesis with a clean, explicitly selected bibliography backend."""
 
 import argparse
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -115,6 +116,13 @@ def build(requested_backend):
             "The PDF was generated, but main.log reports unresolved citations "
             "or references. Inspect the log before using the PDF."
         )
+    count = re.findall(r"MAIN-TEXT-PAGES:\s*(\d+)", log)
+    if not count:
+        raise RuntimeError("Main-text page count was not recorded in main.log.")
+    main_pages = int(count[-1])
+    print(f"Main text: {main_pages} pages; including the one-page abstract: {main_pages + 1}.")
+    if main_pages + 1 > 40:
+        raise RuntimeError("Main text plus abstract exceeds the 40-page allowance.")
     print("Build complete: " + str(THESIS_DIR / "main.pdf"), flush=True)
 
 

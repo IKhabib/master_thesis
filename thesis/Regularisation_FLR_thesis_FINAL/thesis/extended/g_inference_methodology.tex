@@ -1,25 +1,28 @@
-% Chapter 6: inference methodology for the late-stopped CG--FPLS path.
-\chapter{Inference Methodology}
+% Extended inference methodology for the late-stopped CG--FPLS path.
+\chapter{Extended Inference Methodology}
 \label{chap:inference-methodology}
 
-Chapter~\ref{chap:estimation-results} showed that stopping CG--FPLS early can
+This appendix develops the testing, calibration, and confidence-set methodology summarised in
+Chapter~\ref{chap:main-inference}.
+
+Appendix~\ref{chap:estimation-results} showed that stopping CG--FPLS early can
 improve estimation of the slope function.  Hypothesis testing places a
 different demand on the method.  If the iterations stop too soon, the error
 remaining in the fitted equation can affect the test result.  The procedure
 of \textcite{babii_carrasco_tsafack_2026} therefore continues until the fitted
 empirical moment $\widehat K\widehat\beta_m$ is sufficiently close to
 $\widehat r$: their difference must become negligible relative to the
-root-$n$ sampling fluctuation.  This chapter explains why that requirement
+root-$n$ sampling fluctuation.  This appendix explains why that requirement
 matters and how it is assessed.
 
 The analysis focuses on the moment-residual CG--FPLS method defined in
 Section~\ref{sec:methods-cg}.  Its conclusions apply to this method and do
 not automatically extend to raw FPLS, Arnoldi response-space FPLS, or FPCR
-from Chapter~\ref{chap:estimation-results}.  The chapter introduces the
+from Appendix~\ref{chap:estimation-results}.  The appendix introduces the
 hypothesis and test statistic, explains the stopping requirement and choice
 of critical value, and then considers power and confidence sets.  The final
 section describes the simulation design used to assess these ideas in
-Chapter~\ref{chap:inference-results}.
+Appendix~\ref{chap:inference-results}.
 
 \section{Hypothesis and test statistic}
 \label{sec:inference-target}
@@ -77,9 +80,9 @@ iterations is
 \end{equation}
 When the stopping index depends on sample size, write $m=m_n$ and use
 $\mathcal T_n(b)=\mathcal T_{n,m_n}(b)$, as in
-\eqref{eq:intro-test-statistic}.  The calligraphic symbol $\mathcal T_n$
+\eqref{main:eq-inference-statistic}.  The calligraphic symbol $\mathcal T_n$
 denotes this scalar statistic; $T_n$ continues to denote the sampling
-operator introduced in Chapter~\ref{chap:methods}.
+operator introduced in Appendix~\ref{chap:methods}.
 
 The multiplication by $\widehat K$ has a practical purpose.  A test based
 directly on $\|\widehat\beta_m-b\|$ would be affected by the instability of
@@ -320,7 +323,7 @@ the null law.  Both approaches are discussed by
 \textcite{babii_carrasco_tsafack_2026}.  A centred-multiplier method is also
 available as an exploratory option in the accompanying implementation.
 The reported null-size and confidence-set results, however, use only oracle
-calibration.  Chapter~\ref{chap:inference-results} therefore provides no
+calibration.  Appendix~\ref{chap:inference-results} therefore provides no
 empirical assessment of these methods for estimating critical values from
 observed data.
 
@@ -519,7 +522,7 @@ display.  The study accordingly reports three different summaries:
     \item the lower and upper pointwise envelope of the accepted
           five-dimensional coefficient set.
 \end{enumerate}
-The shaded region in Chapter~\ref{chap:inference-results} combines the
+The shaded region in Appendix~\ref{chap:inference-results} combines the
 pointwise medians of 5,000 lower and upper envelopes.  It shows a typical
 range across many simulated samples.  It is not a 95\% confidence band from
 one observed sample, and whether it contains the true curve does not measure
@@ -554,9 +557,9 @@ nominal levels of 1\%, 5\%, and 10\%; the other parts use 5\%.
     \label{tab:inference-design}
     \small
     \begin{tabular}{@{}
-        >{\raggedright\arraybackslash}p{2.75cm}
-        >{\raggedright\arraybackslash}p{2.75cm}
-        >{\raggedright\arraybackslash}p{3.1cm}
+        >{\raggedright\arraybackslash}p{2.5cm}
+        >{\raggedright\arraybackslash}p{2.5cm}
+        >{\raggedright\arraybackslash}p{2.9cm}
         >{\raggedright\arraybackslash}p{5.25cm}@{}}
         \toprule
         Study branch & Statistic and stopping choice & Sample and replications & Calibration and purpose \\
@@ -589,7 +592,7 @@ nominal levels of 1\%, 5\%, and 10\%; the other parts use 5\%.
 
 The stopping comparison includes an adaptive rule intended for estimation.
 It uses the discrepancy formula and constants from
-Chapter~\ref{chap:methods}, with $\tau=1.01$ and
+Appendix~\ref{chap:methods}, with $\tau=1.01$ and
 $\delta_{\mathrm{stop}}=0.1$.  Its FPCR moment-GCV variance pilot follows
 \eqref{eq:simulation-moment-gcv}--\eqref{eq:simulation-cg-sigma-pilot}, but
 uses at most 20 components, compared with 70 in the estimation experiment.
@@ -597,7 +600,7 @@ The comparison also uses the stabilised moment-residual path described below
 in place of the estimation study's short recurrence.  These differences
 matter: the smaller pilot cap can change the estimated variance, the
 discrepancy threshold, and the selected stopping index.  This is therefore a
-variant of the procedure in Chapter~\ref{chap:estimation-results}.
+variant of the procedure in Appendix~\ref{chap:estimation-results}.
 
 The notation $\delta_{\mathrm{stop}}$ distinguishes the tuning constant from
 the power perturbation $\delta$ in \eqref{eq:inference-power-family}.  A
@@ -634,7 +637,7 @@ In exact arithmetic, this solves the same minimum-moment-residual problem at
 each dimension as the original short recurrence.  The orthogonal basis
 improves numerical stability and can change the path in finite precision.
 It does not change the objective to that of Arnoldi FPLS in
-Chapter~\ref{chap:methods}.  Both methods use an orthogonal Krylov basis, but
+Appendix~\ref{chap:methods}.  Both methods use an orthogonal Krylov basis, but
 Arnoldi FPLS minimises response error, while
 \eqref{eq:inference-stable-engine} minimises the CG--FPLS moment residual.
 Propositions~\ref{prop:app-arnoldi-span} and
@@ -651,6 +654,6 @@ repeatable and clarify which comparisons share simulated information.
 
 Interpreting the results first requires checking whether the remaining
 moment residual is small enough for the fitted statistic to behave like the
-direct statistic.  Chapter~\ref{chap:inference-results} therefore begins
+direct statistic.  Appendix~\ref{chap:inference-results} therefore begins
 with the stopping diagnostics, followed by null size, power, and
 confidence-set behaviour.

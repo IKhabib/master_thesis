@@ -63,44 +63,6 @@
       \verb 10.1080/01621459.2025.2582874
       \endverb
     \endentry
-    \entry{blanchard_kramer_2016}{article}{}
-      \name{author}{2}{}{%
-        {{un=0,uniquepart=base,hash=385b3b6ce1dc679a91345c63c1b145d1}{%
-           family={Blanchard},
-           familyi={B\bibinitperiod},
-           given={Gilles},
-           giveni={G\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=58a5dce2b48f6e206013eeeafce6893a}{%
-           family={Krämer},
-           familyi={K\bibinitperiod},
-           given={Nicole},
-           giveni={N\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{f5ea2b8db1d53b2b4cb87059c286e531}
-      \strng{fullhash}{f5ea2b8db1d53b2b4cb87059c286e531}
-      \strng{bibnamehash}{f5ea2b8db1d53b2b4cb87059c286e531}
-      \strng{authorbibnamehash}{f5ea2b8db1d53b2b4cb87059c286e531}
-      \strng{authornamehash}{f5ea2b8db1d53b2b4cb87059c286e531}
-      \strng{authorfullhash}{f5ea2b8db1d53b2b4cb87059c286e531}
-      \field{sortinit}{B}
-      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Analysis and Applications}
-      \field{number}{6}
-      \field{title}{Convergence Rates of Kernel Conjugate Gradient for Random Design Regression}
-      \field{volume}{14}
-      \field{year}{2016}
-      \field{pages}{763\bibrangedash 794}
-      \range{pages}{32}
-      \verb{doi}
-      \verb 10.1142/S0219530516400017
-      \endverb
-    \endentry
     \entry{cai_hall_2006}{article}{}
       \name{author}{2}{}{%
         {{un=0,uniquepart=base,hash=522ba29dd0a27bce6085e7b8942979b9}{%

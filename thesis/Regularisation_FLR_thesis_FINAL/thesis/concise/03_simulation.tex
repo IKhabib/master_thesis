@@ -1,0 +1,420 @@
+\chapter{Simulation Design and Results}
+\label{chap:main-simulation}
+
+The simulation compares the four procedures from
+Chapter~\ref{chap:main-methods} on the same observations. Three models vary
+either the slope or the predictor covariance, allowing us to examine how
+these changes affect estimation and prediction. The comparison also separates
+the behaviour of the raw and Arnoldi representations of FPLS. Their common
+statistical target provides a useful way to assess numerical stability,
+although each procedure still chooses its own dimension.
+
+The design follows the principal settings of
+\textcite{babii_carrasco_tsafack_2026}. The complete specification and extended
+results are retained in Appendices~\ref{chap:simulation-design}
+and~\ref{chap:estimation-results}; supplementary distributions appear in
+Appendix~\ref{app:simulation-diagnostics}.
+
+\section{Three controlled data-generating models}
+\label{main:sec:simulation-design}
+
+Curves are observed on $T=200$ equally spaced points
+$s_t=(t-1)/(T-1)$ in $[0,1]$. All calculations use the endpoint-average inner
+product $\langle f,g\rangle_T=T^{-1}\sum_{t=1}^T f(s_t)g(s_t)$.
+There is no additional measurement error, smoothing, or interpolation.
+The generating basis has $J=100$ functions,
+\begin{equation}
+    \phi_1(s)=1,\qquad
+    \phi_j(s)=\sqrt{2}\cos(j\pi s),\quad j=2,\ldots,100.
+    \label{main:eq:simulation-basis}
+\end{equation}
+The missing frequency $\cos(\pi s)$ is intentional: this is the basis used
+in the experiment. Its functions are orthonormal in continuous $L^2[0,1]$,
+but not exactly under the endpoint-average inner product. Consequently,
+the quantities $\lambda_j$ below are the generating score variances, rather
+than the exact eigenvalues of the finite-grid covariance operator.
+
+Independent standard normal scores $Z_{ij}$ generate the observations as
+\begin{equation}
+    X_i(s_t)=\sum_{j=1}^{100}\sqrt{\lambda_j}Z_{ij}\phi_j(s_t),
+    \qquad
+    Y_i=\langle X_i,\beta\rangle_T+\varepsilon_i,
+    \qquad \varepsilon_i\sim\mathcal N(0,1),
+    \label{main:eq:simulation-dgp}
+\end{equation}
+where the errors and scores are mutually independent, and
+$\beta(s)=\sum_{j=1}^{100}b_j\phi_j(s)$. Population means and the intercept
+are zero. The observations are passed directly to the estimators without
+subtracting their realised sample means. This convention is common to all
+four methods.
+
+Model~1 uses $b_j=4j^{-2.7}$ and $\lambda_j=2j^{-1.1}$. Model~2 retains
+these score variances but sets $b_1=\cdots=b_5=4$, leaving the remaining
+coefficients unchanged. Model~3 retains the slope of Model~1 but sets
+$\lambda_1=\cdots=\lambda_5=2$, leaving the variance tail unchanged.
+Since $b_1=4$ and $\lambda_1=2$ already hold in Model~1, the changes affect
+only indices $2$--$5$. Model~2 therefore changes the target while preserving
+the predictor distribution; Model~3 changes the predictor distribution while
+preserving the target.
+
+The response signal also changes. Its exact finite-grid variance is $\sum_j\lambda_j\langle\beta,\phi_j\rangle_T^2$, giving
+$32.520$, $71.306$, and $33.061$ in Models~1--3. Because the error variance
+is one, these are also the signal-to-noise ratios. Model~2 requires the
+first five generating directions to account for $99\%$ of predictive
+signal; Models~1 and~3 require only two. This describes the generating
+model, not the number of components an estimated procedure should select.
+In particular, raw MSPEs should primarily be compared between methods
+within a model, because Model~2 has substantially more response variation.
+
+Figure~\ref{main:fig:simulation-signal} shows how this signal is distributed.
+Model~2 combines large slope coefficients in several directions with the
+same declining score variances as Model~1. Its additional slope features
+must therefore be estimated from directions with progressively less predictor
+variation. Model~3 changes the information available about these directions
+without introducing new slope features. The distinction matters because
+neither the total size of the slope nor the predictor-variance ordering
+alone determines which components are useful for predicting the response.
+The complete slope and covariance plots are in
+Appendix~\ref{chap:simulation-design}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{predictive_signal_allocation.pdf}
+    \caption[Predictive signal in the three simulation models]{Contribution
+    $q_j=\lambda_j\langle\beta,\phi_j\rangle_T^2$ of each generating
+    direction to response signal, and its cumulative share. Calculations
+    use all $100$ directions under the endpoint-average inner product;
+    the first twenty are displayed. Open markers identify the first
+    component count exceeding $99\%$ of total signal.}
+    \label{main:fig:simulation-signal}
+\end{figure}
+
+\section{Estimation, tuning, and evaluation}
+\label{main:sec:simulation-evaluation}
+
+Each model uses $5{,}000$ independent training samples of size $n=100$.
+For every training sample, all methods receive the same data and are
+evaluated on the same independent test sample of $100$ observations.
+The three models have independent random streams, generated from the
+fixed seed $2026$. Test observations play no part in tuning.
+
+The candidate dimensions are $1,\ldots,70$. Raw and Arnoldi FPLS minimise
+their own five-fold prediction cross-validation errors using identical
+folds. Raw candidates must yield valid finite fits in the full sample
+and every training fold. Arnoldi uses two-pass classical Gram--Schmidt
+and a response-space QR solve, with rank tolerance $10^{-10}$. FPCR
+minimises response-space GCV over eligible positive eigenvalues; the
+smallest minimiser is selected when criteria tie. These choices compare
+complete procedures, including their tuning, rather than estimates forced
+to have equal dimension or effective degrees of freedom.
+
+CG--FPLS uses the moment-residual objective and short recurrence specified
+in Chapter~\ref{chap:main-methods}. It stops at the first component satisfying
+\begin{equation}
+    \|\widehat r-\widehat K\widehat\beta_m^{\mathrm{CG}}\|_T
+    \leq 1.01\left(\frac{2\widehat\sigma^2\widehat E_X}{0.1n}\right)^{1/2},
+    \qquad
+    \widehat E_X=\frac1n\sum_{i=1}^{n}\|X_i\|_T^2.
+    \label{main:eq:simulation-stopping}
+\end{equation}
+An internal FPCR fit chosen by moment-space GCV supplies
+$\widehat\sigma^2$ through its response residual sum of squares divided
+by $n$. This preliminary fit estimates the threshold scale; it is
+different from the reported response-GCV FPCR procedure. If the threshold
+is never reached, the rule returns $m=70$ and records this outcome.
+The rule uses estimated quantities and is therefore not an oracle supplied
+with the true noise variance.
+
+Slope recovery and independent prediction are measured separately:
+\begin{align}
+    \operatorname{ISE}
+    &=\|\widehat\beta-\beta\|_T^2,
+    \label{main:eq:simulation-ise}\\
+    \operatorname{MSPE}
+    &=\frac1{100}\sum_{i=1}^{100}
+      \{Y_i^{\mathrm{test}}-
+      \langle X_i^{\mathrm{test}},\widehat\beta\rangle_T\}^{2}.
+    \label{main:eq:simulation-mspe}
+\end{align}
+For a fixed fitted slope, expected MSPE equals
+$1+\sum_j\lambda_j\langle\phi_j,\widehat\beta-\beta\rangle_T^2$.
+The noise floor is therefore one. Prediction weights slope errors
+according to predictor variation, whereas ISE measures the overall slope
+error. This difference is central to interpreting the results.
+
+Every finite error remains in the main analysis. A raw fit is flagged
+when the condition number of its column-normalised Krylov basis or
+response design reaches $\varepsilon_{\mathrm{mach}}^{-1/2}
+\simeq6.71\times10^7$. Arnoldi is flagged if its orthogonality defect
+reaches $\varepsilon_{\mathrm{mach}}^{1/2}\simeq1.49\times10^{-8}$.
+Non-finite losses would also be flagged for every method. An error
+exceeding $100$ times its own model--method positive median is labelled
+extreme, but is never deleted for that reason. Means, medians, upper
+percentiles, and maxima are reported together in the extended results.
+
+\section{Slope recovery and prediction}
+\label{main:sec:simulation-risk}
+
+Table~\ref{main:tab:simulation-risk} contains all $60{,}000$ fitted results.
+All losses are finite, including those associated with the $445$ flagged
+raw-FPLS fits. The means include the impact of rare large errors; the
+medians describe typical performance. For the three numerically stable
+methods, Monte Carlo standard errors of mean ISE range from $0.0018$ to
+$0.0475$, and those of mean MSPE from $0.0024$ to $0.0088$.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption[Main simulation estimation and prediction results]{Slope and prediction errors over all $5{,}000$ samples per
+    model. Every finite error, including flagged raw-FPLS results, is retained.}
+    \label{main:tab:simulation-risk}
+    \begin{tabular}{@{}llrrrr@{}}
+        \toprule
+        & & \multicolumn{2}{c}{Slope ISE} & \multicolumn{2}{c}{Test MSPE}\\
+        \cmidrule(lr){3-4}\cmidrule(l){5-6}
+        Model & Method & Mean & Median & Mean & Median\\
+        \midrule
+        1 & CG--FPLS     & 0.633 & 0.597 & 1.270 & 1.230\\
+          & Raw FPLS     & 334.298 & 0.539 & 21.224 & 1.114\\
+          & Arnoldi FPLS & 0.760 & 0.539 & 1.130 & 1.113\\
+          & FPCR         & 0.670 & 0.532 & 1.126 & 1.112\\
+        \addlinespace
+        2 & CG--FPLS     & 5.506 & 5.272 & 1.999 & 1.861\\
+          & Raw FPLS     & 7.594 & 5.384 & 1.518 & 1.428\\
+          & Arnoldi FPLS & 6.065 & 5.345 & 1.442 & 1.419\\
+          & FPCR         & 5.662 & 5.365 & 1.495 & 1.472\\
+        \addlinespace
+        3 & CG--FPLS     & 0.447 & 0.426 & 1.221 & 1.176\\
+          & Raw FPLS     & 1.219 & 0.446 & 1.154 & 1.114\\
+          & Arnoldi FPLS & 0.670 & 0.446 & 1.131 & 1.114\\
+          & FPCR         & 0.615 & 0.463 & 1.127 & 1.113\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+CG--FPLS has the lowest mean ISE in all three models. This does not
+mean that it always gives the most accurate typical estimate. In Model~1,
+FPCR has the smallest median ISE, $0.532$, compared with $0.597$ for CG.
+The CG distribution is more concentrated, however, giving a lower mean
+ISE of $0.633$. Raw FPLS has a competitive median of $0.539$ but a mean
+of $334.298$, showing how strongly an occasional numerical failure can
+affect average performance.
+
+The ordering differs for prediction. In Models~1 and~3, FPCR and Arnoldi
+have mean MSPEs around $1.13$, whereas CG reaches $1.270$ and $1.221$.
+In Model~2, where the slope is spread across more directions, Arnoldi
+has the lowest mean MSPE, $1.442$, followed by FPCR at $1.495$.
+CG has the lowest mean ISE, $5.506$, but the largest mean MSPE, $1.999$.
+The reduction in total slope error therefore does not compensate for
+errors in directions that matter more for prediction.
+
+Model~2 is especially informative because the predictors are unchanged
+from Model~1: the different results reflect the changed slope and the
+procedures' responses to it. CG and Arnoldi have relatively close median
+ISEs, $5.272$ and $5.345$, even though their median MSPEs are $1.861$
+and $1.419$. The advantage in mean slope error is therefore insufficient
+to identify the better predictor. Raw FPLS also has a competitive median
+MSPE of $1.428$, but its mean rises to $1.518$ and its numerical flags
+are more frequent. This setting brings together both issues: the loss
+function changes the statistical comparison, while unreliable computation
+can damage a procedure whose typical prediction is accurate.
+
+Changing only the covariance in Model~3 improves CG mean ISE from
+$0.633$ to $0.447$. More predictor variation provides more information
+about the corresponding slope coefficients, while also increasing the
+prediction penalty for errors in those directions. The two effects
+explain why estimation and prediction need not improve by the same
+amount. Across these models, no single ranking answers both questions.
+
+\section{Selected dimensions and the noise estimate}
+\label{main:sec:simulation-dimensions}
+
+Table~\ref{main:tab:simulation-dimensions} shows the median selected
+dimensions alongside raw-FPLS instability. The Krylov methods generally
+use fewer components than FPCR. Their directions use response information,
+whereas FPCR orders directions by predictor variation. One Krylov component
+can combine several generating basis directions, so these counts cannot
+be interpreted as a common measure of model complexity.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption[Selected dimensions and raw-FPLS stability]{Median selected dimensions and raw-FPLS instability among
+    $5{,}000$ samples per model. No other method receives an instability flag.}
+    \label{main:tab:simulation-dimensions}
+    \begin{tabular}{@{}lrrrrrr@{}}
+        \toprule
+        & \multicolumn{4}{c}{Median dimension} & \multicolumn{2}{c}{Raw flags}\\
+        \cmidrule(lr){2-5}\cmidrule(l){6-7}
+        Model & CG & Raw & Arnoldi & FPCR & Count & Rate\\
+        \midrule
+        1 & 1 & 2 & 2 & 5  & 20  & $0.40\%$\\
+        2 & 3 & 5 & 5 & 17 & 409 & $8.18\%$\\
+        3 & 2 & 3 & 3 & 6  & 16  & $0.32\%$\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+All $15{,}000$ CG fits satisfy the discrepancy rule before the upper
+limit. CG selects one component in $90.2\%$ of Model~1 samples, three
+in $88.6\%$ of Model~2 samples, and two in $83.2\%$ of Model~3 samples.
+The internal noise estimate nevertheless has an important limitation.
+Its preliminary moment-GCV fit selects a median of $70$ components in
+every model and estimates a mean noise variance of approximately $0.300$,
+well below the true value of one.
+
+This is consistent with dividing an overfitted response residual sum
+of squares by $n$ without a degrees-of-freedom adjustment:
+$1-70/100=0.30$. It is not evidence of accurate noise estimation.
+A smaller estimated noise level lowers the discrepancy threshold and,
+along the same residual path, can only delay stopping. Thus the observed
+one-to-three-component selections reflect a rapid residual reduction even
+with this underestimated scale. The results describe the implemented
+feasible procedure; they do not validate an oracle discrepancy rule.
+
+The largest raw selections are $57$, $70$, and $68$ across Models~1--3,
+compared with Arnoldi maxima of $14$, $16$, and $11$. A high selected
+dimension alone cannot establish that additional signal has been recovered.
+Its interpretation depends on the associated numerical diagnostics.
+
+\section{Numerical stability}
+\label{main:sec:simulation-stability}
+
+Figure~\ref{main:fig:simulation-tails} shows the complete error
+distributions, including the raw-FPLS extremes. Instability is most
+frequent in Model~2, where more Krylov directions are usually selected.
+Yet the less frequent failures in Model~1 produce the most severe average
+loss: just one ISE exceeds $100$ times the raw median, reaching
+$1.668\times10^6$. The largest raw MSPE is $1.005\times10^5$.
+Its otherwise competitive median therefore gives an incomplete account
+of reliability.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{babii_style_error_boxplots_with_tails.pdf}
+    \caption[Full simulation error distributions]{Slope ISE (left) and independent test MSPE (right), with
+    one row per model. All errors are included on logarithmic axes.
+    Red open diamonds identify flagged raw-FPLS fits; whiskers use the
+    conventional $1.5$ interquartile-range rule. CG, Raw, and Arnoldi
+    denote the corresponding procedures in Chapter~\ref{chap:main-methods}.}
+    \label{main:fig:simulation-tails}
+\end{figure}
+
+Arnoldi avoids these numerical failures in the experiment, but numerical
+stability does not remove statistical variation. Its largest ISEs are
+$36.35$, $77.41$, and $30.23$. These are not accompanied by loss of
+basis orthogonality. The corresponding CG maxima are $1.82$, $16.79$,
+and $1.25$, consistent with its stronger regularisation.
+
+\section{Explaining the bias--variance trade-off}
+\label{main:sec:simulation-bias-variance}
+
+The average squared slope error separates exactly into squared bias and
+variance across the simulated samples. Writing
+$\overline\beta=R^{-1}\sum_{r=1}^{R}\widehat\beta_r$, with $R=5{,}000$,
+\begin{equation}
+    \frac1R\sum_{r=1}^{R}\|\widehat\beta_r-\beta\|_T^2
+    =\|\overline\beta-\beta\|_T^2+
+    \frac1R\sum_{r=1}^{R}\|\widehat\beta_r-\overline\beta\|_T^2.
+    \label{main:eq:simulation-decomposition}
+\end{equation}
+For prediction, the corresponding bias and variance contributions are
+weighted by $\lambda_j$ in the generating score directions. Adding the
+noise variance of one gives expected prediction risk. This expectation
+averages over a new observation; the observed test MSPE in
+Table~\ref{main:tab:simulation-risk} also reflects the finite test samples,
+so the two need not coincide exactly.
+
+Table~\ref{main:tab:simulation-bias-variance} reports these components for
+the three methods whose slope estimates can be reconstructed reliably
+in every sample. All $5{,}000$ samples enter each row. Raw FPLS is omitted
+from this decomposition because its $445$ flagged slopes are too sensitive
+for reliable function-valued reconstruction; its full losses remain in
+Table~\ref{main:tab:simulation-risk} and
+Figure~\ref{main:fig:simulation-tails}.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption[Bias and variance across all simulation samples]{Squared bias
+    and variance over all $5{,}000$ samples per model. Prediction columns
+    exclude irreducible noise variance, which equals one. No samples are
+    removed from the three displayed methods.}
+    \label{main:tab:simulation-bias-variance}
+    \begin{tabular}{@{}llrrrr@{}}
+        \toprule
+        & & \multicolumn{2}{c}{Slope risk}
+          & \multicolumn{2}{c}{Excess prediction risk}\\
+        \cmidrule(lr){3-4}\cmidrule(l){5-6}
+        Model & Method & Sq.\ bias & Variance & Sq.\ bias & Variance\\
+        \midrule
+        1 & CG--FPLS     & 0.1069 & 0.5259 & 0.1102 & 0.1604\\
+          & Arnoldi FPLS & 0.0082 & 0.7520 & 0.0132 & 0.1163\\
+          & FPCR         & 0.0098 & 0.6602 & 0.0164 & 0.1102\\
+        \addlinespace
+        2 & CG--FPLS     & 1.2263 & 4.2796 & 0.4733 & 0.5224\\
+          & Arnoldi FPLS & 0.0990 & 5.9656 & 0.0491 & 0.3903\\
+          & FPCR         & 0.2419 & 5.4197 & 0.1106 & 0.3857\\
+        \addlinespace
+        3 & CG--FPLS     & 0.0183 & 0.4282 & 0.0346 & 0.1883\\
+          & Arnoldi FPLS & 0.0055 & 0.6642 & 0.0098 & 0.1230\\
+          & FPCR         & 0.0072 & 0.6078 & 0.0135 & 0.1141\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The decomposition helps explain CG's advantage in mean ISE.
+In Model~1, CG slope variance
+is $0.526$, compared with $0.752$ for Arnoldi, while squared bias is
+$0.107$ rather than $0.008$. The variance reduction outweighs the extra
+bias in the slope norm. Under prediction weighting, however, CG has both
+larger squared bias ($0.110$ versus $0.013$) and larger variance
+($0.160$ versus $0.116$). Model~2 shows the same distinction more strongly:
+CG's prediction squared bias is $0.473$, compared with $0.049$ for
+Arnoldi. Early stopping therefore need not reduce variance under every
+loss measure.
+
+In Model~2, CG reduces slope variance relative to Arnoldi by approximately
+$1.69$, more than compensating for the increase of approximately $1.13$
+in squared bias. Prediction weights change that balance: both CG's
+prediction bias and its prediction variance exceed the Arnoldi values.
+The smaller number of CG components should therefore not be interpreted
+as a uniform reduction in uncertainty. The benefit depends on which
+directions are uncertain and how the loss function weights them.
+
+An additional comparison retains only the $4{,}980$, $4{,}591$, and
+$4{,}984$ samples where the raw fit passes its stability check. All four
+methods use these same samples for the paired comparison. This restriction
+supports reliable reconstruction of slopes and their bias--variance
+components; it never replaces the full ISE or MSPE results.
+On this subset, raw and Arnoldi mean MSPEs are almost identical:
+$1.1279$ versus $1.1282$, $1.4271$ versus $1.4282$, and $1.1302$
+for both in Model~3. Each method still chooses its own dimension,
+so this is not a comparison at a fixed common $m$.
+
+These findings agree with their exact-arithmetic equivalence at a
+common valid dimension. Reorthogonalisation and QR make the same
+response-least-squares target more reliably computable as the raw powers
+become nearly collinear. They do not guarantee smaller statistical error
+on every sample.
+
+The coefficient distributions in Appendix~\ref{app:simulation-diagnostics}
+provide a more direct view of the slope differences. In Model~1, CG
+estimates the second coefficient with mean $0.366$, compared with its
+true value $0.616$, and the third with mean $0.071$, compared with
+$0.206$. In Model~3, greater predictor variation brings these means to
+$0.599$ and $0.198$. The same slope features are estimated more accurately
+when the predictors contain more information about them. Raw-FPLS
+distribution panels use only its stable fits, whereas the other methods
+use all samples. These supplementary plots illustrate particular
+coefficients and locations; their normal quantile plots do not establish
+Gaussianity of the full estimated function.
+
+The conclusions apply to these three models, dense error-free curves,
+Gaussian scores, $n=100$, and the stated tuning rules. They establish
+neither a universal ranking nor equal-complexity comparisons.
+Chapter~\ref{chap:main-empirical} examines observed spectra.
+Chapter~\ref{chap:main-inference} first considers a different requirement:
+for the stated testing argument, the remaining CG residual must be small
+relative to sampling uncertainty. A dimension suitable for estimation
+need not satisfy that requirement.

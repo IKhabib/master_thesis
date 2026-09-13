@@ -1,0 +1,70 @@
+% Layout based on the University of Bonn Economics guidelines (23 July 2026)
+% and Holger Gerhardt's recommended template.  See TEMPLATE_NOTES.md.
+% Times-compatible text/math via mathptmx is used consistently on all builds.
+\usepackage{mathptmx}
+\usepackage{courier}
+\usepackage{titlesec}
+\usepackage{etoolbox}
+
+\let\ThesisNormalSize\normalsize
+\let\ThesisSmallSize\small
+\let\ThesisFootnoteSize\footnotesize
+\renewcommand{\normalsize}{%
+  \ThesisNormalSize\fontsize{11pt}{19.5pt}\selectfont
+  \abovedisplayskip13.5pt plus6.75pt minus3.375pt
+  \belowdisplayskip\abovedisplayskip
+  \abovedisplayshortskip6.75pt plus3.375pt minus1.6875pt
+  \belowdisplayshortskip\abovedisplayshortskip}
+\renewcommand{\small}{\ThesisSmallSize\fontsize{10pt}{15pt}\selectfont}
+\renewcommand{\footnotesize}{\ThesisFootnoteSize\fontsize{9pt}{13.5pt}\selectfont}
+\normalsize
+\setlength{\textheight}{682.5pt}
+\AtBeginDocument{%
+  \normalsize
+  \setlength{\topskip}{19.5pt}
+  \setlength{\parindent}{19.5pt}
+  \setlength{\parskip}{0pt}
+  \frenchspacing}
+% Put unused vertical space below the text rather than between headings and text.
+\raggedbottom
+\widowpenalty=10000
+\clubpenalty=10000
+\setlength{\emergencystretch}{2em}
+
+% Report-class chapters retain equation/theorem counters, but use the
+% template's continuous level-1 heading rather than a separate chapter page.
+\titleclass{\chapter}{straight}
+\titleformat{\chapter}[hang]
+  {\normalfont\fontsize{14}{19.5}\selectfont\bfseries}{\thechapter}{1em}{}
+\titlespacing*{\chapter}{0pt}{39pt plus4ex}{19.5pt plus2ex}
+\titleformat{\section}
+  {\normalfont\fontsize{12}{19.5}\selectfont\bfseries}{\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{19.5pt plus2ex}{19.5pt plus2ex}
+\titleformat{\subsection}
+  {\normalfont\fontsize{11}{19.5}\selectfont\bfseries}{\thesubsection}{1em}{}
+\titlespacing*{\subsection}{0pt}{9.75pt plus1ex}{9.75pt plus1ex}
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{11}{19.5}\selectfont}{\thesubsubsection}{1em}{}
+\titlespacing*{\subsubsection}{0pt}{9.75pt plus1ex}{0pt}
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
+
+\AtBeginEnvironment{table}{\small}
+\AtBeginEnvironment{figure}{\small}
+\AtBeginEnvironment{quote}{\fontsize{11}{15}\selectfont}
+\AtBeginEnvironment{quotation}{\fontsize{11}{15}\selectfont}
+\captionsetup{font=small,labelfont=bf}
+\ifusebiblatex
+  \renewcommand*{\bibfont}{\small}
+  \setlength{\bibitemsep}{0pt}
+\else
+  \renewcommand{\bibfont}{\small}
+  \setlength{\bibsep}{0pt}
+\fi
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.7}

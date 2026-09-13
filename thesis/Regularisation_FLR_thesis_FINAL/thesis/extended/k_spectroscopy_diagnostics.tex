@@ -1,11 +1,11 @@
 \chapter{Supplementary Spectroscopy Analysis and Diagnostics}
 \label{app:spectroscopy-supplement}
 
-This appendix is the audit trail for Chapter
-\ref{chap:spectroscopy-application}.  It records the dataset identity, every
+This appendix documents the data and computation supporting
+Chapter~\ref{chap:main-empirical} and Appendix~\ref{chap:spectroscopy-application}.  It records the dataset identity, every
 preprocessing and validation rule, the complete development and sensitivity
 summaries, and the numerical diagnostics needed to distinguish finite
-prediction from reliable Krylov coordinates.  The chapter and appendix are
+prediction from reliable Krylov coordinates.  Both empirical appendices are
 derived from one frozen archive; the material below does not redefine the
 primary analysis after observing the benchmark results.
 
@@ -57,8 +57,8 @@ $R^2$.
     \end{tabular}
 \end{table}
 
-The wavelength units and domain are supplied by the external description; they
-are not embedded as ordinary numeric metadata in the MAT object.  The archive
+The MAT object contains the numeric wavelength axis, from 600 to 1898
+in steps of 2; the external description identifies these values as nanometres.  The archive
 and catalogue provide no explicit open-data licence.  The frozen empirical
 archive therefore contains checksums and a reproducible preparation workflow,
 but does not redistribute the source MAT file.
@@ -184,18 +184,21 @@ order has a physical interpretation.
 \section{Complete procedures and tuning rules}
 \label{sec:app-spectroscopy-tuning}
 
-The estimator formulas are given in Chapter~\ref{chap:methods}; Table
+The estimator formulas are given in Appendix~\ref{chap:methods}; Table
 \ref{tab:app-spectroscopy-procedures} records the application-specific tuning
 and diagnostics.  The requested path maximum is 70, further limited by grid
 size, centred training-sample size, numerical rank, and recurrence breakdown.
 
 \begin{table}[htbp]
     \centering
-    \scriptsize
+    \small
     \caption[Regularisation rules in the empirical application]{Estimator-specific regularisation rules in the frozen application.
     The procedures retain different finite-$m$ objectives and stopping rules.}
     \label{tab:app-spectroscopy-procedures}
-    \begin{tabular}{@{}p{2.4cm}p{6.3cm}>{\raggedright\arraybackslash}p{5.1cm}@{}}
+    \begin{tabular}{@{}
+        >{\raggedright\arraybackslash}p{2.1cm}
+        >{\raggedright\arraybackslash}p{6.2cm}
+        >{\raggedright\arraybackslash}p{5.1cm}@{}}
         \toprule
         Method & Regularisation choice & Principal diagnostics \\
         \midrule
@@ -245,7 +248,7 @@ ordering between them.
 
 \begin{table}[htbp]
     \centering
-    \scriptsize
+    \small
     \caption[Repeated-development prediction errors]{Development RMSE.  The first three columns summarise five complete
     repeated nested-CV out-of-fold estimates.  The final two columns are single
     prespecified sensitivities.}
@@ -319,35 +322,42 @@ comparable with a Krylov iteration.
 \section{Benchmark uncertainty and residuals}
 \label{sec:app-spectroscopy-uncertainty}
 
-Chapter~\ref{chap:spectroscopy-application} gives all four primary point
+Appendix~\ref{chap:spectroscopy-application} gives all four primary point
 estimates and marginal iid intervals.  Table
 \ref{tab:app-spectroscopy-rmse-contrasts} supplies the complete prespecified
 RMSE sensitivity for the three declared paired contrasts.  The focal
-Raw-minus-Arnoldi interval remains below zero for every block length, as do the
-larger CG-minus-Arnoldi and FPCR-minus-Arnoldi differences.  This order
+Raw-minus-Arnoldi interval remains below zero for every block length,
+whereas the CG-minus-Arnoldi and FPCR-minus-Arnoldi intervals remain above zero.  This order
 robustness applies to conditional RMSE contrasts.  Bias conclusions are less
 stable: the longer-block bias intervals for the secondary contrasts cross
 zero.
 
 \begin{table}[htbp]
     \centering
-    \scriptsize
+    \small
     \caption[Paired benchmark RMSE contrasts and intervals]{Declared benchmark RMSE contrasts and paired 95\% percentile
     intervals.  Circular blocks follow the supplied archive order.}
     \label{tab:app-spectroscopy-rmse-contrasts}
-    \begin{tabular}{@{}lrrrrr@{}}
+    \begin{tabular}{@{}lrrr@{}}
         \toprule
-        Contrast & Estimate & Iid & Block 5 & Block 10 & Block 20 \\
+        Contrast & Estimate & Iid interval & Block-5 interval \\
         \midrule
         Raw $-$ Arnoldi
-          & -0.0363 & [-0.0565, -0.0169] & [-0.0595, -0.0158]
-          & [-0.0622, -0.0141] & [-0.0649, -0.0117] \\
+          & -0.0363 & [-0.0565, -0.0169] & [-0.0595, -0.0158] \\
         CG $-$ Arnoldi
-          &  0.6500 & [ 0.3973,  0.9208] & [ 0.3286,  0.9783]
-          & [ 0.2565,  1.0169] & [ 0.1664,  1.0687] \\
+          &  0.6500 & [ 0.3973,  0.9208] & [ 0.3286,  0.9783] \\
         FPCR $-$ Arnoldi
-          &  0.5420 & [ 0.2855,  0.8442] & [ 0.2403,  0.8839]
-          & [ 0.2015,  0.9218] & [ 0.1886,  0.9384] \\
+          &  0.5420 & [ 0.2855,  0.8442] & [ 0.2403,  0.8839] \\
+        \bottomrule
+    \end{tabular}
+    \par\medskip
+    \begin{tabular}{@{}lrr@{}}
+        \toprule
+        Contrast & Block-10 interval & Block-20 interval \\
+        \midrule
+        Raw $-$ Arnoldi & [-0.0622, -0.0141] & [-0.0649, -0.0117] \\
+        CG $-$ Arnoldi & [ 0.2565,  1.0169] & [ 0.1664,  1.0687] \\
+        FPCR $-$ Arnoldi & [ 0.2015,  0.9218] & [ 0.1886,  0.9384] \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -384,7 +394,7 @@ quantities do not override the benchmark ordering.
 
 \begin{table}[htbp]
     \centering
-    \scriptsize
+    \small
     \caption[Final-fit numerical diagnostics]{Final fit on all 195 development tablets.  Coefficient norms use
     the archived original-input vector under the $T^{-1}$ prediction
     convention.}
@@ -454,7 +464,7 @@ measurement-system sensitivity rather than independent replication.
 
 \begin{table}[htbp]
     \centering
-    \scriptsize
+    \small
     \caption[Complete prespecified benchmark sensitivities]{Complete prespecified benchmark sensitivities.  Parenthesised
     values in the RMSE column are selected component or stopping indices.
     Sensitivity rows are descriptive point estimates without variant-specific

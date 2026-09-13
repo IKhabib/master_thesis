@@ -1,16 +1,19 @@
 % Empirical application using the 2002 pharmaceutical-tablet NIR data.
-\chapter{Empirical Application: Pharmaceutical-Tablet Spectroscopy}
+\chapter{Extended Pharmaceutical-Tablet Application}
 \label{chap:spectroscopy-application}
 
-In Chapters~\ref{chap:estimation-results} and \ref{chap:inference-results},
+This appendix presents the extended empirical analysis supporting
+Chapter~\ref{chap:main-empirical}.
+
+In Appendices~\ref{chap:estimation-results} and \ref{chap:inference-results},
 the known slope and covariance operator made it possible to distinguish the
-effects of regularisation from numerical error.  This chapter examines
+effects of regularisation from numerical error.  This appendix examines
 whether the same patterns appear in observed data.  It uses near-infrared
 (NIR) spectra to predict the active-ingredient assay of pharmaceutical
 tablets with CG--FPLS, raw FPLS, Arnoldi FPLS, and FPCR.  The focus is
 prediction and numerical stability.  Because the true slope is unknown,
 the application cannot assess slope recovery or use the oracle-assisted
-inference studied in Chapters~\ref{chap:inference-methodology}--\ref{chap:inference-results}.
+inference studied in Appendices~\ref{chap:inference-methodology}--\ref{chap:inference-results}.
 
 The evaluation rules were fixed before the four final models were applied
 to the supplied test set.  However, the test responses and preliminary
@@ -60,7 +63,6 @@ centring, the sample covariance has rank at most 194, leaving at least
 456 directions that the development data cannot identify.  This is the
 finite-sample form of the ill-posed problem discussed earlier.
 
-\begin{samepage}
 The equally weighted grid convention from
 Section~\ref{sec:methods-empirical-operator} is retained:
 \begin{equation}
@@ -71,7 +73,6 @@ Section~\ref{sec:methods-empirical-operator} is retained:
     \widehat r=\frac{X^\top y}{n}.
     \label{eq:spectroscopy-grid-geometry}
 \end{equation}
-\end{samepage}
 The resulting prediction for a new spectrum $x$ is
 \begin{equation}
     \widehat Y(x)=\bar Y_{\mathrm{train}}
@@ -191,7 +192,6 @@ while the paired comparison gives a much narrower interval.
     \label{fig:spectroscopy-rmse-intervals}
 \end{figure}
 
-\begin{samepage}
 The main paired comparison in Table~\ref{tab:spectroscopy-paired-contrasts} is
 $\mathrm{RMSE}_{\mathrm{raw}}-\mathrm{RMSE}_{\mathrm{Arnoldi}}=-0.036$ assay
 units.  Its iid percentile interval excludes zero, as do all three
@@ -204,7 +204,6 @@ representation is generally better.  Arnoldi's RMSE advantages over
 CG--FPLS and FPCR are larger, approximately 0.65 and 0.54 units, and remain
 under the principal block-length-10 bootstrap.
 \par
-\end{samepage}
 
 \begin{table}[htbp]
     \centering
@@ -263,7 +262,6 @@ orthogonality defect $7.4\times10^{-16}$.  It therefore achieves essentially
 the same predictions as Raw using stable five-dimensional coordinates.
 The complete paths appear in Appendix~\ref{app:spectroscopy-supplement}.
 
-\begin{samepage}
 CG--FPLS stops at three components in every development fit and in the final
 fit.  This consistent early stopping applies strong regularisation and
 accompanies a larger prediction error.  The result concerns the particular
@@ -273,7 +271,6 @@ between seven and 57 components in development and 53 in the final fit.
 Component counts therefore reflect different search spaces and tuning rules;
 they are not directly comparable measures of complexity.
 \par
-\end{samepage}
 
 \section{Robustness, interpretation, and scope}
 \label{sec:spectroscopy-scope}
@@ -290,7 +287,6 @@ it provides neither independent external validation nor a calibration-transfer
 experiment.  These changes do not establish that the visible spikes at high
 wavelengths caused particular prediction errors.
 
-\begin{samepage}
 The residual plots in Appendix~\ref{app:spectroscopy-supplement} show a few
 large errors shared by the methods, as well as predictions drawn toward the
 centre of the assay range.  All these tablets remain in the analysis.
@@ -299,17 +295,10 @@ order cannot be given a physical explanation.  Nor can the fitted coefficient
 vectors identify a unique functional slope or wavelengths with a chemically
 causal role in this problem with $650$ coordinates and rank at most $194$.
 \par
-\end{samepage}
 
-Three limitations are central to interpreting the results.  First, the
-designated benchmark had been inspected during dataset selection, so the
-reported errors do not come from a prospectively blind validation.  Second,
-the paired-bootstrap intervals resample the supplied benchmark tablets while
-keeping the fitted models fixed.  They do not include uncertainty from the
-development sample, preprocessing, or tuning.  Third, the study examines one
-response from one tablet dataset, without independent validation across
-batches, laboratories, or acquisition periods.  Within this scope, the
-application illustrates two findings from the controlled experiments:
-stopping too early can reduce prediction accuracy, and related Krylov fits
-can give almost identical predictions despite large differences in their
-numerical reliability.
+Three limits remain: the benchmark was inspected during selection; bootstrap
+intervals condition on fitted models and exclude development, preprocessing,
+and tuning uncertainty; and the study covers one response and dataset without
+independent validation across batches, laboratories, or acquisition periods.
+Within these limits, early stopping can impair prediction, while related
+Krylov fits can predict almost identically despite differing numerical reliability.

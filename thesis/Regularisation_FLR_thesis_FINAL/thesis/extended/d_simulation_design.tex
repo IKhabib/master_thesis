@@ -1,10 +1,13 @@
-%Chapter 4. Monte Carlo design: all definitions and constants match the final six-file
+% Extended Monte Carlo design: all definitions and constants match the final six-file
 % four-method Python workflow.
-\chapter{Monte Carlo Design}
+\chapter{Detailed Monte Carlo Design}
 \label{chap:simulation-design}
 
-This chapter specifies the experiment used to compare the four estimators
-developed in Chapter~\ref{chap:methods}.  Its purpose is to separate the
+This appendix records the complete experiment design underlying
+Chapter~\ref{chap:main-simulation}.
+
+This appendix specifies the experiment used to compare the four estimators
+developed in Appendix~\ref{chap:methods}.  Its purpose is to separate the
 scientific design from the numerical findings.  The data-generating process,
 component-selection rules, diagnostic thresholds, loss functions, and random
 number streams recorded here define the simulation setting.  The design retains
@@ -45,8 +48,7 @@ This is the endpoint average used in the simulation.
 Consequently, every displayed finite-sample formula is interpreted under the
 same numerical geometry as the estimators.
 
-Generated dataset contains $J=100$ functions.  Following the indexing in
-the our simulation, it is
+The generating basis contains $J=100$ functions, defined as follows:
 \begin{equation}
     \phi_1(s)=1,
     \qquad
@@ -236,7 +238,7 @@ response.  In particular,
     &=\sum_{j=1}^{J}q_j+\sigma^2.
     \label{eq:simulation-response-variance}
 \end{align}
-Detailed proof of these identities is represented in Appendix Proposition~\ref{prop:app-simulation-variance}.
+Proposition~\ref{prop:app-simulation-variance} in Appendix~\ref{app:mathematical-proofs} proves these identities.
 The signal-to-noise ratio is defined as
 \begin{equation}
     \operatorname{SNR}
@@ -253,7 +255,7 @@ an unnormalised measure of which model is intrinsically easiest.
 
 \begin{table}[htbp]
     \centering
-    \scriptsize
+    \small
     \caption[Exact properties of the discrete generating design]{Exact derived properties under the discrete data-generating
     process.  The final column gives the first component counts reaching
     $90\%$, $95\%$, and $99\%$ of predictive signal.}
@@ -516,7 +518,7 @@ Thus the oracle noise floor is $\sigma^2=1$, while the second term is excess
 prediction risk.  Equation \eqref{eq:simulation-mspe-risk} is the discrete
 counterpart of Appendix Proposition~\ref{prop:app-risk-identity}.
 
-For every model--method pair, simulation result illustrates the mean and its Monte Carlo
+For every model--method pair, the results report the mean and its Monte Carlo
 standard error, the median, the $90$th and $99$th percentiles, and the maximum
 of both ISE and MSPE.  If $L_1,\ldots,L_{R_f}$ are the finite values of a loss,
 the reported standard error is
@@ -608,5 +610,5 @@ samples.
 
 
 The models vary the slope and covariance structure in a controlled way, while all methods use the same data. This helps distinguish the effects of regularisation from those of numerical computation. Each method follows fixed tuning and evaluation rules, and unusually large errors remain part of the comparison.
-Chapter~\ref{chap:estimation-results} examines how they appear in
+Appendix~\ref{chap:estimation-results} examines how they appear in
 slope recovery and prediction.

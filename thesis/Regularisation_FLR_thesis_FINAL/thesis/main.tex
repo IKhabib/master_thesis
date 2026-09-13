@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper,oneside]{report}
+\documentclass[11pt,a4paper,oneside]{report}
 
 % -----------------------------------------------------------------------------
 % Thesis metadata: complete author_details.tex before final submission.
@@ -12,8 +12,8 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[british]{babel}
-\usepackage{microtype}
-\usepackage[a4paper,left=3cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[protrusion=compatibility,expansion=false]{microtype}
+\usepackage[a4paper,left=2.5cm,right=4cm,top=2.8cm,bottom=2.8cm,headheight=15pt,headsep=22.5pt]{geometry}
 \usepackage{setspace}
 \usepackage{amsmath,amssymb,mathtools}
 \usepackage{amsthm}
@@ -50,10 +50,7 @@
     ]{biblatex}
     \addbibresource{thesis_bibliography.bib}
 \else
-    % Minimal-TeX fallback: map T1 text through scalable Computer Modern fonts.
-    \usepackage{ae}
-    \pdfmapfile{+cmextra.map}
-    \pdfmapfile{+symbols.map}
+    % The same Times-compatible text and mathematics are used with both backends.
     \renewcommand{\labelitemi}{\(\bullet\)}
     \usepackage[authoryear,round]{natbib}
     \usepackage{xurl}
@@ -68,9 +65,7 @@
 }
 
 \graphicspath{{figures/}}
-\onehalfspacing
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.65em}
+\input{bonn_layout}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[chapter]
@@ -130,13 +125,15 @@
 \pagenumbering{roman}
 \input{frontmatter/abstract}
 \clearpage
+\begingroup
+\fontsize{11}{15}\selectfont
 \tableofcontents
+\endgroup
 \clearpage
 \phantomsection
 \addcontentsline{toc}{chapter}{\listfigurename}
 \begingroup
-\small
-\singlespacing
+\fontsize{11}{15}\selectfont
 \setlength{\parskip}{0pt}
 \listoffigures
 \endgroup
@@ -144,26 +141,27 @@
 \phantomsection
 \addcontentsline{toc}{chapter}{\listtablename}
 \begingroup
-\small
-\singlespacing
+\fontsize{11}{15}\selectfont
 \setlength{\parskip}{0pt}
 \listoftables
 \endgroup
 \clearpage
 
 % -----------------------------------------------------------------------------
-% Main matter. Chapters 1--9 are complete;
+% Main matter: six concise chapters; the body page count is written to main.aux.
 % -----------------------------------------------------------------------------
 \pagenumbering{arabic}
-\input{chapters/01_introduction}
-\input{chapters/02_background}
-\input{chapters/03_methods}
-\input{chapters/04_simulation_design}
-\input{chapters/05_estimation_results}
-\input{chapters/06_inference_methodology}
-\input{chapters/07_inference_results}
-\input{chapters/08_spectroscopy_application}
-\input{chapters/09_conclusion}
+\input{concise/01_introduction}
+\input{concise/02_methods}
+\input{concise/03_simulation}
+\input{concise/04_inference}
+\input{concise/05_empirical}
+\input{concise/06_conclusion}
+\clearpage
+\makeatletter
+\immediate\write\@auxout{\string\gdef\string\MainTextPageCount{\number\numexpr\value{page}-1\relax}}
+\typeout{MAIN-TEXT-PAGES: \number\numexpr\value{page}-1\relax}
+\makeatother
 
 \clearpage
 \ifusebiblatex
@@ -177,17 +175,32 @@
 \fi
 
 % -----------------------------------------------------------------------------
-% Appendices are placed after the references: Appendix A contains mathematical proofs; Appendix B
-% contains the detailed simulation diagnostics supporting Chapter 5,
-% Appendix C retains the supplementary inference display supporting Chapter 7,
-% and Appendix D contains the complete spectroscopy analysis supporting the
-% compact empirical Chapter 8.
+% Extended material: all original background, technical chapters, and appendices.
 % -----------------------------------------------------------------------------
 \clearpage
 \appendix
-\input{appendices/a_mathematical_proofs}
-\input{appendices/b_simulation_diagnostics}
-\input{appendices/c_inference_diagnostics}
-\input{appendices/d_spectroscopy_supplement}
+\input{extended/a_background}
+\clearpage
+\input{extended/b_mathematical_proofs}
+\clearpage
+\input{extended/c_methods}
+\clearpage
+\input{extended/d_simulation_design}
+\clearpage
+\input{extended/e_estimation_results}
+\clearpage
+\input{extended/f_simulation_diagnostics}
+\clearpage
+\input{extended/g_inference_methodology}
+\clearpage
+\input{extended/h_inference_results}
+\clearpage
+\input{extended/i_inference_diagnostics}
+\clearpage
+\input{extended/j_spectroscopy_application}
+\clearpage
+\input{extended/k_spectroscopy_diagnostics}
+\clearpage
+\input{frontmatter/declaration}
 
 \end{document}

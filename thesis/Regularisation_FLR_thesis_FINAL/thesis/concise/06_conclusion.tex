@@ -1,0 +1,102 @@
+\chapter{Conclusion and Outlook}
+\label{chap:main-conclusion}
+\label{chap:conclusion}
+
+The central finding is that regularisation must be judged by its statistical
+purpose and its numerical reliability. Slope recovery, prediction, and
+inference place different demands on a fitted model. Even procedures that
+share an exact-arithmetic Krylov space can behave differently when their
+coordinates are calculated in finite precision. The controlled experiments
+and tablet application make both distinctions visible.
+
+\section{Answers to the research questions}
+
+For slope recovery, the implemented discrepancy rule gives CG--FPLS the
+lowest mean ISE in all three simulation models. Its early stopping produces
+relatively concentrated slope estimates and suppresses variation in weak
+directions. This benefit does not produce a corresponding advantage for
+prediction. CG has higher mean MSPE than Arnoldi in every model, most clearly
+when several generating directions carry substantial signal. The
+bias--variance decomposition explains why: ordinary slope error and
+covariance-weighted prediction error need not reward the same restriction.
+Even CG's lower slope variance does not imply lower prediction variance.
+
+The comparison between FPCR and FPLS also depends on the model. FPCR orders
+directions by predictor variation, whereas FPLS uses response information
+to build its search space. Arnoldi and FPCR give very similar prediction
+errors when the signal is concentrated in leading directions. Arnoldi's
+advantage is clearer in Model~2, where the slope involves more directions.
+These results compare the stated complete procedures, including different
+tuning rules. They establish no universal ranking of spectral and iterative
+regularisation, and selected component counts are not comparable units of
+effective degrees of freedom.
+
+The second question concerns numerical representation. At a common valid
+dimension, Raw and Arnoldi minimise the same response least-squares
+criterion over the same Krylov space. Their simulation results nearly
+coincide on the shared subset where the raw fit is numerically stable,
+even though each procedure selects its own dimension. Rare raw failures,
+however, produce very large errors that strongly affect full-sample means.
+Their impact would be obscured by reporting only medians or removing
+numerically inconvenient cases. Reorthogonalisation and QR avoid this
+failure mechanism in the studied experiments while preserving the intended
+fixed-dimension target.
+
+The tablet analysis supports this distinction. Raw and Arnoldi make very
+similar predictions, with benchmark RMSEs of $4.607$ and $4.643$,
+respectively. Arnoldi uses five well-conditioned directions, while the
+selected raw representation has nominal dimension $55$ and is severely
+ill-conditioned. Raw's small conditional RMSE advantage therefore does
+not establish numerical reliability or a general prediction advantage.
+Changing preprocessing can reverse their ordering. The CG prediction cost
+is consistent with the simulation findings, but the empirical comparison
+does not isolate the causal effect of adding CG iterations.
+
+For inference, the relevant distinction is between regularising the slope
+and approximating a sample moment. The sufficient condition
+$\sqrt n\|\widehat r-\widehat K\widehat\beta_m\|=o_P(1)$ makes the
+CG-based statistic asymptotically equivalent to a direct-moment statistic.
+The separate stopping experiment shows that an estimation-oriented variant
+can satisfy its discrepancy threshold while leaving too much residual for
+this approximation. Late iteration removes the material algorithmic
+difference in the studied designs. It does not by itself solve calibration:
+the observed rejection rates also depend on finite-sample behaviour,
+discretisation, and how critical values are obtained. Neither $m=70$ nor
+the simulation's oracle critical values provide a universal prescription
+for observed data.
+
+\section{Scope and further work}
+
+The simulation designs isolate specific mechanisms. They use densely
+observed curves, Gaussian scores, homoskedastic independent errors, fixed
+grids, and a limited set of slopes and covariance spectra. The early-stopping
+results depend on the stated variance pilot and discrepancy constants.
+Comparisons with other tuning rules, ridge and spline regularisation,
+measurement error, irregular observation, and dependent or heavy-tailed
+errors would establish how far the findings extend.
+
+The inference study is a controlled benchmark. Its principal critical
+values use known continuous-design quantities, whose covariance weights
+differ slightly from those induced by the fixed grid. The power study
+instead uses simulated finite-sample null quantiles and considers one
+direction of departure. The confidence-set illustration restricts candidate
+slopes to five coefficients and summarises many sample-specific envelopes;
+it is neither a full-slope coverage experiment for that restricted space
+nor a simultaneous confidence band for an observed sample. Feasible
+plug-in, multiplier, and bootstrap calibration require separate evaluation.
+
+The spectroscopy study uses one response and one data source. Its benchmark
+had been inspected during dataset selection, and its bootstrap intervals
+condition on the fitted models. It does not measure uncertainty from
+development sampling and tuning, or establish performance across independent
+tablet batches, laboratories, or acquisition periods. Instrument~2 measures
+the same tablets again. Unknown assay units and the absence of a known
+physical slope further limit practical and chemical interpretations.
+External validation and resampling that respects available batch information
+would be the next empirical steps.
+
+The practical implication is to choose regularisation for the question,
+retain a numerically reliable representation, and inspect diagnostics
+alongside accuracy. A small prediction error alone cannot establish either
+accurate slope recovery or valid inference. Keeping these claims separate
+allows the strengths and limits of each procedure to be stated clearly.

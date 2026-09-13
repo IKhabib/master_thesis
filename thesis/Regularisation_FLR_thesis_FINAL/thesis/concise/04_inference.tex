@@ -1,0 +1,374 @@
+\chapter{Inference: Methodology and Results}
+\label{chap:main-inference}
+
+The estimation results show that early stopping can protect slope recovery
+from weakly identified directions.  Hypothesis testing places a different
+demand on the fit: reducing the remaining empirical moment residual makes
+the fitted statistic approximate a direct sampling-based statistic.  Following
+\textcite{babii_carrasco_tsafack_2026}, this chapter studies how continued
+moment-residual CG--FPLS iterations support inference, and assesses stopping,
+null rejection, power, and confidence sets in the three simulation models.
+These results concern CG--FPLS inference; they do not compare inferential
+procedures for all four estimation methods.
+
+\section{The hypothesis and the role of stopping}
+\label{main:sec-inference-statistic}
+
+For the centred model $Y^c=\langle X^c,\beta\rangle+\varepsilon$ with
+$\mathbb E(\varepsilon\mid X)=0$, the identifiable hypothesis is
+$H_0:K\beta=Kb$, where $b$ is a specified candidate slope.  It becomes the
+literal slope hypothesis $H_0:\beta=b$ when both functions belong to
+$\operatorname{Null}(K)^\perp$.  A difference in $\operatorname{Null}(K)$
+cannot be detected.  Choosing $b=0$ tests for a functional effect; to measure
+null rejection, the simulations use their known generating slope as $b$.
+
+The hypothesis concerns the complete candidate function, rather than its
+value at a particular wavelength or time point.  Rejection means that the
+candidate is inconsistent with the functional moment equation at the chosen
+significance level.  Non-rejection means that the evidence is insufficient
+to rule it out; it does not establish that the candidate is correct.  This
+distinction matters in an ill-posed problem, where substantial changes in
+weak covariance directions can have little effect on the observed moment.
+
+Using the empirical moments from Chapter~\ref{chap:main-methods}, define
+\begin{equation}
+ \begin{aligned}
+ u_n(b)&=\widehat r-\widehat Kb,\qquad
+ e_m=\widehat r-\widehat K\widehat\beta_m^{\mathrm{CG}},\\
+ \mathcal T_{n,m}(b)&=n\|\widehat K(\widehat\beta_m^{\mathrm{CG}}-b)\|^2.
+ \end{aligned}
+ \label{main:eq-inference-statistic}
+\end{equation}
+Here $e_m$ is the remaining moment residual.  Applying $\widehat K$ avoids
+requiring a root-$n$ limit for the unstable, unweighted slope estimate.
+Since $\widehat K(\widehat\beta_m^{\mathrm{CG}}-b)=u_n(b)-e_m$, comparison
+with the direct statistic $\mathcal S_n(b)=n\|u_n(b)\|^2$ gives
+\begin{align}
+ \mathcal T_{n,m}(b)-\mathcal S_n(b)
+ &=-2n\langle u_n(b),e_m\rangle+n\|e_m\|^2,\label{main:eq-inference-difference}\\
+ |\mathcal T_{n,m}(b)-\mathcal S_n(b)|
+ &\leq2\sqrt n\|u_n(b)\|\sqrt n\|e_m\|+n\|e_m\|^2.\nonumber
+\end{align}
+Under the null, $\sqrt n\|u_n(b)\|=O_{\mathbb P}(1)$.  Consequently,
+\begin{equation}
+ \sqrt n\|e_{m_n}\|=o_{\mathbb P}(1)
+ \quad\Longrightarrow\quad
+ \mathcal T_{n,m_n}(b)=\mathcal S_n(b)+o_{\mathbb P}(1).
+ \label{main:eq-inference-late}
+\end{equation}
+This is a sufficient condition for iteration error to disappear from the
+limiting null distribution.  An estimation rule permitting a constant
+multiple of $n^{-1/2}$ for $\|e_m\|$ does not ensure it.  Further iterations
+can therefore improve the test approximation while worsening slope
+estimation.  The direct statistic itself requires no CG fit; its role is
+both an inferential construction and a benchmark for assessing the fitted
+statistic.  No fixed component count guarantees
+\eqref{main:eq-inference-late} across models and sample sizes.
+
+The comparison with $\mathcal S_n$ also clarifies what continuing CG
+accomplishes.  It connects an estimate obtained by regularised iteration
+to a statistic whose fluctuation can be analysed directly.  It does not
+make inverse estimation unnecessary when the objective is to recover the
+slope, and it does not make the limiting test automatically usable without
+a critical value.  Accurate solution of the empirical equation and accurate
+calibration of the resulting statistic are separate requirements.  The
+experiments below examine them separately so that one cannot conceal a
+failure of the other.
+
+\section{Null law and calibration}
+\label{main:sec-inference-calibration}
+
+Assume independent, identically distributed observations, $\mathbb E\|X^c\|^4<\infty$, and bounded
+conditional error variance.  Under the null and known population means,
+$u_n(b)=n^{-1}\sum_i\varepsilon_iX_i^c$.  Sample centring adds a term of
+order $O_{\mathbb P}(n^{-1})$, which is negligible on the root-$n$ scale.
+The Hilbert-space central limit theorem and
+\eqref{main:eq-inference-late} give
+\begin{equation}
+ \sqrt n\,u_n(b)\rightsquigarrow G\sim\mathcal N_{\mathcal H}(0,V),
+ \qquad
+ \mathcal T_{n,m_n}(b)\rightsquigarrow
+ \|G\|^2=\sum_j\omega_jZ_j^2,
+ \label{main:eq-inference-null-law}
+\end{equation}
+where $V=\mathbb E\{\varepsilon^2(X^c\otimes X^c)\}$, the $\omega_j$ are
+its positive eigenvalues, and the $Z_j$ are independent standard normals.
+The moment conditions make $V$ trace class.  Under conditional
+homoskedasticity, $V=\sigma^2K$ and $\omega_j=\sigma^2\lambda_j$;
+under heteroskedasticity, $V$ and $K$ need not share eigenfunctions.
+Rejecting above the $(1-\alpha)$ quantile of this non-degenerate limiting
+law gives asymptotic size $\alpha$, provided the residual condition holds.
+Proofs appear in Appendix~\ref{app:mathematical-proofs}.
+
+The simulations retain the three models of
+Chapter~\ref{chap:main-simulation}, with 100 Gaussian score terms, a
+200-point grid, and error standard deviation one.  Each design point uses
+5,000 samples.  Principal null-size results use $n=100$, $m=70$, and
+critical values from 50,000 draws of
+$\sum_{j=1}^{100}\sigma^2\lambda_jZ_j^2$.  This \emph{oracle} calibration
+uses known population parameters, rather than estimating them from an
+observed dataset.
+
+The continuous-model oracle law also differs from the exact fixed-grid
+limit.  If $\Phi_{jt}=\phi_j(s_t)$ contains the generating basis values and
+$G_T=T^{-1}\Phi\Phi^\top$, the grid covariance eigenvalues are those of
+$\Lambda^{1/2}G_T\Lambda^{1/2}$, with
+$\Lambda=\operatorname{diag}(\lambda_1,\ldots,\lambda_{100})$.
+The endpoint-inclusive grid has $G_T\neq I$.  Increasing $n$ at fixed
+$T=200$ does not remove this discrepancy.  Departures from the oracle
+reference can therefore reflect finite-sample effects, grid approximation,
+and uncertainty in the simulated critical value.  The power study instead
+uses empirical null quantiles, separately for each model and sample size.
+Neither calibration is available directly from a single observed dataset.
+
+For an application, the unknown score covariance must instead be estimated.
+For a specified null candidate, one possible route uses residuals
+$\widehat\varepsilon_i(b)=Y_i^c-\langle X_i^c,b\rangle$ and the operator
+$\widehat V=n^{-1}\sum_i\widehat\varepsilon_i(b)^2
+(X_i^c\otimes X_i^c)$, then simulates the weighted chi-square law using
+its estimated eigenvalues.  Bootstrap calibration provides another route.
+These possibilities motivate a feasible procedure, but their finite-sample
+performance is not established by an experiment that supplies the true
+population weights.  The present design deliberately makes that limitation
+visible: its oracle calculation checks the theoretical approximation, while
+its empirical-null power calculation isolates detection from the observed
+oracle size distortion.
+
+\section{Stopping and null rejection in the simulations}
+\label{main:sec-inference-size}
+
+The longer inference path uses two-pass reorthogonalisation of the Krylov
+basis and a QR solve that minimises
+$\|\widehat r-\widehat KQ_ma\|$.  In exact arithmetic this has the same
+minimum-moment-residual objective as the released CG--FPLS recurrence.
+It differs from Arnoldi FPLS, which minimises response error.  Numerical
+stabilisation is particularly relevant when many iterations are taken.
+
+A separate stopping experiment compares fixed dimensions, a maximum-rank
+fit, and an adaptive estimation-oriented variant.  The variant retains
+$\tau=1.01$ and $\delta_{\mathrm{stop}}=0.1$, but limits the variance pilot
+to 20 components rather than the estimation study's 70 and uses the
+stabilised path.  It is therefore not an exact rerun of the estimation
+procedure.  Its selected median dimensions are one, two, and one in
+Models~1--3.  All 15,000 fits satisfy their own discrepancy threshold,
+yet null rejection reaches 52.70\%, 96.02\%, and 71.94\%
+(Table~\ref{main:tab-inference-size}).  Meeting an estimation threshold
+clearly does not establish adequate stopping for inference in these designs.
+
+Figure~\ref{main:fig-inference-stopping} follows the complete adjustment as
+the dimension increases.  The top row measures the residual on the sampling
+scale; the middle row measures its actual effect on the statistic; and the
+bottom row reports the resulting decisions.  These quantities answer
+different questions.  A small residual provides a theoretical sufficient
+condition, whereas agreement with the direct statistic checks the practical
+approximation in the simulated samples.  A rejection rate alone cannot
+show whether that approximation is accurate.
+
+\begin{figure}[p]
+ \centering
+ \includegraphics[width=\textwidth]{stopping_diagnostics.pdf}
+ \caption[Effect of stopping on inference]{Stopping diagnostics at $n=100$,
+ based on 5,000 samples per model in the separate stopping study.  Rows show
+ median $\sqrt n\|e_m\|$, median $|\mathcal T_{n,m}-\mathcal S_n|$, and
+ oracle-calibrated null rejection at 5\%.  Circles denote fixed dimensions,
+ stars the adaptive variant with the 20-component variance pilot, and
+ diamonds the maximum-rank fit.  The dotted line in the top row is the
+ median estimation threshold, not a vanishing inferential tolerance.}
+ \label{main:fig-inference-stopping}
+\end{figure}
+
+\begin{table}[htbp]
+ \centering
+ \small
+ \caption[Stopping and null rejection]{Null rejection percentages at the
+ oracle 5\% level.  The adaptive and fixed-$m$ columns use the separate
+ stopping experiment; the last column uses the principal null-size samples.
+ Each experiment contains 5,000 samples per model at $n=100$.}
+ \label{main:tab-inference-size}
+ \begin{tabular}{@{}lrrrrr@{}}
+ \toprule
+ & \multicolumn{4}{c}{Separate stopping experiment}
+ & \shortstack{Principal\\size study}\\
+ \cmidrule(lr){2-5}\cmidrule(l){6-6}
+ Model & \shortstack{Adaptive\\median $m$}
+ & \shortstack{Adaptive\\rejection}
+ & $m=10$ & $m=70$ & $m=70$\\
+ \midrule
+ 1 & 1 & 52.70 & 6.16 & 6.20 & 5.90\\
+ 2 & 2 & 96.02 & 5.88 & 6.00 & 5.84\\
+ 3 & 1 & 71.94 & 5.20 & 5.26 & 6.10\\
+ \bottomrule
+ \end{tabular}
+\end{table}
+
+The adaptive median scaled residuals are 4.2452, 9.4103, and 9.0848.
+At $m=70$, they are approximately 0.0031 in every model, and median
+absolute differences between $\mathcal T_{n,70}$ and $\mathcal S_n$ are
+of order $10^{-5}$.  Continuing to maximum rank changes no rejection
+decision.  At $m=10$, median statistic differences are already below 0.09,
+although this does not establish ten iterations as a general rule.
+Rejection need not approach 5\% monotonically: an intermediate dimension
+can give apparently correct size despite a substantial residual.
+The residual and statistic difference therefore provide essential checks
+alongside rejection frequencies.
+
+For example, stopping at $m=2$ gives 2.64\% rejection in Model~1 but
+99.82\% in Model~2.  At $m=5$, all three rejection rates lie between
+4.40\% and 5.64\%, although median statistic differences still range from
+0.458 to 1.203.  Apparent agreement with the nominal level at one dimension
+is consequently weaker evidence than sustained reduction of both the
+residual and statistic difference.
+
+In the principal null study, $\mathcal T_{n,70}$ and $\mathcal S_n$ give
+identical decisions at the 1\%, 5\%, and 10\% levels in all 15,000 samples.
+The 5\% rejection rates of 5.90\%, 5.84\%, and 6.10\% indicate modest
+over-rejection; their conditional Monte Carlo standard errors are about
+0.33--0.34 percentage points.  The empirical 95th percentiles exceed the
+oracle reference values by 3.47\%, 3.87\%, and 3.71\%.  Additional
+iterations cannot correct these calibration differences once the fitted
+and direct statistics agree.  Models~1 and 2 share the same theoretical
+null law because their predictor and error distributions coincide and the
+slope cancels under the null.  Their small reported differences arise from
+simulation variation.  All reported Monte Carlo standard errors treat the
+estimated critical value as fixed and omit its additional uncertainty.
+
+\section{Power against slope changes}
+\label{main:sec-inference-power}
+
+For a fixed alternative satisfying $K(\beta-b)\neq0$, moment convergence
+and sufficiently late stopping imply
+$n^{-1}\mathcal T_{n,m_n}(b)\to_{\mathbb P}\|K(\beta-b)\|^2>0$,
+so power tends to one.  Under a shrinking alternative
+$\beta_n=b+n^{-1/2}\Delta$, the limit becomes $\|G+K\Delta\|^2$.
+Detectability therefore depends on the covariance-weighted departure:
+under homoskedasticity,
+$\|K\Delta\|^2=\sum_j\lambda_j^2\langle\Delta,v_j\rangle^2$.
+These are direction-specific results, not uniform power guarantees over
+all slope changes.
+
+In particular, a large unweighted change in the slope can be difficult to
+detect when it lies in directions with small covariance eigenvalues.
+Conversely, a more modest change in a strongly observed direction can
+produce a clear moment shift.  The covariance of the random score also
+matters: under general heteroskedasticity, power depends on the orientation
+of $K\Delta$ relative to $V$, as well as its norm.  Thus the comparison
+between simulation models must retain the particular perturbation used.
+
+The experiment generates
+$\beta_\delta(s)=\beta(s)+\delta s$ for
+$\delta\in\{-1,-0.95,\ldots,1\}$, and tests the baseline $b=\beta$.
+It uses the direct statistic $\mathcal S_n$, evaluated in generating
+score coordinates, and a separate empirical 5\% null critical value for
+each model and $n\in\{100,200\}$.  These are fixed-perturbation power
+curves, not power after 70 CG iterations or a direct experiment with
+$\delta=c/\sqrt n$.
+
+\begin{figure}[htbp]
+ \centering
+ \includegraphics[width=\textwidth]{power_curves.pdf}
+ \caption[Direct-moment power]{Power against
+ $\beta_\delta(s)=\beta(s)+\delta s$ using $\mathcal S_n$ and empirical-null
+ calibration.  Solid curves use $n=100$, dashed curves $n=200$; the dotted
+ line marks 5\%.  Each point uses 5,000 separately generated alternative
+ samples.}
+ \label{main:fig-inference-power}
+\end{figure}
+
+At $\delta=0$, rejection lies between 4.58\% and 5.24\% across the six
+model--sample-size combinations.  The approximately symmetric curves in
+Figure~\ref{main:fig-inference-power} show substantial gains with sample
+size.  At $\delta=0.25$, power increases from about 37\% to 65\% in
+Models~1 and 2, and from 23.60\% to 44.56\% in Model~3.  At
+$\delta=0.50$, the corresponding rates rise from about 90\% to above
+99.5\%, and from 75.58\% to 97.26\%.  Models~1 and 2 share covariance
+and perturbation direction; Model~3's lower power concerns this particular
+direction and does not establish a general ranking.
+
+\section{Confidence sets and their interpretation}
+\label{main:sec-inference-confidence}
+
+Inverting a valid level-$\alpha$ test gives
+$\{b:\mathcal T_{n,m}(b)\leq q_{1-\alpha}\}$, an asymptotic confidence set
+on the identified parameter space.  Unrestricted finite-sample inversion
+is unbounded along $\operatorname{Null}(\widehat K)$.  The illustration
+therefore restricts candidates to the first five cosine functions,
+$b_c(s)=\sum_{j=1}^5c_jh_j(s)$, and uses $m_C=10$ with oracle 5\%
+calibration.  If $H$ contains their values on the grid, set
+$A=\widehat KH$ and $f=\widehat K\widehat\beta_{10}^{\mathrm{CG}}$.
+The exact accepted coefficient set is
+\begin{equation}
+ C^{(5)}_{0.95}
+ =\left\{c\in\mathbb R^5:\frac nT\|f-Ac\|_2^2\leq q_{0.95}\right\}.
+ \label{main:eq-inference-coefficient-set}
+\end{equation}
+For full-rank $A$, it is the ellipsoid
+$(c-\widehat c)^\top A^\top A(c-\widehat c)\leq\rho^2$, where
+$\widehat c=(A^\top A)^{-1}A^\top f$ and
+$\rho^2=Tq_{0.95}/n-\|f-A\widehat c\|_2^2$, or it is empty when
+$\rho^2<0$.  The analytic calculation covers all of $\mathbb R^5$,
+without the reference illustration's finite coefficient grid and box
+restriction.  Appendix~\ref{app:mathematical-proofs} derives the ellipsoid,
+its pointwise envelope, and the rank-deficient cases.
+
+Writing $h(s)=(h_1(s),\ldots,h_5(s))^\top$, the exact lower and upper
+function values attained by the non-empty ellipsoid are
+\begin{equation}
+ h(s)^\top\widehat c
+ \mathbin{\pm}\sqrt{\rho^2h(s)^\top(A^\top A)^{-1}h(s)}.
+ \label{main:eq-inference-envelope}
+\end{equation}
+These boundaries describe the range of accepted values at each location.
+The coefficient vector attaining an extreme can change with $s$, so joining
+the extremes need not produce one accepted candidate function.  Membership
+is decided by the joint coefficient inequality in
+\eqref{main:eq-inference-coefficient-set}.  The envelope is a useful display
+of that set, but does not replace its joint constraint.  Similarly, taking
+median boundaries across simulated samples describes a typical envelope;
+it does not preserve the interpretation of one sample's confidence set.
+
+\begin{table}[htbp]
+ \centering
+ \small
+ \caption[Five-dimensional inversion]{Oracle-calibrated inversion using
+ $m_C=10$, $p=5$, and 5,000 samples per model.  Width is averaged over
+ the functional grid and then across samples.}
+ \label{main:tab-inference-confidence}
+ \begin{tabular}{@{}lrrr@{}}
+ \toprule
+ Model & \shortstack{Full-slope\\non-rejection (\%)}
+ & \shortstack{Five-term\\acceptance (\%)}
+ & Mean width\\
+ \midrule
+ 1 & 94.20 & 94.32 & 2.810\\
+ 2 & 94.20 & 94.12 & 2.824\\
+ 3 & 94.02 & 93.94 & 1.118\\
+ \bottomrule
+ \end{tabular}
+\end{table}
+
+All 15,000 sets are non-empty, bounded, and rank five.
+Table~\ref{main:tab-inference-confidence} separates non-rejection of the
+full true slope from acceptance of its five-term projection.  The full
+truth has non-zero coefficients beyond the fifth term and is outside the
+displayed candidate space.  The projected acceptance rates do not establish
+coverage for a projection model with an unknown remainder.  Full-slope
+acceptance uses the principal null samples with $m=10$ rather than 70;
+only 5, 6, and 6 decisions change.  This paired comparison is not independent
+coverage evidence.  Model~3's narrower sets concern the selected five
+directions, not uniformly smaller uncertainty for the whole slope.
+
+The supplementary figures display pointwise median boundaries across
+5,000 envelopes.  Such an aggregate is not a realised 95\% simultaneous
+confidence band, and pointwise containment does not establish membership
+in the coefficient ellipsoid.  Interpretation also remains conditional on
+adequately small iteration error and appropriate calibration.
+
+Together, the results distinguish inadequate stopping from calibration
+error and show how sample size improves power along a specified direction.
+They concern dense Gaussian curves, homoskedastic errors, and oracle or
+simulation-based critical values.  Feasible plug-in and bootstrap
+calibration have not been validated here.  Full methodology and results
+are retained in Appendices~\ref{chap:inference-methodology}
+and~\ref{chap:inference-results}; Chapter~\ref{chap:main-empirical}
+therefore assesses prediction on observed spectra without claiming formal
+slope inference.

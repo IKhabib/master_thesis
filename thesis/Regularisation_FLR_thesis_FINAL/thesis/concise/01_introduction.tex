@@ -1,0 +1,109 @@
+\chapter{Introduction}
+\label{chap:main-introduction}
+\label{chap:introduction}
+
+Many data sets record curves rather than isolated measurements: growth
+trajectories, electricity demand, biomedical signals, and spectra are familiar
+examples. Their measurement locations have an order and a meaningful
+relationship to neighbouring locations. Functional data analysis uses this
+structure to describe variation in whole trajectories and relate it to other
+variables \parencite{ramsay_silverman_2005}. This thesis studies the
+scalar-on-function linear model, in which a response depends on the integral
+of a predictor curve against an unknown slope function.
+
+Estimating that slope is an inverse problem. The predictor covariance
+operator determines which slope directions the data identify and how much
+information they provide about each direction. In an infinite-rank model,
+its positive eigenvalues approach zero. Inverting small eigenvalues can
+greatly amplify sampling errors, even when the slope is uniquely identified
+on the parameter space of interest. A finite representation makes the
+calculation possible but does not remove the underlying instability
+\parencite{cardot_ferraty_sarda_1999,hall_horowitz_2007}.
+
+Regularisation controls this amplification by restricting what the estimator
+attempts to recover. Functional principal component regression (FPCR)
+retains a leading empirical eigenspace. Functional partial least squares
+(FPLS) constructs directions using the relationship between predictor and
+response, rather than predictor variation alone
+\parencite{preda_saporta_2005,delaigle_hall_2012}. Its Krylov formulation
+connects functional regression to iterative methods for linear systems.
+The number of admitted directions or iterations becomes a regularisation
+parameter: it determines how much of the empirical inverse problem is solved.
+
+There are two reasons why the same number of components need not work for
+every purpose. First, slope estimation and prediction assign different
+importance to errors. A slope error in a direction with little predictor
+variation can contribute substantially to integrated squared error while
+having little effect on predictions \parencite{cai_hall_2006}. Inference
+adds a third criterion. For the moment-based test considered here, a
+sufficient approximation condition requires the remaining fitting residual
+to be negligible relative to sampling uncertainty. Stopping that is useful
+for regularised estimation may leave too much residual for this argument.
+
+Second, a well-defined mathematical search space can be difficult to
+represent numerically. Successive powers of an empirical covariance operator
+may become nearly parallel. Solving least squares in these raw coordinates
+can then be unstable. Arnoldi orthogonalisation represents the same Krylov
+space through an orthonormal basis, while iterative recurrences avoid forming
+the complete power-basis equations. Statistical regularisation and numerical
+reliability must therefore be examined together.
+
+\section{Questions and contribution}
+
+The thesis compares four complete procedures: FPCR, raw power-basis FPLS,
+Arnoldi FPLS with reorthogonalisation, and CG--FPLS with discrepancy stopping.
+The last name follows the underlying study of
+\textcite{babii_carrasco_tsafack_2026}; its implemented updates minimise
+the moment residual and are conjugate-residual updates in standard numerical
+terminology. They generally differ from the response least-squares target
+used by Raw and Arnoldi before convergence. This distinction is maintained
+throughout the comparison.
+
+Four questions guide the analysis:
+\begin{enumerate}
+    \item How do spectral and iterative regularisation compare for slope
+    recovery and independent prediction when the slope and covariance change?
+    \item How much does the numerical representation affect theoretically
+    equivalent raw and Arnoldi fits?
+    \item Why can a stopping index adequate for estimation be inadequate
+    for the stated inference procedure?
+    \item Which of these effects remain visible in a real spectroscopic
+    prediction problem?
+\end{enumerate}
+
+The contribution is methodological, computational, and expository. It brings
+these questions into a common analysis, rather than proposing a new
+asymptotic theory. Existing functional-regression results motivate the
+comparison, and the supporting proofs make its operator identities and
+inferential assumptions explicit. Comparative work already shows that the
+relative merits of FPCR and FPLS depend on covariance, slope alignment, and
+tuning \parencite{febrero_bande_et_al_2017}. Here the additional focus is on
+how numerical implementation and the statistical target affect that comparison.
+
+The estimation experiment uses $5{,}000$ simulated training samples in each
+of three controlled models. All four methods receive the same data, but
+retain their own fitting and tuning rules. A separate CG--FPLS study
+examines the remaining moment residual, null rejection probabilities, power,
+and confidence sets. Finally, an application predicts pharmaceutical-tablet
+assay from near-infrared spectra, using $195$ development observations and
+a designated $460$-tablet benchmark. The application concerns prediction
+and numerical stability; its unknown physical slope does not permit a
+direct assessment of slope recovery.
+
+\section{Organisation of the thesis}
+
+Chapter~\ref{chap:main-methods} gives the model, essential operator
+background, and four procedures. Chapter~\ref{chap:main-simulation}
+combines the simulation design with its principal estimation and prediction
+results. Chapter~\ref{chap:main-inference} develops the moment-based
+testing argument and evaluates its finite-sample behaviour.
+Chapter~\ref{chap:main-empirical} presents the spectroscopy application,
+and Chapter~\ref{chap:main-conclusion} draws together the implications
+and limitations.
+
+The appendices retain the extended work behind this argument. They contain
+the functional-analysis background, mathematical proofs, complete algorithmic
+and experimental specifications, detailed results, and additional diagnostic
+figures. The main text presents the definitions and evidence needed to
+follow the conclusions; the appendices allow their assumptions and numerical
+details to be examined more closely.

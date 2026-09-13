@@ -1,0 +1,408 @@
+\chapter{Model and Regularisation Methods}
+\label{chap:main-methods}
+
+Functional linear regression relates a scalar response to a predictor curve.
+The difficulty is to recover the curve's effect when neighbouring measurements
+are strongly related and some directions contain little predictor variation.
+The four procedures studied here address this difficulty by restricting the
+directions used for estimation. They differ in how those directions are
+constructed, how the fit is calculated, and how its complexity is selected.
+This chapter gives the definitions needed to interpret the results. Extended
+background, proofs, and algorithmic details are retained in
+Appendices~\ref{chap:background}, \ref{app:mathematical-proofs}, and
+\ref{chap:methods}, respectively.
+
+\section{The model and the identified slope}
+
+Let $X$ be a random element of the real Hilbert space
+$\mathcal H=L^2([0,1])$, with inner product
+$\langle f,g\rangle=\int_0^1 f(t)g(t)\,\mathrm dt$ and
+$\mathbb E\|X\|^2<\infty$. Measurements on another compact interval can be
+rescaled to $[0,1]$. The model is
+\begin{equation}
+ Y=\alpha+\langle X,\beta\rangle+\varepsilon,
+ \qquad \mathbb E(\varepsilon\mid X)=0,
+ \qquad \beta\in\mathcal H.
+ \label{main:eq:model}
+\end{equation}
+Here $Y$ has finite second moment. Writing $X^c=X-\mathbb EX$ and
+$Y^c=Y-\mathbb EY$ gives
+$Y^c=\langle X^c,\beta\rangle+\varepsilon$; the intercept is recovered as
+$\alpha=\mathbb EY-\langle\mathbb EX,\beta\rangle$. Treating the
+predictor as a function preserves the ordering and proximity of its
+measurement locations, even though computation ultimately uses a finite
+grid or basis \parencite{ramsay_silverman_2005,hsing_eubank_2015}.
+
+Define the covariance operator and cross-covariance element by
+\begin{equation}
+ Kf=\mathbb E\{\langle X^c,f\rangle X^c\},
+ \qquad r=\mathbb E(Y^cX^c),
+ \qquad K\beta=r.
+ \label{main:eq:normal-equation}
+\end{equation}
+The last equality follows from the conditional mean restriction. The
+operator $K$ is self-adjoint, non-negative, and trace class. Its positive
+eigenvalues $\lambda_j$ and orthonormal eigenfunctions $v_j$ describe the
+directions and amounts of predictor variation. If $K$ has infinite rank,
+$\lambda_j\to0$.
+
+Two slopes that differ by an element of $\operatorname{Null}(K)$ give the
+same centred conditional mean. The data therefore identify only their
+equivalence class. Throughout, $\beta$ denotes its minimum-norm
+representative in
+$\mathcal H_{\mathrm{id}}=\operatorname{Null}(K)^\perp
+=\overline{\operatorname{Range}(K)}$.
+On this space, the formal inverse has coefficients
+$\beta_j=\langle r,v_j\rangle/\lambda_j$. Small eigenvalues amplify errors
+in the estimated moments. Consequently, identification does not guarantee
+stable estimation: even an injective covariance operator can have an
+unbounded inverse. Regularisation limits the contribution of directions in
+which this amplification is severe
+\parencite{engl_hanke_neubauer_1996,hall_horowitz_2007}.
+
+The spectral expansion also clarifies what is being estimated. The scores
+$\xi_j=\langle X^c,v_j\rangle$ are uncorrelated, with variance
+$\lambda_j$, and $X^c=\sum_j\xi_jv_j$ in mean square. Its contribution
+to the response is $\sum_j\xi_j\beta_j$. A principal direction can
+therefore explain much of the predictor variation yet little of the
+response if its slope coefficient is small. Conversely, a lower-variance
+direction can matter for prediction when its slope coefficient is large.
+The simulation designs change the covariance spectrum and slope
+coefficients separately to examine these possibilities.
+
+\section{Slope recovery and prediction}
+
+The relevant loss depends on the statistical question. For
+$R(b)=\mathbb E\{Y^c-\langle X^c,b\rangle\}^2$, the model implies
+\begin{equation}
+ R(b)-R(\beta)
+ =\langle K(b-\beta),b-\beta\rangle
+ =\|K^{1/2}(b-\beta)\|^2.
+ \label{main:eq:prediction-risk}
+\end{equation}
+Slope recovery instead uses the integrated squared error $\|b-\beta\|^2$.
+A large slope error in a low-variance direction may have little effect on
+prediction. The covariance-weighted expression in
+\eqref{main:eq:prediction-risk} is a squared seminorm on $\mathcal H$ and
+a squared norm on $\mathcal H_{\mathrm{id}}$; it generally controls less
+than the ordinary squared norm. This explains why accurate predictions do
+not establish accurate slope recovery \parencite{cai_hall_2006}.
+
+For example, if the estimation error is $av_j$ along one covariance
+eigenfunction, its integrated squared error is $a^2$, whereas its excess
+prediction risk is $\lambda_j a^2$. As $\lambda_j$ becomes small, the
+same slope error becomes less visible in prediction. This comparison
+concerns excess risk above the irreducible response noise. An independent
+test mean squared prediction error also includes that noise, so the
+simulation reports both slope loss and prediction loss instead of treating
+either as a complete assessment.
+
+Regularisation balances the bias introduced by suppressing weak directions
+against the variability incurred by estimating them. Spectral truncation
+discards selected directions explicitly. Iterative methods restrict a
+sequence of increasingly rich spaces, making the stopping index a
+regularisation parameter. Continuing until the empirical equation is solved
+as accurately as possible can fit sampling noise. Inference introduces a
+further requirement on the remaining moment residual, considered in
+Chapter~\ref{chap:main-inference}.
+
+Other regularisation families provide useful context. A roughness penalty
+controls derivatives of the fitted slope, while Tikhonov regularisation
+replaces inverse weights $1/\lambda$ by $1/(\lambda+\rho)$ for
+$\rho>0$ on the positive spectrum. Both can stabilise weak directions
+without selecting a component count
+\parencite{cardot_ferraty_sarda_2003,crambes_kneip_sarda_2009}.
+The present comparison concentrates on spectral and Krylov procedures
+because they allow the roles of subspace choice, numerical representation,
+and stopping to be examined together. Its conclusions concern these four
+complete procedures, rather than an exhaustive ranking of all functional
+regression estimators.
+
+\section{The empirical problem}
+
+Let $x_i$ and $y_i$ denote the centred training curves and responses. The
+simulations use their known zero population means; the empirical study
+estimates means within each training sample. Define
+$(T_nb)_i=\langle x_i,b\rangle$ and equip response space with
+$\|a\|_n^2=n^{-1}a^\top a$. Then
+$T_n^*a=n^{-1}\sum_i a_ix_i$,
+$\widehat K=T_n^*T_n$, and $\widehat r=T_n^*y$.
+The response residual is $y-T_nb$, whereas the moment residual is
+$e(b)=\widehat r-\widehat Kb=T_n^*(y-T_nb)$.
+These residuals belong to different spaces; minimising their norms need not
+give the same restricted estimate.
+
+On the equally weighted $T$-point grid, the functional inner product becomes
+$\langle f,g\rangle_T=T^{-1}f^\top g$. For the $n\times T$ matrix $X$ of
+centred curves, this gives
+\begin{equation}
+ \widehat K=\frac{X^\top X}{nT},\qquad
+ \widehat r=\frac{X^\top y}{n},\qquad
+ T_nb=\frac{Xb}{T}.
+ \label{main:eq:grid-moments}
+\end{equation}
+The scaling is shared by all four methods. With sample centring,
+$\operatorname{rank}(\widehat K)\leq n-1$; known-mean centring gives the
+bound $n$. Numerical rank safeguards further restrict usable directions.
+Discretisation makes the calculation finite, but does not eliminate
+ill-conditioning or make a fixed grid identical to its continuous analogue.
+The estimation comparison uses the common candidate range
+$m=1,\ldots,70$, subject to each method's rank and validity rules; a
+zero-component estimator is not included. The selected point on the path
+remains method-specific. The more demanding stopping calculations used for
+inference are described separately in Chapter~\ref{chap:main-inference}.
+
+\section{Functional principal component regression}
+
+FPCR retains the leading empirical covariance eigenfunctions. For
+$\mathcal H$-normalised eigenpairs
+$(\widehat\lambda_j,\widehat v_j)$, its $m$-component slope is
+\begin{equation}
+ \widehat\beta_m^{\mathrm{FPCR}}
+ =\sum_{j=1}^{m}
+ \frac{\langle\widehat r,\widehat v_j\rangle}
+      {\widehat\lambda_j}\widehat v_j.
+ \label{main:eq:fpcr}
+\end{equation}
+This is response least squares over the first $m$ principal directions.
+Only numerically positive eigenvalues are eligible. FPCR uses predictor
+variance to order directions, independently of their relationship with the
+response. It is consequently well suited to signals concentrated in leading
+eigenfunctions, but a response-relevant direction with modest predictor
+variance can enter late \parencite{cardot_ferraty_sarda_1999}.
+
+The reported FPCR fit selects the smallest minimiser of response-space
+generalised cross-validation,
+\begin{equation}
+ \operatorname{GCV}_{Y}(m)
+ =\frac{\|y-T_n\widehat\beta_m^{\mathrm{FPCR}}\|_n^2}
+             {(1-m/n)^2}.
+ \label{main:eq:response-gcv}
+\end{equation}
+This selection rule is distinct from the internal FPCR pilot used to
+estimate the noise scale for CG stopping below.
+
+For a fixed retained eigenspace, the fitted responses are an orthogonal
+projection onto $m$ score directions, which motivates the dimension
+penalty in \eqref{main:eq:response-gcv}. This interpretation concerns the
+fit at a fixed $m$; selection itself also depends on the observations.
+Adding a principal component always enlarges the available response
+space, but may admit a poorly estimated slope coefficient through division
+by a small eigenvalue. The best in-sample response fit is consequently not
+the criterion for choosing the final dimension.
+
+\section{Raw and Arnoldi FPLS}
+
+Functional partial least squares uses the response when constructing its
+directions. Its alternative PLS representation searches the Krylov space
+\parencite{delaigle_hall_2012}
+\begin{equation}
+ \begin{aligned}
+ \widehat{\mathcal K}_m
+ &=\operatorname{span}\{\widehat r,\widehat K\widehat r,
+       \ldots,\widehat K^{m-1}\widehat r\},\\
+ \widehat\beta_m^{\mathrm{APLS}}
+ &\in\arg\min_{b\in\widehat{\mathcal K}_m}\|y-T_nb\|_n^2.
+ \end{aligned}
+ \label{main:eq:apls}
+\end{equation}
+The cross-covariance $\widehat r$ makes this space response-informed.
+Classical NIPALS-type score construction and deflation yield the same
+fixed-$m$ response fit under the stated full-rank conditions; NIPALS is a
+reference formulation, not a fifth comparator. The corresponding
+first-order condition is
+$e(\widehat\beta_m^{\mathrm{APLS}})\perp\widehat{\mathcal K}_m$.
+
+Raw FPLS forms the power-basis matrix
+$G_m=[\widehat r,\widehat K\widehat r,\ldots,
+\widehat K^{m-1}\widehat r]$ directly, without column rescaling or
+orthogonalisation. With $Z_m=T_nG_m$, it solves
+$(Z_m^\top Z_m)a=Z_m^\top y$ and returns $G_ma$.
+Repeated covariance powers increasingly emphasise the largest active
+eigenvalues, making the columns nearly parallel. Forming normal equations
+then squares the design condition number whenever $Z_m$ has full column
+rank. A failed or non-finite solve is marked invalid; it is not silently
+replaced by a pseudoinverse or an orthogonalised method.
+
+More explicitly, in the empirical eigenbasis,
+$\widehat K^k\widehat r=\sum_j\widehat\lambda_j^k
+\langle\widehat r,\widehat v_j\rangle\widehat v_j$.
+Relative contributions shrink like
+$(\widehat\lambda_j/\widehat\lambda_\star)^k$, where
+$\widehat\lambda_\star$ is the largest eigenvalue with a nonzero
+cross-covariance projection. Distinct raw columns can then carry almost
+the same numerical information. Representing a useful direction by
+cancelling large, nearly equal contributions makes the coefficient solve
+sensitive to rounding. An algebraically correct span alone does not
+guarantee that its power-basis coordinates can be used reliably.
+
+Arnoldi FPLS changes the numerical basis while retaining
+\eqref{main:eq:apls}. Starting from the normalised cross-covariance, it
+applies $\widehat K$ successively and removes projections onto the existing
+basis twice, using two-pass classical Gram--Schmidt. The resulting
+orthonormal matrix $Q_m$ represents the same Krylov space in exact
+arithmetic. Response least squares on $T_nQ_m$ is solved by QR
+factorisation. Fixed rank tests terminate basis expansion or freeze the
+response path at its last valid fit when additional directions are
+numerically unavailable. The precise thresholds and failure rules are
+documented in Appendix~\ref{chap:methods}.
+
+In grid coordinates, the columns of $Q_j$ are Euclidean-normalised, so
+$Q_j^\top Q_j=I$. One Arnoldi step starts with $z=\widehat Kq_j$,
+applies $z\leftarrow z-Q_j(Q_j^\top z)$ twice, and then divides by
+$\|z\|_2$. The Euclidean and discrete functional norms differ only by
+the common factor $\sqrt T$; this constant scaling changes neither the
+Krylov span nor which directions are orthogonal. Repeating the
+projection reduces loss of orthogonality, while QR avoids squaring the
+response-design condition number. These operations stabilise how the
+restricted problem is represented; they do not remove the statistical
+uncertainty associated with adding weak directions. Stopping or component
+selection is still needed.
+
+At a common valid dimension, Raw and Arnoldi therefore share the same
+exact-arithmetic target. This does not force their selected estimates to
+coincide. Each method minimises its own five-fold prediction-error curve,
+using identical folds. A raw dimension is eligible only if its full-sample
+fit and every training-fold fit are valid and finite. Numerical instability
+can change both its eligible dimensions and its cross-validation curve.
+The smallest minimiser is selected, and the chosen procedure is refitted
+on the full training sample.
+
+\section{CG--FPLS and discrepancy stopping}
+
+The CG--FPLS procedure follows \textcite{babii_carrasco_tsafack_2026}, but
+the label requires a precise interpretation. Its finite-iteration target is
+\begin{equation}
+ \widehat\beta_m^{\mathrm{CG}}
+ \in\arg\min_{b\in\widehat{\mathcal K}_m}
+       \|\widehat r-\widehat Kb\|^2,
+ \qquad e_m=\widehat r-\widehat K\widehat\beta_m^{\mathrm{CG}}.
+ \label{main:eq:cg}
+\end{equation}
+It searches the same nested spaces as APLS, but minimises the moment
+residual. Its first-order condition is
+$e_m\perp\widehat K\widehat{\mathcal K}_m$, rather than
+$e_m\perp\widehat{\mathcal K}_m$. Thus it generally gives a different
+finite-$m$ slope from response-space FPLS.
+
+The estimation implementation uses a short recurrence to avoid explicitly
+forming the power-basis equations. In standard numerical-linear-algebra
+terminology, these residual-minimising updates are the
+\emph{conjugate-residual} recurrence, rather than textbook energy-norm
+conjugate gradient. The thesis retains the CG--FPLS name while distinguishing
+the actual objective and updates. Algebraic equivalences refer to valid
+iterates in exact arithmetic; the numerical breakdown rules are specified
+in Appendix~\ref{chap:methods}.
+
+For completeness, initialise $\widehat\beta_0=0$ and
+$e_0=d_0=\widehat r$. With $u_k=\widehat Kd_k$, the updates are
+\begin{align}
+ \alpha_k&=\frac{\langle e_k,\widehat K e_k\rangle}{\|u_k\|^2},
+ \label{main:eq:cr-alpha}\\
+ \widehat\beta_{k+1}&=\widehat\beta_k+\alpha_kd_k,
+ \label{main:eq:cr-slope}\\
+ e_{k+1}&=e_k-\alpha_ku_k,
+ \label{main:eq:cr-residual}\\
+ \gamma_k&=\frac{\langle e_{k+1},\widehat K e_{k+1}\rangle}
+                    {\langle e_k,\widehat K e_k\rangle},
+ \label{main:eq:cr-gamma}\\
+ d_{k+1}&=e_{k+1}+\gamma_kd_k.
+ \label{main:eq:cr-direction}
+\end{align}
+In exact arithmetic the images of the search directions under
+$\widehat K$ are mutually orthogonal while the recurrence remains valid.
+The new direction therefore permits further moment-residual reduction
+without undoing the earlier minimisations. This is the relevant
+conjugacy for the objective in \eqref{main:eq:cg}. The implementation
+symmetrises the empirical operator and guards against non-positive or
+non-finite quadratic forms and negligible direction images. Failure of
+these safeguards freezes the remaining path at its last valid estimate;
+non-finite updated iterates or recurrence coefficients raise an error.
+These numerical safeguards should be distinguished from satisfying the
+statistical stopping threshold.
+
+The estimation rule selects the first $m\geq1$ such that
+\begin{equation}
+ \|e_m\|_T\leq\widehat\nu_n,
+ \qquad
+ \widehat\nu_n=1.01\left(
+       \frac{2\widehat\sigma^2\widehat E_X}{0.1n}
+                    \right)^{1/2},
+ \qquad \widehat E_X=\frac1n\sum_i\|x_i\|_T^2.
+ \label{main:eq:cg-threshold}
+\end{equation}
+The noise estimate $\widehat\sigma^2$ is the mean squared response
+residual of an internal FPCR pilot. Its dimension minimises moment-space
+GCV, $\|\widehat r-\widehat K\widehat\beta_q^{\mathrm{FPCR}}\|_T^2/
+(1-q/T)^2$, over the permitted pilot path. The estimation studies allow
+up to 70 pilot components, subject to numerical rank. This pilot supplies
+the threshold scale; it does not add another reported method. If the
+threshold is not reached, the maximum permitted component count is used
+and the absence of a crossing is recorded.
+
+The pilot matters because it determines how small a residual is regarded
+as sufficient. Holding the path and predictor energy fixed, a smaller
+estimated noise variance lowers the threshold and can delay stopping;
+a larger estimate can stop the procedure earlier. The pilot's own
+moment-GCV criterion is therefore part of the CG procedure's behaviour,
+even though the pilot slope is not reported as the final estimate.
+
+Discrepancy stopping compares the residual with an estimated sampling-noise
+scale. The associated ideal rule uses population noise variance and
+predictor energy. Its theoretical guarantees, under the required moment
+and source conditions, do not automatically establish those of this
+particular plug-in pilot. The empirical performance of the complete
+procedure must therefore be assessed directly.
+
+In particular, a smaller residual is not by itself evidence of a better
+slope estimate. The residual is measured after applying the covariance
+operator, and therefore discounts errors in weak directions even more
+strongly than prediction risk. Later steps may continue reducing this
+residual while increasing sensitivity to sampling error. The source
+condition used in the theoretical analysis has the form $\beta=K^\mu g$,
+which expresses how strongly the slope is concentrated in well-identified
+directions. Unknown slope regularity motivates adaptive stopping, but does
+not make the same stopping choice suitable for estimation and inference
+\parencite{babii_carrasco_tsafack_2026}.
+
+\section{What the four-method comparison identifies}
+
+Table~\ref{main:tab:methods} summarises the three choices that define a
+procedure: its search space, restricted objective, and selection rule.
+The table also explains why a component count cannot be interpreted
+independently of the method producing it.
+
+\begin{table}[htbp]
+ \centering
+ \small
+ \caption[The four complete estimation procedures]{Search spaces, finite-component
+ objectives, and tuning rules. The maximum estimation path is 70 components,
+ subject to numerical rank and validity safeguards.}
+ \label{main:tab:methods}
+ \begin{tabular}{@{}
+ >{\raggedright\arraybackslash}p{1.8cm}
+ >{\raggedright\arraybackslash}p{3.0cm}
+ >{\raggedright\arraybackslash}p{3.2cm}
+ >{\raggedright\arraybackslash}p{4.4cm}@{}}
+ \toprule
+ Method & Search space & Objective & Dimension selection \\
+ \midrule
+ FPCR & Leading covariance eigenfunctions & Response least squares
+ & Response GCV \\
+ Raw FPLS & Krylov space in the raw power basis & Response least squares
+ & Five-fold CV over valid dimensions \\
+ Arnoldi FPLS & Same Krylov space in an orthonormal basis & Response least squares
+ & Five-fold CV, separately minimised on the same folds \\
+ CG--FPLS & Same nested Krylov spaces & Moment-residual least squares
+ & Discrepancy stopping with an internal noise pilot \\
+ \bottomrule
+ \end{tabular}
+\end{table}
+
+The comparisons that follow retain each method's own objective and tuning
+rule. A common path cap does not imply equal effective complexity, and a
+selected component count is not a common measure of degrees of freedom
+across all four methods. Raw versus Arnoldi primarily exposes numerical
+representation; Arnoldi versus CG also changes the restricted objective
+and stopping rule. These distinctions guide the interpretation of both the
+simulation results and the spectroscopy application.

@@ -1,118 +1,139 @@
 \babel@toc {british}{}\relax 
-\contentsline {chapter}{Abstract}{i}{section*.2}%
-\contentsline {chapter}{List of Figures}{vii}{section*.4}%
-\contentsline {chapter}{List of Tables}{viii}{section*.6}%
+\contentsline {chapter}{Abstract}{i}{section*.1}%
+\contentsline {chapter}{List of Figures}{vi}{section*.2}%
+\contentsline {chapter}{List of Tables}{vii}{section*.3}%
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Literature and Functional Regression Background}{5}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Functional observations from discrete measurements}{5}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Hilbert-space foundations}{6}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}The space of square-integrable functions}{6}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Orthogonality, bases, and projections}{7}{subsection.2.2.2}%
-\contentsline {section}{\numberline {2.3}Random functions and covariance operators}{9}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Random elements in $L^2$}{9}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Properties and spectral representation}{11}{subsection.2.3.2}%
-\contentsline {section}{\numberline {2.4}The scalar-on-function linear model}{12}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Identification and ill-posedness}{14}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Identification of the slope}{14}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Why inversion is unstable}{15}{subsection.2.5.2}%
-\contentsline {section}{\numberline {2.6}Regularisation principles in functional regression}{16}{section.2.6}%
-\contentsline {subsection}{\numberline {2.6.1}Basis penalties and Tikhonov regularisation}{16}{subsection.2.6.1}%
-\contentsline {subsection}{\numberline {2.6.2}Spectral cut-off and FPCR}{17}{subsection.2.6.2}%
-\contentsline {subsection}{\numberline {2.6.3}Response-informed Krylov regularisation}{18}{subsection.2.6.3}%
-\contentsline {subsection}{\numberline {2.6.4}Tuning and early stopping}{19}{subsection.2.6.4}%
-\contentsline {section}{\numberline {2.7}Estimation, prediction, and inference}{19}{section.2.7}%
-\contentsline {section}{\numberline {2.8}Discretisation and the population--computation distinction}{20}{section.2.8}%
-\contentsline {section}{\numberline {2.9}Position of the thesis in the literature}{21}{section.2.9}%
-\contentsline {chapter}{\numberline {3}FPLS, Krylov Methods, and Regularisation}{22}{chapter.3}%
-\contentsline {section}{\numberline {3.1}The empirical operator problem}{22}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Functional principal component regression}{24}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Classical functional PLS and the NIPALS algorithm}{24}{section.3.3}%
-\contentsline {section}{\numberline {3.4}APLS and the Krylov representation}{26}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Raw FPLS}{27}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Arnoldi FPLS and reorthogonalisation}{28}{section.3.6}%
-\contentsline {section}{\numberline {3.7}Conjugate-Gradient FPLS}{30}{section.3.7}%
-\contentsline {section}{\numberline {3.8}Why conjugate directions improve on steepest descent}{31}{section.3.8}%
-\contentsline {section}{\numberline {3.9}Early stopping as regularisation}{32}{section.3.9}%
-\contentsline {section}{\numberline {3.10}Equivalence boundaries and tuning design}{33}{section.3.10}%
-\contentsline {chapter}{\numberline {4}Monte Carlo Design}{35}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Discretised functional data-generating process}{35}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Grid, basis, and inner product}{35}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Predictors and responses}{36}{subsection.4.1.2}%
-\contentsline {section}{\numberline {4.2}The three controlled models}{37}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Signal strength and effective directionality}{39}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Monte Carlo protocol}{41}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Estimator-specific tuning}{43}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}Five-fold tuning of raw and Arnoldi FPLS}{43}{subsection.4.5.1}%
-\contentsline {subsection}{\numberline {4.5.2}Response-GCV tuning of FPCR}{44}{subsection.4.5.2}%
-\contentsline {subsection}{\numberline {4.5.3}Discrepancy tuning of CG--FPLS}{44}{subsection.4.5.3}%
-\contentsline {section}{\numberline {4.6}Performance measures and summaries}{45}{section.4.6}%
-\contentsline {subsection}{\numberline {4.6.1}Slope estimation and independent prediction}{45}{subsection.4.6.1}%
-\contentsline {subsection}{\numberline {4.6.2}Bias--variance decomposition}{46}{subsection.4.6.2}%
-\contentsline {subsection}{\numberline {4.6.3}Complexity, instability, and tail events}{46}{subsection.4.6.3}%
-\contentsline {section}{\numberline {4.7}Randomness and reproducibility}{47}{section.4.7}%
-\contentsline {chapter}{\numberline {5}Estimation and Prediction Results}{48}{chapter.5}%
-\contentsline {section}{\numberline {5.1}How the results are assessed}{48}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Overall estimation and prediction accuracy}{49}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Model 1: predictive signal concentrated in the leading directions}{50}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Model 2: a slope spread across more directions}{51}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}Model 3: stronger leading predictor directions}{51}{subsection.5.2.3}%
-\contentsline {section}{\numberline {5.3}Selected regularisation levels}{52}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Unusually large errors and numerical stability}{53}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Understanding bias and variance}{54}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Raw and Arnoldi FPLS when the raw fit is stable}{56}{section.5.6}%
-\contentsline {section}{\numberline {5.7}Distribution of the recovered slope}{58}{section.5.7}%
-\contentsline {chapter}{\numberline {6}Inference Methodology}{60}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Hypothesis and test statistic}{60}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Why inference requires later stopping}{61}{section.6.2}%
-\contentsline {section}{\numberline {6.3}The null distribution and choice of critical value}{63}{section.6.3}%
-\contentsline {paragraph}{Using the known simulation model: oracle calibration.}{64}{section*.28}%
-\contentsline {paragraph}{Using simulated null samples: empirical-null calibration.}{65}{section*.29}%
-\contentsline {paragraph}{Estimating critical values from observed data.}{65}{section*.30}%
-\contentsline {section}{\numberline {6.4}Alternatives and power}{65}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Confidence sets by test inversion}{67}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Implementation and diagnostic design}{69}{section.6.6}%
-\contentsline {chapter}{\numberline {7}Inference Results}{71}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Results and reporting conventions}{71}{section.7.1}%
-\contentsline {section}{\numberline {7.2}How stopping affects the test}{72}{section.7.2}%
-\contentsline {section}{\numberline {7.3}The null distribution and rejection rates}{74}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Power against fixed perturbations}{77}{section.7.4}%
-\contentsline {section}{\numberline {7.5}Confidence sets in five dimensions}{78}{section.7.5}%
-\contentsline {chapter}{\numberline {8}Empirical Application: Pharmaceutical-Tablet Spectroscopy}{81}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Data and prediction problem}{81}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Evaluation procedure}{83}{section.8.2}%
-\contentsline {section}{\numberline {8.3}Benchmark prediction}{84}{section.8.3}%
-\contentsline {section}{\numberline {8.4}Selection and numerical stability}{86}{section.8.4}%
-\contentsline {section}{\numberline {8.5}Robustness, interpretation, and scope}{87}{section.8.5}%
-\contentsline {chapter}{\numberline {9}Conclusion and Outlook}{89}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Answers to the research questions}{89}{section.9.1}%
-\contentsline {subsection}{\numberline {9.1.1}Spectral and iterative regularisation}{89}{subsection.9.1.1}%
-\contentsline {subsection}{\numberline {9.1.2}Numerical reliability of Krylov methods}{90}{subsection.9.1.2}%
-\contentsline {subsection}{\numberline {9.1.3}Stopping for estimation and inference}{91}{subsection.9.1.3}%
-\contentsline {subsection}{\numberline {9.1.4}Regularisation in the tablet data}{92}{subsection.9.1.4}%
-\contentsline {section}{\numberline {9.2}Practical implications}{92}{section.9.2}%
-\contentsline {section}{\numberline {9.3}Limitations}{93}{section.9.3}%
-\contentsline {section}{\numberline {9.4}Directions for further work}{94}{section.9.4}%
-\contentsline {section}{\numberline {9.5}Final perspective}{94}{section.9.5}%
-\contentsline {chapter}{References}{95}{chapter*.46}%
-\contentsline {chapter}{\numberline {A}Definitions and Supporting Proofs}{98}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Definitions and notation}{98}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Hilbert-space geometry}{101}{section.A.2}%
-\contentsline {section}{\numberline {A.3}Random functions and covariance operators}{104}{section.A.3}%
-\contentsline {section}{\numberline {A.4}The functional normal equation and inverse problem}{108}{section.A.4}%
-\contentsline {section}{\numberline {A.5}Regularised and Krylov solutions}{111}{section.A.5}%
-\contentsline {section}{\numberline {A.6}Late stopping and inference}{116}{section.A.6}%
-\contentsline {chapter}{\numberline {B}Supplementary Monte Carlo Diagnostics}{122}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Leading basis coefficients}{123}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Pointwise slope distributions}{126}{section.B.2}%
-\contentsline {section}{\numberline {B.3}Normal quantile--quantile diagnostics}{129}{section.B.3}%
-\contentsline {chapter}{\numberline {C}Supplementary Inference Diagnostics}{132}{appendix.C}%
-\contentsline {section}{\numberline {C.1}Oracle-calibrated size at the 5\% level}{132}{section.C.1}%
-\contentsline {chapter}{\numberline {D}Supplementary Spectroscopy Analysis and Diagnostics}{134}{appendix.D}%
-\contentsline {section}{\numberline {D.1}Data provenance and structural audit}{134}{section.D.1}%
-\contentsline {section}{\numberline {D.2}Functional representation and preprocessing}{135}{section.D.2}%
-\contentsline {section}{\numberline {D.3}Evaluation design and leakage safeguards}{136}{section.D.3}%
-\contentsline {section}{\numberline {D.4}Complete procedures and tuning rules}{137}{section.D.4}%
-\contentsline {section}{\numberline {D.5}Development evidence}{138}{section.D.5}%
-\contentsline {section}{\numberline {D.6}Benchmark uncertainty and residuals}{139}{section.D.6}%
-\contentsline {section}{\numberline {D.7}Final-fit numerical diagnostics}{141}{section.D.7}%
-\contentsline {section}{\numberline {D.8}Preprocessing and instrument sensitivities}{141}{section.D.8}%
+\contentsline {section}{\numberline {1.1}Questions and contribution}{2}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Organisation of the thesis}{3}{section.1.2}%
+\contentsline {chapter}{\numberline {2}Model and Regularisation Methods}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}The model and the identified slope}{3}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Slope recovery and prediction}{4}{section.2.2}%
+\contentsline {section}{\numberline {2.3}The empirical problem}{5}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Functional principal component regression}{6}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Raw and Arnoldi FPLS}{7}{section.2.5}%
+\contentsline {section}{\numberline {2.6}CG--FPLS and discrepancy stopping}{8}{section.2.6}%
+\contentsline {section}{\numberline {2.7}What the four-method comparison identifies}{10}{section.2.7}%
+\contentsline {chapter}{\numberline {3}Simulation Design and Results}{10}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Three controlled data-generating models}{11}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Estimation, tuning, and evaluation}{12}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Slope recovery and prediction}{13}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Selected dimensions and the noise estimate}{15}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Numerical stability}{16}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Explaining the bias--variance trade-off}{16}{section.3.6}%
+\contentsline {chapter}{\numberline {4}Inference: Methodology and Results}{19}{chapter.4}%
+\contentsline {section}{\numberline {4.1}The hypothesis and the role of stopping}{19}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Null law and calibration}{20}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Stopping and null rejection in the simulations}{22}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Power against slope changes}{24}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Confidence sets and their interpretation}{26}{section.4.5}%
+\contentsline {chapter}{\numberline {5}Empirical Application: Tablet Spectroscopy}{27}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Data and evaluation}{27}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Prediction and numerical stability}{29}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Sensitivity and interpretation}{31}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Conclusion and Outlook}{32}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Answers to the research questions}{32}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Scope and further work}{33}{section.6.2}%
+\contentsline {chapter}{References}{35}{section.6.2}%
+\contentsline {chapter}{\numberline {A}Literature and Functional Regression Background}{37}{chapter.A}%
+\contentsline {section}{\numberline {A.1}Functional observations from discrete measurements}{37}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Hilbert-space foundations}{38}{section.A.2}%
+\contentsline {subsection}{\numberline {A.2.1}The space of square-integrable functions}{38}{subsection.A.2.1}%
+\contentsline {subsection}{\numberline {A.2.2}Orthogonality, bases, and projections}{39}{subsection.A.2.2}%
+\contentsline {section}{\numberline {A.3}Random functions and covariance operators}{41}{section.A.3}%
+\contentsline {subsection}{\numberline {A.3.1}Random elements in $L^2$}{41}{subsection.A.3.1}%
+\contentsline {subsection}{\numberline {A.3.2}Properties and spectral representation}{42}{subsection.A.3.2}%
+\contentsline {section}{\numberline {A.4}The scalar-on-function linear model}{43}{section.A.4}%
+\contentsline {section}{\numberline {A.5}Identification and ill-posedness}{45}{section.A.5}%
+\contentsline {subsection}{\numberline {A.5.1}Identification of the slope}{45}{subsection.A.5.1}%
+\contentsline {subsection}{\numberline {A.5.2}Why inversion is unstable}{46}{subsection.A.5.2}%
+\contentsline {section}{\numberline {A.6}Regularisation principles in functional regression}{47}{section.A.6}%
+\contentsline {subsection}{\numberline {A.6.1}Basis penalties and Tikhonov regularisation}{48}{subsection.A.6.1}%
+\contentsline {subsection}{\numberline {A.6.2}Spectral cut-off and FPCR}{48}{subsection.A.6.2}%
+\contentsline {subsection}{\numberline {A.6.3}Response-informed Krylov regularisation}{49}{subsection.A.6.3}%
+\contentsline {subsection}{\numberline {A.6.4}Tuning and early stopping}{50}{subsection.A.6.4}%
+\contentsline {section}{\numberline {A.7}Estimation, prediction, and inference}{50}{section.A.7}%
+\contentsline {section}{\numberline {A.8}Discretisation and the population--computation distinction}{51}{section.A.8}%
+\contentsline {section}{\numberline {A.9}Position of the thesis in the literature}{52}{section.A.9}%
+\contentsline {chapter}{\numberline {B}Definitions and Supporting Proofs}{53}{chapter.B}%
+\contentsline {section}{\numberline {B.1}Definitions and notation}{53}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Hilbert-space geometry}{56}{section.B.2}%
+\contentsline {section}{\numberline {B.3}Random functions and covariance operators}{59}{section.B.3}%
+\contentsline {section}{\numberline {B.4}The functional normal equation and inverse problem}{63}{section.B.4}%
+\contentsline {section}{\numberline {B.5}Regularised and Krylov solutions}{66}{section.B.5}%
+\contentsline {section}{\numberline {B.6}Late stopping and inference}{71}{section.B.6}%
+\contentsline {chapter}{\numberline {C}Extended Methods and Numerical Implementation}{76}{chapter.C}%
+\contentsline {section}{\numberline {C.1}The empirical operator problem}{76}{section.C.1}%
+\contentsline {section}{\numberline {C.2}Functional principal component regression}{77}{section.C.2}%
+\contentsline {section}{\numberline {C.3}Classical functional PLS and the NIPALS algorithm}{78}{section.C.3}%
+\contentsline {section}{\numberline {C.4}APLS and the Krylov representation}{79}{section.C.4}%
+\contentsline {section}{\numberline {C.5}Raw FPLS}{80}{section.C.5}%
+\contentsline {section}{\numberline {C.6}Arnoldi FPLS and reorthogonalisation}{81}{section.C.6}%
+\contentsline {section}{\numberline {C.7}Conjugate-Gradient FPLS}{83}{section.C.7}%
+\contentsline {section}{\numberline {C.8}Why conjugate directions improve on steepest descent}{85}{section.C.8}%
+\contentsline {section}{\numberline {C.9}Early stopping as regularisation}{86}{section.C.9}%
+\contentsline {section}{\numberline {C.10}Equivalence boundaries and tuning design}{87}{section.C.10}%
+\contentsline {chapter}{\numberline {D}Detailed Monte Carlo Design}{89}{chapter.D}%
+\contentsline {section}{\numberline {D.1}Discretised functional data-generating process}{89}{section.D.1}%
+\contentsline {subsection}{\numberline {D.1.1}Grid, basis, and inner product}{89}{subsection.D.1.1}%
+\contentsline {subsection}{\numberline {D.1.2}Predictors and responses}{90}{subsection.D.1.2}%
+\contentsline {section}{\numberline {D.2}The three controlled models}{91}{section.D.2}%
+\contentsline {section}{\numberline {D.3}Signal strength and effective directionality}{93}{section.D.3}%
+\contentsline {section}{\numberline {D.4}Monte Carlo protocol}{95}{section.D.4}%
+\contentsline {section}{\numberline {D.5}Estimator-specific tuning}{96}{section.D.5}%
+\contentsline {subsection}{\numberline {D.5.1}Five-fold tuning of raw and Arnoldi FPLS}{96}{subsection.D.5.1}%
+\contentsline {subsection}{\numberline {D.5.2}Response-GCV tuning of FPCR}{97}{subsection.D.5.2}%
+\contentsline {subsection}{\numberline {D.5.3}Discrepancy tuning of CG--FPLS}{97}{subsection.D.5.3}%
+\contentsline {section}{\numberline {D.6}Performance measures and summaries}{98}{section.D.6}%
+\contentsline {subsection}{\numberline {D.6.1}Slope estimation and independent prediction}{98}{subsection.D.6.1}%
+\contentsline {subsection}{\numberline {D.6.2}Bias--variance decomposition}{99}{subsection.D.6.2}%
+\contentsline {subsection}{\numberline {D.6.3}Complexity, instability, and tail events}{99}{subsection.D.6.3}%
+\contentsline {section}{\numberline {D.7}Randomness and reproducibility}{100}{section.D.7}%
+\contentsline {chapter}{\numberline {E}Detailed Estimation and Prediction Results}{101}{chapter.E}%
+\contentsline {section}{\numberline {E.1}How the results are assessed}{101}{section.E.1}%
+\contentsline {section}{\numberline {E.2}Overall estimation and prediction accuracy}{101}{section.E.2}%
+\contentsline {subsection}{\numberline {E.2.1}Model 1: predictive signal concentrated in the leading directions}{103}{subsection.E.2.1}%
+\contentsline {subsection}{\numberline {E.2.2}Model 2: a slope spread across more directions}{103}{subsection.E.2.2}%
+\contentsline {subsection}{\numberline {E.2.3}Model 3: stronger leading predictor directions}{104}{subsection.E.2.3}%
+\contentsline {section}{\numberline {E.3}Selected regularisation levels}{104}{section.E.3}%
+\contentsline {section}{\numberline {E.4}Unusually large errors and numerical stability}{106}{section.E.4}%
+\contentsline {section}{\numberline {E.5}Understanding bias and variance}{107}{section.E.5}%
+\contentsline {section}{\numberline {E.6}Raw and Arnoldi FPLS when the raw fit is stable}{109}{section.E.6}%
+\contentsline {section}{\numberline {E.7}Distribution of the recovered slope}{111}{section.E.7}%
+\contentsline {chapter}{\numberline {F}Supplementary Monte Carlo Diagnostics}{113}{chapter.F}%
+\contentsline {section}{\numberline {F.1}Leading basis coefficients}{114}{section.F.1}%
+\contentsline {section}{\numberline {F.2}Pointwise slope distributions}{117}{section.F.2}%
+\contentsline {section}{\numberline {F.3}Normal quantile--quantile diagnostics}{120}{section.F.3}%
+\contentsline {chapter}{\numberline {G}Extended Inference Methodology}{123}{chapter.G}%
+\contentsline {section}{\numberline {G.1}Hypothesis and test statistic}{123}{section.G.1}%
+\contentsline {section}{\numberline {G.2}Why inference requires later stopping}{124}{section.G.2}%
+\contentsline {section}{\numberline {G.3}The null distribution and choice of critical value}{125}{section.G.3}%
+\contentsline {paragraph}{Using the known simulation model: oracle calibration.}{127}{equation.G.3.16}%
+\contentsline {paragraph}{Using simulated null samples: empirical-null calibration.}{127}{equation.G.3.18}%
+\contentsline {paragraph}{Estimating critical values from observed data.}{128}{equation.G.3.18}%
+\contentsline {section}{\numberline {G.4}Alternatives and power}{128}{section.G.4}%
+\contentsline {section}{\numberline {G.5}Confidence sets by test inversion}{129}{section.G.5}%
+\contentsline {section}{\numberline {G.6}Implementation and diagnostic design}{131}{section.G.6}%
+\contentsline {chapter}{\numberline {H}Detailed Inference Results}{134}{chapter.H}%
+\contentsline {section}{\numberline {H.1}Results and reporting conventions}{134}{section.H.1}%
+\contentsline {section}{\numberline {H.2}How stopping affects the test}{135}{section.H.2}%
+\contentsline {section}{\numberline {H.3}The null distribution and rejection rates}{137}{section.H.3}%
+\contentsline {section}{\numberline {H.4}Power against fixed perturbations}{140}{section.H.4}%
+\contentsline {section}{\numberline {H.5}Confidence sets in five dimensions}{141}{section.H.5}%
+\contentsline {chapter}{\numberline {I}Supplementary Inference Diagnostics}{144}{chapter.I}%
+\contentsline {section}{\numberline {I.1}Oracle-calibrated size at the 5\% level}{144}{section.I.1}%
+\contentsline {chapter}{\numberline {J}Extended Pharmaceutical-Tablet Application}{145}{chapter.J}%
+\contentsline {section}{\numberline {J.1}Data and prediction problem}{145}{section.J.1}%
+\contentsline {section}{\numberline {J.2}Evaluation procedure}{147}{section.J.2}%
+\contentsline {section}{\numberline {J.3}Benchmark prediction}{148}{section.J.3}%
+\contentsline {section}{\numberline {J.4}Selection and numerical stability}{148}{section.J.4}%
+\contentsline {section}{\numberline {J.5}Robustness, interpretation, and scope}{151}{section.J.5}%
+\contentsline {chapter}{\numberline {K}Supplementary Spectroscopy Analysis and Diagnostics}{152}{chapter.K}%
+\contentsline {section}{\numberline {K.1}Data provenance and structural audit}{152}{section.K.1}%
+\contentsline {section}{\numberline {K.2}Functional representation and preprocessing}{153}{section.K.2}%
+\contentsline {section}{\numberline {K.3}Evaluation design and leakage safeguards}{154}{section.K.3}%
+\contentsline {section}{\numberline {K.4}Complete procedures and tuning rules}{155}{section.K.4}%
+\contentsline {section}{\numberline {K.5}Development evidence}{156}{section.K.5}%
+\contentsline {section}{\numberline {K.6}Benchmark uncertainty and residuals}{157}{section.K.6}%
+\contentsline {section}{\numberline {K.7}Final-fit numerical diagnostics}{158}{section.K.7}%
+\contentsline {section}{\numberline {K.8}Preprocessing and instrument sensitivities}{159}{section.K.8}%
+\contentsline {chapter}{Declaration}{162}{section*.74}%

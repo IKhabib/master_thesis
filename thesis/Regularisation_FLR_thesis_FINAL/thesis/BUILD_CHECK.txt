@@ -1,0 +1,22 @@
+FINAL DOCUMENT CHECK — 13 September 2026
+
+Build: successful clean pdfLaTeX/BibTeX build using python3 build.py --backend bibtex.
+Main text: 34 consecutively numbered pages.
+Abstract: one page; main text plus abstract: 35 pages (limit: 40).
+Full PDF including preliminary pages, references, appendices, and declarations: 171 pages.
+Cross-references and citations: settled; no undefined-reference/citation warnings.
+Final LaTeX log: no overflow warnings or missing-character warnings.
+All PDF text bounding boxes: within the physical pages.
+All PDF fonts: embedded.
+Relocated technical labels: 322 retained.
+Original saved figure files: 26 retained byte-for-byte.
+Original uploaded source ZIP: retained byte-for-byte as original_upload.zip.
+Rendered layout: visually reviewed; identified overflow and stretched-gap issues corrected.
+
+The bibliography's undated Eigenvector catalogue can produce an empty-year
+BibTeX warning; it is intentionally not assigned a publication year.
+Underfull paragraph boxes in narrow table cells are cosmetic, not clipped content.
+
+No numerical experiments were rerun or modified for this document revision.
+Biber compilation was not tested here. The declaration remains unsigned.
+Review the AI disclosure and other author tasks in REVISION_NOTES.md before submission.

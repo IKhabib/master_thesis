@@ -1,9 +1,12 @@
 % Estimation and prediction results from the frozen R=5,000 archive.
-\chapter{Estimation and Prediction Results}
+\chapter{Detailed Estimation and Prediction Results}
 \label{chap:estimation-results}
 
-This chapter analyses the experiment described in
-Chapter~\ref{chap:simulation-design}, using the original tuning rules and
+This appendix presents the detailed results and diagnostic discussion supporting
+Chapter~\ref{chap:main-simulation}.
+
+This appendix analyses the experiment described in
+Appendix~\ref{chap:simulation-design}, using the original tuning rules and
 diagnostic criteria. It first compares how well the methods estimate the slope
 and predict new responses. It then examines the number of selected components,
 unusually large errors, and differences between raw and Arnoldi FPLS on the
@@ -20,7 +23,7 @@ prediction errors (MSPE), selected component counts, and unusually large
 errors. The $445$ raw-FPLS fits identified as numerically unstable remain in
 this comparison. They are excluded only from additional analyses requiring
 reliable reconstruction of the slope curves, according to the stability rule
-in Chapter~\ref{chap:simulation-design}. This exclusion is not based on the
+in Appendix~\ref{chap:simulation-design}. This exclusion is not based on the
 size of the observed error.
 
 The mean, median, and upper percentiles describe different aspects of
@@ -45,7 +48,7 @@ large errors can be seen.
 
 \begin{table}[htbp]
     \centering
-    \scriptsize
+    \small
     \caption[Slope and prediction errors across all simulation runs]{Slope-estimation and prediction errors across all simulation runs. Means,
     medians, and $90$th percentiles are calculated over all $5{,}000$
     runs for each model--method pair.}
@@ -75,7 +78,7 @@ large errors can be seen.
     \end{tabular}
 \end{table}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth]{babii_style_error_boxplots_with_tails.pdf}
     \caption[Full distributions of estimation and prediction errors]{Distributions of slope ISE (left column) and
@@ -84,7 +87,7 @@ large errors can be seen.
     All axes are logarithmic, and red open diamonds mark raw-FPLS fits
     identified as numerically unstable. The labels ``CG'', ``Raw'', and
     ``Arnoldi'' refer to the CG--FPLS, raw FPLS, and Arnoldi FPLS procedures
-    defined in Chapter~\ref{chap:methods}. All extreme errors are retained.}
+    defined in Appendix~\ref{chap:methods}. All extreme errors are retained.}
     \label{fig:results-error-boxplots}
 \end{figure}
 
@@ -320,7 +323,7 @@ prediction risk.
 
 \begin{table}[htbp]
     \centering
-    \scriptsize
+    \small
     \caption[Bias--variance components for CG--FPLS, Arnoldi FPLS, and FPCR]{Bias--variance components for the three methods whose slopes can
     be reconstructed reliably in every simulation run.  The prediction
     columns exclude the irreducible noise variance of $1$.}
@@ -422,7 +425,7 @@ cross-validation errors.  Small numerical differences in those errors can
 lead to different selected dimensions even before the instability threshold
 is reached.
 
-This finding agrees with the result in Chapter~\ref{chap:methods}: at the
+This finding agrees with the result in Appendix~\ref{chap:methods}: at the
 same dimension, when the relevant systems have full rank, raw and Arnoldi
 FPLS target the same response-least-squares solution in exact arithmetic.
 Their computed solutions remain close while the raw basis is usable.  The
@@ -507,11 +510,11 @@ calculation stable as raw power-basis directions become nearly collinear.
 These findings are limited to the three chosen models, densely observed
 curves measured without error, Gaussian scores, $n=100$, and the stated tuning
 rules. They do not establish a universal ranking. The spectroscopy study in
-Chapter~\ref{chap:spectroscopy-application} considers observed data, with
+Appendix~\ref{chap:spectroscopy-application} considers observed data, with
 supporting diagnostics and sensitivities in
 Appendix~\ref{app:spectroscopy-supplement}.
 
 Choosing a small $m$ can benefit slope estimation. For hypothesis testing,
-Chapter~\ref{chap:inference-methodology} instead requires the CG residual
+Appendix~\ref{chap:inference-methodology} instead requires the CG residual
 to be negligible relative to sampling uncertainty of order $n^{-1/2}$.
 The same stopping rule therefore cannot be used unchanged.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.13)  10 SEP 2026 20:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.13)  13 SEP 2026 21:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -8,8 +8,8 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
 (/usr/local/texlive/2024/texmf-dist/tex/latex/base/report.cls
 Document Class: report 2023/05/17 v1.4n Standard LaTeX document class
-(/usr/local/texlive/2024/texmf-dist/tex/latex/base/size12.clo
-File: size12.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
+(/usr/local/texlive/2024/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count188
 \c@chapter=\count189
@@ -733,53 +733,105 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 85.
 )
 \Hy@SectionHShift=\skip85
+) (./bonn_layout.tex
+(/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/mathptmx.sty
+Package: mathptmx 2020/03/25 PSNFSS-v9.3 Times w/ Math, improved (SPQR, WaS) 
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 28.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ztmcm/m/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ztmcm/m/n on input line 28.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 29.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ztmcm/m/it on input line 29.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ztmcm/m/it on input line 29.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 30.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/ztmcm/m/n on input line 30.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/ztmcm/m/n on input line 30.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 31.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/ztmcm/m/n on input line 31.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/ztmcm/m/n on input line 31.
+\symbold=\mathgroup6
+\symitalic=\mathgroup7
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 34.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 35.
+LaTeX Info: Redefining \hbar on input line 50.
 )
+(/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/courier.sty
+Package: courier 2020/03/25 PSNFSS-v9.3 (WaS) 
+)
+(/usr/local/texlive/2024/texmf-dist/tex/latex/titlesec/titlesec.sty
+Package: titlesec 2023/10/27 v2.16 Sectioning titles
+\ttl@box=\box60
+\beforetitleunit=\skip86
+\aftertitleunit=\skip87
+\ttl@plus=\dimen199
+\ttl@minus=\dimen256
+\ttl@toksa=\toks38
+\titlewidth=\dimen257
+\titlewidthlast=\dimen258
+\titlewidthfirst=\dimen259
+))
 \c@definition=\count440
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'british'.
- (./main.aux)
+LaTeX Font Info:    Trying to load font information for T1+ptm on input line 86
+.
+
+(/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/t1ptm.fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+) (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 91.
-LaTeX Font Info:    ... okay on input line 91.
-LaTeX Info: Redefining \microtypecontext on input line 91.
-Package microtype Info: Applying patch `item' on input line 91.
-Package microtype Info: Applying patch `toc' on input line 91.
-Package microtype Info: Applying patch `eqnum' on input line 91.
-Package microtype Info: Applying patch `footnote' on input line 91.
-Package microtype Info: Applying patch `verbatim' on input line 91.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Info: Redefining \microtypecontext on input line 86.
+Package microtype Info: Applying patch `item' on input line 86.
+Package microtype Info: Applying patch `toc' on input line 86.
+Package microtype Info: Applying patch `eqnum' on input line 86.
+Package microtype Info: Applying patch `footnote' on input line 86.
+Package microtype Info: Applying patch `verbatim' on input line 86.
 Package microtype Info: Generating PDF output.
-Package microtype Info: Character protrusion enabled (level 2).
+Package microtype Info: Character protrusion enabled (level 1).
 Package microtype Info: Using default protrusion set `alltext'.
-Package microtype Info: Automatic font expansion enabled (level 2),
-(microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
-Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 91.
+Package microtype Info: No font expansion.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
 
-(/usr/local/texlive/2024/texmf-dist/tex/latex/microtype/mt-cmr.cfg
-File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
-(RS)
+(/usr/local/texlive/2024/texmf-dist/tex/latex/microtype/mt-ptm.cfg
+File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
 )
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -789,23 +841,23 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(85.35826pt, 441.01773pt, 71.13188pt)
-* v-part:(T,H,B)=(71.13188pt, 702.78308pt, 71.13188pt)
+* h-part:(L,W,R)=(71.13188pt, 412.56497pt, 113.81102pt)
+* v-part:(T,H,B)=(79.6678pt, 685.71124pt, 79.6678pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
-* \textwidth=441.01773pt
-* \textheight=702.78308pt
-* \oddsidemargin=13.08827pt
-* \evensidemargin=13.08827pt
-* \topmargin=-38.1381pt
-* \headheight=12.0pt
-* \headsep=25.0pt
-* \topskip=12.0pt
+* \textwidth=412.56497pt
+* \textheight=682.5pt
+* \oddsidemargin=-1.1381pt
+* \evensidemargin=-1.1381pt
+* \topmargin=-30.10219pt
+* \headheight=15.0pt
+* \headsep=22.5pt
+* \topskip=11.0pt
 * \footskip=30.0pt
-* \marginparwidth=35.0pt
+* \marginparwidth=50.0pt
 * \marginparsep=10.0pt
 * \columnsep=10.0pt
-* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -818,16 +870,16 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 (/usr/local/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count441
-\scratchdimen=\dimen199
-\scratchbox=\box60
+\scratchdimen=\dimen260
+\scratchbox=\box61
 \nofMPsegments=\count442
 \nofMParguments=\count443
-\everyMPshowfont=\toks38
+\everyMPshowfont=\toks39
 \MPscratchCnt=\count444
-\MPscratchDim=\dimen256
+\MPscratchDim=\dimen261
 \MPnumerator=\count445
 \makeMPintoPDFobject=\count446
-\everyMPtoPDFconversion=\toks39
+\everyMPtoPDFconversion=\toks40
 ) (/usr/local/texlive/2024/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -860,447 +912,549 @@ Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' found.
 
 (./main.bbl)
-Package biblatex Info: Reference section=0 on input line 91.
-Package biblatex Info: Reference segment=0 on input line 91.
-Package hyperref Info: Link coloring OFF on input line 91.
+Package biblatex Info: Reference section=0 on input line 86.
+Package biblatex Info: Reference segment=0 on input line 86.
+Package hyperref Info: Link coloring OFF on input line 86.
  (./main.out) (./main.out)
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
-Package hyperref Info: Option `pageanchor' set `false' on input line 96.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 119
-.
+Package hyperref Info: Option `pageanchor' set `false' on input line 91.
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 114.
+LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line
+ 114.
 
-(/usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+(/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
+File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
+)
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `ztmcm' (encoding: OT1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line
+ 114.
+
+(/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/omlztmcm.fd
+File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line
+ 114.
+
+(/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/omsztmcm.fd
+File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line
+ 114.
+
+(/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/omxztmcm.fd
+File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
 (/usr/local/texlive/2024/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 119
-.
-
-(/usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
 (/usr/local/texlive/2024/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
-) [1
+)
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 1
+14.
+
+(/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <11> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 114.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8.14006> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 114.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6.60007> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 114.
+ [1
 
 {/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/loc
-al/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}]
-Package hyperref Info: Option `pageanchor' set `true' on input line 128.
+al/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc}]
+Package hyperref Info: Option `pageanchor' set `true' on input line 123.
+ (./frontmatter/abstract.tex)
+[1] (./main.toc [2
 
-(./frontmatter/abstract.tex) [1
-
-] (./main.toc [2
-
-
-] [3] [4] [5])
+] [3] [4])
 \tf@toc=\write5
 \openout5 = `main.toc'.
 
- [6] (./main.lof)
+ [5] (./main.lof)
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
-
-[7
-
+ [6
 
 ] (./main.lot)
 \tf@lot=\write7
 \openout7 = `main.lot'.
 
- [8
+ [7
 
-
-] (./chapters/01_introduction.tex
+]
+(./concise/01_introduction.tex
 Chapter 1.
 [1
 
-
-] [2] [3]) (./chapters/02_background.tex [4]
+] [2]) (./concise/02_methods.tex
 Chapter 2.
-[5
-
-] [6] [7] [8]
-<figures/lp_duality_geometry.pdf, id=862, 443.7378pt x 379.4175pt>
-File: figures/lp_duality_geometry.pdf Graphic file (type pdf)
-<use figures/lp_duality_geometry.pdf>
-Package pdftex.def Info: figures/lp_duality_geometry.pdf  used on input line 12
-8.
-(pdftex.def)             Requested size: 441.01773pt x 377.10657pt.
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `cmss' (encoding: OT1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
- [9] [10 <./figures/lp_duality_geometry.pdf>] [11] [12] [13]
-[14] [15] [16] [17] [18] [19] [20]) (./chapters/03_methods.tex [21]
-Chapter 3.
-[22
-
-] [23]
-Overfull \hbox (7.98822pt too wide) in paragraph at lines 144--144
-[]\T1/cmr/bx/n/17.28 (-20) Classical func-tional PLS and the NIPALS al-gorithm 
-
+[3] [4] [5] [6] [7]
+Underfull \hbox (badness 1097) in paragraph at lines 288--296
+\T1/ptm/m/n/11 power-basis equa-tions. In stand-ard numerical-linear-algebra te
+r-min-o-logy, these residual-
  []
 
-[24] [25] [26] [27] [28]
-<figures/krylov_geometry.pdf, id=1112, 443.7378pt x 224.037pt>
-File: figures/krylov_geometry.pdf Graphic file (type pdf)
-<use figures/krylov_geometry.pdf>
-Package pdftex.def Info: figures/krylov_geometry.pdf  used on input line 422.
-(pdftex.def)             Requested size: 423.37997pt x 213.76718pt.
- [29 <./figures/krylov_geometry.pdf>] [30] [31]
-<figures/quadratic_trajectory_2d.pdf, id=1168, 216.81pt x 216.81pt>
-File: figures/quadratic_trajectory_2d.pdf Graphic file (type pdf)
-<use figures/quadratic_trajectory_2d.pdf>
-Package pdftex.def Info: figures/quadratic_trajectory_2d.pdf  used on input lin
-e 606.
-(pdftex.def)             Requested size: 216.1011pt x 216.11142pt.
-<figures/quadratic_surface_3d.pdf, id=1169, 216.81pt x 216.81pt>
-File: figures/quadratic_surface_3d.pdf Graphic file (type pdf)
-<use figures/quadratic_surface_3d.pdf>
-Package pdftex.def Info: figures/quadratic_surface_3d.pdf  used on input line 6
-12.
-(pdftex.def)             Requested size: 216.1011pt x 216.11142pt.
-
-[32 <./figures/quadratic_trajectory_2d.pdf> <./figures/quadratic_surface_3d.pdf
->]) (./chapters/04_simulation_design.tex [33] [34]
-Chapter 4.
-[35
-
-] [36]
-<figures/true_slope_structure.pdf, id=1250, 443.7378pt x 458.9145pt>
-File: figures/true_slope_structure.pdf Graphic file (type pdf)
-<use figures/true_slope_structure.pdf>
-Package pdftex.def Info: figures/true_slope_structure.pdf  used on input line 1
-88.
-(pdftex.def)             Requested size: 436.60997pt x 451.56078pt.
- [37] [38 <./figures/true_slope_structure.pdf>]
-<figures/covariance_spectrum.pdf, id=1283, 443.7378pt x 238.49101pt>
-File: figures/covariance_spectrum.pdf Graphic file (type pdf)
-<use figures/covariance_spectrum.pdf>
-Package pdftex.def Info: figures/covariance_spectrum.pdf  used on input line 20
-6.
-(pdftex.def)             Requested size: 423.37997pt x 227.55862pt.
- [39]
-<figures/predictive_signal_allocation.pdf, id=1295, 443.7378pt x 256.5585pt>
+[8] [9]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 382.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 382.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 382.
+) (./concise/03_simulation.tex
+Chapter 3.
+[10] [11]
+<figures/predictive_signal_allocation.pdf, id=989, 443.7378pt x 256.5585pt>
 File: figures/predictive_signal_allocation.pdf Graphic file (type pdf)
 <use figures/predictive_signal_allocation.pdf>
 Package pdftex.def Info: figures/predictive_signal_allocation.pdf  used on inpu
-t line 287.
-(pdftex.def)             Requested size: 423.37997pt x 244.79793pt.
- [40 <./figures/covariance_spectrum.pdf>]
-<figures/functional_predictor_examples.pdf, id=1325, 443.7378pt x 325.215pt>
-File: figures/functional_predictor_examples.pdf Graphic file (type pdf)
-<use figures/functional_predictor_examples.pdf>
-Package pdftex.def Info: figures/functional_predictor_examples.pdf  used on inp
-ut line 306.
-(pdftex.def)             Requested size: 423.37997pt x 310.30722pt.
- [41 <./figures/predictive_signal_allocation.pdf>]
-[42 <./figures/functional_predictor_examples.pdf>] [43] [44] [45] [46]
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 6
-01.
-
-(/usr/local/texlive/2024/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
-)
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `cmtt' (encoding: T1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
-)
-(./chapters/05_estimation_results.tex [47]
-Chapter 5.
-[48
-
-]
-<figures/babii_style_error_boxplots_with_tails.pdf, id=1432, 443.7378pt x 440.8
+t line 82.
+(pdftex.def)             Requested size: 412.56497pt x 238.54213pt.
+ [12 <./figures/predictive_signal_allocation.pdf>] [13] [14] [15]
+<figures/babii_style_error_boxplots_with_tails.pdf, id=1034, 443.7378pt x 440.8
 4702pt>
 File: figures/babii_style_error_boxplots_with_tails.pdf Graphic file (type pdf)
 
 <use figures/babii_style_error_boxplots_with_tails.pdf>
 Package pdftex.def Info: figures/babii_style_error_boxplots_with_tails.pdf  use
-d on input line 80.
-(pdftex.def)             Requested size: 441.01773pt x 438.16194pt.
- [49] [50 <./figures/babii_style_error_boxplots_with_tails.pdf>] [51]
-[52] [53] [54]
-<figures/bias_variance_decomposition.pdf, id=1506, 443.7378pt x 440.84702pt>
-File: figures/bias_variance_decomposition.pdf Graphic file (type pdf)
-<use figures/bias_variance_decomposition.pdf>
-Package pdftex.def Info: figures/bias_variance_decomposition.pdf  used on input
- line 310.
-(pdftex.def)             Requested size: 441.01773pt x 438.16194pt.
- [55 <./figures/bias_variance_decomposition.pdf>]
-<figures/bias_variance_decomposition_raw_stable_subset.pdf, id=1527, 443.7378pt
- x 440.84702pt>
-File: figures/bias_variance_decomposition_raw_stable_subset.pdf Graphic file (t
-ype pdf)
-<use figures/bias_variance_decomposition_raw_stable_subset.pdf>
-Package pdftex.def Info: figures/bias_variance_decomposition_raw_stable_subset.
-pdf  used on input line 385.
-(pdftex.def)             Requested size: 441.01773pt x 438.16194pt.
- [56] [57 <./figures/bias_variance_decomposition_raw_stable_subset.pdf>] [58])
-(./chapters/06_inference_methodology.tex [59]
-Chapter 6.
-[60
+d on input line 294.
+(pdftex.def)             Requested size: 412.56497pt x 409.88931pt.
 
-] [61] [62] [63] [64] [65] [66] [67] [68] [69])
-(./chapters/07_inference_results.tex [70]
-Chapter 7.
-[71
-
-]
-<figures/stopping_diagnostics.pdf, id=1731, 443.7378pt x 448.07399pt>
+[16] [17 <./figures/babii_style_error_boxplots_with_tails.pdf>] [18])
+(./concise/04_inference.tex
+Chapter 4.
+[19] [20] [21]
+<figures/stopping_diagnostics.pdf, id=1121, 443.7378pt x 448.07399pt>
 File: figures/stopping_diagnostics.pdf Graphic file (type pdf)
 <use figures/stopping_diagnostics.pdf>
-Package pdftex.def Info: figures/stopping_diagnostics.pdf  used on input line 7
-2.
-(pdftex.def)             Requested size: 441.01773pt x 445.34488pt.
- [72] [73 <./figures/stopping_diagnostics.pdf>]
-<figures/null_calibration.pdf, id=1779, 443.7378pt x 448.07399pt>
-File: figures/null_calibration.pdf Graphic file (type pdf)
-<use figures/null_calibration.pdf>
-Package pdftex.def Info: figures/null_calibration.pdf  used on input line 177.
-(pdftex.def)             Requested size: 441.01773pt x 445.34488pt.
- [74] [75 <./figures/null_calibration.pdf>] [76]
-<figures/power_curves.pdf, id=1825, 443.7378pt x 419.166pt>
+Package pdftex.def Info: figures/stopping_diagnostics.pdf  used on input line 1
+69.
+(pdftex.def)             Requested size: 412.56497pt x 416.60876pt.
+ [22] [23 <./figures/stopping_diagnostics.pdf>]
+<figures/power_curves.pdf, id=1163, 443.7378pt x 419.166pt>
 File: figures/power_curves.pdf Graphic file (type pdf)
 <use figures/power_curves.pdf>
-Package pdftex.def Info: figures/power_curves.pdf  used on input line 267.
-(pdftex.def)             Requested size: 441.01773pt x 416.61299pt.
- [77 <./figures/power_curves.pdf>]
-<figures/confidence_sets.pdf, id=1849, 443.7378pt x 419.166pt>
-File: figures/confidence_sets.pdf Graphic file (type pdf)
-<use figures/confidence_sets.pdf>
-Package pdftex.def Info: figures/confidence_sets.pdf  used on input line 344.
-(pdftex.def)             Requested size: 441.01773pt x 416.61299pt.
- [78] [79 <./figures/confidence_sets.pdf>]) (./chapters/08_spectroscopy_applica
-tion.tex [80]
-Chapter 8.
-[81
+Package pdftex.def Info: figures/power_curves.pdf  used on input line 268.
+(pdftex.def)             Requested size: 412.56497pt x 389.7308pt.
+ [24] [25 <./figures/power_curves.pdf>] [26]) (./concise/05_empirical.tex
+Chapter 5.
 
-]
-<figures/tablet_spectra_assay_overview.pdf, id=1892, 458.70119pt x 508.602pt>
+Underfull \hbox (badness 1137) in paragraph at lines 4--12
+\T1/ptm/m/n/11 the gen-er-at-ing model is known. This ap-plic-a-tion ex-am-ines
+ pre-dic-tion and sta-bil-ity in
+ []
+
+[27]
+<figures/tablet_spectra_assay_overview.pdf, id=1212, 458.70119pt x 508.602pt>
 File: figures/tablet_spectra_assay_overview.pdf Graphic file (type pdf)
 <use figures/tablet_spectra_assay_overview.pdf>
 Package pdftex.def Info: figures/tablet_spectra_assay_overview.pdf  used on inp
-ut line 48.
-(pdftex.def)             Requested size: 361.63776pt x 400.98407pt.
- [82 <./figures/tablet_spectra_assay_overview.pdf>] [83]
-<figures/tablet_benchmark_observed_vs_predicted.pdf, id=1918, 483.5947pt x 463.
+ut line 35.
+(pdftex.def)             Requested size: 338.30629pt x 375.11789pt.
+ [28 <./figures/tablet_spectra_assay_overview.pdf>] [29]
+<figures/tablet_benchmark_observed_vs_predicted.pdf, id=1233, 483.5947pt x 463.
 10617pt>
 File: figures/tablet_benchmark_observed_vs_predicted.pdf Graphic file (type pdf
 )
 <use figures/tablet_benchmark_observed_vs_predicted.pdf>
 Package pdftex.def Info: figures/tablet_benchmark_observed_vs_predicted.pdf  us
-ed on input line 167.
-(pdftex.def)             Requested size: 379.27551pt x 363.22821pt.
-<figures/tablet_benchmark_rmse_intervals.pdf, id=1921, 452.3324pt x 263.05653pt
->
-File: figures/tablet_benchmark_rmse_intervals.pdf Graphic file (type pdf)
-<use figures/tablet_benchmark_rmse_intervals.pdf>
-Package pdftex.def Info: figures/tablet_benchmark_rmse_intervals.pdf  used on i
-nput line 186.
-(pdftex.def)             Requested size: 343.99329pt x 200.0575pt.
- [84] [85 <./figures/tablet_benchmark_observed_vs_predicted.pdf> <./figures/tab
-let_benchmark_rmse_intervals.pdf>]
-<figures/tablet_development_selected_components.pdf, id=1967, 458.81223pt x 306
-.91878pt>
-File: figures/tablet_development_selected_components.pdf Graphic file (type pdf
+ed on input line 136.
+(pdftex.def)             Requested size: 338.30629pt x 323.98837pt.
+ [30])
+(./concise/06_conclusion.tex
+Chapter 6.
+[31 <./figures/tablet_benchmark_observed_vs_predicted.pdf>] [32] [33]) [34]
+MAIN-TEXT-PAGES: 34
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 16
+8.
+(/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
-<use figures/tablet_development_selected_components.pdf>
-Package pdftex.def Info: figures/tablet_development_selected_components.pdf  us
-ed on input line 244.
-(pdftex.def)             Requested size: 361.63776pt x 241.92928pt.
- [86] [87 <./figures/tablet_development_selected_components.pdf>]) (./chapters/
-09_conclusion.tex [88]
-Chapter 9.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `pcr' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+ [35
+
+
+] [36]
+(./extended/a_background.tex
+Appendix A.
+[37
+
+] [38] [39]
+<figures/lp_duality_geometry.pdf, id=1371, 443.7378pt x 379.4175pt>
+File: figures/lp_duality_geometry.pdf Graphic file (type pdf)
+<use figures/lp_duality_geometry.pdf>
+Package pdftex.def Info: figures/lp_duality_geometry.pdf  used on input line 13
+0.
+(pdftex.def)             Requested size: 412.56497pt x 352.77356pt.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmss' (encoding: OT1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+ [40] [41 <./figures/lp_duality_geometry.pdf>] [42] [43] [44]
+[45] [46] [47] [48] [49] [50] [51]) [52] (./extended/b_mathematical_proofs.tex
+Appendix B.
+[53
+
+] [54] [55] [56] [57] [58] [59] [60] [61] [62] [63] [64] [65] [66] [67]
+[68] [69] [70] [71]
+Underfull \hbox (badness 2213) in paragraph at lines 1264--1274
+\T1/ptm/m/n/11 The con-tinu-ous map-ping the-orem now gives $\OML/ztmcm/m/it/11
+ n\OMS/ztmcm/m/n/11 k\OML/ztmcm/m/it/11 u[]\OT1/ztmcm/m/n/11 (\OML/ztmcm/m/it/1
+1 b\OT1/ztmcm/m/n/11 )\OMS/ztmcm/m/n/11 k[] \U/msa/m/n/11   \OMS/ztmcm/m/n/11 k
+\OML/ztmcm/m/it/11 G\OMS/ztmcm/m/n/11 k[]$\T1/ptm/m/n/11 . Ap-ply-ing the co-v-
+
+ []
+
+
+Underfull \hbox (badness 1490) in paragraph at lines 1264--1274
+\T1/ptm/m/n/11 ari-ance spec-tral rep-res-ent-a-tion to $\OML/ztmcm/m/it/11 G$ 
+\T1/ptm/m/n/11 yields $\OML/ztmcm/m/it/11 G \OT1/ztmcm/m/n/11 = [][] []\OML/ztm
+cm/m/it/11 Z[]w[]$ \T1/ptm/m/n/11 in mean square for or-
+ []
+
+[72] [73] [74]) [75] (./extended/c_methods.tex
+Appendix C.
+[76
+
+] [77] [78] [79] [80] [81]
+<figures/krylov_geometry.pdf, id=1774, 443.7378pt x 224.037pt>
+File: figures/krylov_geometry.pdf Graphic file (type pdf)
+<use figures/krylov_geometry.pdf>
+Package pdftex.def Info: figures/krylov_geometry.pdf  used on input line 425.
+(pdftex.def)             Requested size: 396.06514pt x 199.97343pt.
+ [82] [83 <./figures/krylov_geometry.pdf>]
+[84]
+<figures/quadratic_trajectory_2d.pdf, id=1829, 216.81pt x 216.81pt>
+File: figures/quadratic_trajectory_2d.pdf Graphic file (type pdf)
+<use figures/quadratic_trajectory_2d.pdf>
+Package pdftex.def Info: figures/quadratic_trajectory_2d.pdf  used on input lin
+e 609.
+(pdftex.def)             Requested size: 202.15909pt x 202.17046pt.
+<figures/quadratic_surface_3d.pdf, id=1830, 216.81pt x 216.81pt>
+File: figures/quadratic_surface_3d.pdf Graphic file (type pdf)
+<use figures/quadratic_surface_3d.pdf>
+Package pdftex.def Info: figures/quadratic_surface_3d.pdf  used on input line 6
+15.
+(pdftex.def)             Requested size: 202.15909pt x 202.17046pt.
+ [85] [86 <./figures/quadratic_trajectory_2d.pdf> <./figures/quadratic_surface_
+3d.pdf>]) [87] [88] (./extended/d_simulation_design.tex
+Appendix D.
 [89
 
-] [90] [91] [92] [93]) [94] [95
+] [90]
+<figures/true_slope_structure.pdf, id=1916, 443.7378pt x 458.9145pt>
+File: figures/true_slope_structure.pdf Graphic file (type pdf)
+<use figures/true_slope_structure.pdf>
+Package pdftex.def Info: figures/true_slope_structure.pdf  used on input line 1
+90.
+(pdftex.def)             Requested size: 408.44157pt x 422.42354pt.
+<figures/covariance_spectrum.pdf, id=1918, 443.7378pt x 238.49101pt>
+File: figures/covariance_spectrum.pdf Graphic file (type pdf)
+<use figures/covariance_spectrum.pdf>
+Package pdftex.def Info: figures/covariance_spectrum.pdf  used on input line 20
+8.
+(pdftex.def)             Requested size: 396.06514pt x 212.87495pt.
+ [91] [92 <./figures/true_slope_structure.pdf>] [93 <./figures/covariance_spect
+rum.pdf>]
+File: figures/predictive_signal_allocation.pdf Graphic file (type pdf)
+<use figures/predictive_signal_allocation.pdf>
+Package pdftex.def Info: figures/predictive_signal_allocation.pdf  used on inpu
+t line 289.
+(pdftex.def)             Requested size: 396.06514pt x 229.00186pt.
+<figures/functional_predictor_examples.pdf, id=1982, 443.7378pt x 325.215pt>
+File: figures/functional_predictor_examples.pdf Graphic file (type pdf)
+<use figures/functional_predictor_examples.pdf>
+Package pdftex.def Info: figures/functional_predictor_examples.pdf  used on inp
+ut line 308.
+(pdftex.def)             Requested size: 396.06514pt x 290.28404pt.
+ [94] [95 <./figures/functional_predictor_examples.pdf>]
+[96] [97] [98]
+Underfull \hbox (badness 1484) in paragraph at lines 536--542
+\T1/ptm/m/n/11 quantile plots. They re-main in every primary ISE and MSPE sum-m
+ary. With $[][] \OT1/ztmcm/m/n/11 =
+ []
 
+[99]) [100] (./extended/e_estimation_results.tex
+Appendix E.
+File: figures/babii_style_error_boxplots_with_tails.pdf Graphic file (type pdf)
 
-] [96] [97]
-(./appendices/a_mathematical_proofs.tex
-Appendix A.
-[98
+<use figures/babii_style_error_boxplots_with_tails.pdf>
+Package pdftex.def Info: figures/babii_style_error_boxplots_with_tails.pdf  use
+d on input line 83.
+(pdftex.def)             Requested size: 412.56497pt x 409.88931pt.
+[101
 
-
-] [99] [100] [101] [102] [103] [104] [105] [106] [107] [108] [109] [110]
-[111] [112] [113] [114] [115] [116] [117] [118] [119] [120])
-(./appendices/b_simulation_diagnostics.tex [121]
-Appendix B.
-<figures/basis_coefficient_histograms.pdf, id=2227, page=1, 443.7378pt x 339.66
+] [102] [103] [104] [105] [106]
+<figures/bias_variance_decomposition.pdf, id=2097, 443.7378pt x 440.84702pt>
+File: figures/bias_variance_decomposition.pdf Graphic file (type pdf)
+<use figures/bias_variance_decomposition.pdf>
+Package pdftex.def Info: figures/bias_variance_decomposition.pdf  used on input
+ line 313.
+(pdftex.def)             Requested size: 412.56497pt x 409.88931pt.
+ [107] [108 <./figures/bias_variance_decomposition.pdf>]
+<figures/bias_variance_decomposition_raw_stable_subset.pdf, id=2123, 443.7378pt
+ x 440.84702pt>
+File: figures/bias_variance_decomposition_raw_stable_subset.pdf Graphic file (t
+ype pdf)
+<use figures/bias_variance_decomposition_raw_stable_subset.pdf>
+Package pdftex.def Info: figures/bias_variance_decomposition_raw_stable_subset.
+pdf  used on input line 388.
+(pdftex.def)             Requested size: 412.56497pt x 409.88931pt.
+ [109] [110 <./figures/bias_variance_decomposition_raw_stable_subset.pdf>] [111
+]) [112] (./extended/f_simulation_diagnostics.tex
+Appendix F.
+<figures/basis_coefficient_histograms.pdf, id=2171, page=1, 443.7378pt x 339.66
 899pt>
 File: figures/basis_coefficient_histograms.pdf Graphic file (type pdf)
 <use figures/basis_coefficient_histograms.pdf, page 1>
 Package pdftex.def Info: figures/basis_coefficient_histograms.pdf , page1 used 
 on input line 24.
-(pdftex.def)             Requested size: 441.01773pt x 337.60016pt.
-[122
+(pdftex.def)             Requested size: 412.56497pt x 315.81633pt.
+[113
 
 ]
-<figures/basis_coefficient_histograms.pdf, id=2232, page=2, 443.7378pt x 339.66
+<figures/basis_coefficient_histograms.pdf, id=2177, page=2, 443.7378pt x 339.66
 899pt>
 File: figures/basis_coefficient_histograms.pdf Graphic file (type pdf)
 <use figures/basis_coefficient_histograms.pdf, page 2>
 Package pdftex.def Info: figures/basis_coefficient_histograms.pdf , page2 used 
 on input line 33.
-(pdftex.def)             Requested size: 441.01773pt x 337.60016pt.
- [123 <./figures/basis_coefficient_histograms.pdf>]
-<figures/basis_coefficient_histograms.pdf, id=2259, page=3, 443.7378pt x 339.66
+(pdftex.def)             Requested size: 412.56497pt x 315.81633pt.
+ [114 <./figures/basis_coefficient_histograms.pdf>]
+<figures/basis_coefficient_histograms.pdf, id=2204, page=3, 443.7378pt x 339.66
 899pt>
 File: figures/basis_coefficient_histograms.pdf Graphic file (type pdf)
 <use figures/basis_coefficient_histograms.pdf, page 3>
 Package pdftex.def Info: figures/basis_coefficient_histograms.pdf , page3 used 
 on input line 41.
-(pdftex.def)             Requested size: 441.01773pt x 337.60016pt.
- [124 <./figures/basis_coefficient_histograms.pdf>] [125 <./figures/basis_coeff
+(pdftex.def)             Requested size: 412.56497pt x 315.81633pt.
+ [115 <./figures/basis_coefficient_histograms.pdf>] [116 <./figures/basis_coeff
 icient_histograms.pdf>]
-<figures/beta_point_histograms.pdf, id=2269, page=1, 443.7378pt x 458.9145pt>
+<figures/beta_point_histograms.pdf, id=2213, page=1, 443.7378pt x 458.9145pt>
 File: figures/beta_point_histograms.pdf Graphic file (type pdf)
 <use figures/beta_point_histograms.pdf, page 1>
 Package pdftex.def Info: figures/beta_point_histograms.pdf , page1 used on inpu
 t line 52.
-(pdftex.def)             Requested size: 441.01773pt x 456.11938pt.
-<figures/beta_point_histograms.pdf, id=2270, page=2, 443.7378pt x 458.9145pt>
+(pdftex.def)             Requested size: 412.56497pt x 426.68803pt.
+<figures/beta_point_histograms.pdf, id=2214, page=2, 443.7378pt x 458.9145pt>
 File: figures/beta_point_histograms.pdf Graphic file (type pdf)
 <use figures/beta_point_histograms.pdf, page 2>
 Package pdftex.def Info: figures/beta_point_histograms.pdf , page2 used on inpu
 t line 60.
-(pdftex.def)             Requested size: 441.01773pt x 456.11938pt.
-[126
+(pdftex.def)             Requested size: 412.56497pt x 426.68803pt.
+[117
 
  <./figures/beta_point_histograms.pdf>]
-<figures/beta_point_histograms.pdf, id=2291, page=3, 443.7378pt x 458.9145pt>
+<figures/beta_point_histograms.pdf, id=2234, page=3, 443.7378pt x 458.9145pt>
 File: figures/beta_point_histograms.pdf Graphic file (type pdf)
 <use figures/beta_point_histograms.pdf, page 3>
 Package pdftex.def Info: figures/beta_point_histograms.pdf , page3 used on inpu
 t line 68.
-(pdftex.def)             Requested size: 441.01773pt x 456.11938pt.
- [127 <./figures/beta_point_histograms.pdf>] [128 <./figures/beta_point_histogr
+(pdftex.def)             Requested size: 412.56497pt x 426.68803pt.
+ [118 <./figures/beta_point_histograms.pdf>] [119 <./figures/beta_point_histogr
 ams.pdf>]
-<figures/coefficient_normal_qq.pdf, id=2300, page=1, 443.7378pt x 346.89601pt>
+<figures/coefficient_normal_qq.pdf, id=2244, page=1, 443.7378pt x 346.89601pt>
 File: figures/coefficient_normal_qq.pdf Graphic file (type pdf)
 <use figures/coefficient_normal_qq.pdf, page 1>
 Package pdftex.def Info: figures/coefficient_normal_qq.pdf , page1 used on inpu
 t line 79.
-(pdftex.def)             Requested size: 441.01773pt x 344.78316pt.
-<figures/coefficient_normal_qq.pdf, id=2301, page=2, 443.7378pt x 346.89601pt>
+(pdftex.def)             Requested size: 412.56497pt x 322.53584pt.
+<figures/coefficient_normal_qq.pdf, id=2245, page=2, 443.7378pt x 346.89601pt>
 File: figures/coefficient_normal_qq.pdf Graphic file (type pdf)
 <use figures/coefficient_normal_qq.pdf, page 2>
 Package pdftex.def Info: figures/coefficient_normal_qq.pdf , page2 used on inpu
 t line 89.
-(pdftex.def)             Requested size: 441.01773pt x 344.78316pt.
- [129
+(pdftex.def)             Requested size: 412.56497pt x 322.53584pt.
+ [120
 
  <./figures/coefficient_normal_qq.pdf>]
-<figures/coefficient_normal_qq.pdf, id=2473, page=3, 443.7378pt x 346.89601pt>
+<figures/coefficient_normal_qq.pdf, id=2417, page=3, 443.7378pt x 346.89601pt>
 File: figures/coefficient_normal_qq.pdf Graphic file (type pdf)
 <use figures/coefficient_normal_qq.pdf, page 3>
 Package pdftex.def Info: figures/coefficient_normal_qq.pdf , page3 used on inpu
 t line 98.
-(pdftex.def)             Requested size: 441.01773pt x 344.78316pt.
-) (./appendices/c_inference_diagnostics.tex [130 <./figures/coefficient_normal_
-qq.pdf>] [131 <./figures/coefficient_normal_qq.pdf>]
-Appendix C.
-<figures/calibration_comparison.pdf, id=2485, 443.7378pt x 252.945pt>
+(pdftex.def)             Requested size: 412.56497pt x 322.53584pt.
+) [121 <./figures/coefficient_normal_qq.pdf>] [122 <./figures/coefficient_norma
+l_qq.pdf>] (./extended/g_inference_methodology.tex
+Appendix G.
+[123
+
+] [124] [125] [126] [127] [128] [129] [130] [131] [132]) [133]
+(./extended/h_inference_results.tex
+Appendix H.
+[134
+
+]
+File: figures/stopping_diagnostics.pdf Graphic file (type pdf)
+<use figures/stopping_diagnostics.pdf>
+Package pdftex.def Info: figures/stopping_diagnostics.pdf  used on input line 7
+5.
+(pdftex.def)             Requested size: 412.56497pt x 416.60876pt.
+ [135] [136]
+<figures/null_calibration.pdf, id=2590, 443.7378pt x 448.07399pt>
+File: figures/null_calibration.pdf Graphic file (type pdf)
+<use figures/null_calibration.pdf>
+Package pdftex.def Info: figures/null_calibration.pdf  used on input line 180.
+(pdftex.def)             Requested size: 412.56497pt x 416.60876pt.
+ [137] [138 <./figures/null_calibration.pdf>] [139]
+File: figures/power_curves.pdf Graphic file (type pdf)
+<use figures/power_curves.pdf>
+Package pdftex.def Info: figures/power_curves.pdf  used on input line 270.
+(pdftex.def)             Requested size: 412.56497pt x 389.7308pt.
+ [140]
+<figures/confidence_sets.pdf, id=2642, 443.7378pt x 419.166pt>
+File: figures/confidence_sets.pdf Graphic file (type pdf)
+<use figures/confidence_sets.pdf>
+Package pdftex.def Info: figures/confidence_sets.pdf  used on input line 347.
+(pdftex.def)             Requested size: 412.56497pt x 389.7308pt.
+
+[141] [142 <./figures/confidence_sets.pdf>]) [143]
+(./extended/i_inference_diagnostics.tex
+Appendix I.
+<figures/calibration_comparison.pdf, id=2675, 443.7378pt x 252.945pt>
 File: figures/calibration_comparison.pdf Graphic file (type pdf)
 <use figures/calibration_comparison.pdf>
 Package pdftex.def Info: figures/calibration_comparison.pdf  used on input line
  17.
-(pdftex.def)             Requested size: 423.37997pt x 241.35007pt.
-) (./appendices/d_spectroscopy_supplement.tex [132
+(pdftex.def)             Requested size: 396.06514pt x 225.77647pt.
+) [144
 
-] [133 <./figures/calibration_comparison.pdf>]
-Appendix D.
-[134
+ <./figures/calibration_comparison.pdf>]
+(./extended/j_spectroscopy_application.tex
+Appendix J.
+File: figures/tablet_spectra_assay_overview.pdf Graphic file (type pdf)
+<use figures/tablet_spectra_assay_overview.pdf>
+Package pdftex.def Info: figures/tablet_spectra_assay_overview.pdf  used on inp
+ut line 51.
+(pdftex.def)             Requested size: 338.30629pt x 375.11789pt.
+[145
 
-{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
- [135] [136] [137] [138]
-<figures/tablet_benchmark_residuals.pdf, id=2546, 483.23636pt x 442.0756pt>
+] [146] [147]
+File: figures/tablet_benchmark_observed_vs_predicted.pdf Graphic file (type pdf
+)
+<use figures/tablet_benchmark_observed_vs_predicted.pdf>
+Package pdftex.def Info: figures/tablet_benchmark_observed_vs_predicted.pdf  us
+ed on input line 168.
+(pdftex.def)             Requested size: 354.80612pt x 339.7889pt.
+<figures/tablet_benchmark_rmse_intervals.pdf, id=2720, 452.3324pt x 263.05653pt
+>
+File: figures/tablet_benchmark_rmse_intervals.pdf Graphic file (type pdf)
+<use figures/tablet_benchmark_rmse_intervals.pdf>
+Package pdftex.def Info: figures/tablet_benchmark_rmse_intervals.pdf  used on i
+nput line 187.
+(pdftex.def)             Requested size: 321.80017pt x 187.14876pt.
+ [148] [149 <./figures/tablet_benchmark_rmse_intervals.pdf>]
+<figures/tablet_development_selected_components.pdf, id=2741, 458.81223pt x 306
+.91878pt>
+File: figures/tablet_development_selected_components.pdf Graphic file (type pdf
+)
+<use figures/tablet_development_selected_components.pdf>
+Package pdftex.def Info: figures/tablet_development_selected_components.pdf  us
+ed on input line 243.
+(pdftex.def)             Requested size: 338.30629pt x 226.32018pt.
+
+[150 <./figures/tablet_development_selected_components.pdf>]) [151]
+(./extended/k_spectroscopy_diagnostics.tex
+Appendix K.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 1
+9.
+(/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+) [152
+
+] [153]
+Underfull \hbox (badness 10000) in paragraph at lines 138--139
+[]|\T1/ptm/m/n/10 Repeated de-vel-op-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 153--154
+[]|\T1/ptm/m/n/10 Designated bench-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 156--157
+[]|\T1/ptm/m/n/10 Conditional boot-
+ []
+
+[154] [155] [156]
+<figures/tablet_benchmark_residuals.pdf, id=2807, 483.23636pt x 442.0756pt>
 File: figures/tablet_benchmark_residuals.pdf Graphic file (type pdf)
 <use figures/tablet_benchmark_residuals.pdf>
 Package pdftex.def Info: figures/tablet_benchmark_residuals.pdf  used on input 
-line 366.
-(pdftex.def)             Requested size: 388.09775pt x 355.05054pt.
- [139] [140 <./figures/tablet_benchmark_residuals.pdf>]
-<figures/tablet_raw_arnoldi_numerical_diagnostics.pdf, id=2569, 458.69206pt x 4
+line 376.
+(pdftex.def)             Requested size: 363.05919pt x 332.14275pt.
+ [157] [158 <./figures/tablet_benchmark_residuals.pdf>]
+<figures/tablet_raw_arnoldi_numerical_diagnostics.pdf, id=2830, 458.69206pt x 4
 94.14801pt>
 File: figures/tablet_raw_arnoldi_numerical_diagnostics.pdf Graphic file (type p
 df)
 <use figures/tablet_raw_arnoldi_numerical_diagnostics.pdf>
 Package pdftex.def Info: figures/tablet_raw_arnoldi_numerical_diagnostics.pdf  
-used on input line 433.
-(pdftex.def)             Requested size: 361.63776pt x 389.58847pt.
- [141] [142 <./figures/tablet_raw_arnoldi_numerical_diagnostics.pdf>]
-<figures/tablet_benchmark_sensitivity_rmse.pdf, id=2611, 480.3383pt x 335.09854
+used on input line 443.
+(pdftex.def)             Requested size: 338.30629pt x 364.45738pt.
+<figures/tablet_benchmark_sensitivity_rmse.pdf, id=2833, 480.3383pt x 335.09854
 pt>
 File: figures/tablet_benchmark_sensitivity_rmse.pdf Graphic file (type pdf)
 <use figures/tablet_benchmark_sensitivity_rmse.pdf>
 Package pdftex.def Info: figures/tablet_benchmark_sensitivity_rmse.pdf  used on
- input line 496.
-(pdftex.def)             Requested size: 379.27551pt x 264.60733pt.
+ input line 506.
+(pdftex.def)             Requested size: 354.80612pt x 247.5344pt.
 )
-[143] [144 <./figures/tablet_benchmark_sensitivity_rmse.pdf>] (./main.aux)
+[159] [160 <./figures/tablet_raw_arnoldi_numerical_diagnostics.pdf>] [161 <./fi
+gures/tablet_benchmark_sensitivity_rmse.pdf>] (./frontmatter/declaration.tex)
+[162
+
+] (./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 2BFC66F29F9745198C56C84C69A961EC;26294.
+(rerunfilecheck)             Checksum: 8EBE08B735554704100C4538A9C9D900;31112.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 26076 strings out of 474116
- 462035 string characters out of 5743682
- 1942187 words of memory out of 5000000
- 46959 multiletter control sequences out of 15000+600000
- 606272 words of font info for 384 fonts, out of 8000000 for 9000
+ 26250 strings out of 474116
+ 468029 string characters out of 5743682
+ 1944187 words of memory out of 5000000
+ 47542 multiletter control sequences out of 15000+600000
+ 649753 words of font info for 171 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 66i,14n,81p,1205b,2365s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
-></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
-</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.p
-fb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pf
-b></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
-></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><
-/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></u
-sr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></u
-sr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
-/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/l
-ocal/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/loca
-l/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/t
-exlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/tex
-live/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
-ive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texliv
-e/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/
-2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texl
-ive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/
-texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/te
-xlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/texl
-ive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texliv
-e/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/
-2024/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive/20
-24/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texlive/2024
-/texmf-dist/fonts/type1/public/cm-super/sfcc1200.pfb></usr/local/texlive/2024/t
-exmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2024/tex
-mf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2024/texmf
--dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2024/texmf-d
-ist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2024/texmf-dis
-t/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2024/texmf-dist/
-fonts/type1/public/cm-super/sfti1200.pfb></usr/local/texlive/2024/texmf-dist/fo
-nts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2024/texmf-dist/font
-s/type1/public/cm-super/sftt1200.pfb>
-Output written on main.pdf (153 pages, 1998510 bytes).
+ 66i,14n,81p,1084b,2365s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
+></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
+</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></
+usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></us
+r/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr
+/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><
+/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.p
+fb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr
+/local/texlive/2024/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/t
+exlive/2024/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2024
+/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2024/texmf-dist
+/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/typ
+e1/urw/times/utmr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/tim
+es/utmri8a.pfb>
+Output written on main.pdf (170 pages, 1607691 bytes).
 PDF statistics:
- 2900 PDF objects out of 2984 (max. 8388607)
- 2304 compressed objects within 24 object streams
- 582 named destinations out of 1000 (max. 500000)
- 84017 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 3096 PDF objects out of 3580 (max. 8388607)
+ 2519 compressed objects within 26 object streams
+ 649 named destinations out of 1000 (max. 500000)
+ 25817 words of extra memory for PDF output out of 29859 (max. 10000000)
 
